@@ -1,0 +1,108 @@
+<script src=lib1.js></script>
+
+<style>
+body {
+   background-color: black;
+}
+
+#canvas1 {
+    position: absolute;
+
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin:auto;
+}
+
+</style>
+
+
+<canvas id='canvas1' width='640' height='640'></canvas>
+
+<script id='my_vertex_shader' type='x-shader/x-vertex'>
+   attribute vec3 aPosition;
+   varying   vec3 vPosition;
+   void main() {
+      gl_Position = vec4(aPosition, 1.0);
+      vPosition = aPosition;
+   }
+</script>
+
+<!!==========================================================================
+
+   Below is the fragment shader from class (with some slight improvements).
+
+   Your assignment is to write your own interesting fragment shader program.
+   Try to have fun with it -- use "uTime" to create animated patterns, and
+   "uCursor" to make it responsive to a user's mouse gestures.
+
+   Try to make something as completely different from my "easter egg" example
+   as possible :-)
+
+============================================================================>
+
+<script id='my_fragment_shader' type='x-shader/x-fragment'>
+   precision mediump float;
+   uniform float uTime;
+   uniform vec3  uCursor;
+   varying vec3  vPosition;
+
+   void main() {
+      // Set background color black.
+      vec3 color = vec3(0.0, 0.0, 0.0);                    
+
+      // Use only x and y coords of the square's geometry.
+      float x = vPosition.x;                            
+      float y = vPosition.y;                          
+
+      //make dynamic variable for x, y *for blobbing
+      float scaleFactor_x = uCursor.x * 2.5 + 0.5;
+      float scaleFactor_y = (1.0 - uCursor.y) * 2.5 + 0.5;
+
+      float dX = x + (x * sin((y * 8.5) * cos(uTime * 0.8) + uTime * 0.5) * 0.07) * scaleFactor_x;                   
+      float dY = y + (y * cos((x * 5.2) * sin(uTime * 0.8) + uTime * 0.5) * 0.07) * scaleFactor_y;  
+      //make circle movement
+      dX = dX + sin(uTime * 0.5) * 0.2;
+      dY = dY + cos(uTime * 0.5) * 0.2; 
+
+      //Compute radius squared.
+      float rr = (dX * dX + dY * dY) / pow(0.5, 2.0);
+
+      // If pixel is on sphere:
+      if (rr < 1.0) {                                    
+         //compute z.
+         float z = sqrt(1.0 - rr);                       
+         //do shading.
+         float t = (0.15 * abs(sin(uTime) * 2.0)) + max(0.0, (dX * sin(uTime * 0.7) + dY * cos(uTime * 0.7) + z) * 1.5);        
+         
+         /* 
+         //slice it 
+         float zSlice = 1.0 - 3.3 * x + 0.5 * sin(uTime); //    check for slice.
+         
+         if (zSlice < z) {                              //    If pixel is on slice:
+            z = zSlice;                                 //       adjust z,
+            t = z * z < 1.0 - rr ? 0.6 : 1.0;              //       check for off shape,
+         }
+         */
+
+         //make it grayscale first
+         float aT = abs(t);
+         color = vec3(aT, aT, aT);                         
+         //make cool easter egg-like
+         color.r *= 0.5 + 0.6 * sin(20.0 * (dX + 0.6 * z + 0.13   * cos(20.0 * dY + uTime * 0.9 )) + uTime * 0.9); 
+
+         color.g *= 0.05 + 0.2 * sin(3.0 * (dX + 0.3 * z + 0.03   * cos(20.0 * dY + uTime * 0.9 )) + uTime * 0.9);
+         color.b *= 0.3 + 0.3 * cos(10.0 * (dY + 0.3 * z + 0.03   * sin(20.0 * dX + uTime * 0.9 )) + uTime * 0.9);
+      }
+
+      gl_FragColor = vec4(color, 1.0);
+   }
+</script>
+
+<script>
+start_gl('canvas1', document.getElementById('my_vertex_shader'  ).innerHTML,
+                    document.getElementById('my_fragment_shader').innerHTML);
+</script>
+

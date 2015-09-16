@@ -1,0 +1,2 @@
+#!/bin/sh
+open -a /Applications/*Chrome.app index.html
