@@ -1,46 +1,71 @@
 <html>
    <head>
       <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.12/p5.js"></script>
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.12/addons/p5.dom.min.js"></script>
       <script src="./button.js"></script>
-      <script src="./p5.dom.js"></script>
       <style>
+         body {
+            
+         }
+         canvas {
+             position: absolute;
+             top:0;
+             bottom: 0;
+             left: 0;
+             right: 0;
+             margin: auto;
+         }
       </style>
-
       <script>
             window.onload = function(){
-               // console.log("window is onload");
+               // console.log("window is loaded");
             }
 
             //get button obj
             var mBtns = [];
-            var wCount = 19.;
-            var hCount = 30.;
+            var wCount = 30;
+            var hCount = 30;
             var indices = wCount * hCount;
 
             function setup(){
-               createCanvas(800., 800.);
-               background(250.);
+               createCanvas(600, 600);
+               background(250);
 
                capture = createCapture(VIDEO);
-               capture.size(800, 800);
-              //capture.hide();
+               capture.size(600, 600);
+               capture.hide();
 
-               var index = 0;      
                for (var x = 0; x < wCount; x++) {
                    for (var y = 0; y < hCount; y++) {
-                     mBtns[index++] = new btn(x, y);
+                     var index = x * wCount + y;
+                     mBtns[index] = new btn(x, y);
                   }
                }
             }
 
             function draw(){
+               capture.loadPixels();
+
+               for (var x = 0; x < 600; x+=20 ){ //<- 800/wCount
+                  for(var y = 0; y < 600; y+=20){
+
+                     var i = x * 600 + y;
+                     var darkness = (255 - capture.pixels[i*4]) / 255;
+
+                     var mBtnIndex = x/20 * wCount + y/20;
+                     // console.log(mBtnIndex);
+
+                     if(darkness > 0.1){
+                        mBtns[mBtnIndex].isHit = true;
+                     } else {
+                        mBtns[mBtnIndex].isHit = false;
+                     }
+                  }
+               }
                for (var i = 0; i < indices; i++) {
                      mBtns[i].update();
                      mBtns[i].draw();
                }
-
-               image(capture, 0, 0, 320, 240);
             }
 
       </script>
