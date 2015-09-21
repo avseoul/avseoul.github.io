@@ -5,7 +5,7 @@
       <script src="./button.js"></script>
       <style>
          body {
-            
+            background-color: #f0f0f0;
          }
          canvas {
              position: absolute;
@@ -23,46 +23,49 @@
 
             //get button obj
             var mBtns = [];
-            var wCount = 30;
-            var hCount = 30;
+            var wCount = 22;
+            var hCount = 31;
             var indices = wCount * hCount;
 
             function setup(){
                createCanvas(600, 600);
-               background(250);
+               smooth();
 
                capture = createCapture(VIDEO);
                capture.size(600, 600);
                capture.hide();
 
-               for (var x = 0; x < wCount; x++) {
-                   for (var y = 0; y < hCount; y++) {
-                     var index = x * wCount + y;
+               for (var y = 0; y < hCount; y++) {
+                   for (var x = 0; x < wCount; x++) {
+                     var index = y * wCount + x;
                      mBtns[index] = new btn(x, y);
                   }
                }
             }
 
             function draw(){
+              background(240);
+
                capture.loadPixels();
 
-               for (var x = 0; x < 600; x+=20 ){ //<- 800/wCount
-                  for(var y = 0; y < 600; y+=20){
+               for(var y = 0; y < hCount; y++){ 
+                  for(var x = 0; x < wCount; x++){
 
-                     var i = x * 600 + y;
+                     var i = y*15 * 640 + x*29; // 640 * 480 
                      var darkness = (255 - capture.pixels[i*4]) / 255;
 
-                     var mBtnIndex = x/20 * wCount + y/20;
-                     // console.log(mBtnIndex);
+                     var mBtnIndex = y * wCount + (wCount - 1 - x);
 
-                     if(darkness > 0.1){
+                     if(darkness < 0.6){
                         mBtns[mBtnIndex].isHit = true;
                      } else {
                         mBtns[mBtnIndex].isHit = false;
                      }
                   }
                }
-               for (var i = 0; i < indices; i++) {
+                // image(capture, 0, 0, 600, 600);
+              
+              for (var i = 0; i < indices; i++) {
                      mBtns[i].update();
                      mBtns[i].draw();
                }
