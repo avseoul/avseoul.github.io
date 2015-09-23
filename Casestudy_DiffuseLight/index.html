@@ -83,8 +83,8 @@
 
       //give animated texture to diffuse
       diffuse.r *= 0.5 + 0.6 * sin(20.0 * (point.x + 0.6 * point.z + 0.13   * cos(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
-      diffuse.g *= 0.05 + 0.2 * sin(10.0 * (point.x + 0.6 * point.y + 0.13   * cos(20.0 * point.z + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
-      diffuse.b *= 0.3 + 0.3 * cos(20.0 * (point.x + 0.6 * point.z + 0.13   * sin(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1;
+      diffuse.g *= 0.5 + 0.6 * sin(20.0 * (point.x + 0.6 * point.y + 0.13   * cos(20.0 * point.z + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
+      diffuse.b *= 0.5 + 0.6 * cos(20.0 * (point.x + 0.6 * point.z + 0.13   * sin(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1;
 
       //calculate shading by light
       vec3 multLight = vec3(0.,0.,0);
