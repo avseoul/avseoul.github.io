@@ -21,7 +21,7 @@
    uniform vec3  uCursor;
    varying vec3  vPosition;
 
-   vec4 sphere[5];
+   vec4 sphere[15];
    vec3 material;
 
    vec3 Lrgb[3];
@@ -32,7 +32,7 @@
       float radius = 0.15;
       
       //if you want to animate sphere then do it in ray calculate
-      for(int i = 0; i < 5; i++){
+      for(int i = 0; i < 15; i++){
          sphere[i] = vec4(0.3 * sin(float(i)*10.0), 0.3 * cos(float(i)*10.0), 0.6 * sin(float(i)*10.0), radius * abs(sin(float(i)*10.0 + 15.0))  );
       }
    }
@@ -114,7 +114,7 @@
       material = vec3(0.4, 0.4, 0.4);
 
       vec3 color = vec3(0., 0., 0.);
-      for(int i = 0; i < 5; i++){
+      for(int i = 0; i < 15; i++){
          float t = raySphere(V, W, sphere[i], i);
 
          if (t < 10000.){
