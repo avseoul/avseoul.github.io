@@ -39,7 +39,7 @@ function process(txt) {
   while (reset_02.firstChild) {
     reset_02.removeChild(reset_02.firstChild);
   }
-  
+
   var newParagraph = document.createElement('P');
 
   var words = splitTokens(txt, ' .,:;!@#$%&*()\n'); 
@@ -78,7 +78,7 @@ function process(txt) {
     }                  
   }
   //add message
-  var newMessage = document.createTextNode('There are ' + counter + ' fucks down there.' );
+  var newMessage = document.createTextNode('There are ' + counter + ' fucks in there.' );
   document.getElementById('counter').appendChild(newMessage);
   //add fucks 
   document.getElementById('eventWindow').appendChild(newParagraph);
