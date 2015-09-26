@@ -2,7 +2,7 @@
 
 <body bgcolor=black>
 <center>
-<td><canvas id='canvas1' width=700 height=700></canvas></td>
+<td><canvas id='canvas1' width='750' height='750'></canvas></td>
 </center>
 </body>
 
@@ -21,7 +21,7 @@
    uniform vec3  uCursor;
    varying vec3  vPosition;
 
-   vec4 sphere[30];
+   vec4 sphere[15];
    vec3 material;
 
    vec3 Lrgb[3];
@@ -32,8 +32,8 @@
       float radius = 0.15;
       
       //if you want to animate sphere then do it in ray calculate
-      for(int i = 0; i < 30; i++){
-         sphere[i] = vec4(0.3 * sin(float(i)*10.0), 0.3 * cos(float(i)*10.0), 0.6 * sin(float(i)*10.0), radius * sin(float(i)*10.0 + 15.0)  );
+      for(int i = 0; i < 15; i++){
+         sphere[i] = vec4(0.3 * sin(float(i)*10.0), 0.3 * cos(float(i)*10.0), 0.6 * sin(float(i)*10.0), radius * abs(sin(float(i)*10.0 + 15.0))  );
       }
    }
 
@@ -83,8 +83,13 @@
 
       //give animated texture to diffuse
       diffuse.r *= 0.5 + 0.6 * sin(20.0 * (point.x + 0.6 * point.z + 0.13   * cos(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
+<<<<<<< HEAD
       diffuse.g *= 0.05 + 0.2 * sin(20.0 * (point.x + 0.6 * point.y + 0.13   * cos(20.0 * point.z + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
       diffuse.b *= 0.3 + 0.3 * cos(20.0 * (point.x + 0.6 * point.z + 0.13   * sin(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1;
+=======
+      diffuse.g *= 0.05 + 0.2 * sin(10.0 * (point.x + 0.6 * point.y + 0.13   * cos(20.0 * point.z + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
+      diffuse.b *= 0.3 + 0.3 * cos(5.0 * (point.x + 0.6 * point.z + 0.13   * sin(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1;
+>>>>>>> origin/master
 
       //calculate shading by light
       vec3 multLight = vec3(0.,0.,0);
@@ -114,7 +119,7 @@
       material = vec3(0.4, 0.4, 0.4);
 
       vec3 color = vec3(0., 0., 0.);
-      for(int i = 0; i < 30; i++){
+      for(int i = 0; i < 15; i++){
          float t = raySphere(V, W, sphere[i], i);
 
          if (t < 10000.){
