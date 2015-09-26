@@ -15,19 +15,23 @@
       body {
         padding: 20px;
       }
-
-      .file {
-        margin-top: 24px;
-        font-weight: bold;
-      }
-
       .text {
         border-style: solid;
         border-width: 1px;
+        color: #333;
 
         width: 600px;
         height: 400px;
         overflow: scroll;
+      }
+
+      .counter {
+        font-size: 48px;
+        border-style: none;
+        margin: 0px;
+        padding: 0px;
+
+        width: 600px;
       }
 
       #textinput {
@@ -36,14 +40,50 @@
         border-style: dotted;
       }
 
+      #isFucked {
+        /*text-transform: uppercase;*/
+        color: red;
+        font-size: 40px;
+
+        -webkit-animation-name: example; /* Chrome, Safari, Opera */
+        -webkit-animation-duration: 500ms; /* Chrome, Safari, Opera */
+        -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+        animation-name: example;
+        animation-duration: 500ms;
+        animation-iteration-count: infinite;
+      }
+      #isIndex {
+        color: black;
+        vertical-align: super;
+        font-size: 20px;
+      }
+
+      /* Chrome, Safari, Opera */
+      @-webkit-keyframes example {
+          0%   {color:red;}
+          25%  {color:yellow;}
+          50%  {color:red;}
+          75%  {color:green;}
+          100% {color:red;}
+      }
+      /* Standard syntax */
+      @keyframes example {
+          0%   {color:red;}
+          25%  {color:yellow;}
+          50%  {color:red;}
+          75%  {color:green;}
+          100% {color:red;}
+      }
     </style>
 
   </head>
   <body>
+    <p class='counter' id='counter'></p>
     <p class='text' id='eventWindow'></p>
     <p>
-      <textarea id = "textinput" rows="10" cols='100'>Enter some text</textarea><br/>
-      <button id = "submit">submit</button>
+      <textarea id="textinput" rows="10" cols='100'>Enter some text</textarea><br/>
+      <button id = "submit" style="display: inline;">submit</button>
+      <button id = "sample" style="display: inline;">re-load sample text</button>
     </p>
   </body>
 </html>
