@@ -149,11 +149,11 @@
       localPoint *= 3.0;
       float f = fractal(localPoint + uTime * 0.1);
       float t = turbulence(localPoint + uTime * 0.1 + noise(localPoint + uTime * 0.1));
-      float t2 = turbulence(localPoint + uTime * 0.1);
+      float t2 = turbulence(localPoint + uTime * 0.3);
 
       diffuse.r *= 0.1 + pow(t, 2.0) * 1.0;
       diffuse.g *= 0.1 + pow(f, 1.0) * 0.15;
-      diffuse.b *= 0.1 + pow(t2, 2.0) * 1.0;
+      diffuse.b *= 0.1 + pow(t2, 3.0) * 1.0;
 
       //calculate shading by light
       vec3 multLight = vec3(0.,0.,0);
