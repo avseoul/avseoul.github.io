@@ -95,9 +95,9 @@
 
       sphere[2] = vec4(0.0, 0.0, 0.0, 0.02);
       //animate it 
-      sphere[2].x += sin(uTime * 0.6) * 0.13 + sphere[1].x;
-      sphere[2].y += sin(uTime * 1.2) * 0.02 + sphere[1].y;
-      sphere[2].z += cos(uTime * 0.6) * 0.13 + sphere[1].z; 
+      sphere[2].x += sin(uTime * 1.2) * 0.13 + sphere[1].x;
+      sphere[2].y += sin(uTime * 2.4) * 0.02 + sphere[1].y;
+      sphere[2].z += cos(uTime * 1.2) * 0.13 + sphere[1].z; 
    }
 
    void setupLights(){
@@ -217,7 +217,7 @@
             vec3 point = V + d3 * W;
             vec3 localPoint = point - sphere[2].xyz;
             color = shadeSphere(localPoint, point, sphere[2], material);
-            color += 0.8;
+            color += 0.6;
          } 
       }
 
