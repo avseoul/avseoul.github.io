@@ -27,6 +27,8 @@
    vec3 Lrgb[5];
    vec3 Lloc[5];
 
+   float pi = 3.14159265359;
+
    //noise, tubulence, fractal algorithm by Ken Perlin
    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
    vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -89,15 +91,15 @@
 
       sphere[1] = vec4(0.0, 0.0, 0.0, 0.10);
       //animate it 
-      sphere[1].x += sin(uTime * 0.6) * 1.0 + sphere[0].x;
+      sphere[1].x += sin(uTime * 0.6) * 1.1 + sphere[0].x;
       sphere[1].y += sin(uTime * 1.2) * 0.2 + sphere[0].y;
-      sphere[1].z += cos(uTime * 0.6) * 1.0 + sphere[0].z; 
+      sphere[1].z += cos(uTime * 0.6) * 1.1 + sphere[0].z; 
 
       sphere[2] = vec4(0.0, 0.0, 0.0, 0.02);
       //animate it 
-      sphere[2].x += sin(uTime * 1.2) * 0.13 + sphere[1].x;
-      sphere[2].y += sin(uTime * 2.4) * 0.02 + sphere[1].y;
-      sphere[2].z += cos(uTime * 1.2) * 0.13 + sphere[1].z; 
+      sphere[2].x += sin(uTime * 2.2 + pi) * 0.14 + sphere[1].x;
+      sphere[2].y = sphere[1].y;
+      sphere[2].z += cos(uTime * 2.2 + pi) * 0.14 + sphere[1].z; 
    }
 
    void setupLights(){
@@ -217,7 +219,7 @@
             vec3 point = V + d3 * W;
             vec3 localPoint = point - sphere[2].xyz;
             color = shadeSphere(localPoint, point, sphere[2], material);
-            color += 0.6;
+            color += 0.4;
          } 
       }
 
