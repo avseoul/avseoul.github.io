@@ -1,8 +1,3 @@
-# ComputerGraphics 2015 Fall Assignments Archive
-  ### Assignment01
-     * [AV](http://lovecicijoannastuff.tumblr.com/)
-     * [Seth] ()
+# ComputerGraphics 2015 Fall Assignments wiki
 
-
-***
-
+    * [click here](https://github.com/avseoul/avseoul.github.io/wiki/Computer-Graphics-Assignments-Wiki)
