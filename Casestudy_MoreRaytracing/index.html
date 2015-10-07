@@ -284,7 +284,7 @@
             vec3 normal = (point - thisSphere.xyz) / thisSphere.w;
             
             if(index != k){
-               vec3 toObjdir = 2.0*dot(normal,-Ldir)*normal-(-Ldir);
+               vec3 toObjdir = 2.0*dot(normal,-W)*normal-(-W);
                vec3 hitPoint = point + 0.001 * toObjdir;
 
                rFactor = calRay(hitPoint, toObjdir, sphere[k]);
