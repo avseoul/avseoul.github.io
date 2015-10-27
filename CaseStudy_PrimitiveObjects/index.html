@@ -81,7 +81,7 @@
             }
          }
 
-         var trigerCube    = function(){
+         var triggerCube    = function(){
             if(!isCube){
                var target = document.getElementById('thisTd');
                //reset all the child elements
@@ -96,7 +96,7 @@
             }
          }
 
-         var trigerSphere   = function(){
+         var triggerSphere   = function(){
             var sSlice = function(){
                var string = document.getElementById('bSphere1').value;
                // console.log('string : ' + string);
@@ -159,7 +159,7 @@
          }
 
 
-         var trigerCylinder = function(){
+         var triggerCylinder = function(){
             var sSlice = function(){
                var string = document.getElementById('bCylinder1').value;
                // console.log('string : ' + string);
@@ -220,7 +220,7 @@
                target.appendChild(div4);
             }
          }
-         var trigerTorus    = function(){
+         var triggerTorus    = function(){
             var sSlice = function(){
                var string = document.getElementById('bTorus1').value;
                // console.log('string : ' + string);
@@ -310,10 +310,10 @@
          <tr>
             <td valign='top' width='80px'>
                <div style='margin-bottom: 10px;'>object- control</div>
-               <button onclick='trigerCube()'>cube</button>
-               <button onclick='trigerSphere()'>sphere</button>
-               <button onclick='trigerCylinder()'>cylinder</button>
-               <button onclick='trigerTorus()'>torus</button>
+               <button onclick='triggerCube()'>cube</button>
+               <button onclick='triggerSphere()'>sphere</button>
+               <button onclick='triggerCylinder()'>cylinder</button>
+               <button onclick='triggerTorus()'>torus</button>
                <div>-</div>
                <div style='margin-bottom: 10px;'>trigger- p.noise</div>
                <button onclick='addNoise()'>p.noise</button>
