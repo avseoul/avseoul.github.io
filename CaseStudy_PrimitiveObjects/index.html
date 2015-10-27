@@ -311,8 +311,9 @@
                <button onclick='trigerCylinder()'>cylinder</button>
                <button onclick='trigerTorus()'>torus</button>
                <div>-</div>
-               <button onclick='addNoise()'>P.noise</button>
-               <input id='noiseValue' value='1' onchange='changeNoise()' style='width:55px;'></input>
+               <div style='margin-bottom: 10px;'>trigger- p.noise</div>
+               <button onclick='addNoise()'>p.noise</button>
+               <input id='noiseValue' value='intensity' onchange='changeNoise()' style='width:55px;'></input>
             </td>
             <td valign='top' id='thisTd' width='100px'></td>
             <td><canvas id='canvas' width='600' height='600'></td>
