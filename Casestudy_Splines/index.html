@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         body{
+            font-family: verdana;
+            font-size: 17px;
+         }
+         button{
+            font-family: verdana;
+            width: 60px;  
+            text-align: left;
+         }
+         #thisTd{
+            padding-top: 55px;
+         }
+         #canvas{
+            background-color: #f5f5f5;
+         }
+      </style>
+
+      <script src=drawlib1.js></script>
+      <script>
+
+         var theta = 0;
+         var mousePos;
+         var updatedMatrix = [];
+         var m = new Matrix();
+         var canvas; 
+
+         var noise      = new Noise();
+
+         var cube       = new Cube();
+         var sphere     = new Sphere();
+         var cylinder   = new Cylinder();
+         var torus      = new Torus();
+
+         var isCube     = true;
+         var isSphere   = false;
+         var isCylinder = false;
+         var isTorus    = false;
+
+         var hSpline    = new HSpline();
+         var bSpline    = new BSpline();
+
+         var isHS       = false;
+         var isBS       = true;
+         var isAddPoint = true;
+         var isDelPoint = false;
+         var isMovPoint = false;
+         var isDragging = false;
+
+         window.onload = function() {
+            canvas = initCanvas('canvas');
+            canvas.update = function(g) {
+
+               //-------------//
+               //update       //
+               //-------------//
+
+                pX = 0.5;
+                pY = 0.5;
+               var pZ = 0;
+               var s  = 0.2 - (Math.sin(theta * 0.01) * 0.2) + 0.1;
+
+               //get all calculated matrices
+               m.identity();
+               //m.scale(s, s, s);
+               m.scale(0.5, 0.5, 0.5);
+               m.rotateX(theta * 0.005);
+               m.rotateY(theta * 0.01);
+               m.rotateZ(theta * 0.025);
+               m.translate(0, 0, 0);
+
+               theta++;
+
+               if(isCube){
+                  //cube.transform(g, m, noise);
+               } else if(isSphere){
+                  sphere.transform(g, m, noise, theta);
+               } else if(isCylinder){
+                  cylinder.transform(g, m, noise);
+               } else if(isTorus){
+                  torus.transform(g, m, noise);
+               }
+                
+
+               //initialize&draw spline (for now there is no function related with matrix)
+               if(isBS){
+                   bSpline.transform(g, m);
+                   document.getElementById('h').style.color = '#000';
+                   document.getElementById('b').style.color = '#f00';
+               } else {
+                   hSpline.transform(g, m);
+                   document.getElementById('h').style.color = '#f00';
+                   document.getElementById('b').style.color = '#000';
+               }
+            }
+            getMouseEvents();
+         }
+
+         var triggerHS = function(){
+             isBS = false;
+             isHS = true;
+         }
+
+         var triggerBS = function(){
+             isBS = true;
+             isHS = false;
+         }
+
+         var triggerCube    = function(){
+            if(!isCube){
+               var target = document.getElementById('thisTd');
+               //reset all the child elements
+               while (target.firstChild) {
+                  target.removeChild(target.firstChild);
+               }
+               //reset boolean
+               isCube     = true;
+               isSphere   = false;
+               isCylinder = false;
+               isTorus    = false;
+            }
+         }
+
+         var triggerSphere   = function(){
+            var sSlice = function(){
+               var string = document.getElementById('bSphere1').value;
+               // console.log('string : ' + string);
+               var value = parseFloat(string);
+
+               sphere.updateSlice(value);
+            }
+            var sSeg = function(){
+               var string = document.getElementById('bSphere2').value;
+               // console.log('string : ' + string);
+               var value = parseFloat(string);
+
+               sphere.updateSeg(value);
+            }
+            if(!isSphere){
+               var target = document.getElementById('thisTd');
+               //reset all the child elements
+               while (target.firstChild) {
+                  target.removeChild(target.firstChild);
+               }
+               //reset boolean
+               isCube     = false;
+               isSphere   = true;
+               isCylinder = false;
+               isTorus    = false;
+               //get slice&seg values
+               var slice = sphere.getSlice();
+               var segment = sphere.getSeg();
+               //create dom elements
+               var div1   = document.createElement('div');
+               var div2   = document.createElement('div');
+               var div3   = document.createElement('div');
+               var div4   = document.createElement('div');
+               var input1  = document.createElement("INPUT");
+               var input2  = document.createElement("INPUT");
+
+               //set div attribute
+               div1.innerHTML = 'slice';
+               div1.style['font-size'] = '11px';
+               div3.innerHTML = 'segment';
+               div3.style['font-size'] = '11px';
+               
+               //set input attribute
+               input1.id ='bSphere1';
+               input1.setAttribute("value", slice);
+               input1.addEventListener('change', sSlice);
+               input2.id ='bSphere2';
+               input2.setAttribute("value", segment);
+               input2.addEventListener('change', sSeg);
+
+               //add input to new div
+               div2.appendChild(input1);
+               div4.appendChild(input2);
+               //add all to target div
+               target.appendChild(div1);
+               target.appendChild(div2);
+               target.appendChild(div3);
+               target.appendChild(div4);
+            }
+         }
+
+
+         var triggerCylinder = function(){
+            var sSlice = function(){
+               var string = document.getElementById('bCylinder1').value;
+               // console.log('string : ' + string);
+               var value = parseFloat(string);
+
+               cylinder.updateSlice(value);
+            }
+            var sSeg = function(){
+               var string = document.getElementById('bCylinder2').value;
+               // console.log('string : ' + string);
+               var value = parseFloat(string);
+
+               cylinder.updateSeg(value);
+            }
+            if(!isCylinder){
+               var target = document.getElementById('thisTd');
+               //reset all the child elements
+               while (target.firstChild) {
+                  target.removeChild(target.firstChild);
+               }
+               //reset boolean
+               isCube     = false;
+               isSphere   = false;
+               isCylinder = true;
+               isTorus    = false;
+               //get slice&seg values
+               var slice = cylinder.getSlice();
+               var segment = cylinder.getSeg();
+               //create dom elements
+               var div1   = document.createElement('div');
+               var div2   = document.createElement('div');
+               var div3   = document.createElement('div');
+               var div4   = document.createElement('div');
+               var input1  = document.createElement("INPUT");
+               var input2  = document.createElement("INPUT");
+
+               //set div attribute
+               div1.innerHTML = 'slice';
+               div1.style['font-size'] = '11px';
+               div3.innerHTML = 'segment';
+               div3.style['font-size'] = '11px';
+               
+               //set input attribute
+               input1.id ='bCylinder1';
+               input1.setAttribute("value", slice);
+               input1.addEventListener('change', sSlice);
+               input2.id ='bCylinder2';
+               input2.setAttribute("value", segment);
+               input2.addEventListener('change', sSeg);
+
+               //add input to new div
+               div2.appendChild(input1);
+               div4.appendChild(input2);
+               //add all to target div
+               target.appendChild(div1);
+               target.appendChild(div2);
+               target.appendChild(div3);
+               target.appendChild(div4);
+            }
+         }
+         var triggerTorus    = function(){
+            var sSlice = function(){
+               var string = document.getElementById('bTorus1').value;
+               // console.log('string : ' + string);
+               var value = parseFloat(string);
+
+               torus.updateSlice(value);
+            }
+            var sSeg = function(){
+               var string = document.getElementById('bTorus2').value;
+               // console.log('string : ' + string);
+               var value = parseFloat(string);
+
+               torus.updateSeg(value);
+            }
+            if(!isTorus){
+               var target = document.getElementById('thisTd');
+               //reset all the child elements
+               while (target.firstChild) {
+                  target.removeChild(target.firstChild);
+               }
+               //reset boolean
+               isCube     = false;
+               isSphere   = false;
+               isCylinder = false;
+               isTorus    = true;
+               //get slice&seg values
+               var slice = torus.getSlice();
+               var segment = torus.getSeg();
+               //create dom elements
+               var div1   = document.createElement('div');
+               var div2   = document.createElement('div');
+               var div3   = document.createElement('div');
+               var div4   = document.createElement('div');
+               var input1  = document.createElement("INPUT");
+               var input2  = document.createElement("INPUT");
+
+               //set div attribute
+               div1.innerHTML = 'slice';
+               div1.style['font-size'] = '11px';
+               div3.innerHTML = 'segment';
+               div3.style['font-size'] = '11px';
+               
+               //set input attribute
+               input1.id ='bTorus1';
+               input1.setAttribute("value", slice);
+               input1.addEventListener('change', sSlice);
+               input2.id ='bTorus2';
+               input2.setAttribute("value", segment);
+               input2.addEventListener('change', sSeg);
+
+               //add input to new div
+               div2.appendChild(input1);
+               div4.appendChild(input2);
+               //add all to target div
+               target.appendChild(div1);
+               target.appendChild(div2);
+               target.appendChild(div3);
+               target.appendChild(div4);
+            }
+         }
+         var addNoise = function(){
+            cube.addNoise();
+            sphere.addNoise();
+            cylinder.addNoise();
+            torus.addNoise();
+         }
+
+         var changeNoise = function(){
+            var string = document.getElementById('noiseValue').value;
+            var value = parseFloat(string);
+            
+            cube.changeNoise(value);
+            sphere.changeNoise(value);
+            cylinder.changeNoise(value);
+            torus.changeNoise(value);
+         }
+
+         var resetInput = function(){
+            document.getElementById('noiseValue').value = ' ';
+         }
+
+         var resetPoints = function(){
+            hSpline.resetPoints();
+            bSpline.resetPoints();
+         }
+
+        //get mouse events
+        var getMouseEvents = function(){
+            var index;
+            canvas.onmouseup = function(e){
+               mousePos = getMousePos(canvas, e);
+               
+               if(isAddPoint){
+                   hSpline.addPoint(mousePos.x, mousePos.y);
+                   bSpline.addPoint(mousePos.x, mousePos.y);
+               }
+               //when you mouseup, stop drag
+               isDragging = false;
+            }
+            canvas.onmousedown = function(e){
+                mousePos = getMousePos(canvas, e);
+                if(isMovPoint || isDelPoint){
+                    index = bSpline.detectPoints(mousePos);
+                }
+                //ready to drag
+                isDragging = true;
+                //delete
+                if(isDelPoint && index != undefined){
+                    bSpline.deletePoints(index);
+                    hSpline.deletePoints(index);
+                }
+            }
+            canvas.onmousemove = function(e){
+                mousePos = getMousePos(canvas, e);
+                if(isMovPoint && index != undefined && isDragging){
+                    bSpline.movePoints(index, mousePos);
+                    hSpline.movePoints(index, mousePos);
+                }
+            }
+            if(isMovPoint){
+                 document.getElementById('del').style.color = '#000';
+                 document.getElementById('add').style.color = '#000';
+                 document.getElementById('move').style.color = '#f00';
+            } else if(isAddPoint){
+                 document.getElementById('del').style.color = '#000';
+                 document.getElementById('add').style.color = '#f00';
+                 document.getElementById('move').style.color = '#000';
+            } else if(isDelPoint){
+                 document.getElementById('del').style.color = '#f00';
+                 document.getElementById('add').style.color = '#000';
+                 document.getElementById('move').style.color = '#000';
+            }
+
+        };
+
+         var addPoints = function(){
+             isAddPoint = true;
+             isMovPoint = false;
+             isDelPoint = false;
+
+             getMouseEvents();
+         }
+         var movePoints = function(){
+             isAddPoint = false;
+             isMovPoint = true;
+             isDelPoint = false;
+
+             getMouseEvents();
+         }
+         var deletePoints = function(){
+             isAddPoint = false;
+             isMovPoint = false;
+             isDelPoint = true;
+
+             getMouseEvents();
+         }
+
+      </script>
+   </head>
+   <body>
+      <table>
+         <tr>
+            <td valign='top' width='40px'>
+               <div style='margin-bottom: 10px;'>select spline</div>
+               <button id='h' onclick='triggerHS()'>Hspline</button>
+               <button id='b' onclick='triggerBS()'>Bspline</button>
+               <div>-</div>
+               <div style='margin-bottom: 10px;'>control points</div>
+               <button id='add' onclick='addPoints()'>add</button>
+               <button id='move' onclick='movePoints()'>move</button>
+               <button id='del' onclick='deletePoints()'>delete</button>
+               <div>-</div>
+               <button onclick='resetPoints()'>reset</button>
+            </td>
+            <td valign='top' id='thisTd' width='50px'></td>
+            <td><canvas id='canvas' width='600' height='600'></td>
+         </tr>
+      </table>
+   </body>
+</html>
+
