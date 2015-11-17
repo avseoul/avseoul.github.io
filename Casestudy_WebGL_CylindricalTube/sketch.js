@@ -33,24 +33,104 @@ function draw() {
     ].join('\n'));
 
     var vertices = [];
-    var slice = 10;
-    var segment = 24;
+    var slice = 24;
+    var segment = 48;
     var radius = 0.6;
     var innerRadius = 0.3;
 
-    //-> start&end cap
-    for(var i = 0; i < 2; i++){
+    //-> start cap
+    for(var u = 0; u < segment; u++){
+    var theta; 
+    var px, py, pz;
+
+    pz = radius;
+
+    //first point strip
+    theta = 2 * pi * u/segment;
+
+    px = Math.cos(theta) * radius;
+    py = Math.sin(theta) * radius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);
+
+    //second point strip
+    theta = 2 * pi * u/segment;
+
+    px = Math.cos(theta) * innerRadius;
+    py = Math.sin(theta) * innerRadius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);
+
+    //third point strip
+    theta = 2 * pi * (u+1)/segment;
+
+    px = Math.cos(theta) * radius;
+    py = Math.sin(theta) * radius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);
+
+    //forth point strip
+    theta = 2 * pi * u/segment;
+
+    px = Math.cos(theta) * innerRadius;
+    py = Math.sin(theta) * innerRadius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz); 
+
+    //fifth point strip 
+    theta = 2 * pi * (u+1)/segment;
+
+    px = Math.cos(theta) * innerRadius;
+    py = Math.sin(theta) * innerRadius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);                               
+    }
+   
+    //-> outter cylinder
+    for(var v = 0; v < slice; v++){
         for(var u = 0; u < segment; u++){
             var theta; 
             var px, py, pz;
+            var r = radius;
 
-            if(i==0){pz = radius;}else{pz = -1 * radius;} 
+            if(v == 0){
+                theta = 2 * pi * u/segment;
+
+                px = Math.cos(theta) * r;
+                py = Math.sin(theta) * r;
+                pz = radius;
+
+                vertices.push(px);
+                vertices.push(py);
+                vertices.push(pz);
+
+                theta = 2 * pi * (u+1)/segment;
+
+                px = Math.cos(theta) * r;
+                py = Math.sin(theta) * r;
+                pz = radius;
+
+                vertices.push(px);
+                vertices.push(py);
+                vertices.push(pz);
+            }
 
             //first point strip
             theta = 2 * pi * u/segment;
 
-            px = Math.cos(theta) * radius;
-            py = Math.sin(theta) * radius;
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * v/slice) * radius;
 
             vertices.push(px);
             vertices.push(py);
@@ -59,8 +139,9 @@ function draw() {
             //second point strip
             theta = 2 * pi * u/segment;
 
-            px = Math.cos(theta) * innerRadius;
-            py = Math.sin(theta) * innerRadius;
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * (v+1)/slice) * radius;
 
             vertices.push(px);
             vertices.push(py);
@@ -69,8 +150,9 @@ function draw() {
             //third point strip
             theta = 2 * pi * (u+1)/segment;
 
-            px = Math.cos(theta) * radius;
-            py = Math.sin(theta) * radius;
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * v/slice) * radius;
 
             vertices.push(px);
             vertices.push(py);
@@ -79,90 +161,168 @@ function draw() {
             //forth point strip
             theta = 2 * pi * u/segment;
 
-            px = Math.cos(theta) * innerRadius;
-            py = Math.sin(theta) * innerRadius;
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * (v+1)/slice) * radius;
 
             vertices.push(px);
             vertices.push(py);
-            vertices.push(pz); 
+            vertices.push(pz);
 
-            //fifth point strip 
+            //fifth point strip
             theta = 2 * pi * (u+1)/segment;
 
-            px = Math.cos(theta) * innerRadius;
-            py = Math.sin(theta) * innerRadius;
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * (v+1)/slice) * radius;
 
             vertices.push(px);
             vertices.push(py);
-            vertices.push(pz);                               
+            vertices.push(pz);
+
         }
     }
-    //-> inner&outter cylinder
-    for(var i = 0; i < 2; i++){
-        for(var v = 0; v < slice; v++){
-            for(var u = 0; u < segment; u++){
-                var theta; 
-                var px, py, pz;
-                var r;
+    
+    //-> end cap
+    for(var u = 0; u < segment; u++){
+    var theta; 
+    var px, py, pz;
 
-                if(i == 0){r = radius;}else{r = innerRadius;}
+    pz = -1 * radius;
 
-                //outter cylinder
-                //first point strip
+    //first point strip
+    theta = 2 * pi * u/segment;
+
+    px = Math.cos(theta) * radius;
+    py = Math.sin(theta) * radius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);
+
+    //second point strip
+    theta = 2 * pi * u/segment;
+
+    px = Math.cos(theta) * innerRadius;
+    py = Math.sin(theta) * innerRadius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);
+
+    //third point strip
+    theta = 2 * pi * (u+1)/segment;
+
+    px = Math.cos(theta) * radius;
+    py = Math.sin(theta) * radius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);
+
+    //forth point strip
+    theta = 2 * pi * u/segment;
+
+    px = Math.cos(theta) * innerRadius;
+    py = Math.sin(theta) * innerRadius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz); 
+
+    //fifth point strip 
+    theta = 2 * pi * (u+1)/segment;
+
+    px = Math.cos(theta) * innerRadius;
+    py = Math.sin(theta) * innerRadius;
+
+    vertices.push(px);
+    vertices.push(py);
+    vertices.push(pz);                               
+    }
+    //-> inner cylinder
+    for(var v = 0; v < slice; v++){
+        for(var u = 0; u < segment; u++){
+            var theta; 
+            var px, py, pz;
+            var r = innerRadius;
+
+            if(v == 0){
                 theta = 2 * pi * u/segment;
 
                 px = Math.cos(theta) * r;
                 py = Math.sin(theta) * r;
-                pz = (1 - 2 * v/slice) * radius;
+                pz = radius;
 
                 vertices.push(px);
                 vertices.push(py);
                 vertices.push(pz);
 
-                //second point strip
-                theta = 2 * pi * u/segment;
-
-                px = Math.cos(theta) * r;
-                py = Math.sin(theta) * r;
-                pz = (1 - 2 * (v+1)/slice) * radius;
-
-                vertices.push(px);
-                vertices.push(py);
-                vertices.push(pz);
-
-                //third point strip
                 theta = 2 * pi * (u+1)/segment;
 
                 px = Math.cos(theta) * r;
                 py = Math.sin(theta) * r;
-                pz = (1 - 2 * v/slice) * radius;
-
-                vertices.push(px);
-                vertices.push(py);
-                vertices.push(pz);
-
-                //forth point strip
-                theta = 2 * pi * u/segment;
-
-                px = Math.cos(theta) * r;
-                py = Math.sin(theta) * r;
-                pz = (1 - 2 * (v+1)/slice) * radius;
-
-                vertices.push(px);
-                vertices.push(py);
-                vertices.push(pz);
-
-                //fifth point strip
-                theta = 2 * pi * (u+1)/segment;
-
-                px = Math.cos(theta) * r;
-                py = Math.sin(theta) * r;
-                pz = (1 - 2 * (v+1)/slice) * radius;
+                pz = radius;
 
                 vertices.push(px);
                 vertices.push(py);
                 vertices.push(pz);
             }
+
+            //first point strip
+            theta = 2 * pi * u/segment;
+
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * v/slice) * radius;
+
+            vertices.push(px);
+            vertices.push(py);
+            vertices.push(pz);
+
+            //second point strip
+            theta = 2 * pi * u/segment;
+
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * (v+1)/slice) * radius;
+
+            vertices.push(px);
+            vertices.push(py);
+            vertices.push(pz);
+
+            //third point strip
+            theta = 2 * pi * (u+1)/segment;
+
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * v/slice) * radius;
+
+            vertices.push(px);
+            vertices.push(py);
+            vertices.push(pz);
+
+            //forth point strip
+            theta = 2 * pi * u/segment;
+
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * (v+1)/slice) * radius;
+
+            vertices.push(px);
+            vertices.push(py);
+            vertices.push(pz);
+
+            //fifth point strip
+            theta = 2 * pi * (u+1)/segment;
+
+            px = Math.cos(theta) * r;
+            py = Math.sin(theta) * r;
+            pz = (1 - 2 * (v+1)/slice) * radius;
+
+            vertices.push(px);
+            vertices.push(py);
+            vertices.push(pz);
         }
     }
 
@@ -178,12 +338,23 @@ function draw() {
     var attr = gl.getAttribLocation(prog, 'aPos');
     gl.enableVertexAttribArray(attr);
     gl.vertexAttribPointer(attr, 3, gl.FLOAT, false, 0, 0);
+    /*->
+    //-> for normal 
+    var posAttr = gl.getAttribLocation(prog, 'aPos');
+    var normalAttr = gl.getAttribLocation(prog, 'aNormal');
+    gl.enableVertexAttribArray(posAttr);
+    gl.enableVertexAttribArray(normalAttr);
+    var bpe = Float32Array.BYTES_PER_ELEMENT;
+    gl.vertexAttribPointer(posAttr , 3, gl.FLOAT, false, 6 * bpe, 0);
+    gl.vertexAttribPointer(normalAttr, 3, gl.FLOAT, false, 6 * bpe, 3 * bpe);
+    <-*/
+
     gl.useProgram(prog);
 
     setInterval(tick, 1000 / 60);
 
     function tick() {
-        var turn = (new Date()).getTime() / 3000.;
+        var turn = (new Date()).getTime() / 1500.;
         var cos = Math.cos(turn);
         var sin = Math.sin(turn);
         var adjust = gl.canvas.height / gl.canvas.width;
@@ -195,8 +366,8 @@ function draw() {
         ];
 
         gl.uniformMatrix4fv(address('uMatrix'), false, matrix);
-        //gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertices.length / 3);
-        gl.drawArrays(gl.LINE_STRIP, 0, vertices.length / 3);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertices.length / 3);
+        //gl.drawArrays(gl.LINE_STRIP, 0, vertices.length / 3);
     };            
             };
     setTimeout(draw, 100);
