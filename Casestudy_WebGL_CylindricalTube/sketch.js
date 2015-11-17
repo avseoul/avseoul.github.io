@@ -28,7 +28,7 @@ function draw() {
             ,'precision highp float;'
             ,'varying vec3 uPos;'
             ,'void main() {'
-                ,'gl_FragColor = vec4(vec3(1.0, 0.0, 0.0) * uPos.z * 1.0, 1.0);'
+                ,'gl_FragColor = vec4(vec3(1.0, 0.0, 0.0) * abs(uPos.z) * 1.0, 1.0);'
                     ,'}',
     ].join('\n'));
 
@@ -366,8 +366,8 @@ function draw() {
         ];
 
         gl.uniformMatrix4fv(address('uMatrix'), false, matrix);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertices.length / 3);
-        //gl.drawArrays(gl.LINE_STRIP, 0, vertices.length / 3);
+        //gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertices.length / 3);
+        gl.drawArrays(gl.LINE_STRIP, 0, vertices.length / 3);
     };            
             };
     setTimeout(draw, 100);
