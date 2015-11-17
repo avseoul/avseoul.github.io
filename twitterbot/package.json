@@ -1,0 +1,16 @@
+{
+  "name": "twitterbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "avseoul",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "twit": "^2.1.1"
+  }
+}
