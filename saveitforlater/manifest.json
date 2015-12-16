@@ -1,0 +1,45 @@
+{
+    "manifest_version": 2,
+    "name": "SAVEITFORLATER",
+    "permissions":[
+        "contextMenus",
+        "management",
+        "tabs",
+        "activeTab",
+        "storage",
+        "<all_urls>"
+    ],
+    "commands": {
+        "toggle-feature-foo":{
+            "suggested_key": {
+                "default": "Alt+D",
+                "mac": "Alt+D"
+            },
+            "description": "shortcut for add URL"
+        }
+    },
+    "version": "0.1",
+    "icons":{
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "browser_action":{
+        "default_icon":{
+            "19": "images/icon19.png",
+            "38": "images/icon38.png"
+        },
+        "default_popup": "src/popup.html"
+    },
+    "background":{
+        "scripts": ["src/background.js"],
+        "persistent": false
+    },
+    "chrome_url_overrides" : {
+        "newtab": "src/newtab.html"
+    },
+    "content_scripts":[{
+        "matches": ["<all_urls>"],
+        "js": ["src/content.js"]
+    }]
+}
