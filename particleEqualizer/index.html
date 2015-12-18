@@ -82,8 +82,12 @@
 
             varying vec3 vColor;
             uniform float uTime;
+            uniform int uTotalIndices;
+            uniform int uIndex;
+            varying float opacityOffset;
 
             void main(){
+                opacityOffset = float(uIndex) * 1. / float(uTotalIndices) ;
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
                 float mNoise = 60. * -2. * noise( mNormal + uTime);
 
@@ -92,7 +96,7 @@
                 float mRgb = mUv.y * ( .02 - .02 * mNoise );
                 
                 vec3 mPos = position + mNormal * mNoise;
-
+                
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 float mPointSize = mRgb * .02;
                 mPointSize = clamp(mPointSize, .1, 0.99);
@@ -103,10 +107,11 @@
         </script>
         <script type='x-shader/x-vertex' id='PS_01_frag'>
             varying vec3 vColor;
+            varying float opacityOffset;
             
             void main(){
                 vec3 mColor = clamp( vColor, vec3(0., 0., 0.), vec3(1., 1., 1.) );
-                gl_FragColor = vec4( mColor.r, mColor.g * .1, mColor.b * .1, mColor.r * 4. );
+                gl_FragColor = vec4( mColor.r, mColor.g * opacityOffset, mColor.b * .1, mColor.r * opacityOffset * 5. );
             }
         </script>
 

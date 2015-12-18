@@ -33,7 +33,9 @@ THREE.PS_01 = function(_options){
         transparent: true,
         depthWrite: true,
         uniforms:{
-            'uTime': {type: 'f', value: 0.0 }
+            'uTime': {type: 'f', value: 0.0 },
+            'uIndex' : {type: 'i', value: 0 },
+            'uTotalIndices' : {type: 'i', value: 0}
         },
         vertexShader: PS_01_vert,
         fragmentShader: PS_01_frag
@@ -67,8 +69,10 @@ THREE.PS_01 = function(_options){
         this.add(self.ps);
     };
 
-    this.update = function(time) {
+    this.update = function(time, index, total) {
         self.mat.uniforms['uTime'].value = time;
+        self.mat.uniforms['uIndex'].value = index;
+        self.mat.uniforms['uTotalIndices'].value = total;
     };
     
     //excute init()

@@ -8,7 +8,7 @@
 
 /* threejs scene setting */
 var width, height, ratio, scene, camera, renderer, container, 
-    mouseX, mouseY, clock, mDS_01_mat, mDS_01_mesh, tick;
+    mouseX, mouseY, clock, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, tick, tick_pre;
 
 /* setting window resize */
 var windowResize = function(){
@@ -26,6 +26,9 @@ var getMousePos = function(event) {
 var init = function(){
     /* initialize global variable */
     tick = 0;
+    tick_pre_01 = 0;
+    tick_pre_02 = 0;
+    tick_pre_03 = 0;
     //-for convinient
     width = window.innerWidth;
     height = window.innerHeight;
@@ -41,14 +44,22 @@ var init = function(){
     var PS_01_frag = document.getElementById('PS_01_frag').textContent;
     var DS_01_vert = document.getElementById('DS_01_vert').textContent;
     var DS_01_frag = document.getElementById('DS_01_frag').textContent;
-    //-declare PS_01
-    mPS_01 = new THREE.PS_01({
-        'slice': 200,
-        'segment': 200,
-        'ps01vert': PS_01_vert,
-        'ps01frag': PS_01_frag,
-        'radius': 300
-    });
+    //-declare PS_01 trails
+    PS_01_size = 50;
+    mPS_01 = [PS_01_size];
+    tick_pre = [PS_01_size];
+    for(var i = 0; i < PS_01_size; i++){
+        mPS_01[i] = new THREE.PS_01({
+            'slice': 100,
+            'segment': 100,
+            'ps01vert': PS_01_vert,
+            'ps01frag': PS_01_frag,
+            'radius': 300
+        });
+
+        tick_pre[i] = 0;
+    }
+
     //-set displaced sphere
     mDS_01_mat = new THREE.ShaderMaterial({
         transparent: true,
@@ -72,7 +83,9 @@ var init = function(){
     //-add scene objects
     //scene.add(camera);
     scene.add( mDS_01_mesh );
-    scene.add( mPS_01 );
+    for(var i = 0; i < PS_01_size; i++){
+        scene.add( mPS_01[i] );
+    }
 
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
@@ -99,11 +112,21 @@ var render = function(){
     var delta = clock.getDelta();
     tick += delta;
 
-    if(tick < 0) tick = 0;
-    if(tick > 0){   
+    if(tick < 0){ tick = 0; }
+    
+    /* update tick for trails object */
+    for(var i = PS_01_size -1; i >= 0; i--){
+        if(i != 0 ){
+            tick_pre[i] = tick_pre[i-1];
+        } else if (i == 0){
+            tick_pre[i] = tick;
+        }
     }
 
-    mPS_01.update(tick * 0.25);
+    /* update objects */
+    for(var i = 0; i < PS_01_size; i++){
+        mPS_01[i].update(tick_pre[i], i, PS_01_size);
+    }
     mDS_01_mat.uniforms['uTime'].value = tick;
 
     camera.lookAt( scene.position );
