@@ -8,7 +8,7 @@
 
 /* threejs scene setting */
 var width, height, ratio, scene, camera, renderer, container, 
-    mouseX, mouseY, clock, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, tick, tick_pre;
+    mouseX, mouseY, clock, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, tick, tick_pre;
 
 /* setting window resize */
 var windowResize = function(){
@@ -40,12 +40,17 @@ var init = function(){
     clock = new THREE.Clock(true);
     container = document.createElement('div');
     //-get shaders from index.html
+    //ps01
     var PS_01_vert = document.getElementById('PS_01_vert').textContent;
     var PS_01_frag = document.getElementById('PS_01_frag').textContent;
+    //ps02
+    var PS_02_vert = document.getElementById('PS_02_vert').textContent;
+    var PS_02_frag = document.getElementById('PS_02_frag').textContent;
+    //ds01
     var DS_01_vert = document.getElementById('DS_01_vert').textContent;
     var DS_01_frag = document.getElementById('DS_01_frag').textContent;
-    //-declare PS_01 trails
-    PS_01_size = 50;
+    //-set PS_01 trails
+    PS_01_size = 5;
     mPS_01 = [PS_01_size];
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
@@ -54,15 +59,25 @@ var init = function(){
             'segment': 100,
             'ps01vert': PS_01_vert,
             'ps01frag': PS_01_frag,
-            'radius': 300
+            'radius': 200
         });
 
         tick_pre[i] = 0;
     }
 
+    //-set PS_02
+    mPS_02 = new THREE.PS_02({
+        'slice': 100,
+        'segment': 100,
+        'ps02vert': PS_02_vert,
+        'ps02frag': PS_02_frag,
+        'radius': 200
+    });
+
     //-set displaced sphere
     mDS_01_mat = new THREE.ShaderMaterial({
         transparent: true,
+        blending: 'THREE.AddictiveBlending',
         depthWrite: true,
         uniforms:{
             'uTex': { type: 't', value: THREE.TextureLoader( './img/tex_01.png' )},
@@ -86,6 +101,7 @@ var init = function(){
     for(var i = 0; i < PS_01_size; i++){
         scene.add( mPS_01[i] );
     }
+    scene.add( mPS_02 );
 
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
@@ -127,6 +143,7 @@ var render = function(){
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i].update(tick_pre[i], i, PS_01_size);
     }
+    mPS_02.update(tick);
     mDS_01_mat.uniforms['uTime'].value = tick;
 
     camera.lookAt( scene.position );

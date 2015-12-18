@@ -6,7 +6,7 @@
  *  http://kimsehyun.kr
  */
 
-THREE.PS_01 = function(_options){
+THREE.PS_02 = function(_options){
     var self = this;
     var options = _options || {};
 
@@ -22,8 +22,8 @@ THREE.PS_01 = function(_options){
     self.ps; //<-'praticlesystem' will be point cloud
 
     //get shaders
-    var PS_01_vert = options.ps01vert;
-    var PS_01_frag = options.ps01frag;
+    var PS_02_vert = options.ps02vert;
+    var PS_02_frag = options.ps02frag;
 
     /* extend Object3D */
     THREE.Object3D.apply(this, arguments);
@@ -38,8 +38,8 @@ THREE.PS_01 = function(_options){
         },
         blending: 'THREE.AddictiveBlending',
         depthWrite: true,
-        vertexShader: PS_01_vert,
-        fragmentShader: PS_01_frag
+        vertexShader: PS_02_vert,
+        fragmentShader: PS_02_frag
     });
 
     //-append vertices
@@ -72,15 +72,13 @@ THREE.PS_01 = function(_options){
 
     this.update = function(time, index, total) {
         self.mat.uniforms['uTime'].value = time;
-        self.mat.uniforms['uIndex'].value = index;
-        self.mat.uniforms['uTotalIndices'].value = total;
     };
     
     //excute init()
     this.init();
 };
 
-THREE.PS_01.prototype = Object.create(THREE.Object3D.prototype);
-THREE.PS_01.prototype.constructor = THREE.PS_01;
+THREE.PS_02.prototype = Object.create(THREE.Object3D.prototype);
+THREE.PS_02.prototype.constructor = THREE.PS_02;
 
 

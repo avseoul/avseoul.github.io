@@ -37,9 +37,7 @@ function MarkovGeneratorWord(n, max) {
 
   // A function to feed in text to the markov chain
   this.feed = function(text) {
-
     var tokens = text.tokenize();
-
     // Discard this line if it's too short
     if (tokens.length < this.n) {
       return false;

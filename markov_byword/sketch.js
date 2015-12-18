@@ -24,7 +24,6 @@ function generate() {
   // Get the HTML elements we need
   var order = document.getElementById('order');
   var length = document.getElementById('length');
-  
 
   // Get the input text
   var textinput = document.getElementById('text');
