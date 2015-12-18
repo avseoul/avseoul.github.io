@@ -55,11 +55,11 @@ var init = function(){
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i] = new THREE.PS_01({
-            'slice': 100,
-            'segment': 100,
+            'slice': 300,
+            'segment': 300,
             'ps01vert': PS_01_vert,
             'ps01frag': PS_01_frag,
-            'radius': 200
+            'radius': 180
         });
 
         tick_pre[i] = 0;
