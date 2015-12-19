@@ -182,7 +182,7 @@
                 vec3 mPos = position + mNormal * mNoise;
                 
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
-                gl_PointSize = mNoise * .1;
+                gl_PointSize = mNoise * .05;
             }
 
         </script>

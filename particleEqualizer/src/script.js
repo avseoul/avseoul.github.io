@@ -17,12 +17,13 @@ var windowResize = function(){
     renderer.setSize(width, height);
 };
 
+/* set getmousepos */
 var getMousePos = function(event) {
     mouseX = ( event.clientX - width/2 );
     mouseY = ( event.clientY - height/2 );
 };
 
-/* setting init */
+/* set init */
 var init = function(){
     /* initialize global variable */
     tick = 0;
@@ -55,8 +56,8 @@ var init = function(){
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i] = new THREE.PS_01({
-            'slice': 300,
-            'segment': 300,
+            'slice': 150,
+            'segment': 150,
             'ps01vert': PS_01_vert,
             'ps01frag': PS_01_frag,
             'radius': 180
