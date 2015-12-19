@@ -21,6 +21,7 @@
         <!--shaders-->
         <script type="text/javascript" src="src/three.min.js"></script>
         <script type="text/javascript" src="src/stats.min.js"></script>
+        <script type="text/javascript" src="src/audioInput.js"></script>
         <script type="text/javascript" src="src/Ps_01.js"></script>
         <script type="text/javascript" src="src/Ps_02.js"></script>
         <script type="text/javascript" src="src/script.js"></script>
@@ -177,9 +178,10 @@
 
             void main(){
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
+                float mAlign = 60. * -2. * noise( mNormal + uTime);
                 float mNoise = 60. * -2. * noise( position + uTime);
                 
-                vec3 mPos = position + mNormal * mNoise;
+                vec3 mPos = position + mNormal * (mNoise + mAlign) ;
                 
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 gl_PointSize = mNoise * .05;
