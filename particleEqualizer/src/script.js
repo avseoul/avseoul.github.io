@@ -83,8 +83,8 @@ var init = function(){
     });
     //-set PS_03
     mPS_03 = new THREE.PS_03({
-        'slice': 5,
-        'segment': 5,
+        'slice': 8,
+        'segment': 8,
         'ps03vert': PS_03_vert,
         'ps03frag': PS_03_frag,
         'radius': 200

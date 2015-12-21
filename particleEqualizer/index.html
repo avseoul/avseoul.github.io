@@ -279,7 +279,7 @@
                 float mNoise = 60. * -2. * noise( position );
                                        
                 //cal location 
-                mExplosion = -1. * randomLifeTarget * mNormal * (1. - randomLife/randomLifeTarget);
+                mExplosion = -.7 * randomLifeTarget * mNormal * (.7 - randomLife/randomLifeTarget);
                 mVel = ( mExplosion + mGravity ) * randomLife + mNormal*mNoise;
                 mPos = position + mVel;
                 float mLNoise = 10. * -.5 * noise( mPos * randomLife );
