@@ -7,8 +7,8 @@
  */
 
 /* threejs scene setting */
-var width, height, ratio, scene, camera, renderer, container, 
-    mouseX, mouseY, clock, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre;
+var width, height, ratio, group_01, group_02, scene, camera, renderer, container, 
+    mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre;
 
 /* setting window resize */
 var windowResize = function(){
@@ -38,6 +38,8 @@ var init = function(){
     ratio = window.devicePixelRatio;
     //-set threejs objects
     scene = new THREE.Scene();
+    group_01 = new THREE.Object3D();
+    group_02 = new THREE.Object3D();
     camera = new THREE.PerspectiveCamera( 35, width/height, 0.1, 10000);
     renderer = new THREE.WebGLRenderer();
     clock = new THREE.Clock(true);
@@ -58,6 +60,9 @@ var init = function(){
     //ds01
     var DS_01_vert = document.getElementById('DS_01_vert').textContent;
     var DS_01_frag = document.getElementById('DS_01_frag').textContent;
+    //bkg
+    var BKG_vert = document.getElementById('BKG_vert').textContent;
+    var BKG_frag = document.getElementById('BKG_frag').textContent;
     //-set PS_01 trails
     PS_01_size = 5;
     mPS_01 = [PS_01_size];
@@ -97,7 +102,6 @@ var init = function(){
         'ps03frag': PS_04_frag,
         'radius': 200
     });
-
     //-set displaced sphere
     mDS_01_mat = new THREE.ShaderMaterial({
         transparent: true,
@@ -113,21 +117,40 @@ var init = function(){
     });
     var mDS_01_geo = new THREE.SphereGeometry( 160, 128, 128 );
     mDS_01_mesh = new THREE.Mesh( mDS_01_geo, mDS_01_mat );
+    //-set background quad
+    mBKG_mat = new THREE.ShaderMaterial({
+        transparent: false,
+        depthWrite: false,
+        uniforms:{
+            'uTime': { type: 'f', value: 0.0 }
+        },
+        vertexShader: BKG_vert,
+        fragmentShader: BKG_frag
+    });
+    var mBKG_geo = new THREE.PlaneGeometry(width, height);
+    mBKG_mesh = new THREE.Mesh( mBKG_geo, mBKG_mat );
+    mBKG_mesh.position.z = -2000;
+    mBKG_mesh.scale.set( 2.9, 2.9, 1 );
 
+    //-set group
+        group_01.add( mDS_01_mesh );
+    for(var i = 0; i < PS_01_size; i++){
+        group_01.add( mPS_01[i] );
+    }
+    group_01.add( mPS_02 );
+    group_02.add( mPS_03 );
+    group_02.add( mPS_04 );
+
+    
     //-set camera's default distance
     renderer.setPixelRatio(ratio);
     renderer.setSize(width, height);
     camera.position.z = 1500;
 
     //-add scene objects
-    //scene.add(camera);
-    scene.add( mDS_01_mesh );
-    for(var i = 0; i < PS_01_size; i++){
-        scene.add( mPS_01[i] );
-    }
-    scene.add( mPS_02 );
-    scene.add( mPS_03 );
-    scene.add( mPS_04 );
+    scene.add( group_01 );
+    scene.add( group_02 );
+    scene.add( mBKG_mesh );
 
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
@@ -148,8 +171,9 @@ var render = function(){
     //camera.position.x += ( mouseX - camera.position.x ) * .05;
     //camera.position.y += ( - ( mouseY - 200) - camera.position.y ) * .05;
     
-    scene.rotation.y += 0.003;
-    //scene.rotation.x += 0.001;
+    group_01.rotation.y += 0.003;
+    group_01.rotation.x += 0.001;
+    group_02.rotation.y += 0.003;
 
     var delta = clock.getDelta();
     tick += delta;
@@ -180,6 +204,7 @@ var render = function(){
     mPS_03.update( tick, life );
     mPS_04.update( tick, life );
     mDS_01_mat.uniforms['uTime'].value = tick;
+    mBKG_mat.uniforms['uTime'].value = tick;
 
     camera.lookAt( scene.position );
     renderer.render( scene, camera );
