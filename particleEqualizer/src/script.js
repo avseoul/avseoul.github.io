@@ -8,7 +8,7 @@
 
 /* threejs scene setting */
 var width, height, ratio, scene, camera, renderer, container, 
-    mouseX, mouseY, clock, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, tick, tick_pre;
+    mouseX, mouseY, clock, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre;
 
 /* setting window resize */
 var windowResize = function(){
@@ -26,6 +26,8 @@ var getMousePos = function(event) {
 /* set init */
 var init = function(){
     /* initialize global variable */
+    life = 0;
+    lifeTarget = 30;
     tick = 0;
     tick_pre_01 = 0;
     tick_pre_02 = 0;
@@ -47,6 +49,12 @@ var init = function(){
     //ps02
     var PS_02_vert = document.getElementById('PS_02_vert').textContent;
     var PS_02_frag = document.getElementById('PS_02_frag').textContent;
+    //ps03
+    var PS_03_vert = document.getElementById('PS_03_vert').textContent;
+    var PS_03_frag = document.getElementById('PS_03_frag').textContent;
+    //ps04
+    var PS_04_vert = document.getElementById('PS_04_vert').textContent;
+    var PS_04_frag = document.getElementById('PS_04_frag').textContent;
     //ds01
     var DS_01_vert = document.getElementById('DS_01_vert').textContent;
     var DS_01_frag = document.getElementById('DS_01_frag').textContent;
@@ -65,13 +73,28 @@ var init = function(){
 
         tick_pre[i] = 0;
     }
-
     //-set PS_02
     mPS_02 = new THREE.PS_02({
         'slice': 100,
         'segment': 100,
         'ps02vert': PS_02_vert,
         'ps02frag': PS_02_frag,
+        'radius': 200
+    });
+    //-set PS_03
+    mPS_03 = new THREE.PS_03({
+        'slice': 5,
+        'segment': 5,
+        'ps03vert': PS_03_vert,
+        'ps03frag': PS_03_frag,
+        'radius': 200
+    });
+    //-set PS_03
+    mPS_04 = new THREE.PS_04({
+        'slice': 50,
+        'segment': 50,
+        'ps03vert': PS_04_vert,
+        'ps03frag': PS_04_frag,
         'radius': 200
     });
 
@@ -103,6 +126,8 @@ var init = function(){
         scene.add( mPS_01[i] );
     }
     scene.add( mPS_02 );
+    scene.add( mPS_03 );
+    scene.add( mPS_04 );
 
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
@@ -124,7 +149,7 @@ var render = function(){
     //camera.position.y += ( - ( mouseY - 200) - camera.position.y ) * .05;
     
     scene.rotation.y += 0.003;
-    scene.rotation.x += 0.001;
+    //scene.rotation.x += 0.001;
 
     var delta = clock.getDelta();
     tick += delta;
@@ -139,12 +164,21 @@ var render = function(){
             tick_pre[i] = tick;
         }
     }
+    /* ger random number for particle's life span */
+    if(life > lifeTarget) {
+        life = 0;
+        lifeTarget = Math.random() * 30 + 10;
+    } else {
+        life += .2;
+    }
 
     /* update objects */
     for(var i = 0; i < PS_01_size; i++){
-        mPS_01[i].update(tick_pre[i], i, PS_01_size);
+        mPS_01[i].update( tick_pre[i], i, PS_01_size );
     }
-    mPS_02.update(tick);
+    mPS_02.update( tick );
+    mPS_03.update( tick, life );
+    mPS_04.update( tick, life );
     mDS_01_mat.uniforms['uTime'].value = tick;
 
     camera.lookAt( scene.position );
