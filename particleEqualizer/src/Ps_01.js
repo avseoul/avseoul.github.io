@@ -88,11 +88,11 @@ THREE.PS_01 = function(_options){
         var i1 = in01; 
         for(var i = 0; i < self.PARTICLE_COUNT; i++){
             if(i1[i] > 1){
-                i1[i] -= 1.;
+                i1[i] *= 0.96;
             } else {
                 var index = Math.floor( Math.random() * self.PARTICLE_COUNT );
                 var trigger = 40;
-                if( index%i == 0 && _in_01 > trigger ){ 
+                if( index%i == 0 && _in_01 > trigger || index%i == 1 && _in_01 > trigger ){ 
                     i1[index] = _in_01;
                 }
             }

@@ -116,7 +116,7 @@
                 float mPointSize = mRgb * .02;
                 mPointSize = clamp(mPointSize, .1, 0.99);
                 vColor = vec3(mPointSize, mPointSize, mPointSize);
-                gl_PointSize = (1. - mPointSize) * 2. + mIn_01 * .3;
+                gl_PointSize = (1. - mPointSize) * 1.;
             }
 
         </script>
@@ -134,9 +134,9 @@
                 }
                 float mC = uC * 0.02;
                 vec3 mColor = clamp( vColor, vec3(0., 0., 0.), vec3(1., 1., 1.) );
-                gl_FragColor = vec4( (1. - mColor.r) * opacityOffset + vGb * .6 + (.9 * mC *(1.- opacityOffset)), 
-                vGb * .6 + (.9 * mC *(1.- opacityOffset)), 
-                vGb * .6 + (.9 * mC *(1.- opacityOffset)), 
+                gl_FragColor = vec4( (1. - mColor.r) * opacityOffset + vGb * .6 + (.4 * mC *(1.- opacityOffset)), 
+                vGb * .6 + (.4 * mC *(1.- opacityOffset)), 
+                vGb * .6 + (.4 * mC *(1.- opacityOffset)), 
                 mColor.r * opacityOffset * 5. );
             }
         </script>
@@ -515,7 +515,7 @@
             void main(){
                 float mIn_01 = 0.;
                 if(uIn_01 > 90.){
-                    mIn_01 = uIn_01 * .9;
+                    mIn_01 = uIn_01 * .1;
                 } else {
                     mIn_01 = 0.;
                 }
@@ -526,7 +526,7 @@
                 
                 float mR = mUv.y * ( .2 - .02 * vNoise );
                 float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01;
-                vec3 mColor = vec3( mR + mGB, mGB * .9, mGB ); //-vertically b&w
+                vec3 mColor = vec3( mR + mGB, mGB, mGB ); //-vertically b&w
 
                 gl_FragColor = vec4( mColor, 1. );
             }
