@@ -214,6 +214,8 @@ var render = function(){
     } else {
         nL = cL+oL;
         group_01.rotation.y += oL * .002;
+        group_01.rotation.x += oL * .001;
+        group_01.rotation.z += oL * .001;
         group_02.rotation.y += oL * .002;
     }
     group_03.position.z = nL;
