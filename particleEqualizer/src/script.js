@@ -9,6 +9,7 @@
 /* threejs scene setting */
 var width, height, ratio, group_01, group_02, group_03, scene, camera, renderer, container, 
     mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre;
+var cL=0,tL=0,nL=0,oL=0;
 
 /* setting window resize */
 var windowResize = function(){
@@ -171,15 +172,6 @@ var init = function(){
 
 /* setting render */
 var render = function(){
-    //camera.position.x += ( mouseX - camera.position.x ) * .05;
-    //camera.position.y += ( - ( mouseY - 200) - camera.position.y ) * .05;
-    
-    group_01.rotation.y += 0.003;
-    group_01.rotation.x += 0.001;
-    group_02.rotation.y += 0.003;
-    //
-    group_03.position.z = Math.sin(tick) * 500;
-
     var delta = clock.getDelta();
     tick += delta;
     if(tick < 0){ tick = 0; }
@@ -201,6 +193,31 @@ var render = function(){
     }
     /* get mic input */
     var in_01 = micInput[2];
+
+    //camera.position.x += ( mouseX - camera.position.x ) * .05;
+    //camera.position.y += ( - ( mouseY - 200) - camera.position.y ) * .05;
+    
+    group_01.rotation.y += 0.003;
+    group_01.rotation.x += 0.001;
+    group_02.rotation.y += 0.003;
+    
+    //new position
+    cL = group_03.position.z;
+    if(in_01 > 150 && oL < .5 && oL > -.5){
+        tL = 1000-Math.random()*2000;
+    } else {
+        tL = tL * .96;
+    }
+    oL = (tL-cL) * .03;
+    if(oL < .5 && oL > -.5){
+        nL = nL * .96;
+    } else {
+        nL = cL+oL;
+        group_01.rotation.y += oL * .001;
+        group_02.rotation.y += oL * .001;
+    }
+    group_03.position.z = nL;
+    //console.log('cl : ', cL, ', tl : ', tL, ', nl : ', nL, ', ol : ', oL);
 
     /* update objects */
     for(var i = 0; i < PS_01_size; i++){
