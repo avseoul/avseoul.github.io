@@ -109,7 +109,8 @@ var init = function(){
         depthWrite: true,
         uniforms:{
             'uTex': { type: 't', value: THREE.TextureLoader( './img/tex_01.png' )},
-            'uTime': { type: 'f', value: 0.0 }
+            'uTime': { type: 'f', value: 0.0 },
+            'uIn_01': { type: 'f', value: 0.0 }
         },
         //blending: THREE.AdditiveBlending,
         vertexShader: DS_01_vert,
@@ -201,10 +202,11 @@ var render = function(){
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i].update( tick_pre[i], i, PS_01_size, in_01 );
     }
-    mPS_02.update( tick );
+    mPS_02.update( tick, in_01 );
     mPS_03.update( tick, life );
     mPS_04.update( tick, life, in_01 );
     mDS_01_mat.uniforms['uTime'].value = tick;
+    mDS_01_mat.uniforms['uIn_01'].value = in_01;
     mBKG_mat.uniforms['uTime'].value = tick;
 
     camera.lookAt( scene.position );

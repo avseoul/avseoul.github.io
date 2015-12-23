@@ -100,7 +100,7 @@
 
 
             void main(){
-                float mIn_01 = in01 * .02 + 1.;
+                float mIn_01 = in01 * .05 + 1.;
                 vGb = mIn_01 - 1.;
                 opacityOffset = float(uIndex) * 1. / float(uTotalIndices) ;
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
@@ -116,7 +116,7 @@
                 float mPointSize = mRgb * .02;
                 mPointSize = clamp(mPointSize, .1, 0.99);
                 vColor = vec3(mPointSize, mPointSize, mPointSize);
-                gl_PointSize = (1. - mPointSize) * 2. + mIn_01;
+                gl_PointSize = (1. - mPointSize) * 2. + mIn_01 * .3;
             }
 
         </script>
@@ -134,7 +134,10 @@
                 }
                 float mC = uC * 0.02;
                 vec3 mColor = clamp( vColor, vec3(0., 0., 0.), vec3(1., 1., 1.) );
-                gl_FragColor = vec4( (1. - mColor.r) * opacityOffset, vGb * .6 + (.4 * mC *(1.- opacityOffset)), vGb * .4 + (.6 * mC *(1.- opacityOffset)), mColor.r * opacityOffset * 5. );
+                gl_FragColor = vec4( (1. - mColor.r) * opacityOffset + vGb * .6 + (.9 * mC *(1.- opacityOffset)), 
+                vGb * .6 + (.9 * mC *(1.- opacityOffset)), 
+                vGb * .6 + (.9 * mC *(1.- opacityOffset)), 
+                mColor.r * opacityOffset * 5. );
             }
         </script>
 
@@ -197,25 +200,36 @@
             }
 
             uniform float uTime;
+            uniform float uIn_01;
             varying float vr;
+            varying float vC;
 
             void main(){
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
                 float mAlign = 60. * -2. * noise( mNormal + uTime);
                 float mNoise = 60. * -2. * noise( position + uTime);
+                float mIn_01 = uIn_01 * 0.015;
+                vC = mIn_01;
+                float mPointSize = 1.;
+                if(uIn_01 > 0.){
+                    mPointSize = mNoise * .08 * mIn_01;
+                } else {
+                    mPointSize = mNoise * .04;
+                }
                 
                 vec3 mPos = position + mNormal * (mNoise + mAlign) ;
                 
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
-                gl_PointSize = mNoise * .08;
+                gl_PointSize = mPointSize;
                 vr = mNoise * 0.007;
             }
 
         </script>
         <script type='x-shader/x-vertex' id='PS_02_frag'>
             varying float vr;
+            varying float vC;
             void main(){
-                gl_FragColor = vec4( 1., vr * .8, .0, .99 );
+                gl_FragColor = vec4( 1. + vC, vr * .8 + vC, .0 + vC, .99 );
             }
         </script>
 
@@ -414,7 +428,7 @@
             varying float alpha;
             varying float gb;
             void main(){
-                gl_FragColor = vec4( 1., gb*.7, gb*.4, alpha );
+                gl_FragColor = vec4( 1., gb*.8, gb*.5, alpha );
             }
         </script>
 
@@ -477,12 +491,9 @@
             }
 
             varying float vNoise;
-            //varying vec2 vUv; 
             uniform float uTime;
 
             void main(){
-                //vUv = uv;
-
                 //by normal - for big blob
                 vNoise = 40. * -2. * noise(normal + uTime * .5);
                 //by position - for tiny detail
@@ -496,27 +507,31 @@
         </script>
         <script type='x-shader/x-vertex' id='DS_01_frag'>
             varying float vNoise;
-            //varying vec2 vUv;
             uniform sampler2D uTex;
+            uniform float uIn_01;
             
             float random(vec3 scale,float seed){return fract(sin(dot(gl_FragCoord.xyz+seed,scale))*43758.5453+seed);}
             
             void main(){
+                float mIn_01 = 0.;
+                if(uIn_01 > 90.){
+                    mIn_01 = uIn_01 * .9;
+                } else {
+                    mIn_01 = 0.;
+                }
                 //get a random offset
                 float r = .0001 * random( vec3( 12.9898, 78.233, 151.7182 ), 0.0 );
                 //look up vertically in the texture
                 vec2 mUv = vec2( 0., 1.02 - .32 * vNoise * r );
                 
-                /* get color from uv or texture */
-                //vec3 mColor = texture2D( uTex, mUv ).rgb; //-texture 
-                //vec3 mColor = vec3( vUv * ( 1. - 1. * vNoise ), 1. ); //-uv color
-                float mRgb = mUv.y * ( .2 - .02 * vNoise );
-                //vec3 mColor = vec3( mUv.y * ( .3 - .02 * vNoise ), .03, .1 ); //-vertically 
-                vec3 mColor = vec3( mRgb, mRgb * .1, 0. ); //-vertically b&w
+                float mR = mUv.y * ( .2 - .02 * vNoise );
+                float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01;
+                vec3 mColor = vec3( mR + mGB, mGB * .9, mGB ); //-vertically b&w
 
                 gl_FragColor = vec4( mColor, 1. );
             }
         </script>
+        
         <!--***********************
         *  BKG_shaders
         *  background quad
