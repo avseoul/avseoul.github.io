@@ -100,7 +100,7 @@
 
 
             void main(){
-                float mIn_01 = in01 * .05 + 1.;
+                float mIn_01 = in01 * .01 + 1.;
                 vGb = mIn_01 - 1.;
                 opacityOffset = float(uIndex) * 1. / float(uTotalIndices) ;
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
@@ -132,11 +132,11 @@
                 if(pt.x*pt.x+pt.y*pt.y > 0.25){
                     discard;
                 }
-                float mC = uC * 0.02;
+                float mC = uC * 0.025;
                 vec3 mColor = clamp( vColor, vec3(0., 0., 0.), vec3(1., 1., 1.) );
-                gl_FragColor = vec4( (1. - mColor.r) * opacityOffset + vGb * .6 + (.4 * mC *(1.- opacityOffset)), 
-                vGb * .6 + (.4 * mC *(1.- opacityOffset)), 
-                vGb * .6 + (.4 * mC *(1.- opacityOffset)), 
+                gl_FragColor = vec4( (1. - mColor.r) * opacityOffset + vGb * .4 + (.4 * mC *(1.- opacityOffset)), 
+                vGb * .9 + (.4 * mC *(1.- opacityOffset)), 
+                vGb * .4 + (.3 * mC *(1.- opacityOffset)), 
                 mColor.r * opacityOffset * 5. );
             }
         </script>
@@ -212,9 +212,9 @@
                 vC = mIn_01;
                 float mPointSize = 1.;
                 if(uIn_01 > 0.){
-                    mPointSize = mNoise * .08 * mIn_01;
+                    mPointSize = mNoise * .04 * mIn_01;
                 } else {
-                    mPointSize = mNoise * .04;
+                    mPointSize = mNoise * .02;
                 }
                 
                 vec3 mPos = position + mNormal * (mNoise + mAlign) ;
@@ -229,7 +229,8 @@
             varying float vr;
             varying float vC;
             void main(){
-                gl_FragColor = vec4( 1. + vC, vr * .8 + vC, .0 + vC, .99 );
+                float mC = vC * .4;
+                gl_FragColor = vec4( 1. + mC, vr * .8 + mC, 0. + mC, .99 );
             }
         </script>
 
@@ -408,11 +409,11 @@
             void main(){
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
                 float mNoise = 60. * -2. * noise( position + uTime );
-                float mIn_01 = pow(in01 * .013, 3.);
+                float mIn_01 = pow(in01 * .0105, 3.);
                 gb = mIn_01 * 0.2;
                                               
                 //cal location 
-                mExplosion = -.1 * randomLifeTarget * mNormal * (.1 - randomLife/randomLifeTarget) + mNormal;
+                mExplosion = -.1 * randomLifeTarget * mNormal * (.1 - randomLife/randomLifeTarget) - mNormal * mIn_01 * 2.;
                 mVel = ( mExplosion + mGravity ) * randomLife + mNormal*mNoise;
                 mPos = position + mVel;
                 float mLNoise = 10. * -.5 * noise( mPos * randomLife );
@@ -428,7 +429,7 @@
             varying float alpha;
             varying float gb;
             void main(){
-                gl_FragColor = vec4( 1., gb*.8, gb*.5, alpha );
+                gl_FragColor = vec4( 1., gb*.8, gb*.8, alpha );
             }
         </script>
 
@@ -515,7 +516,7 @@
             void main(){
                 float mIn_01 = 0.;
                 if(uIn_01 > 0.){
-                    mIn_01 = uIn_01 * .25;
+                    mIn_01 = uIn_01 * .15;
                 } else {
                     mIn_01 = 0.;
                 }
@@ -526,7 +527,7 @@
                 
                 float mR = mUv.y * ( .2 - .02 * vNoise );
                 float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01;
-                vec3 mColor = vec3( mR + mGB, mGB * .7, mGB ); //-vertically b&w
+                vec3 mColor = vec3( mR + mGB, 0., 0. ); //-vertically b&w
 
                 gl_FragColor = vec4( mColor, 1. );
             }
