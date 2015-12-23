@@ -409,17 +409,17 @@
             void main(){
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
                 float mNoise = 60. * -2. * noise( position + uTime );
-                float mIn_01 = pow(in01 * .0105, 3.);
+                float mIn_01 = pow(in01 * .011, 3.);
                 gb = mIn_01 * 0.2;
                                               
                 //cal location 
-                mExplosion = -.1 * randomLifeTarget * mNormal * (.1 - randomLife/randomLifeTarget) - mNormal * mIn_01 * 2.;
+                mExplosion = -.1 * randomLifeTarget * mNormal * (.1 - randomLife/randomLifeTarget);
                 mVel = ( mExplosion + mGravity ) * randomLife + mNormal*mNoise;
                 mPos = position + mVel;
                 float mLNoise = 10. * -.5 * noise( mPos * randomLife );
                 mPos = mPos + mNormal * mLNoise;
                 
-                gl_PointSize = mIn_01;
+                gl_PointSize = mIn_01 * .5;
                 alpha = 1. - randomLife/randomLifeTarget;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
             }
@@ -429,7 +429,7 @@
             varying float alpha;
             varying float gb;
             void main(){
-                gl_FragColor = vec4( 1., gb*.8, gb*.8, alpha );
+                gl_FragColor = vec4( 1., gb*.1, .0, alpha );
             }
         </script>
 
@@ -526,7 +526,7 @@
                 vec2 mUv = vec2( 0., 1.02 - .32 * vNoise * r );
                 
                 float mR = mUv.y * ( .2 - .02 * vNoise );
-                float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01 * 1.;
+                float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01 * .5;
 //                if(mGB < 0.){mGB = 0.;}
                 //vec3 mColor = vec3( mR + mGB, mGB*.7, mGB*1. ); 
                 vec3 mColor = vec3( mR+mGB, mGB*.0, .0 );
