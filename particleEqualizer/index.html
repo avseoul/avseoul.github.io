@@ -116,7 +116,7 @@
                 float mPointSize = mRgb * .02;
                 mPointSize = clamp(mPointSize, .1, 0.99);
                 vColor = vec3(mPointSize, mPointSize, mPointSize);
-                gl_PointSize = (1. - mPointSize) * 1.;
+                gl_PointSize = (1. - mPointSize) * 3.;
             }
 
         </script>
@@ -135,7 +135,7 @@
                 float mC = uC * 0.025;
                 vec3 mColor = clamp( vColor, vec3(0., 0., 0.), vec3(1., 1., 1.) );
                 gl_FragColor = vec4( (1. - mColor.r) * opacityOffset + vGb * .4 + (1. * mC *(1.- opacityOffset)), 
-                vGb * .3 + (.3 * mC *(1.- opacityOffset)), 
+                vGb * .3 + (.2 * mC *(1.- opacityOffset)), 
                 vGb * .1 + (.0 * mC *(1.- opacityOffset)), 
                 mColor.r * opacityOffset * 5. );
             }

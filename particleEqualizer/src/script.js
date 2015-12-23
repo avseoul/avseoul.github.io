@@ -7,7 +7,7 @@
  */
 
 /* threejs scene setting */
-var width, height, ratio, group_01, group_02, scene, camera, renderer, container, 
+var width, height, ratio, group_01, group_02, group_03, scene, camera, renderer, container, 
     mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre;
 
 /* setting window resize */
@@ -40,6 +40,7 @@ var init = function(){
     scene = new THREE.Scene();
     group_01 = new THREE.Object3D();
     group_02 = new THREE.Object3D();
+    group_03 = new THREE.Object3D();
     camera = new THREE.PerspectiveCamera( 35, width/height, 0.1, 10000);
     renderer = new THREE.WebGLRenderer();
     clock = new THREE.Clock(true);
@@ -141,6 +142,8 @@ var init = function(){
     group_01.add( mPS_02 );
     group_02.add( mPS_03 );
     group_02.add( mPS_04 );
+    group_03.add( group_01 );
+    group_03.add( group_02 );
 
     
     //-set camera's default distance
@@ -149,8 +152,7 @@ var init = function(){
     camera.position.z = 1500;
 
     //-add scene objects
-    scene.add( group_01 );
-    scene.add( group_02 );
+    scene.add( group_03 );
     scene.add( mBKG_mesh );
 
     stats = new Stats();
@@ -175,6 +177,8 @@ var render = function(){
     group_01.rotation.y += 0.003;
     group_01.rotation.x += 0.001;
     group_02.rotation.y += 0.003;
+    //
+    group_03.position.z = Math.sin(tick) * 500;
 
     var delta = clock.getDelta();
     tick += delta;
