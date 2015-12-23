@@ -203,18 +203,18 @@ var render = function(){
     
     //new position
     cL = group_03.position.z;
-    if(in_01 > 150 && oL < .5 && oL > -.5){
+    if(in_01 > 100 && oL < .04 && oL > -.04){
         tL = 1000-Math.random()*2000;
     } else {
         tL = tL * .96;
     }
     oL = (tL-cL) * .03;
-    if(oL < .5 && oL > -.5){
+    if(oL < .04 && oL > -.04){
         nL = nL * .96;
     } else {
         nL = cL+oL;
-        group_01.rotation.y += oL * .001;
-        group_02.rotation.y += oL * .001;
+        group_01.rotation.y += oL * .002;
+        group_02.rotation.y += oL * .002;
     }
     group_03.position.z = nL;
     //console.log('cl : ', cL, ', tl : ', tL, ', nl : ', nL, ', ol : ', oL);
