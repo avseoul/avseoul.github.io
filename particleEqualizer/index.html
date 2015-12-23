@@ -514,8 +514,8 @@
             
             void main(){
                 float mIn_01 = 0.;
-                if(uIn_01 > 90.){
-                    mIn_01 = uIn_01 * .1;
+                if(uIn_01 > 0.){
+                    mIn_01 = uIn_01 * .25;
                 } else {
                     mIn_01 = 0.;
                 }
@@ -526,7 +526,7 @@
                 
                 float mR = mUv.y * ( .2 - .02 * vNoise );
                 float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01;
-                vec3 mColor = vec3( mR + mGB, mGB, mGB ); //-vertically b&w
+                vec3 mColor = vec3( mR + mGB, mGB * .7, mGB ); //-vertically b&w
 
                 gl_FragColor = vec4( mColor, 1. );
             }
