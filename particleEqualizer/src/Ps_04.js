@@ -63,16 +63,20 @@ THREE.PS_04 = function(_options){
 
     //-tell shader about default position.. 
     self.buffer.addAttribute('position', new THREE.BufferAttribute(self.pVertices, 3));
-    randomLife = new Float32Array( self.PARTICLE_COUNT  );
-    randomLifeTarget = new Float32Array( self.PARTICLE_COUNT  );
+    var randomLife =            new Float32Array( self.PARTICLE_COUNT );
+    var randomLifeTarget =      new Float32Array( self.PARTICLE_COUNT );
+    var in01 =                  new Float32Array( self.PARTICLE_COUNT );
     for(var i = 0; i < randomLife.length; i++){
         var r = randomLife[i];
         var rt = randomLifeTarget[i];
+        //var uIn_01 = in_01[i];
         r = 0;
         rt = Math.random() * 30 + 30;
+        //uIn_01 = 1;
     }
-    self.buffer.addAttribute( 'randomLife', new THREE.BufferAttribute( randomLife, 1 ).setDynamic(true) );
-    self.buffer.addAttribute( 'randomLifeTarget', new THREE.BufferAttribute( randomLifeTarget, 1 ).setDynamic(true) );
+    self.buffer.addAttribute( 'randomLife',         new THREE.BufferAttribute( randomLife,          1 ).setDynamic(true) );
+    self.buffer.addAttribute( 'randomLifeTarget',   new THREE.BufferAttribute( randomLifeTarget,    1 ).setDynamic(true) );
+    self.buffer.addAttribute( 'in01',               new THREE.BufferAttribute( in01,                1 ).setDynamic(true) );
 
 
     /* init */
@@ -82,7 +86,7 @@ THREE.PS_04 = function(_options){
         this.add(self.ps);
     };
     
-    this.update = function(time, life) {
+    this.update = function(time, life, _in_01) {
         //update uniforms
         self.mat.uniforms['uTime'].value = time;
         self.mat.uniforms['uLife'].value = life;
@@ -90,7 +94,19 @@ THREE.PS_04 = function(_options){
         //update attribues
         var r = randomLife;
         var rt = randomLifeTarget;
+        var i1 = in01; 
         for(var i = 0; i < self.PARTICLE_COUNT; i++){
+            //
+            if(i1[i] > 1){
+                i1[i] -= .5;
+            } else {
+                var index = Math.floor( Math.random() * self.PARTICLE_COUNT );
+                var trigger = 40;
+                if( index%i == 0 && _in_01 > trigger ){ 
+                    i1[index] = _in_01;
+                }
+            }
+            //
             if(r[i] > rt[i]){
                 r[i] = 0;
                 rt[i] = Math.random() * 20 + 10;
@@ -100,6 +116,7 @@ THREE.PS_04 = function(_options){
 
         self.buffer.attributes.randomLife.needsUpdate = true;
         self.buffer.attributes.randomLifeTarget.needsUpdate = true;
+        self.buffer.attributes.in01.needsUpdate = true;
 
     };
 

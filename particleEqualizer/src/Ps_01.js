@@ -34,7 +34,8 @@ THREE.PS_01 = function(_options){
         uniforms:{
             'uTime': {type: 'f', value: 0.0 },
             'uIndex' : {type: 'i', value: 0 },
-            'uTotalIndices' : {type: 'i', value: 0}
+            'uTotalIndices' : {type: 'i', value: 0},
+            'uC' : {type: 'f', value: 0}
         },
         blending: 'THREE.AddictiveBlending',
         depthWrite: true,
@@ -60,8 +61,10 @@ THREE.PS_01 = function(_options){
         }
     }
     
-    //-tell shader about default position.. 
+    //-tell shader about default attribute
+    var in01 = new Float32Array( self.PARTICLE_COUNT );
     self.buffer.addAttribute('position', new THREE.BufferAttribute(self.pVertices, 3));
+    self.buffer.addAttribute( 'in01', new THREE.BufferAttribute( in01, 1 ).setDynamic(true) );
 
     /* init */
     this.init = function(){
@@ -70,10 +73,31 @@ THREE.PS_01 = function(_options){
         this.add(self.ps);
     };
 
-    this.update = function(time, index, total) {
+    this.update = function(time, index, total, _in_01) {
         self.mat.uniforms['uTime'].value = time;
         self.mat.uniforms['uIndex'].value = index;
         self.mat.uniforms['uTotalIndices'].value = total;
+        var mC = 0;
+        if(mC < 0.111){
+            mC = _in_01;
+        } else {
+            mC *= 0.96;
+        }
+        self.mat.uniforms['uC'].value = mC;
+
+        var i1 = in01; 
+        for(var i = 0; i < self.PARTICLE_COUNT; i++){
+            if(i1[i] > 1){
+                i1[i] -= 1.;
+            } else {
+                var index = Math.floor( Math.random() * self.PARTICLE_COUNT );
+                var trigger = 40;
+                if( index%i == 0 && _in_01 > trigger ){ 
+                    i1[index] = _in_01;
+                }
+            }
+        }
+        self.buffer.attributes.in01.needsUpdate = true;
     };
     
     //excute init()

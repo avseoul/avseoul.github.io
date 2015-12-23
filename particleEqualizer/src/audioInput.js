@@ -9,31 +9,37 @@ var myAudio = document.querySelector('audio');
 var video = document.querySelector('video');
 
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-var analyser = audioCtx.createAnalyser();
+var analyserNode = audioCtx.createAnalyser();
 
-var source;
+var sourceNode;
 
-analyser.fftSize = 256;
-var bufferLength = analyser.frequencyBinCount;
-var dataArray = new Uint8Array(bufferLength);
-
-analyser.getByteTimeDomainData(dataArray);
+var bufferLength = analyserNode.frequencyBinCount;
+var micInput = new Uint8Array(bufferLength);
 
 var setupAudioNodes= function(stream) {
-    var sampleSize = 256;  // number of samples to collect before analyzing FFT
-    audioStream = stream;
+    var sampleSize = 32;
+    sourceNode = audioCtx.createMediaStreamSource(stream);
+    var filter = audioCtx.createBiquadFilter();
+    filter.frequency.value = 60.0;
+    filter.type = filter.NOTCH;
+    filter.Q = 10.0;
+    analyserNode.smoothingTimeConstant = 0.0;
+    analyserNode.fftSize = 32;
 
-    // The nodes are:  sourceNode -> analyserNode -> javascriptNode -> destination
+    sourceNode.connect(filter);
+    filter.connect(analyserNode);
+    
+    micInput = new Uint8Array(analyserNode.frequencyBinCount);
+};
 
-    // create an audio buffer source node
-    sourceNode = audioContext.createMediaStreamSource(audioStream);
-
-    // connect the nodes together
-    sourceNode.connect(analyserNode);
-
-    // allocate the array for Frequency Data
-    dataArray = new Uint8Array(analyserNode.frequencyBinCount);
-}
+var getMICInput = function(){
+    requestAnimationFrame( getMICInput );
+    //e.preventDefault();
+    analyserNode.getByteFrequencyData(micInput);
+    //analyserNode.getByteTimeDomainData(micInput);
+    //if(micInput[2] > 40)
+    //console.log(micInput);
+};
 
 window.addEventListener("load", function(){
     if (navigator.getUserMedia) {
@@ -49,10 +55,8 @@ window.addEventListener("load", function(){
     } else {
         console.log('getUserMedia not supported on your browser!');
     }
-
-    for(var i = 0; i < bufferLength; i++){
-        console.log(dataArray[i]);
-    }
+    getMICInput();
 });
+
 
 

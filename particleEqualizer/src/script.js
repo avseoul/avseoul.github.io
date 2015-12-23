@@ -133,7 +133,7 @@ var init = function(){
     mBKG_mesh.scale.set( 2.9, 2.9, 1 );
 
     //-set group
-        group_01.add( mDS_01_mesh );
+    group_01.add( mDS_01_mesh );
     for(var i = 0; i < PS_01_size; i++){
         group_01.add( mPS_01[i] );
     }
@@ -177,7 +177,6 @@ var render = function(){
 
     var delta = clock.getDelta();
     tick += delta;
-
     if(tick < 0){ tick = 0; }
     
     /* update tick for trails object */
@@ -195,14 +194,16 @@ var render = function(){
     } else {
         life += .2;
     }
+    /* get mic input */
+    var in_01 = micInput[2];
 
     /* update objects */
     for(var i = 0; i < PS_01_size; i++){
-        mPS_01[i].update( tick_pre[i], i, PS_01_size );
+        mPS_01[i].update( tick_pre[i], i, PS_01_size, in_01 );
     }
     mPS_02.update( tick );
     mPS_03.update( tick, life );
-    mPS_04.update( tick, life );
+    mPS_04.update( tick, life, in_01 );
     mDS_01_mat.uniforms['uTime'].value = tick;
     mBKG_mat.uniforms['uTime'].value = tick;
 
