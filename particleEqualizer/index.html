@@ -601,15 +601,18 @@
             }
 
             uniform float uTime;
+            uniform float uIn_01;
             varying vec2 vUv;
+
             void main(){
-                float t = 4.5;
+                float mi = uIn_01 * .0001;
+                float t = 3.0;
                 float x = (.5 - vUv.x) * t;
                 float y = (.5 - vUv.y) * t/2.;
                 float r = x * x + y * y;
-                float n = 1. - sqrt(noise(vec2(x, y) + uTime));
+                float n = 1. - sqrt(noise(vec2(x, y) + uTime + mi));
                 float mRed = 1. - sqrt( r + n );
-                gl_FragColor = vec4( vec3(mRed, 0., 0.), 1. );
+                gl_FragColor = vec4( vec3(mRed * .5, .0, .0), 1. );
             }
         </script>
     </head>

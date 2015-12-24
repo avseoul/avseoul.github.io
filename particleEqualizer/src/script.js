@@ -125,7 +125,8 @@ var init = function(){
         transparent: false,
         depthWrite: false,
         uniforms:{
-            'uTime': { type: 'f', value: 0.0 }
+            'uTime': { type: 'f', value: 0.0 },
+            'uIn_01': {type: 'f', value: 0.0 }
         },
         vertexShader: BKG_vert,
         fragmentShader: BKG_frag
@@ -203,7 +204,7 @@ var render = function(){
     
     //new position
     cL = group_03.position.z;
-    if(in_01 > 100 && oL < .04 && oL > -.04){
+    if(in_01 > 50 && oL < .04 && oL > -.04){
         tL = 1000-Math.random()*2000;
     } else {
         tL = tL * .96;
@@ -231,6 +232,7 @@ var render = function(){
     mDS_01_mat.uniforms['uTime'].value = tick;
     mDS_01_mat.uniforms['uIn_01'].value = in_01;
     mBKG_mat.uniforms['uTime'].value = tick;
+    mBKG_mat.uniforms['uIn_01'].value = in_01;
 
     camera.lookAt( scene.position );
     renderer.render( scene, camera );
