@@ -198,18 +198,15 @@
 
             uniform float uTime;
             uniform float uBase;
-            varying float vr;
-            varying float vC;
-
+            varying float vA;
+            varying float vG;
+            varying float vR;
             void main(){
                 //set m variables
                 vec3 mNormal = normalize(vec3(0.,0.,0.)-position);
                 float mAlign = 60.*-2.*noise(mNormal+uTime);
                 float mNoise = 60.*-2.*noise(position+uTime);
                 float mBase = uBase*.015;
-                //set varying variables
-                vC = mBase;
-                vr = mNoise*.007;
                 //set position
                 vec3 mPos = position+mNormal*(mNoise+mAlign);
                 gl_Position = projectionMatrix*modelViewMatrix*vec4(mPos,1.0);
@@ -217,17 +214,21 @@
                 float mPointSize = 1.;
                 mPointSize = mNoise*.01*mBase;
                 gl_PointSize = pow(mPointSize,2.2);
+                //set varying variables
+                vA = pow(uBase,2.2);
+                vR = mBase;
+                vG = mPointSize*.2;
             }
-
         </script>
         <script type='x-shader/x-vertex' id='PS_02_frag'>
-            varying float vr;
-            varying float vC;
+            varying float vA;
+            varying float vG;
+            varying float vR;
             void main(){
-                float mC = vC*.4;
-                vec3 mColor = vec3(1.+mC,vr,0.);
+                float mR = vR*.4;
+                vec3 mColor = vec3(1.+mR,vG,0.);
                 mColor = pow(mColor,vec3(1./2.2));
-                gl_FragColor = vec4( mColor, .99 );
+                gl_FragColor = vec4( mColor, vA );
             }
         </script>
 
