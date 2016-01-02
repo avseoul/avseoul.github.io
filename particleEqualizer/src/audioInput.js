@@ -5,39 +5,36 @@ navigator.getUserMedia = (navigator.getUserMedia ||
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia);
 
-var myAudio = document.querySelector('audio');
-var video = document.querySelector('video');
-
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 var analyserNode = audioCtx.createAnalyser();
-
-var sourceNode;
-
 var bufferLength = analyserNode.frequencyBinCount;
 var micInput = new Uint8Array(bufferLength);
 
 var setupAudioNodes= function(stream) {
-    var sampleSize = 32;
-    sourceNode = audioCtx.createMediaStreamSource(stream);
-    var filter = audioCtx.createBiquadFilter();
-    filter.frequency.value = 60.0;
-    filter.type = 'lowpass';
-    filter.Q = 10.0;
+    var sampleSize = 1024;
+    var sourceNode = audioCtx.createMediaStreamSource(stream);
+    var filter_low = audioCtx.createBiquadFilter();
+    var filter_high = audioCtx.createBiquadFilter(); 
+    filter_low.frequency.value = 60.0;
+    filter_high.frequency.value = 1280.0; 
+    filter_low.type = 'lowpass';
+    filter_high.type = 'highpass';
+    filter_low.Q = 10.0;
+    filter_high.Q = 1.0;
     analyserNode.smoothingTimeConstant = 0.0;
-    analyserNode.fftSize = 32;
+    analyserNode.fftSize = 1024;
 
-    sourceNode.connect(filter);
-    filter.connect(analyserNode);
+    sourceNode.connect(filter_low);
+    sourceNode.connect(filter_high);
+    filter_low.connect(analyserNode);
+    filter_high.connect(analyserNode);
     
     micInput = new Uint8Array(analyserNode.frequencyBinCount);
 };
 
 var getMICInput = function(){
     requestAnimationFrame( getMICInput );
-    //e.preventDefault();
     analyserNode.getByteFrequencyData(micInput);
-    //analyserNode.getByteTimeDomainData(micInput);
-    //if(micInput[2] > 40)
     //console.log(micInput);
 };
 

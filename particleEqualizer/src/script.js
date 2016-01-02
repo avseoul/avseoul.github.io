@@ -7,9 +7,9 @@
  */
 
 /* threejs scene setting */
-var width, height, ratio, group_01, group_02, group_03, scene, camera, renderer, container, 
-    mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre;
-var cL=0,tL=0,nL=0,oL=0;
+var width, height, ratio, group_01, group_02, group_03, group_04, scene, camera, renderer, container, 
+    mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre, treble;
+var cL=0,tL=0,nL=0,oL=0, nR=1;
 
 /* setting window resize */
 var windowResize = function(){
@@ -33,6 +33,7 @@ var init = function(){
     tick_pre_01 = 0;
     tick_pre_02 = 0;
     tick_pre_03 = 0;
+    treble = 0;
     //-for convinient
     width = window.innerWidth;
     height = window.innerHeight;
@@ -42,6 +43,7 @@ var init = function(){
     group_01 = new THREE.Object3D();
     group_02 = new THREE.Object3D();
     group_03 = new THREE.Object3D();
+    group_04 = new THREE.Object3D();
     camera = new THREE.PerspectiveCamera( 35, width/height, 0.1, 10000);
     renderer = new THREE.WebGLRenderer();
     clock = new THREE.Clock(true);
@@ -137,13 +139,14 @@ var init = function(){
     mBKG_mesh.scale.set( 2.9, 2.9, 1 );
 
     //-set group
-    group_01.add( mDS_01_mesh );
+    group_04.add( mDS_01_mesh );
     for(var i = 0; i < PS_01_size; i++){
         group_01.add( mPS_01[i] );
     }
     group_01.add( mPS_02 );
     group_02.add( mPS_03 );
     group_02.add( mPS_04 );
+    group_03.add( group_04 );
     group_03.add( group_01 );
     group_03.add( group_02 );
 
@@ -194,37 +197,58 @@ var render = function(){
     }
     /* get mic input */
     var in_01 = micInput[2];
+    var in_02 = micInput[200];
+
+    /* normalize treble */
+    if(in_02 > 200.){
+        treble = 1.;
+    } else {
+        if(treble > .001){
+            treble *= .96;
+        } else {
+            treble = 0.;
+        }
+    }
+    //console.log('treble : ', treble);
 
     //camera.position.x += ( mouseX - camera.position.x ) * .05;
     //camera.position.y += ( - ( mouseY - 200) - camera.position.y ) * .05;
     
-    group_01.rotation.y += 0.003;
-    group_01.rotation.x += 0.001;
-    group_02.rotation.y += 0.003;
+    group_01.rotation.y += .003 * nR;
+    group_01.rotation.x += .001 * nR;
+    group_02.rotation.y -= .003 * nR;
+    group_04.rotation.y += .003 * nR;
+    group_04.rotation.x += .001 * nR;
     
-    //new position
+    /*  loc&rot event
+     *  
+     *  cL - current location
+     *  tL - target location
+     *  oL - offset location
+     *  nL - new location
+     *  nR - new rotation
+     *
+     */
     cL = group_03.position.z;
-    if(in_01 > 50 && oL < .04 && oL > -.04){
-        tL = 1000-Math.random()*2000;
+    if(in_01 > 1. && tL < 800.){
+        tL += in_01*.05; //-get intensity by level of input
     } else {
-        tL = tL * .96;
+        tL = tL * .99; //-get back when out of input event
     }
-    oL = (tL-cL) * .03;
-    if(oL < .04 && oL > -.04){
+    oL = (tL-cL)*.5; //-normalize
+    if(oL < 2.5 && oL > -2.5){
         nL = nL * .96;
     } else {
         nL = cL+oL;
-        group_01.rotation.y += oL * .002;
-        group_01.rotation.x += oL * .001;
-        group_01.rotation.z += oL * .001;
-        group_02.rotation.y += oL * .002;
     }
+    nR = 1.+nL*.02; //-get new rotation
     group_03.position.z = nL;
     //console.log('cl : ', cL, ', tl : ', tL, ', nl : ', nL, ', ol : ', oL);
+    //console.log('input_b : ', in_01, ', input_t : ', in_02);
 
     /* update objects */
     for(var i = 0; i < PS_01_size; i++){
-        mPS_01[i].update( tick_pre[i], i, PS_01_size, in_01 );
+        mPS_01[i].update( tick_pre[i], i, PS_01_size, in_01, treble );
     }
     mPS_02.update( tick, in_01 );
     mPS_03.update( tick, life );

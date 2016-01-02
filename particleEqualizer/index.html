@@ -88,56 +88,48 @@
                 return f;
             }
 
-            varying vec3 vColor;
-            varying float opacityOffset;
-            varying float vGb;
+            varying vec4 vColor;
 
             uniform float uTime;
             uniform int uTotalIndices;
             uniform int uIndex;
+            uniform float uTreble;
 
             attribute float in01;
 
-
             void main(){
-                float mIn_01 = in01 * .02 + 1.;
-                vGb = mIn_01 - 1.;
-                opacityOffset = float(uIndex) * 1. / float(uTotalIndices) ;
-                vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
-                float mNoise = 60. * -2. * noise( mNormal + uTime) * mIn_01;
+                vec3 mNormal = normalize(vec3(0.,0.,0.)-position);
+                float mIn01 = in01*.9+1.;
+                float mNoise = 60.*-2.*noise(mNormal+uTime);
+                float mO = float(uIndex)/float(uTotalIndices)+.1; //-get custom value 0-1 for opacity based on the order of trails
 
-                //look up vertically 
-                vec2 mUv = vec2( 0., .7 - .5 * mNoise );
-                float mRgb = mUv.y * ( .02 - .02 * mNoise );
-                
-                vec3 mPos = position + mNormal * mNoise;
-                
+                //cal custom v based on vertical height
+                float mV = abs(.7-.5*mNoise)*.04; //-set custom uv intensity with treble input
+                if(mV<0.001){mV=0.;}else if(mV>1.){mV=1.;} //-clamp custom uv between 0-1                
+                mV=pow(mV,3.);
+                //set color
+                float mBase = in01*.01;
+                if(mBase<0.001){mBase=0.;}else if(mBase>1.){mBase=1.;} //-clamp mBase between 0-1 
+                float mR = (1.-mV)*mO*10. + mV*mO + mBase + uTreble*mV*.1; //-root+whitering+base+treble
+                float mG = 0. + mV*mO*.5 + mBase*.3 + uTreble*mV; 
+                float mB = 0. + mV*mO*.5 + mBase*.3 + uTreble*mV*.3;
+                float mA = mV*mO;
+                vColor = vec4(mR,mG,mB,mA);                
+                //set position
+                vec3 mPos = position + mNormal*mNoise - mNormal*mIn01;                
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
-                float mPointSize = mRgb * .02;
-                mPointSize = clamp(mPointSize, .1, 0.99);
-                vColor = vec3(mPointSize, mPointSize, mPointSize);
-                gl_PointSize = (1. - mPointSize) * 3.;
+                //set point size 
+                float mPointSize = (1.-mV)*mO;
+                mPointSize = pow(mPointSize,3.)*15.+mBase*5.; //-root+base
+                gl_PointSize = mPointSize;
             }
 
         </script>
         <script type='x-shader/x-vertex' id='PS_01_frag'>
-            varying vec3 vColor;
-            varying float opacityOffset;
-            varying float vGb;
-
-            uniform float uC;
+            varying vec4 vColor;
             
             void main(){
-                vec2 pt = gl_PointCoord - vec2(0.5);
-                if(pt.x*pt.x+pt.y*pt.y > 0.25){
-                    discard;
-                }
-                float mC = uC * 0.025;
-                vec3 mColor = clamp( vColor, vec3(0., 0., 0.), vec3(1., 1., 1.) );
-                gl_FragColor = vec4( (1. - mColor.r) * opacityOffset + vGb * .9 - (.9 * mC *(1.- opacityOffset)), 
-                vGb * .1 - (.3 * mC *(1.- opacityOffset)), 
-                vGb * .0 - (.3 * mC *(1.- opacityOffset)), 
-                mColor.r * opacityOffset * 5. );
+                gl_FragColor = vColor;
             }
         </script>
 

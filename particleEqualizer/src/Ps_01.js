@@ -35,7 +35,7 @@ THREE.PS_01 = function(_options){
             'uTime': {type: 'f', value: 0.0 },
             'uIndex' : {type: 'i', value: 0 },
             'uTotalIndices' : {type: 'i', value: 0},
-            'uC' : {type: 'f', value: 0}
+            'uTreble' : {type: 'f', value: 0.0}
         },
         blending: 'THREE.AddictiveBlending',
         depthWrite: true,
@@ -63,6 +63,7 @@ THREE.PS_01 = function(_options){
     
     //-tell shader about default attribute
     var in01 = new Float32Array( self.PARTICLE_COUNT );
+    var treble = new Float32Array( self.PARTICLE_COUNT );
     self.buffer.addAttribute('position', new THREE.BufferAttribute(self.pVertices, 3));
     self.buffer.addAttribute( 'in01', new THREE.BufferAttribute( in01, 1 ).setDynamic(true) );
 
@@ -73,20 +74,15 @@ THREE.PS_01 = function(_options){
         this.add(self.ps);
     };
 
-    this.update = function(time, index, total, _in_01) {
+    this.update = function(time, index, total, _in_01, _treble) {
         self.mat.uniforms['uTime'].value = time;
         self.mat.uniforms['uIndex'].value = index;
         self.mat.uniforms['uTotalIndices'].value = total;
-        var mC = 0;
-        if(mC < 0.111){
-            mC = _in_01;
-        } else {
-            mC *= 0.96;
-        }
-        self.mat.uniforms['uC'].value = mC;
+        self.mat.uniforms['uTreble'].value = _treble;
 
         var i1 = in01; 
         for(var i = 0; i < self.PARTICLE_COUNT; i++){
+            //update base
             if(i1[i] > 1){
                 i1[i] *= 0.96;
             } else {
