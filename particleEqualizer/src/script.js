@@ -8,7 +8,7 @@
 
 /* threejs scene setting */
 var width, height, ratio, group_01, group_02, group_03, group_04, scene, camera, renderer, container, 
-    mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre, treble;
+    mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_05, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre, treble;
 var cL=0,tL=0,nL=0,oL=0, nR=1;
 
 /* setting window resize */
@@ -61,6 +61,9 @@ var init = function(){
     //ps04
     var PS_04_vert = document.getElementById('PS_04_vert').textContent;
     var PS_04_frag = document.getElementById('PS_04_frag').textContent;
+    //ps05
+    var PS_05_vert = document.getElementById('PS_05_vert').textContent;
+    var PS_05_frag = document.getElementById('PS_05_frag').textContent;
     //ds01
     var DS_01_vert = document.getElementById('DS_01_vert').textContent;
     var DS_01_frag = document.getElementById('DS_01_frag').textContent;
@@ -98,7 +101,7 @@ var init = function(){
         'ps03frag': PS_03_frag,
         'radius': 200
     });
-    //-set PS_03
+    //-set PS_04
     mPS_04 = new THREE.PS_04({
         'slice': 50,
         'segment': 50,
@@ -106,6 +109,13 @@ var init = function(){
         'ps03frag': PS_04_frag,
         'radius': 200
     });
+    //-set PS_05
+    mPS_05 = new THREE.PS_05({
+        'size': 600,
+        'ps05vert': PS_05_vert,
+        'ps05frag': PS_05_frag
+    });
+
     //-set displaced sphere
     mDS_01_mat = new THREE.ShaderMaterial({
         transparent: true,
@@ -138,7 +148,7 @@ var init = function(){
     var mBKG_geo = new THREE.PlaneGeometry(width, height);
     mBKG_mesh = new THREE.Mesh( mBKG_geo, mBKG_mat );
     mBKG_mesh.position.z = -2000;
-    mBKG_mesh.scale.set( 2.9, 2.9, 1 );
+    mBKG_mesh.scale.set( 2.9, 3.3, 1 );
 
     //-set group
     group_04.add( mDS_01_mesh );
@@ -156,11 +166,12 @@ var init = function(){
     //-set camera's default distance
     renderer.setPixelRatio(ratio);
     renderer.setSize(width, height);
-    camera.position.z = 1500;
+    camera.position.z = 2000;
 
     //-add scene objects
     scene.add( group_03 );
     scene.add( mBKG_mesh );
+    scene.add( mPS_05 );
 
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
@@ -198,11 +209,11 @@ var render = function(){
         life += .2;
     }
     /* get mic input */
-    var in_01 = micInput[2];
-    var in_02 = micInput[200];
+    var in_bass = micInput[2];
+    var in_treble = micInput[200];
 
     /* normalize treble */
-    if(in_02 > 180.){
+    if(in_treble > 140.){
         treble = 1.;
     } else {
         if(treble > .001){
@@ -232,34 +243,37 @@ var render = function(){
      *
      */
     cL = group_03.position.z;
-    if(in_01 > 1. && tL < 800.){
-        tL += in_01*.03; //-get intensity by level of input
+    if(in_bass > 1. && tL < 1500.){
+        tL += in_bass*.03; //-get intensity by level of input
+    } else if(treble==1.&&tL>1000.){
+        tL = Math.random()*2000-1000;
     } else {
         tL = tL * .99; //-get back when out of input event
     }
-    oL = (tL-cL)*.5; //-normalize
+    oL = (tL-cL)*.05; //-normalize
     if(oL < 2.5 && oL > -2.5){
-        nL = nL * .96;
+        nL = nL * .99;
     } else {
         nL = cL+oL;
     }
-    nR = 1.+nL*.02; //-get new rotation
+    nR = 1.+nL*.005; //-get new rotation
     group_03.position.z = nL;
     //console.log('cl : ', cL, ', tl : ', tL, ', nl : ', nL, ', ol : ', oL);
     //console.log('input_b : ', in_01, ', input_t : ', in_02);
 
     /* update objects */
     for(var i = 0; i < PS_01_size; i++){
-        mPS_01[i].update( tick_pre[i], i, PS_01_size, in_01, treble );
+        mPS_01[i].update( tick_pre[i], i, PS_01_size, in_bass, treble );
     }
-    mPS_02.update( tick, in_01 );
-    mPS_03.update( tick, life );
-    mPS_04.update( tick, life, in_01 );
+    mPS_02.update( tick, in_bass );
+    mPS_03.update( tick, life, in_bass, treble );
+    mPS_04.update( tick, life, in_bass, treble );
+    mPS_05.update( tick, in_bass, treble );
     mDS_01_mat.uniforms['uTime'].value = tick;
-    mDS_01_mat.uniforms['uIn_01'].value = in_01;
+    mDS_01_mat.uniforms['uIn_01'].value = in_bass;
     mDS_01_mat.uniforms['uTreble'].value = treble;
     mBKG_mat.uniforms['uTime'].value = tick;
-    mBKG_mat.uniforms['uIn_01'].value = in_01;
+    mBKG_mat.uniforms['uIn_01'].value = in_bass;
     mBKG_mat.uniforms['uTreble'].value = treble;
 
     camera.lookAt( scene.position );

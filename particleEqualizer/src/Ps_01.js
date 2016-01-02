@@ -62,10 +62,10 @@ THREE.PS_01 = function(_options){
     }
     
     //-tell shader about default attribute
-    var in01 = new Float32Array( self.PARTICLE_COUNT );
+    var aBass = new Float32Array( self.PARTICLE_COUNT );
     var treble = new Float32Array( self.PARTICLE_COUNT );
     self.buffer.addAttribute('position', new THREE.BufferAttribute(self.pVertices, 3));
-    self.buffer.addAttribute( 'in01', new THREE.BufferAttribute( in01, 1 ).setDynamic(true) );
+    self.buffer.addAttribute( 'aBass', new THREE.BufferAttribute( aBass, 1 ).setDynamic(true) );
 
     /* init */
     this.init = function(){
@@ -80,7 +80,7 @@ THREE.PS_01 = function(_options){
         self.mat.uniforms['uTotalIndices'].value = total;
         self.mat.uniforms['uTreble'].value = _treble;
 
-        var i1 = in01; 
+        var i1 = aBass; 
         for(var i = 0; i < self.PARTICLE_COUNT; i++){
             //update base
             if(i1[i] > .0000000000000011){
@@ -96,7 +96,7 @@ THREE.PS_01 = function(_options){
                 }
             }
         }
-        self.buffer.attributes.in01.needsUpdate = true;
+        self.buffer.attributes.aBass.needsUpdate = true;
     };
     
     //excute init()
