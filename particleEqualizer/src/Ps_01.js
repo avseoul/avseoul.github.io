@@ -83,8 +83,11 @@ THREE.PS_01 = function(_options){
         var i1 = in01; 
         for(var i = 0; i < self.PARTICLE_COUNT; i++){
             //update base
-            if(i1[i] > 1){
+            if(i1[i] > .0000000000000011){
                 i1[i] *= 0.96;
+                if(i1[i] < .000000000000001){
+                    i1[i] = 0;
+                }
             } else {
                 var index = Math.floor( Math.random() * self.PARTICLE_COUNT );
                 var trigger = 40;

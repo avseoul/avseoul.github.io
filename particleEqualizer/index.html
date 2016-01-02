@@ -102,17 +102,21 @@
                 float mIn01 = in01*.9+1.;
                 float mNoise = 60.*-2.*noise(mNormal+uTime);
                 float mO = float(uIndex)/float(uTotalIndices)+.1; //-get custom value 0-1 for opacity based on the order of trails
+                //set mTreble
+                float mTreble = uTreble;
+                if(uTreble == 0.){mTreble = .01;}
+
 
                 //cal custom v based on vertical height
                 float mV = abs(.7-.5*mNoise)*.04; //-set custom uv intensity with treble input
                 if(mV<0.001){mV=0.;}else if(mV>1.){mV=1.;} //-clamp custom uv between 0-1                
                 mV=pow(mV,3.);
                 //set color
-                float mBase = in01*.01;
+                float mBase = in01*.9;
                 if(mBase<0.001){mBase=0.;}else if(mBase>1.){mBase=1.;} //-clamp mBase between 0-1 
-                float mR = (1.-mV)*mO*10. + mV*mO + mBase + uTreble*mV*.1; //-root+whitering+base+treble
-                float mG = 0. + mV*mO*.5 + mBase*.3 + uTreble*mV; 
-                float mB = 0. + mV*mO*.5 + mBase*.3 + uTreble*mV*.3;
+                float mR = (1.-mV)*mO*10. - mV*mO + mBase + mTreble*mV*.99; //-root+blackring+base+treble
+                float mG = 0. - mV*mO*.5 + mBase + mTreble*mV*.99; 
+                float mB = 0. - mV*mO*.5 + mBase + mTreble*mV*.1;
                 float mA = mV*mO;
                 vColor = vec4(mR,mG,mB,mA);                
                 //set position
@@ -120,7 +124,7 @@
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //set point size 
                 float mPointSize = (1.-mV)*mO;
-                mPointSize = pow(mPointSize,3.)*15.+mBase*5.; //-root+base
+                mPointSize = pow(mPointSize,3.)*15.+mBase*3.+mTreble*3.; //-root+base
                 gl_PointSize = mPointSize;
             }
 
@@ -485,7 +489,7 @@
 
             varying float vNoise;
             uniform float uTime;
-
+            
             void main(){
                 //by normal - for big blob
                 vNoise = 40. * -2. * noise(normal + uTime * .5);
@@ -502,16 +506,13 @@
             varying float vNoise;
             uniform sampler2D uTex;
             uniform float uIn_01;
+            uniform float uTime;
+            uniform float uTreble;
             
             float random(vec3 scale,float seed){return fract(sin(dot(gl_FragCoord.xyz+seed,scale))*43758.5453+seed);}
             
             void main(){
-                float mIn_01 = 0.;
-                if(uIn_01 > 0.){
-                    mIn_01 = uIn_01 * .15;
-                } else {
-                    mIn_01 = 0.;
-                }
+                float mIn_01 = uIn_01 * .15;
                 //get a random offset
                 float r = .0001 * random( vec3( 12.9898, 78.233, 151.7182 ), 0.0 );
                 //look up vertically in the texture
@@ -519,8 +520,9 @@
                 
                 float mR = mUv.y * ( .2 - .02 * vNoise );
                 float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01 * .8;
-                if(mGB < 0.){mGB = 0.;}
-                vec3 mColor = vec3( mR + mGB * 1., mGB*.0, mGB*.0 ); 
+                //if(mGB < 0.){mGB = 0.;}
+                float mEnergy = mGB * uTreble * .5;
+                vec3 mColor = vec3( mR + mGB * 1. + mEnergy, mGB*.0 + mEnergy, mGB*.0 + mEnergy*.5 ); 
                 //vec3 mColor = vec3( mR+mGB, mGB*.0, .0 );
 
                 gl_FragColor = vec4( mColor, 1. );
@@ -594,17 +596,18 @@
 
             uniform float uTime;
             uniform float uIn_01;
+            uniform float uTreble;
             varying vec2 vUv;
 
             void main(){
                 float mi = uIn_01 * .0001;
-                float t = 3.0;
+                float t = 3.0 - (3.0 * uTreble * .3);
                 float x = (.5 - vUv.x) * t;
                 float y = (.5 - vUv.y) * t/2.;
                 float r = x * x + y * y;
                 float n = 1. - sqrt(noise(vec2(x, y) + uTime + mi));
-                float mRed = 1. - sqrt( r + n );
-                gl_FragColor = vec4( vec3(mRed * .5, .0, .0), 1. );
+                float mRed = 1. - sqrt( r + n ) + uTreble*.2;
+                gl_FragColor = vec4( vec3(mRed*.5, .0, .0), 1. );
             }
         </script>
     </head>

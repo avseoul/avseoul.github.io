@@ -33,7 +33,7 @@ var init = function(){
     tick_pre_01 = 0;
     tick_pre_02 = 0;
     tick_pre_03 = 0;
-    treble = 0;
+    treble = .001;
     //-for convinient
     width = window.innerWidth;
     height = window.innerHeight;
@@ -114,7 +114,8 @@ var init = function(){
         uniforms:{
             'uTex': { type: 't', value: THREE.TextureLoader( './img/tex_01.png' )},
             'uTime': { type: 'f', value: 0.0 },
-            'uIn_01': { type: 'f', value: 0.0 }
+            'uIn_01': { type: 'f', value: 0.0 },
+            'uTreble': { type: 'f', value: 0.0 }
         },
         //blending: THREE.AdditiveBlending,
         vertexShader: DS_01_vert,
@@ -128,7 +129,8 @@ var init = function(){
         depthWrite: false,
         uniforms:{
             'uTime': { type: 'f', value: 0.0 },
-            'uIn_01': {type: 'f', value: 0.0 }
+            'uIn_01': {type: 'f', value: 0.0 },
+            'uTreble': { type: 'f', value: 0.0 }
         },
         vertexShader: BKG_vert,
         fragmentShader: BKG_frag
@@ -200,13 +202,13 @@ var render = function(){
     var in_02 = micInput[200];
 
     /* normalize treble */
-    if(in_02 > 200.){
+    if(in_02 > 180.){
         treble = 1.;
     } else {
         if(treble > .001){
             treble *= .96;
         } else {
-            treble = 0.;
+            treble = 0;
         }
     }
     //console.log('treble : ', treble);
@@ -231,7 +233,7 @@ var render = function(){
      */
     cL = group_03.position.z;
     if(in_01 > 1. && tL < 800.){
-        tL += in_01*.05; //-get intensity by level of input
+        tL += in_01*.03; //-get intensity by level of input
     } else {
         tL = tL * .99; //-get back when out of input event
     }
@@ -255,8 +257,10 @@ var render = function(){
     mPS_04.update( tick, life, in_01 );
     mDS_01_mat.uniforms['uTime'].value = tick;
     mDS_01_mat.uniforms['uIn_01'].value = in_01;
+    mDS_01_mat.uniforms['uTreble'].value = treble;
     mBKG_mat.uniforms['uTime'].value = tick;
     mBKG_mat.uniforms['uIn_01'].value = in_01;
+    mBKG_mat.uniforms['uTreble'].value = treble;
 
     camera.lookAt( scene.position );
     renderer.render( scene, camera );
