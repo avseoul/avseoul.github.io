@@ -197,28 +197,26 @@
             }
 
             uniform float uTime;
-            uniform float uIn_01;
+            uniform float uBase;
             varying float vr;
             varying float vC;
 
             void main(){
-                vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
-                float mAlign = 60. * -2. * noise( mNormal + uTime);
-                float mNoise = 60. * -2. * noise( position + uTime);
-                float mIn_01 = uIn_01 * 0.015;
-                vC = mIn_01;
+                //set m variables
+                vec3 mNormal = normalize(vec3(0.,0.,0.)-position);
+                float mAlign = 60.*-2.*noise(mNormal+uTime);
+                float mNoise = 60.*-2.*noise(position+uTime);
+                float mBase = uBase*.015;
+                //set varying variables
+                vC = mBase;
+                vr = mNoise*.007;
+                //set position
+                vec3 mPos = position+mNormal*(mNoise+mAlign);
+                gl_Position = projectionMatrix*modelViewMatrix*vec4(mPos,1.0);
+                //set pointsize
                 float mPointSize = 1.;
-                if(uIn_01 > 0.){
-                    mPointSize = mNoise * .04 * mIn_01;
-                } else {
-                    mPointSize = mNoise * .04;
-                }
-                
-                vec3 mPos = position + mNormal * (mNoise + mAlign) ;
-                
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
-                gl_PointSize = mPointSize;
-                vr = mNoise * 0.007;
+                mPointSize = mNoise*.01*mBase;
+                gl_PointSize = pow(mPointSize,2.2);
             }
 
         </script>
@@ -226,8 +224,10 @@
             varying float vr;
             varying float vC;
             void main(){
-                float mC = vC * .4;
-                gl_FragColor = vec4( 1. + mC, vr, 0., .99 );
+                float mC = vC*.4;
+                vec3 mColor = vec3(1.+mC,vr,0.);
+                mColor = pow(mColor,vec3(1./2.2));
+                gl_FragColor = vec4( mColor, .99 );
             }
         </script>
 

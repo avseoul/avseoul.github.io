@@ -33,7 +33,7 @@ THREE.PS_02 = function(_options){
         transparent: true,
         uniforms:{
             'uTime': {type: 'f', value: 0.0 },
-            'uIn_01' : {type: 'f', value: 0 }
+            'uBase' : {type: 'f', value: 0 }
         },
         blending: 'THREE.AddictiveBlending',
         depthWrite: true,
@@ -71,7 +71,7 @@ THREE.PS_02 = function(_options){
 
     this.update = function(time, _in_01) {
         self.mat.uniforms['uTime'].value = time;
-        self.mat.uniforms['uIn_01'].value = _in_01;
+        self.mat.uniforms['uBase'].value = _in_01;
     };
     
     //excute init()
