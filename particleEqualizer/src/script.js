@@ -33,8 +33,8 @@ var windowResize = function(){
 
 /* set getmousepos */
 var getMousePos = function(event) {
-    mouseX = ( event.clientX - width/2 );
-    mouseY = ( event.clientY - height/2 );
+    mouseX = ( event.clientX - window.innerWidth/2 );
+    mouseY = ( event.clientY - window.innerHeight/2 );
 };
 
 /* set init */
@@ -174,7 +174,6 @@ var init = function(){
     group_03.add( group_04 );
     group_03.add( group_01 );
     group_03.add( group_02 );
-
     
     //-set camera's default distance
     renderer.setPixelRatio(ratio);
@@ -237,9 +236,10 @@ var render = function(){
         }
     }
     //console.log('treble : ', treble);
-
-    //camera.position.x += ( mouseX - camera.position.x ) * .05;
-    //camera.position.y += ( - ( mouseY - 200) - camera.position.y ) * .05;
+    if(mouseX){
+        camera.position.x += ( mouseX - camera.position.x ) * .05;
+        camera.position.y += ( -mouseY - camera.position.y ) * .05;    
+    }
     
     group_01.rotation.y += .003 * nR;
     group_01.rotation.x += .001 * nR;

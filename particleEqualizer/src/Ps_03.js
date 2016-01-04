@@ -86,7 +86,7 @@ THREE.PS_03 = function(_options){
                 aBass[i] -= .5;
             } else {
                 var index = Math.floor( Math.random() * self.PARTICLE_COUNT );
-                var trigger = 40;
+                var trigger = 150;
                 if( index%i == 0 && _bass > trigger ){ 
                     aBass[index] = _bass;
                 }
