@@ -70,6 +70,20 @@ body{
     background: #000;
     opacity: 0.8;
 }
+.body-description li{
+    margin:0px;
+}
+.body-description li span{
+    font-size: 11px;
+    padding-bottom:2px;
+    font-weight: 100;
+    color: #a0a0a5;
+    letter-spacing: 0.6px;
+    line-height: 17px;
+    position: relative;
+    background: #000;
+    opacity: 0.8;
+}
 .body-description a{
     color: #b0b0b5;
     text-decoration: underline;
