@@ -86,7 +86,7 @@ THREE.PS_04 = function(_options){
                 i1[i] -= .5;
             } else {
                 var index = Math.floor( Math.random() * self.PARTICLE_COUNT );
-                var trigger = 90;
+                var trigger = 150;
                 if( index%i == 0 && _base > trigger ){ 
                     i1[index] = _base;
                 }

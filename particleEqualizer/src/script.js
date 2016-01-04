@@ -13,10 +13,22 @@ var cL=0,tL=0,nL=0,oL=0, nR=1;
 
 /* setting window resize */
 var windowResize = function(){
-    console.log('resize');
-    camera.aspect = width/height;
+    var c = document.getElementsByTagName('canvas');
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    //console.log(r);
+    if (window.matchMedia("(-webkit-device-pixel-ratio: 2)").matches) {//-if retina 
+        c[0].width = w*2;
+        c[0].height = h*2;
+    } else {
+        c[0].width = w;
+        c[0].height = h;
+    }
+    c[0].style.width = w;
+    c[0].style.height = h;
+    renderer.setViewport(0,0,w,h);
+    camera.aspect = w/h;
     camera.updateProjectionMatrix();
-    renderer.setSize(width, height);
 };
 
 /* set getmousepos */
