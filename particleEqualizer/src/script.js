@@ -16,17 +16,11 @@ var windowResize = function(){
     var c = document.getElementsByTagName('canvas');
     var w = window.innerWidth;
     var h = window.innerHeight;
-    //console.log(r);
-    if (window.matchMedia("(-webkit-device-pixel-ratio: 2)").matches) {//-if retina 
-        c[0].width = w*2;
-        c[0].height = h*2;
-    } else {
-        c[0].width = w;
-        c[0].height = h;
-    }
-    c[0].style.width = w;
-    c[0].style.height = h;
-    renderer.setViewport(0,0,w,h);
+    c[0].width = w*2;//-keep retina point size       
+    c[0].height = h*2;      
+    c[0].style.width = w;   
+    c[0].style.height = h;  
+    renderer.setViewport(0,0,w*2,h*2);
     camera.aspect = w/h;
     camera.updateProjectionMatrix();
 };
@@ -50,7 +44,7 @@ var init = function(){
     //-for convinient
     width = window.innerWidth;
     height = window.innerHeight;
-    ratio = window.devicePixelRatio;
+    ratio = width/height;
     //-set threejs objects
     scene = new THREE.Scene();
     group_01 = new THREE.Object3D();
@@ -176,8 +170,6 @@ var init = function(){
     group_03.add( group_02 );
     
     //-set camera's default distance
-    renderer.setPixelRatio(ratio);
-    renderer.setSize(width, height);
     camera.position.z = 2000;
 
     //-add scene objects
@@ -192,7 +184,16 @@ var init = function(){
     //container.appendChild( stats.domElement );
 
     //-add canvas(renderer) dom to body
-    container.appendChild(renderer.domElement); 
+    var retina = renderer.domElement;
+    retina.width = width * 2; //-get retina point size regardless any screen
+    retina.height = height * 2; 
+    retina.style.width = width; 
+    retina.style.height = height;
+    console.log(retina);
+    renderer.setViewport(0,0,retina.width,retina.height);
+    camera.aspect = retina.width/retina.height;
+    camera.updateProjectionMatrix();
+    container.appendChild(retina); 
     document.body.appendChild(container); 
     //-get resized window when browser is modified 
     window.addEventListener('resize', windowResize, false);
