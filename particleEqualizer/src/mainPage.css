@@ -51,7 +51,7 @@ body{
     left: 2px;
     top: -8px;
     font-size: 10px;
-    letter-spacing: 0px;
+    letter-spacing: 0.6px;
     font-weight: 600;
     color:#e8e8ef;
     opacity: 0.8;
@@ -60,12 +60,12 @@ body{
     background: #000;
 }
 .body-description{
-    font-size: 10px;
+    font-size: 11px;
     padding-bottom:2px;
     font-weight: 100;
     color: #a0a0a5;
-    letter-spacing: 0px;
-    line-height: 16px;
+    letter-spacing: 0.6px;
+    line-height: 17px;
     position: relative;
     background: #000;
     opacity: 0.8;
