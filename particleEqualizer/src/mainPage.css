@@ -1,0 +1,82 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    background: #000;
+    font-family: Helvetica, arial, sans-serif;
+}   
+
+#project-title{
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 72px;
+    font-weight: 600;
+    letter-spacing: -5px;
+    color: #f8f8ff;
+    z-index: 1000;
+    opacity: 0.8;
+}
+#project-title span{
+    background: #000;
+}
+
+#description{
+    position: absolute;
+    width: 50%;
+    height: 20%;
+    left: 15px;
+    bottom: 5px;
+    z-index: 1000;
+}
+#project-info{
+    position: absolute; 
+    width: 20%;
+    height: 20%;
+    bottom: 5px;
+    left: 55%;
+    z-index: 1000;
+}
+#contact-info{
+    position: absolute; 
+    width: 20%;
+    height: 20%;
+    bottom: 5px;
+    right: 15px;
+    z-index: 1000;
+}
+
+.body-title{
+    position: relative;
+    padding-bottom:2px;
+    left: 2px;
+    top: -8px;
+    font-size: 10px;
+    letter-spacing: 0px;
+    font-weight: 600;
+    color:#e8e8ef;
+    opacity: 0.8;
+}
+.body-title span{
+    background: #000;
+}
+.body-description{
+    font-size: 10px;
+    padding-bottom:2px;
+    font-weight: 100;
+    color: #a0a0a5;
+    letter-spacing: 0px;
+    line-height: 16px;
+    position: relative;
+    background: #000;
+    opacity: 0.8;
+}
+.body-description a{
+    color: #b0b0b5;
+    text-decoration: underline;
+}
+.body-description a:hover{
+    text-decoration: line-through;
+}
+
+
+

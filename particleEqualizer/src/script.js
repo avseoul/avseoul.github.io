@@ -13,6 +13,7 @@ var cL=0,tL=0,nL=0,oL=0, nR=1;
 
 /* setting window resize */
 var windowResize = function(){
+    console.log('resize');
     camera.aspect = width/height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
@@ -148,7 +149,7 @@ var init = function(){
     var mBKG_geo = new THREE.PlaneGeometry(width, height);
     mBKG_mesh = new THREE.Mesh( mBKG_geo, mBKG_mat );
     mBKG_mesh.position.z = -2000;
-    mBKG_mesh.scale.set( 2.9, 3.3, 1 );
+    mBKG_mesh.scale.set( 5., 5., 1 );
 
     //-set group
     group_04.add( mDS_01_mesh );
@@ -176,7 +177,8 @@ var init = function(){
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.top = '0px';
-    container.appendChild( stats.domElement );
+    stats.domElement.style.right = '0px';
+    //container.appendChild( stats.domElement );
 
     //-add canvas(renderer) dom to body
     container.appendChild(renderer.domElement); 
