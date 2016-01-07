@@ -35,7 +35,10 @@ var setupAudioNodes= function(stream) {
 var getMICInput = function(){
     requestAnimationFrame( getMICInput );
     analyserNode.getByteFrequencyData(micInput);
-    //console.log(micInput);
+    //for(var i = 0; i < micInput.length; i++){
+        //if(micInput[i] > 100)
+        //console.log(i, "' ",micInput[i]);
+    //}
 };
 
 window.addEventListener("load", function(){

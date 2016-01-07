@@ -224,9 +224,11 @@ var render = function(){
     /* get mic input */
     var in_bass = micInput[3];
     var in_treble = micInput[200];
+    var in_mid_01 = micInput[100];
+    var in_treble_02 = micInput[300];
 
     /* normalize treble */
-    if(in_treble > 140.){
+    if(in_treble > 120. || in_mid_01 > 120. || in_treble_02 > 60.){
         treble = 1.;
     } else {
         if(treble > .001){
@@ -237,8 +239,8 @@ var render = function(){
     }
     //console.log('treble : ', treble);
     if(mouseX){
-        camera.position.x += ( mouseX - camera.position.x ) * .05;
-        camera.position.y += ( -mouseY - camera.position.y ) * .05;    
+        camera.position.x += ( mouseX - camera.position.x ) * .02;
+        camera.position.y += ( -mouseY - camera.position.y ) * .02;    
     }
     
     group_01.rotation.y += .003 * nR_b + nR_t;
@@ -257,9 +259,9 @@ var render = function(){
      *
      */
     cL = group_03.position.z;
-    if(in_bass > 1. && tL < 1500.){
+    if(in_bass > 1. && tL < 1800.){
         tL += in_bass*.03; //-get intensity by level of input
-    } else if(treble==1.&&tL>1000.){
+    } else if(treble==1.&&tL>1200.){
         tL = Math.random()*2000-1000;
     } else {
         tL = tL * .99; //-get back when out of input event
@@ -270,7 +272,7 @@ var render = function(){
     } else {
         nL = cL+oL;
     }
-    nR_b = 1.+nL*.005; //-get new rotation
+    nR_b = 1.+nL*.002; //-get new rotation
     if(in_treble > 200.){
         nR_t+=.002;
     } else {
