@@ -9,7 +9,7 @@
 /* threejs scene setting */
 var width, height, ratio, group_01, group_02, group_03, group_04, scene, camera, renderer, container, 
     mouseX, mouseY, clock, mBKG_mat, mBKG_mesh, mPS_05, mPS_04, mPS_03, mPS_02, mPS_01, PS_01_size, mDS_01_mat, mDS_01_mesh, life, lifeTarget, tick, tick_pre, treble;
-var cL=0,tL=0,nL=0,oL=0, nR=1;
+var cL=0,tL=0,nL=0,oL=0, nR_b=1, nR_t=0;
 
 /* setting window resize */
 var windowResize = function(){
@@ -223,7 +223,7 @@ var render = function(){
         life += .2;
     }
     /* get mic input */
-    var in_bass = micInput[3]*2.;
+    var in_bass = micInput[3];
     var in_treble = micInput[200];
 
     /* normalize treble */
@@ -242,11 +242,11 @@ var render = function(){
         camera.position.y += ( -mouseY - camera.position.y ) * .05;    
     }
     
-    group_01.rotation.y += .003 * nR;
-    group_01.rotation.x += .001 * nR;
-    group_02.rotation.y -= .003 * nR;
-    group_04.rotation.y += .003 * nR;
-    group_04.rotation.x += .001 * nR;
+    group_01.rotation.y += .003 * nR_b + nR_t;
+    group_01.rotation.x += .001 * nR_b;
+    group_02.rotation.y -= .003 * nR_b + nR_t;
+    group_04.rotation.y += .003 * nR_b + nR_t;
+    group_04.rotation.x += .001 * nR_b;
     
     /*  loc&rot event
      *  
@@ -265,13 +265,22 @@ var render = function(){
     } else {
         tL = tL * .99; //-get back when out of input event
     }
-    oL = (tL-cL)*.05; //-normalize
+    oL = (tL-cL)*.2; //-normalize
     if(oL < 2.5 && oL > -2.5){
         nL = nL * .99;
     } else {
         nL = cL+oL;
     }
-    nR = 1.+nL*.005; //-get new rotation
+    nR_b = 1.+nL*.01; //-get new rotation
+    if(in_treble > 200.){
+        nR_t+=.01;
+    } else {
+        if(nR_t > .001){
+            nR_t *= .96;
+        } else {
+            nR_t = 0;
+        }
+    }
     group_03.position.z = nL;
     //console.log('cl : ', cL, ', tl : ', tL, ', nl : ', nL, ', ol : ', oL);
     //console.log('input_b : ', in_01, ', input_t : ', in_02);
