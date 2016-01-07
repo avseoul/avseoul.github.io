@@ -223,7 +223,7 @@ var render = function(){
         life += .2;
     }
     /* get mic input */
-    var in_bass = micInput[2];
+    var in_bass = micInput[3]*2.;
     var in_treble = micInput[200];
 
     /* normalize treble */
