@@ -121,11 +121,11 @@
                 float mA = mV*mO*.15;
                 vColor = vec4(mR,mG,mB,mA);                
                 //set position
-                vec3 mPos = position + mNormal*mNoise - mNormal*mIn01;                
+                vec3 mPos = position + mNormal*mNoise + mNormal*mIn01;       
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //set point size 
                 float mPointSize = (1.-mV)*mO;
-                mPointSize = pow(mPointSize,2.2)*18.+pow(mBase,1.66)+mTreble*3.; //-root+base+treble
+                mPointSize = pow(mPointSize,2.2)*18.+pow(mBase*1.8,2.22)+mTreble*3.; //-root+base+treble
                 gl_PointSize = mPointSize;
             }
 
@@ -218,7 +218,7 @@
                 mPointSize = mNoise*.01*mBase;
                 gl_PointSize = pow(mPointSize,2.2);
                 //set varying variables
-                vA = pow(uBase*.004,2.2);
+                vA = pow(uBase*.005,2.2);
                 vR = mBase;
                 vG = mPointSize*.1*randomTrigger;
             }
@@ -334,8 +334,8 @@
             varying float vG;
             varying float vB;
             void main(){
-                vec3 mC = vec3(1.,vG*.6,vB*.6);
-                gl_FragColor = vec4(mC,.9);
+                vec3 mC = vec3(1.,vG*.1,vB*.1);
+                gl_FragColor = vec4(mC,vB*3.);
             }
         </script>
 
@@ -567,7 +567,7 @@
                 vec3 mColor = vec3( mR + mGB * 1. + mEnergy, mGB*.0 + mEnergy, mGB*.0 + mEnergy*.5 ); 
                 mColor = pow(mColor,vec3(2.2));//-gamma correction, you will lose vertically shading
 
-                gl_FragColor = vec4( mColor, mColor.r+.4 );
+                gl_FragColor = vec4( mColor, 1. );
             }
         </script>
         

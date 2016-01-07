@@ -45,7 +45,7 @@ THREE.PS_01 = function(_options){
     });
 
     //-append vertices
-    for(var v = 0; v < self.slice-1; v++){
+    for(var v = 0; v < self.slice; v++){
         for(var u = 0; u < self.segment; u++){
             var i = u + v * self.segment;
             var theta = 2 * pi * u/self.segment;

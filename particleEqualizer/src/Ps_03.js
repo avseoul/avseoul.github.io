@@ -38,7 +38,7 @@ THREE.PS_03 = function(_options){
         fragmentShader: PS_03_frag
     });
     //-append vertices to position attribute
-    for(var v = 0; v < self.slice-1; v++){
+    for(var v = 0; v < self.slice; v++){
         for(var u = 0; u < self.segment; u++){
             var i = u + v * self.segment;
             var theta = 2 * pi * u/self.segment;
