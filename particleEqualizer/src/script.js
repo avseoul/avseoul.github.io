@@ -141,7 +141,7 @@ var init = function(){
     //-set background quad
     mBKG_mat = new THREE.ShaderMaterial({
         transparent: false,
-        depthWrite: true,
+        depthWrite: false,
         blending: 'THREE.AddictiveBlending',
         uniforms:{
             'uTime': { type: 'f', value: 0.0 },
