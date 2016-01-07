@@ -33,7 +33,7 @@ THREE.PS_03 = function(_options){
             'uTreble': {type: 'f', value: 0.0 }
         },
         blending: 'THREE.AddictiveBlending',
-        depthWrite: true,
+        depthWrite: false,
         vertexShader: PS_03_vert,
         fragmentShader: PS_03_frag
     });

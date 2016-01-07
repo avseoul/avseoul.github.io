@@ -30,15 +30,16 @@ THREE.PS_01 = function(_options){
 
     //set material
     self.mat = new THREE.ShaderMaterial({
-        transparent: true,
         uniforms:{
             'uTime': {type: 'f', value: 0.0 },
             'uIndex' : {type: 'i', value: 0 },
             'uTotalIndices' : {type: 'i', value: 0},
-            'uTreble' : {type: 'f', value: 0.0}
+            'uTreble' : {type: 'f', value: 0.0},
+            'uTex' : {type: 't', value: THREE.TextureLoader('img/p01.png')}
         },
-        blending: 'THREE.AddictiveBlending',
-        depthWrite: true,
+        blending: 'THREE.AdditiveBlending',
+        depthWrite: false,
+        transparent: true,
         vertexShader: PS_01_vert,
         fragmentShader: PS_01_frag
     });

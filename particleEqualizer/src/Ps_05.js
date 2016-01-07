@@ -26,8 +26,8 @@ THREE.PS_05 = function(_options){
             'uTime': {type: 'f', value: 0.0 },
             'uTreble': {type: 'f', value: 0.0 }
         },
-        depthWrite: true,
-        blending: 'THREE.NormalBlending',
+        depthWrite: false,
+        blending: 'THREE.AddictiveBlending',
         vertexShader: PS_05_vert,
         fragmentShader: PS_05_frag
     });

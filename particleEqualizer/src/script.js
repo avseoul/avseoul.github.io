@@ -125,16 +125,14 @@ var init = function(){
 
     //-set displaced sphere
     mDS_01_mat = new THREE.ShaderMaterial({
-        transparent: true,
-        blending: 'THREE.AddictiveBlending',
-        depthWrite: true,
+        transparent: false,
+        blending: 'THREE.AdditiveBlending',
+        depthWrite : true,
         uniforms:{
-            'uTex': { type: 't', value: THREE.TextureLoader( './img/tex_01.png' )},
             'uTime': { type: 'f', value: 0.0 },
             'uIn_01': { type: 'f', value: 0.0 },
             'uTreble': { type: 'f', value: 0.0 }
         },
-        //blending: THREE.AdditiveBlending,
         vertexShader: DS_01_vert,
         fragmentShader: DS_01_frag
     });
@@ -143,7 +141,8 @@ var init = function(){
     //-set background quad
     mBKG_mat = new THREE.ShaderMaterial({
         transparent: false,
-        depthWrite: false,
+        depthWrite: true,
+        blending: 'THREE.AddictiveBlending',
         uniforms:{
             'uTime': { type: 'f', value: 0.0 },
             'uIn_01': {type: 'f', value: 0.0 },
@@ -158,10 +157,10 @@ var init = function(){
     mBKG_mesh.scale.set( 5., 5., 1 );
 
     //-set group
-    group_04.add( mDS_01_mesh );
     for(var i = 0; i < PS_01_size; i++){
         group_01.add( mPS_01[i] );
     }
+    group_04.add( mDS_01_mesh );
     group_01.add( mPS_02 );
     group_02.add( mPS_03 );
     group_02.add( mPS_04 );
@@ -265,15 +264,15 @@ var render = function(){
     } else {
         tL = tL * .99; //-get back when out of input event
     }
-    oL = (tL-cL)*.2; //-normalize
+    oL = (tL-cL)*.05; //-normalize
     if(oL < 2.5 && oL > -2.5){
         nL = nL * .99;
     } else {
         nL = cL+oL;
     }
-    nR_b = 1.+nL*.01; //-get new rotation
+    nR_b = 1.+nL*.005; //-get new rotation
     if(in_treble > 200.){
-        nR_t+=.01;
+        nR_t+=.002;
     } else {
         if(nR_t > .001){
             nR_t *= .96;

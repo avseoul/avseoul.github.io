@@ -30,7 +30,7 @@ THREE.PS_02 = function(_options){
             'uBase' : {type: 'f', value: 0 }
         },
         blending: 'THREE.AddictiveBlending',
-        depthWrite: true,
+        depthWrite: false,
         vertexShader: PS_02_vert,
         fragmentShader: PS_02_frag
     });
