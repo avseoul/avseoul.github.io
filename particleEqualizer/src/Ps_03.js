@@ -32,7 +32,7 @@ THREE.PS_03 = function(_options){
             'uBass': {type: 'f', value: 0.0 },
             'uTreble': {type: 'f', value: 0.0 }
         },
-        blending: 'THREE.AddictiveBlending',
+        blending: THREE.AdditiveBlending,
         depthWrite: false,
         vertexShader: PS_03_vert,
         fragmentShader: PS_03_frag

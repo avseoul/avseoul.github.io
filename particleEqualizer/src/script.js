@@ -83,8 +83,8 @@ var init = function(){
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i] = new THREE.PS_01({
-            'slice': 150,
-            'segment': 150,
+            'slice': 200,
+            'segment': 200,
             'ps01vert': PS_01_vert,
             'ps01frag': PS_01_frag,
             'radius': 180
@@ -125,31 +125,31 @@ var init = function(){
 
     //-set displaced sphere
     mDS_01_mat = new THREE.ShaderMaterial({
-        transparent: false,
-        blending: 'THREE.AdditiveBlending',
-        depthWrite : true,
         uniforms:{
             'uTime': { type: 'f', value: 0.0 },
             'uIn_01': { type: 'f', value: 0.0 },
             'uTreble': { type: 'f', value: 0.0 }
         },
         vertexShader: DS_01_vert,
-        fragmentShader: DS_01_frag
+        fragmentShader: DS_01_frag,
+        blending: THREE.NormalBlending,
+        depthWrite : true,
+        transparent: true,
     });
     var mDS_01_geo = new THREE.SphereGeometry( 160, 128, 128 );
     mDS_01_mesh = new THREE.Mesh( mDS_01_geo, mDS_01_mat );
     //-set background quad
     mBKG_mat = new THREE.ShaderMaterial({
-        transparent: false,
-        depthWrite: false,
-        blending: 'THREE.AddictiveBlending',
         uniforms:{
             'uTime': { type: 'f', value: 0.0 },
             'uIn_01': {type: 'f', value: 0.0 },
             'uTreble': { type: 'f', value: 0.0 }
         },
         vertexShader: BKG_vert,
-        fragmentShader: BKG_frag
+        fragmentShader: BKG_frag,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        transparent: true
     });
     var mBKG_geo = new THREE.PlaneGeometry(width, height);
     mBKG_mesh = new THREE.Mesh( mBKG_geo, mBKG_mat );

@@ -31,7 +31,7 @@ THREE.PS_04 = function(_options){
             'uLife': {type: 'f', value: 0.0 },
             'uTreble': {type: 'f', value: 0.0 }
         },
-        blending: 'THREE.AddictiveBlending',
+        blending: THREE.AdditiveBlending,
         depthWrite: false,
         vertexShader: PS_04_vert,
         fragmentShader: PS_04_frag

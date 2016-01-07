@@ -24,15 +24,16 @@ THREE.PS_02 = function(_options){
     THREE.Object3D.apply(this, arguments);
     /* set material */
     self.mat = new THREE.ShaderMaterial({
-        transparent: true,
         uniforms:{
             'uTime': {type: 'f', value: 0.0 },
-            'uBase' : {type: 'f', value: 0 }
+            'uBase': {type: 'f', value: 0 },
+            'uTex': {type: 't', value: THREE.TextureLoader('img/p01.png')}
         },
-        blending: 'THREE.AddictiveBlending',
-        depthWrite: false,
         vertexShader: PS_02_vert,
-        fragmentShader: PS_02_frag
+        fragmentShader: PS_02_frag,
+        blending: THREE.AdditiveBlending,
+        depthTest: false,
+        transparent: true
     });
     //-append vertices to position attribute
     for(var v = 0; v < self.slice-1; v++){

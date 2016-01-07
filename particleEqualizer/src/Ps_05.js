@@ -21,15 +21,15 @@ THREE.PS_05 = function(_options){
     THREE.Object3D.apply(this, arguments);
     /* set material */
     self.mat = new THREE.ShaderMaterial({
-        transparent: true,
         uniforms:{
             'uTime': {type: 'f', value: 0.0 },
             'uTreble': {type: 'f', value: 0.0 }
         },
-        depthWrite: false,
-        blending: 'THREE.AddictiveBlending',
         vertexShader: PS_05_vert,
-        fragmentShader: PS_05_frag
+        fragmentShader: PS_05_frag,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        transparent: true
     });
     //-append vertices
     for(var i = 0; i < self.PARTICLE_COUNT; i++){
