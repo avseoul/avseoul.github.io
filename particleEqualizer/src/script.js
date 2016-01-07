@@ -132,9 +132,9 @@ var init = function(){
         },
         vertexShader: DS_01_vert,
         fragmentShader: DS_01_frag,
-        blending: THREE.AdditiveBlending,
-        depthWrite : false,
-        transparent: true,
+        blending: THREE.NormalBlending,
+        depthWrite : true,
+        transparent: false,
     });
     var mDS_01_geo = new THREE.SphereGeometry( 160, 128, 128 );
     mDS_01_mesh = new THREE.Mesh( mDS_01_geo, mDS_01_mat );

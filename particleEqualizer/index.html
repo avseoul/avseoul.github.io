@@ -118,10 +118,10 @@
                 float mR = (1.-mV)*mO*10. - mV*mO + mBase + mTreble*mV*.99+uTreble*aBass; //-root+blackring+base+treble+whity
                 float mG = 0. - mV*mO*.5 + mBase + mTreble*mV*.99+uTreble*aBass; 
                 float mB = 0. - mV*mO*.5 + mBase + mTreble*mV*.1+uTreble*aBass;
-                float mA = mV*mO*.15;
+                float mA = mV*mO*.4;
                 vColor = vec4(mR,mG,mB,mA);                
                 //set position
-                vec3 mPos = position + mNormal*mNoise + mNormal*mIn01;       
+                vec3 mPos = position + mNormal*mNoise - mNormal*mIn01;       
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //set point size 
                 float mPointSize = (1.-mV)*mO;
@@ -430,7 +430,7 @@
                 //-set varying
                 vG = pow(mAttrBase,2.2)*.001+uTreble*aBase;
                 vB = pow(mAttrBase,2.2)*.0001+uTreble*aBase;
-                vA = (1.-randomLife/randomLifeTarget);
+                vA = (1.6-randomLife/randomLifeTarget)*3.;
             }
         </script>
         <script type='x-shader/x-vertex' id='PS_04_frag'>
