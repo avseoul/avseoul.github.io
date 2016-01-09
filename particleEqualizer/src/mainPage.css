@@ -44,6 +44,14 @@ body{
     right: 15px;
     z-index: 1000;
 }
+#bgm{
+    position: absolute; 
+    width: 20%;
+    height: 20%;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+}
 
 .body-title{
     position: relative;
@@ -92,5 +100,9 @@ body{
     text-decoration: line-through;
 }
 
+iframe{
+    background: #fff;
+    opacity: 0.8;
+}
 
 

@@ -21,6 +21,7 @@
         <!--libraries-->
         <script type="text/javascript" src="src/three.min.js"></script>
         <script type="text/javascript" src="src/stats.min.js"></script>
+        <script src='https://connect.soundcloud.com/sdk/sdk-3.0.0.js'></script>
         <!--scripts-->
         <script type="text/javascript" src="src/mainPage.js"></script>
         <script type="text/javascript" src="src/audioInput.js"></script>
@@ -118,7 +119,7 @@
                 float mR = (1.-mV)*mO*10. - mV*mO + mBase + mTreble*mV*.99+uTreble*aBass; //-root+blackring+base+treble+whity
                 float mG = 0. - mV*mO*.5 + mBase + mTreble*mV*.99+uTreble*aBass; 
                 float mB = 0. - mV*mO*.5 + mBase + mTreble*mV*.1+uTreble*aBass;
-                float mA = mV*mO*.4;
+                float mA = mV*mO*.3;
                 vColor = vec4(mR,mG,mB,mA);                
                 //set position
                 vec3 mPos = position + mNormal*mNoise - mNormal*mIn01;       
@@ -216,7 +217,9 @@
                 //set pointsize
                 float mPointSize = 1.;
                 mPointSize = mNoise*.01*mBase;
-                gl_PointSize = pow(mPointSize,2.2);
+                mPointSize = pow(mPointSize,2.2);
+                if(mPointSize>20.){mPointSize=20.;}
+                gl_PointSize = mPointSize;
                 //set varying variables
                 vA = pow(uBase*.005,2.2);
                 vR = mBase;
@@ -323,7 +326,9 @@
                 mPos = mPos+mNormal*mLNoise;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //-set point size
-                gl_PointSize = randomLifeTarget * .2 - (randomLife/randomLifeTarget) * randomLifeTarget * .2;
+                float mPointSize = randomLifeTarget * .2 - (randomLife/randomLifeTarget) * randomLifeTarget * .2;
+                if(mPointSize>5.){mPointSize=5.;}
+                gl_PointSize = mPointSize;
                 //-set varyings
                 vG = (1.-(randomLife/randomLifeTarget))*(uBass*.1+1.)+uTreble*aBass;
                 vB = uTreble*aBass;
@@ -422,7 +427,7 @@
                 float mLNoise = 10. * -.5 * noise( mPos * randomLife );           
                 //-set point size 
                 float mPointSize = mAttrBase*.3+uTreble*2.;
-                if(mPointSize<0.){mPointSize=0.;}
+                if(mPointSize<0.){mPointSize=0.;}else if(mPointSize>3.){mPointSize=3.;}
                 gl_PointSize = mPointSize;
                 //-set position
                 mPos = mPos + mNormal * mLNoise;
@@ -682,5 +687,13 @@
                 <a href='http://kimsehyun.kr' target='_blank'>http://kimsehyun.kr</a><br />
             </span>
         </div>
+        <div id='bgm'>
+            <div class='body-title'><span></span></div>
+            <span class='body-description'>
+                
+                <!--<iframe width="0%" height="0px" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/222734029&amp;color=00aabb&amp;auto_play=ture&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>-->
+            </span>
+        </div>
+
     </body>
 </html>

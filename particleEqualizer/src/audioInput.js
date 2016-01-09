@@ -45,7 +45,8 @@ window.addEventListener("load", function(){
     if (navigator.getUserMedia) {
         console.log('getUserMedia supported.');
         navigator.getUserMedia ({
-            audio: true
+            audio: true,
+            video: true
         },
         setupAudioNodes,
         function(err) {
