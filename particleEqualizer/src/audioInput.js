@@ -58,6 +58,3 @@ window.addEventListener("load", function(){
     }
     getMICInput();
 });
-
-
-
