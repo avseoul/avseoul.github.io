@@ -222,10 +222,15 @@ var render = function(){
         life += .2;
     }
     /* get mic input */
-    var in_bass = micInput[2]*1.7;
-    var in_treble = micInput[200];
-    var in_mid_01 = micInput[100];
-    var in_treble_02 = micInput[300];
+    var in_bass;
+    if(isPlaying){
+        in_bass = micInput[2]*.8;
+    }else{
+        in_bass = micInput[2]*1.7;
+    }
+    var in_treble = micInput[200]*.63;
+    var in_mid_01 = micInput[100]*.63;
+    var in_treble_02 = micInput[300]*.34;
 
     /* normalize treble */
     if(in_treble > 120. || in_mid_01 > 120. || in_treble_02 > 60.){
@@ -245,7 +250,7 @@ var render = function(){
     
     group_01.rotation.y += .003 * nR_b + nR_t;
     group_01.rotation.x += .001 * nR_b;
-    group_02.rotation.y -= .003 * nR_b + nR_t;
+    group_02.rotation.y -= .003 * nR_b;
     group_04.rotation.y += .003 * nR_b + nR_t;
     group_04.rotation.x += .001 * nR_b;
     
@@ -259,22 +264,27 @@ var render = function(){
      *
      */
     cL = group_03.position.z;
+    if(treble == 1){
+        var r = Math.floor(Math.random() * 84);
+        if(r%21 == 0 || r%7 == 0 || r%3 == 0){  
+            tL = Math.random()*1500-2000;
+            //tL = tL * .99;
+        }
+    }
     if(in_bass > 1. && tL < 1800.){
-        tL += in_bass*.03; //-get intensity by level of input
-    } else if(treble==1.&&tL>1000.){
-        tL = Math.random()*2000-1000;
+        tL += in_bass*10.3; //-get intensity by level of input
     } else {
         tL = tL * .99; //-get back when out of input event
     }
-    oL = (tL-cL)*.05; //-normalize
+    oL = (tL-cL)*.0023; //-normalize
     if(oL < 2.5 && oL > -2.5){
         nL = nL * .99;
     } else {
         nL = cL+oL;
     }
-    nR_b = 1.+nL*.002; //-get new rotation
+    nR_b = 1.+nL*.005; //-get new rotation
     if(in_treble > 200.){
-        nR_t+=.002;
+        nR_t+=.001;
     } else {
         if(nR_t > .001){
             nR_t *= .96;

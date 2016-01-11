@@ -33,7 +33,7 @@ body{
     width: 20%;
     height: 20%;
     bottom: 5px;
-    left: 55%;
+    left: 57%;
     z-index: 1000;
 }
 #contact-info{
@@ -46,10 +46,11 @@ body{
 }
 #bgm{
     position: absolute; 
-    width: 20%;
-    height: 20%;
-    top: 15px;
+    width: 300px;
+    height: 50px;
+    top: 25px;
     right: 15px;
+    background: #000;
     z-index: 1000;
 }
 
@@ -69,11 +70,10 @@ body{
 }
 .body-description{
     font-size: 11px;
-    padding-bottom:2px;
     font-weight: 100;
     color: #a0a0a5;
     letter-spacing: 0.6px;
-    line-height: 17px;
+    line-height: 15px;
     position: relative;
     background: #000;
     opacity: 0.8;
@@ -83,11 +83,10 @@ body{
 }
 .body-description li span{
     font-size: 11px;
-    padding-bottom:2px;
     font-weight: 100;
     color: #a0a0a5;
     letter-spacing: 0.6px;
-    line-height: 17px;
+    line-height: 15px;
     position: relative;
     background: #000;
     opacity: 0.8;
@@ -100,9 +99,76 @@ body{
     text-decoration: line-through;
 }
 
-iframe{
-    background: #fff;
+.player{
+    font-size: 9px;
+    font-weight: 100;
+    word-break: break-all; 
+    color: #a0a0a5;
+    letter-spacing: 0.6px;
+    line-height: 12px;
+    position: relative;
     opacity: 0.8;
+}
+.player a{
+    color: #b0b0b5;
+    text-decoration: none;
+}
+.player a:hover{
+    color: #fff;
+}
+.player #mThumb {
+    cursor: pointer;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 0px;
+    left:0px;
+}
+.player #mImg{
+    width: 50px;
+}
+.player #mLink{
+    position: absolute;
+    left: 52px;
+    max-width: 248px;
+    overflow : hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.player #mUsrLink{
+    font-size: 7px;
+    position: absolute;
+    left: 52px;
+    top: 12px;
+    max-width: 248px;
+    overflow : hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.player #mLogo{
+    position: absolute;
+    top: 38px;
+    right: 2px;
+    cursor: pointer;
+    width: 70px;
+}
+.player #mUI{
+    position: absolute;
+    top: 38px;
+    left: 54px;
+}
+.player #mUI #play{
+}
+.player #mUI #stop{
+    margin-left: 2px;
+}
+.player #mUI #play:hover{
+    cursor: pointer;
+    color: #fff;
+}
+.player #mUI #stop:hover{
+    cursor: pointer;
+    color: #fff;
 }
 
 

@@ -9,8 +9,10 @@ var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 var analyserNode = audioCtx.createAnalyser();
 var bufferLength = analyserNode.frequencyBinCount;
 var micInput = new Uint8Array(bufferLength);
+/////* getting mAudio variable from mainPage.js (soundcould api)
+var audioNode = audioCtx.createMediaElementSource(mAudio);
 
-var setupAudioNodes= function(stream) {
+var setupAudioNodes = function(stream) {
     var sampleSize = 1024;
     var sourceNode = audioCtx.createMediaStreamSource(stream);
     var filter_low = audioCtx.createBiquadFilter();
@@ -26,9 +28,12 @@ var setupAudioNodes= function(stream) {
 
     sourceNode.connect(filter_low);
     sourceNode.connect(filter_high);
+    audioNode.connect(audioCtx.destination);
+    audioNode.connect(filter_low);
+    audioNode.connect(filter_high);
     filter_low.connect(analyserNode);
     filter_high.connect(analyserNode);
-    
+
     micInput = new Uint8Array(analyserNode.frequencyBinCount);
 };
 
@@ -36,12 +41,13 @@ var getMICInput = function(){
     requestAnimationFrame( getMICInput );
     analyserNode.getByteFrequencyData(micInput);
     //for(var i = 0; i < micInput.length; i++){
-        //if(micInput[i] > 100)
-        //console.log(i, "' ",micInput[i]);
+    //if(micInput[i] > 100)
+    //console.log(i, "' ",micInput[i]);
     //}
 };
 
 window.addEventListener("load", function(){
+//var triggerWebAudio = function(){
     if (navigator.getUserMedia) {
         console.log('getUserMedia supported.');
         navigator.getUserMedia ({
@@ -57,4 +63,5 @@ window.addEventListener("load", function(){
         console.log('getUserMedia not supported on your browser!');
     }
     getMICInput();
+//}
 });

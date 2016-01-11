@@ -119,14 +119,14 @@
                 float mR = (1.-mV)*mO*10. - mV*mO + mBase + mTreble*mV*.99+uTreble*aBass; //-root+blackring+base+treble+whity
                 float mG = 0. - mV*mO*.5 + mBase + mTreble*mV*.99+uTreble*aBass; 
                 float mB = 0. - mV*mO*.5 + mBase + mTreble*mV*.1+uTreble*aBass;
-                float mA = mV*mO*.3;
+                float mA = mV*mO*.3+uTreble*aBass*.003;
                 vColor = vec4(mR,mG,mB,mA);                
                 //set position
                 vec3 mPos = position + mNormal*mNoise - mNormal*mIn01;       
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //set point size 
                 float mPointSize = (1.-mV)*mO;
-                mPointSize = pow(mPointSize,2.2)*18.+pow(mBase*1.8,2.22)+mTreble*3.; //-root+base+treble
+                mPointSize = pow(mPointSize,2.2)*13.+pow(mBase*1.,2.22)+(1.-mTreble)*.01; //-root+base+treble
                 gl_PointSize = mPointSize;
             }
 
@@ -675,7 +675,7 @@
                 <li><span>web application for desktop</span></li>
                 <li><span>creative coding</span></li>
                 <li><span>sound reactive</span></li>
-                <li><span>javascript/ <a href='https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API' target='_blank'>web-audio-api</a>/ <a href='http://threejs.org/' target='_blank'>threejs</a>/ glsl</span></li>
+                <li><span>javascript/ web-audio-api/ <a href='http://threejs.org/' target='_blank'>threejs</a>/ glsl/ soundcloud-api</span></li>
                 <li><span>2015.12</span></li>
             </span>
         </div>
@@ -688,10 +688,7 @@
             </span>
         </div>
         <div id='bgm'>
-            <div class='body-title'><span></span></div>
-            <span class='body-description'>
-                <!--<iframe width="100%" height="400px" scrolling="no" frameborder="no"></iframe>-->
-            </span>
+            <div class='player' id='player-here'></div>
         </div>
 
     </body>
