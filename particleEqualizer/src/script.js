@@ -185,10 +185,10 @@ var init = function(){
     //-add canvas(renderer) dom to body
     var retina = renderer.domElement;
     retina.width = width * 2; //-get retina point size regardless any screen
-    retina.height = height * 2; 
+    retina.height = height * 2;
     retina.style.width = width; 
     retina.style.height = height;
-    console.log(retina);
+    //console.log(retina);
     renderer.setViewport(0,0,retina.width,retina.height);
     camera.aspect = retina.width/retina.height;
     camera.updateProjectionMatrix();
@@ -266,9 +266,11 @@ var render = function(){
     cL = group_03.position.z;
     if(treble == 1){
         var r = Math.floor(Math.random() * 84);
-        if(r%21 == 0 || r%7 == 0 || r%3 == 0){  
-            tL = Math.random()*1500-2000;
-            //tL = tL * .99;
+        if(tL > 500.){
+            if(r%21 == 0 || r%7 == 0 || r%3 == 0){  
+                tL = Math.random()*1500-2000;
+                //tL = tL * .99;
+            }
         }
     }
     if(in_bass > 1. && tL < 1800.){

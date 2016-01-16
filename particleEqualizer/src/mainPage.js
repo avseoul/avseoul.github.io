@@ -2,29 +2,27 @@ SC.initialize({
     client_id: '1c78c29753054d2e9af8926dd4a77db3'
 });
 /* --------------------------------------------------------- */
+var mTracks = ['/tracks/222734029',     //Everything and Nothing - dj krush
+    '/tracks/220103939',                //Future Correction[45sec] - dj krush
+    '/tracks/221995257',                //Missing Link - dj krush
+    '/tracks/220662300',                //Strange Light - dj krush 
+    '/tracks/222735580',                //Nostalgia feat.Takashi Niigaki[45sec] - dj krush 
+    '/tracks/222735459',                //My Light feat. Yasmine Hamdan[30sec] - dj krush
+    '/tracks/222734282',                //Coruscation[45sec] - dj krush
+    '/tracks/221995046'                 //Song of the Haze[45sec] - dj krush
+];               
+var selector = 0;
 var mAudio = new Audio(); //-for web-audio api
-mAudio.loop = true;
+//mAudio.loop = true;
 var isPlaying = true;
-mAudio.src = 'https://api.soundcloud.com/tracks/222734029/stream?client_id=1c78c29753054d2e9af8926dd4a77db3';
+mAudio.src = 'https://api.soundcloud.com' + mTracks[selector] + '/stream?client_id=1c78c29753054d2e9af8926dd4a77db3';
 mAudio.crossOrigin = "anonymous";
 /* --------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', function(){
-    //-get track
-    var selector = 0;
-    /*var mTrack = ['/tracks/222734029', 
-      '/tracks/221995257', 
-      '/tracks/220662300', 
-      '/tracks/222735580',
-      '/tracks/222735459',
-      '/tracks/222734282',
-      '/tracks/221995046',
-      '/tracks/220103939'
-      ];*/
-    var mTrack = ['/tracks/222734029', '/tracks/221995257'];
-    //-get song's info
+    //-get song's info & build up player
     var getTrackInfo = function(){
-        SC.get(mTrack[0]).then(function(track){
+        SC.get(mTracks[selector]).then(function(track){
             var user = track.user.username;
             var userProfile = track.user.permalink_url;
             var permalink = track.permalink_url;
@@ -68,9 +66,9 @@ document.addEventListener('DOMContentLoaded', function(){
             play.addEventListener('click', function(){
                 if(!isPlaying)
                     audioNode.mediaElement.play();
-                    mStream.then(function(player){
-                        //player.play();
-                    });
+                mStream.then(function(player){
+                    //player.play();
+                });
                 isPlaying = true;
             });
             var stop = document.createElement('span');
@@ -79,9 +77,9 @@ document.addEventListener('DOMContentLoaded', function(){
             stop.addEventListener('click', function(){
                 if(isPlaying)
                     audioNode.mediaElement.pause();
-                    mStream.then(function(player){
-                        //player.pause();
-                    });
+                mStream.then(function(player){
+                    //player.pause();
+                });
                 isPlaying = false;
             });
             mUI.appendChild(play);
@@ -95,28 +93,23 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     };
     //-stream track
-    var mStream = SC.stream(mTrack[0]);
+    var mStream = SC.stream(mTracks[selector]);
     var playTracks = function(){
         mStream.then(function(player){
             getTrackInfo();
-            //player.play();
             audioNode.mediaElement.play();//-web audio audioInput.js
-            audioNode.onended = function(){
-                console.log('he;');
-             }
-
-            player.on('finish', function(){
-                //selector++;
-                //if(selector > mTrack.length-1){
-                //    selector = 0;
-                //}
-                //console.log(selector);
-                //mStream = SC.stream(mTrack[selector]);
-                //playTracks();
-                
-                //player.play();                
-            });
         });
     };
     playTracks();
+
+    //-get playback event and change tracks
+    mAudio.addEventListener('ended', function(){
+        selector++;
+        if(selector > mTracks.length-1){
+            selector = 0;
+        }
+        mAudio.src = 'https://api.soundcloud.com' + mTracks[selector] + '/stream?client_id=1c78c29753054d2e9af8926dd4a77db3';
+        mStream = SC.stream(mTracks[selector]);
+        playTracks();
+    });
 });

@@ -217,9 +217,9 @@
                 gl_Position = projectionMatrix*modelViewMatrix*vec4(mPos,1.0);
                 //set pointsize
                 float mPointSize = 1.;
-                mPointSize = mNoise*.01*mBase;
+                mPointSize = mNoise*.013*mBase;
                 mPointSize = pow(mPointSize,2.2);
-                if(mPointSize>20.){mPointSize=20.;}
+                if(mPointSize>50.){mPointSize=50.;}
                 gl_PointSize = mPointSize;
                 //set varying variables
                 vA = pow(uBase*.005,2.2);
