@@ -43,7 +43,11 @@ var getProgressBar = function(){
     mTime = document.getElementById('pTime');
     var progress = mAudio.currentTime*1000/duration[selector] * 170;
     mBar.style.width = progress;
-    mTime.innerHTML = toTimer(mAudio.currentTime);
+    if(mAudio.currentTime){
+        mTime.innerHTML = toTimer(mAudio.currentTime);
+    }else{
+        mTime.innerHTML = '00:00:00';
+    }
 };
 //-store tracks info
 var getTracks = function(){

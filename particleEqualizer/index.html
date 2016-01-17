@@ -126,7 +126,7 @@
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //set point size 
                 float mPointSize = (1.-mV)*mO;
-                mPointSize = pow(mPointSize,2.2)*15.+mBase*.0001+mTreble*.1; //-root+base+treble
+                mPointSize = mPointSize*10.+mBase*.1+mTreble*.1; //-root+base+treble
                 if(mPointSize<0.){mPointSize=0.;}
                 gl_PointSize = mPointSize;
             }
@@ -217,14 +217,14 @@
                 gl_Position = projectionMatrix*modelViewMatrix*vec4(mPos,1.0);
                 //set pointsize
                 float mPointSize = 1.;
-                mPointSize = mNoise*.013*mBase;
+                mPointSize = mAlign*.008+mNoise*.008*mBase;
                 mPointSize = pow(mPointSize,2.2);
-                if(mPointSize>50.){mPointSize=50.;}
+                //if(mPointSize>50.){mPointSize=50.;}
                 gl_PointSize = mPointSize;
                 //set varying variables
                 vA = pow(uBase*.005,2.2);
-                vR = mBase;
-                vG = mPointSize*.1*randomTrigger;
+                vR = mPointSize;
+                vG = mPointSize*.5*randomTrigger;
             }
         </script>
         <script type='x-shader/x-vertex' id='PS_02_frag'>
@@ -537,12 +537,13 @@
 
             varying float vNoise;
             uniform float uTime;
+            uniform float uTreble;
             
             void main(){
                 //by normal - for big blob
                 vNoise = 40. * -2. * noise(normal + uTime * .5);
                 //by position - for tiny detail
-                float pn = 1. * noise( .015 * position + uTime);
+                float pn = (50.*uTreble+1.) * 1. * noise( (.2*uTreble+1.) * .015 * position + uTime);
                 //compose it
                 float displacement = vNoise + pn;
                 
@@ -570,7 +571,7 @@
                 float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01 * .8;
                 //if(mGB < 0.){mGB = 0.;}
                 float mEnergy = mGB * uTreble * .5;
-                vec3 mColor = vec3( mR + mGB * 1. + mEnergy, mGB*.0 + mEnergy, mGB*.0 + mEnergy*.1 ); 
+                vec3 mColor = vec3( mR + mGB * 1. + mEnergy, mGB*.1 + mEnergy, mGB*.1 + mEnergy*.1 ); 
                 mColor = pow(mColor,vec3(2.2));//-gamma correction, you will lose vertically shading
 
                 gl_FragColor = vec4( mColor, 1. );

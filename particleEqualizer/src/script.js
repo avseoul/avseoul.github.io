@@ -119,7 +119,7 @@ var init = function(){
     });
     //-set PS_05
     mPS_05 = new THREE.PS_05({
-        'size': 600,
+        'size': 3200,
         'ps05vert': PS_05_vert,
         'ps05frag': PS_05_frag
     });
@@ -267,7 +267,7 @@ var render = function(){
     cL = group_03.position.z;
     if(treble == 1){
         var r = Math.floor(Math.random() * 84);
-        if(tL > 500.){
+        if(tL > 100.){
             if(r%21 == 0 || r%7 == 0 || r%3 == 0){  
                 tL = Math.random()*1500-2000;
                 //tL = tL * .99;
