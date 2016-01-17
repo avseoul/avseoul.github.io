@@ -84,8 +84,8 @@ var init = function(){
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i] = new THREE.PS_01({
-            'slice': 200,
-            'segment': 200,
+            'slice': 150,
+            'segment': 150,
             'ps01vert': PS_01_vert,
             'ps01frag': PS_01_frag,
             'radius': 180
@@ -185,6 +185,7 @@ var init = function(){
 
     //-add canvas(renderer) dom to body
     var retina = renderer.domElement;
+    retina.id = 'mCanvas';
     retina.width = width * 2; //-get retina point size regardless any screen
     retina.height = height * 2;
     retina.style.width = width; 

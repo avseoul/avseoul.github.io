@@ -22,25 +22,56 @@ var isPlaying = true;
 /* --------------------------------------------------------- */
 
 /* navigation */
+var d01_gPos = 15;
+var d01_gOpa = .8;
 var navigation = function(event){
-    var navi = event.wheelDeltaY * 0.01;
+    var trigger = event.wheelDeltaY;
     //console.log(navi);
-
     //-projetc title
     var d01 = document.getElementById('project-title');
-    var d01_opacity = d01.style.opacity;
-    var d01_pos = d01.style.top;
-    var d01_rootPos = '15px';
-    var d01_targetPos = '0px';
-    var d01_rootOpacity = '0.8';
-    var d01_targetOpacity = '0';
-    if(navi < -1){
-        console.log('working?');
-        d01_opacity = d01_targetOpacity;
-        d01_pos = d01_targetPos;
-    }else if(navi > 1){
-        d01_opacity = d01_rootOpacity;
-        d01_pos = d01_rootPos;
+    var d01_rPos = 15;
+    var d01_tPos = -15;
+    var d01_rOpa = .8;
+    var d01_tOpa = 0;
+    if(trigger < 0){
+        //-get new opacity
+        var d01_nOpa = d01_tOpa-d01_gOpa;
+        d01_gOpa += d01_nOpa*.03;
+        if(d01_gOpa < d01_tOpa){ //-stop when it approach to edge
+            d01_gOpa = d01_tOpa;
+        }
+        //-get new position
+        var d01_nPos = d01_tPos-d01_gPos;
+        d01_gPos += d01_nPos*.05;
+        if(d01_gPos < d01_tPos){ //-stop when it approach to edge
+            d01_gPos = d01_tPos;
+        }
+        //-assign it
+        d01.style.opacity = d01_gOpa.toString();
+        d01.style.top = d01_gPos.toString();
+
+    }else if(trigger > 0){
+        //-get new opacity
+        var d01_nOpa = d01_rOpa-d01_gOpa;
+        d01_gOpa += d01_nOpa*.03;
+        if(d01_gOpa > d01_rOpa){
+            d01_gOpa = d01_rOpa;
+        }
+        //-get new position
+        var d01_nPos = d01_rPos-d01_gPos;
+        d01_gPos += d01_nPos*.05;
+        if(d01_gPos > d01_rPos){
+            d01_gPos = d01_rPos;
+        }
+        //-assign it
+        d01.style.opacity = d01_gOpa.toString();
+        d01.style.top = d01_gPos.toString();
+    }else if(trigger == 0){
+        if(d01_gOpa >= d01_rOpa*.5){
+            //go to root
+        }else{
+            //go to target
+        }
     }
 };
 
@@ -331,8 +362,8 @@ document.addEventListener('DOMContentLoaded', function(){
     var init = function(){
         getTracks();
         loading();
-        
+        //document.addEventListener('wheel', navigation, false);
     };
     init();
 });
-document.addEventListener('wheel', navigation, false);
+
