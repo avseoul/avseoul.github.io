@@ -47,7 +47,6 @@ var getMICInput = function(){
 };
 
 window.addEventListener("load", function(){
-//var triggerWebAudio = function(){
     if (navigator.getUserMedia) {
         //console.log('getUserMedia supported.');
         navigator.getUserMedia ({
@@ -63,5 +62,4 @@ window.addEventListener("load", function(){
         console.log('getUserMedia not supported on your browser!');
     }
     getMICInput();
-//}
 });

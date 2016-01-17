@@ -47,6 +47,7 @@ var init = function(){
     ratio = width/height;
     //-set threejs objects
     scene = new THREE.Scene();
+    //scene.fog = new THREE.FogExp2( 0x000000, .25 );
     group_01 = new THREE.Object3D();
     group_02 = new THREE.Object3D();
     group_03 = new THREE.Object3D();
@@ -175,7 +176,7 @@ var init = function(){
     scene.add( group_03 );
     scene.add( mBKG_mesh );
     scene.add( mPS_05 );
-
+    
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.top = '0px';
