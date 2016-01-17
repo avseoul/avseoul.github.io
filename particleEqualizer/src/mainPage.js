@@ -21,6 +21,28 @@ var user = [], userProfile = [], permalink = [], title = [], imgUrl = [], stream
 var isPlaying = true;
 /* --------------------------------------------------------- */
 
+/* navigation */
+var navigation = function(event){
+    var navi = event.wheelDeltaY * 0.01;
+    //console.log(navi);
+
+    //-projetc title
+    var d01 = document.getElementById('project-title');
+    var d01_opacity = d01.style.opacity;
+    var d01_pos = d01.style.top;
+    var d01_rootPos = '15px';
+    var d01_targetPos = '0px';
+    var d01_rootOpacity = '0.8';
+    var d01_targetOpacity = '0';
+    if(navi < -1){
+        console.log('working?');
+        d01_opacity = d01_targetOpacity;
+        d01_pos = d01_targetPos;
+    }else if(navi > 1){
+        d01_opacity = d01_rootOpacity;
+        d01_pos = d01_rootPos;
+    }
+};
 
 /* to convert duration to time code */
 var toTimer = function (duration) {
@@ -34,7 +56,7 @@ var toTimer = function (duration) {
     if (seconds < 10) {seconds = "0"+seconds;}
     var time    = hours+':'+minutes+':'+seconds;
     return time;
-}
+};
 
 //-get progress bar for ui
 var pBarIntervar;
@@ -309,6 +331,8 @@ document.addEventListener('DOMContentLoaded', function(){
     var init = function(){
         getTracks();
         loading();
+        
     };
     init();
 });
+document.addEventListener('wheel', navigation, false);

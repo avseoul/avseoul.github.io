@@ -234,8 +234,12 @@ var render = function(){
     var in_treble_02 = micInput[300]*.34;
 
     /* normalize treble */
-    if(in_treble > 120. || in_mid_01 > 120. || in_treble_02 > 60.){
-        treble = 1.;
+    if(in_treble > 90.){
+        treble = in_treble * 0.01;
+    } if(in_mid_01 > 90.){
+        treble = in_mid_01 * 0.01;
+    } if(in_treble_02 > 60.){
+        treble = in_treble_02 * 0.01;
     } else {
         if(treble > .001){
             treble *= .96;
@@ -268,7 +272,7 @@ var render = function(){
     if(treble == 1){
         var r = Math.floor(Math.random() * 84);
         if(tL > 100.){
-            if(r%21 == 0 || r%7 == 0 || r%3 == 0){  
+            if(r%21 == 0){  
                 tL = Math.random()*1500-2000;
                 //tL = tL * .99;
             }
