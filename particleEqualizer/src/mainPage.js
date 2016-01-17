@@ -63,6 +63,77 @@ var getTracks = function(){
         });
     }
 };
+//-add track to the list
+var addTrack = function(track_url){
+    var mRegex = new RegExp('^https?://soundcloud.com');
+    if(mRegex.test(track_url)){
+        if(track_url.indexOf('sets/')>-1){//-single set
+            SC.resolve(track_url).then(function(_track){
+                var arr = _track.tracks;
+                for(var i = 0; i < arr.length; i++){
+                    user.push(arr[i].user.username);
+                    userProfile.push(arr[i].user.permalink_url);
+                    permalink.push(arr[i].permalink_url);
+                    title.push(arr[i].title);
+                    imgUrl.push(arr[i].artwork_url);
+                    stream.push(arr[i].stream_url);
+                    duration.push(arr[i].duration);
+                }
+                selector = user.length-arr.length;
+                playTracks();
+            });
+        } else if (track_url.indexOf('sets')>-1){//-multiple sets 
+            SC.resolve(track_url).then(function(_track){
+                var counter = 0;
+                for(var i = 0; i < _track.length; i++){
+                    var arr = _track[i].tracks;
+                    for(var j = 0; j < arr.length; j++){
+                        user.push(arr[j].user.username);
+                        userProfile.push(arr[j].user.permalink_url);
+                        permalink.push(arr[j].permalink_url);
+                        title.push(arr[j].title);
+                        imgUrl.push(arr[j].artwork_url);
+                        stream.push(arr[j].stream_url);
+                        duration.push(arr[j].duration);
+                        counter++;
+                    }
+                }
+                selector = user.length-counter;
+                playTracks();
+            });
+        } else if (track_url.indexOf('tracks')>-1){//-multiple tracks 
+            SC.resolve(track_url).then(function(_track){
+                for(var i = 0; i < _track.length; i++){
+                    user.push(_track[i].user.username);
+                    userProfile.push(_track[i].user.permalink_url);
+                    permalink.push(_track[i].permalink_url);
+                    title.push(_track[i].title);
+                    imgUrl.push(_track[i].artwork_url);
+                    stream.push(_track[i].stream_url);
+                    duration.push(_track[i].duration);
+                }
+                selector = user.length-_track.length;
+                playTracks();
+            });
+        } else {
+            SC.resolve(track_url).then(function(_track){//-single track
+                console.log(_track);
+                user.push(_track.user.username);
+                userProfile.push(_track.user.permalink_url);
+                permalink.push(_track.permalink_url);
+                title.push(_track.title);
+                imgUrl.push(_track.artwork_url);
+                stream.push(_track.stream_url);
+                duration.push(_track.duration);
+
+                selector = user.length-1;
+                playTracks();
+            });
+        }
+    }else{
+        alert('url not valid');
+    }
+};
 //-build up player
 var setPlayer = function(){
     //-set player
@@ -126,10 +197,37 @@ var setPlayer = function(){
         //-cal progress the width of bar is 170px set in css
         pBarIntervar = setInterval(getProgressBar, 200);
 
+    //-get new track from soundcloud url
+    var input = document.createElement('input');
+    input.id = 'input';
+    input.value = 'paste soundcloud url';
+    input.addEventListener('focus', function(){
+        this.value = '';
+    });
+    input.addEventListener('focusout', function(){
+        if(this.value == '' || this.value == ' ' || this.value == '   '){
+            this.value = 'paste soundcloud url';
+        }
+    });
+    input.addEventListener('keypress', function(event){
+        var key = event.which || event.keyCode;
+        if(key === 13 && this.value != 'paste soundcloud url'){
+            var track_url = input.value;
+            addTrack(track_url);
+        }
+    });
+    var button = document.createElement('div');
+    button.id = 'button';
+    button.innerHTML = '+';
+    button.addEventListener('click', function(){
+        var track_url = input.value;
+        addTrack(track_url);
+    });
+
     //-get list
     var list = document.createElement('div');
     list.id = 'list';
-    for(var i = 0; i < mTracks.length; i++){
+    for(var i = 0; i < user.length; i++){
         var _user = document.createElement('div');
         _user.className = 'user';
         _user.innerHTML = ' <a href="' + permalink[i] + '" target="_blank">by ' + user[i]+'</a>';
@@ -170,6 +268,8 @@ var setPlayer = function(){
     t.appendChild(mUsrLink);
     t.appendChild(mUI);
     t.appendChild(list);
+    t.appendChild(input);
+    t.appendChild(button);
     t.appendChild(mLogo);
 };
 //-navigate tracks

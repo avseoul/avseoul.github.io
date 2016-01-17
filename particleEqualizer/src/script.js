@@ -179,9 +179,9 @@ var init = function(){
     
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    stats.domElement.style.right = '0px';
-    //container.appendChild( stats.domElement );
+    stats.domElement.style.top = '25px';
+    stats.domElement.style.right = '15px';
+    container.appendChild( stats.domElement );
 
     //-add canvas(renderer) dom to body
     var retina = renderer.domElement;

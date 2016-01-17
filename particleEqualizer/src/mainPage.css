@@ -211,9 +211,9 @@ body{
 }
 .player #list{
     position: absolute;
-    top: 50px;
+    top: 55px;
     width: 100%;
-    height: 100px;
+    height: 90px;
     overflow-y: scroll;
     overflow-x: hidden;    
     padding: 5px;
@@ -237,7 +237,41 @@ body{
     white-space: nowrap;
     display: inline-block;
 }
+.player #input{
+    font-size: 10px;
+    background: #ccc;
+    margin: 5px;
+    padding-left: 2px;
+    position: absolute;
+    width: 270px;
+    height: 13px;
+    border-style: none;
+    top: 155px;
+}
+.player #input:focus{
+    background: #fff;
+}
+.player #button{
+    background: none;
+    color: #ccc;
+    padding-left: 4px;
+    padding-bottom: 2px;
+    cursor: pointer;
+    font-size: 15px;
+    position: absolute;
+    width: 15px;
+    height: 13px;
+    top: 159px;
+    left: 280px;
+}
+.player #button:hover{
+    background: none;
+    color: #fff;
+}
 
+.player #input:focus{
+    outline: none;
+}
 ::-webkit-scrollbar {
     width: 2px;
 }
