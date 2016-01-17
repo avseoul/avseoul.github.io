@@ -270,7 +270,7 @@ var render = function(){
      */
     cL = group_03.position.z;
     if(treble == 1){
-        var r = Math.floor(Math.random() * 84);
+        var r = Math.floor(Math.random() * 21);
         if(tL > 100.){
             if(r%21 == 0){  
                 tL = Math.random()*1500-2000;
