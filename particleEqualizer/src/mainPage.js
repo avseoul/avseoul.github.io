@@ -50,38 +50,33 @@ var naviUpdate = function(){
 };
 var naviClear = function(){
     if(gO >= .4){
-        while(gO<.79999999){
-            var nO = .8-gO;
-            gO+=nO*oO;
-            naviUpdate();
-        }
+        gO = .8;
     }else{
-        while(gO>0.00000001){
-            var nO = 0.-gO;
-            gO+=nO*oO;
-            naviUpdate();
-        }
+        gO = 0.;
     }
+    naviUpdate();
 };
 var navigation = function(event){
     var trigger = event.wheelDeltaY;
     if(event.srcElement.id == 'mCanvas')
-    if(trigger < 0){
-        var nO = 0.-gO;
-        gO += nO*oO;
-        if(gO < 0.){ //-stop when it approach to edge
-            gO = 0.;
+        if(trigger < 0){
+            var nO = 0.-gO;
+            gO += nO*oO;
+            if(gO < 0.){ //-stop when it approach to edge
+                gO = 0.;
+            }
+        }else if(trigger > 0){
+            var nO = .8-gO;
+            gO += nO*oO;
+            if(gO > .8){ //-stop when it approach to edge
+                gO = .8;
+            }
         }
-    }else if(trigger > 0){
-        var nO = .8-gO;
-        gO += nO*oO;
-        if(gO > .8){ //-stop when it approach to edge
-            gO = .8;
+        naviUpdate();
+        
+        if(trigger == 0){
+            naviClear();
         }
-    }else if(trigger == 0){
-        naviClear();
-    }
-    naviUpdate();
 };
 
 /* to convert duration to time code */
