@@ -137,7 +137,7 @@ var init = function(){
         depthWrite : true,
         transparent: false,
     });
-    var mDS_01_geo = new THREE.SphereGeometry( 160, 128, 128 );
+    var mDS_01_geo = new THREE.SphereGeometry( 160, 32, 32 );
     mDS_01_mesh = new THREE.Mesh( mDS_01_geo, mDS_01_mat );
     //-set background quad
     mBKG_mat = new THREE.ShaderMaterial({
