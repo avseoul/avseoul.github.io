@@ -84,8 +84,8 @@ var init = function(){
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i] = new THREE.PS_01({
-            'slice': 150,
-            'segment': 150,
+            'slice': 100,
+            'segment': 100,
             'ps01vert': PS_01_vert,
             'ps01frag': PS_01_frag,
             'radius': 180
@@ -95,8 +95,8 @@ var init = function(){
     }
     //-set PS_02
     mPS_02 = new THREE.PS_02({
-        'slice': 100,
-        'segment': 100,
+        'slice': 80,
+        'segment': 80,
         'ps02vert': PS_02_vert,
         'ps02frag': PS_02_frag,
         'radius': 200
@@ -119,7 +119,7 @@ var init = function(){
     });
     //-set PS_05
     mPS_05 = new THREE.PS_05({
-        'size': 600,
+        'size': 100,
         'ps05vert': PS_05_vert,
         'ps05frag': PS_05_frag
     });
