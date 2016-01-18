@@ -79,7 +79,7 @@ var init = function(){
     var BKG_vert = document.getElementById('BKG_vert').textContent;
     var BKG_frag = document.getElementById('BKG_frag').textContent;
     //-set PS_01 trails
-    PS_01_size = 5;
+    PS_01_size = 3;
     mPS_01 = [PS_01_size];
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
