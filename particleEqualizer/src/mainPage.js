@@ -64,8 +64,6 @@ var naviClear = function(){
     }
 };
 var navigation = function(event){
-    console.log(event);
-    event.bubbles = false;
     var trigger = event.wheelDeltaY;
     if(event.srcElement.id == 'mCanvas')
     if(trigger < 0){
