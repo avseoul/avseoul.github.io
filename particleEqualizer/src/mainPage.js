@@ -22,7 +22,7 @@ var isPlaying = true;
 /* --------------------------------------------------------- */
 
 /* navigation */
-var gO = .8, oO = .05;
+var gO = .8, oO = .08;
 var naviUpdate = function(){
     //-get doms 
     var d1 = document.getElementById('project-title');
@@ -64,8 +64,10 @@ var naviClear = function(){
     }
 };
 var navigation = function(event){
+    console.log(event);
+    event.bubbles = false;
     var trigger = event.wheelDeltaY;
-    //console.log(trigger);
+    if(event.srcElement.id == 'mCanvas')
     if(trigger < 0){
         var nO = 0.-gO;
         gO += nO*oO;

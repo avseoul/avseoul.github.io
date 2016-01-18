@@ -119,7 +119,7 @@ var init = function(){
     });
     //-set PS_05
     mPS_05 = new THREE.PS_05({
-        'size': 800,
+        'size': 2000,
         'ps05vert': PS_05_vert,
         'ps05frag': PS_05_frag
     });
