@@ -364,6 +364,6 @@ document.addEventListener('DOMContentLoaded', function(){
         loading();
         //document.addEventListener('wheel', navigation, false);
     };
-    //init();
+    init();
 });
 
