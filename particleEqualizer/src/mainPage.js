@@ -22,7 +22,7 @@ var isPlaying = true;
 /* --------------------------------------------------------- */
 
 /* navigation */
-var gO = .8, oO = .08;
+var gO = .0, oO = .08;
 var naviUpdate = function(){
     //-get doms 
     var d1 = document.getElementById('project-title');
@@ -48,23 +48,39 @@ var naviUpdate = function(){
     d5.style['opacity'] = gO.toString();
     d5.style['bottom'] = d5_gP.toString();
 };
+
+var naviInterval;
+var clearNaviInterval = function(){
+    clearInterval(naviInterval);
+};
+var initNavi = function(){
+    var nO = .8-gO;
+    gO += nO*oO*2;
+    if(gO > .78){ //-stop when it approach to edge
+        gO = .8;
+        clearNaviInterval();
+    }
+    naviUpdate();
+};
+naviInterval = setInterval(initNavi, 50);
+
 var navigation = function(event){
     var trigger = event.wheelDeltaY;
     if(event.srcElement.id == 'mCanvas')
         if(trigger < 0){
             var nO = 0.-gO;
             gO += nO*oO;
-            if(gO < 0.){ //-stop when it approach to edge
+            if(gO < 0.02){ //-stop when it approach to edge
                 gO = 0.;
             }
         }else if(trigger > 0){
             var nO = .8-gO;
             gO += nO*oO;
-            if(gO > .8){ //-stop when it approach to edge
+            if(gO > .78){ //-stop when it approach to edge
                 gO = .8;
             }
         }
-        naviUpdate();
+    naviUpdate();
 };
 
 /* to convert duration to time code */
