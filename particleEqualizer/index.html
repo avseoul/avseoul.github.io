@@ -543,8 +543,8 @@
                 //by normal - for big blob
                 vNoise = 40. * -2. * noise(normal + uTime * .5);
                 //by position - for tiny detail
-                //float pn = (50.*uTreble+1.) * 1. * noise( (.2*uTreble+1.) * .015 * position + uTime);
-                float pn =  1. * noise( .015 * position + uTime);
+                float pn = (50.*uTreble+1.) * 1. * noise( (.2*uTreble+1.) * .015 * position + uTime);
+                //float pn =  1. * noise( .015 * position + uTime);
                 //compose it
                 float displacement = vNoise + pn;
                 

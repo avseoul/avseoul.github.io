@@ -79,13 +79,13 @@ var init = function(){
     var BKG_vert = document.getElementById('BKG_vert').textContent;
     var BKG_frag = document.getElementById('BKG_frag').textContent;
     //-set PS_01 trails
-    PS_01_size = 5;
+    PS_01_size = 3;
     mPS_01 = [PS_01_size];
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
         mPS_01[i] = new THREE.PS_01({
-            'slice': 150,
-            'segment': 150,
+            'slice': 180,
+            'segment': 180,
             'ps01vert': PS_01_vert,
             'ps01frag': PS_01_frag,
             'radius': 180
@@ -199,7 +199,7 @@ var init = function(){
     //-get resized window when browser is modified 
     window.addEventListener('resize', windowResize, false);
     //-get mouse position
-    document.addEventListener( 'mousemove', getMousePos, false );
+    //document.addEventListener( 'mousemove', getMousePos, false );
 };
 
 /* setting render */
@@ -254,10 +254,10 @@ var render = function(){
         //camera.position.y += ( -mouseY - camera.position.y ) * .01;    
     }
     
-    group_01.rotation.y += .003 * nR_b + nR_t;
+    group_01.rotation.y += .003 * nR_b;
     group_01.rotation.x += .001 * nR_b;
     group_02.rotation.y -= .003 * nR_b;
-    group_04.rotation.y += .003 * nR_b + nR_t;
+    group_04.rotation.y += .003 * nR_b;
     group_04.rotation.x += .001 * nR_b;
     
     /*  loc&rot event
@@ -291,15 +291,6 @@ var render = function(){
         nL = cL+oL;
     }
     nR_b = 1.+nL*.005; //-get new rotation
-    if(in_treble > 200.){
-        nR_t+=.001;
-    } else {
-        if(nR_t > .001){
-            nR_t *= .96;
-        } else {
-            nR_t = 0;
-        }
-    }
     group_03.position.z = nL;
     //console.log('cl : ', cL, ', tl : ', tL, ', nl : ', nL, ', ol : ', oL);
     //console.log('input_b : ', in_01, ', input_t : ', in_02);
