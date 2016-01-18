@@ -567,7 +567,7 @@
                 //look up vertically in the texture
                 vec2 mUv = vec2( 0., 1.02 - .32 * vNoise * r );
                 
-                float mR = mUv.y * ( .2 - .02 * vNoise );
+                float mR = mUv.y * ( .1 - .01 * vNoise );
                 float mGB = (1. - mUv.y) * ( .05 - .1 * vNoise ) * mIn_01 * .8;
                 //if(mGB < 0.){mGB = 0.;}
                 float mEnergy = mGB * uTreble * .5;
