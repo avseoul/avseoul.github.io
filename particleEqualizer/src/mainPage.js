@@ -22,57 +22,66 @@ var isPlaying = true;
 /* --------------------------------------------------------- */
 
 /* navigation */
-var d01_gPos = 15;
-var d01_gOpa = .8;
-var navigation = function(event){
-    var trigger = event.wheelDeltaY;
-    //console.log(navi);
-    //-projetc title
-    var d01 = document.getElementById('project-title');
-    var d01_rPos = 15;
-    var d01_tPos = -15;
-    var d01_rOpa = .8;
-    var d01_tOpa = 0;
-    if(trigger < 0){
-        //-get new opacity
-        var d01_nOpa = d01_tOpa-d01_gOpa;
-        d01_gOpa += d01_nOpa*.03;
-        if(d01_gOpa < d01_tOpa){ //-stop when it approach to edge
-            d01_gOpa = d01_tOpa;
+var gO = .8, oO = .05;
+var naviUpdate = function(){
+    //-get doms 
+    var d1 = document.getElementById('project-title');
+    var d2 = document.getElementById('description');
+    var d3 = document.getElementById('project-info');
+    var d4 = document.getElementById('contact-info');
+    var d5 = document.getElementById('bgm');
+    //-get new position based on opacity 0.~.8
+    var d1_gP = gO*1.25*90-80;//-80~15
+    var d2_gP = gO*1.25*115-90;//-90~25
+    var d3_gP = gO*1.25*115-90;
+    var d4_gP = gO*1.25*115-90;
+    var d5_gP = gO*1.25*115-90;
+    //-update it
+    d1.style['opacity'] = gO.toString();
+    d1.style['top'] = d1_gP.toString();
+    d2.style['opacity'] = gO.toString();
+    d2.style['bottom'] = d2_gP.toString();
+    d3.style['opacity'] = gO.toString();
+    d3.style['bottom'] = d3_gP.toString();
+    d4.style['opacity'] = gO.toString();
+    d4.style['bottom'] = d4_gP.toString();
+    d5.style['opacity'] = gO.toString();
+    d5.style['bottom'] = d5_gP.toString();
+};
+var naviClear = function(){
+    if(gO >= .4){
+        while(gO<.79999999){
+            var nO = .8-gO;
+            gO+=nO*oO;
+            naviUpdate();
         }
-        //-get new position
-        var d01_nPos = d01_tPos-d01_gPos;
-        d01_gPos += d01_nPos*.05;
-        if(d01_gPos < d01_tPos){ //-stop when it approach to edge
-            d01_gPos = d01_tPos;
-        }
-        //-assign it
-        d01.style.opacity = d01_gOpa.toString();
-        d01.style.top = d01_gPos.toString();
-
-    }else if(trigger > 0){
-        //-get new opacity
-        var d01_nOpa = d01_rOpa-d01_gOpa;
-        d01_gOpa += d01_nOpa*.03;
-        if(d01_gOpa > d01_rOpa){
-            d01_gOpa = d01_rOpa;
-        }
-        //-get new position
-        var d01_nPos = d01_rPos-d01_gPos;
-        d01_gPos += d01_nPos*.05;
-        if(d01_gPos > d01_rPos){
-            d01_gPos = d01_rPos;
-        }
-        //-assign it
-        d01.style.opacity = d01_gOpa.toString();
-        d01.style.top = d01_gPos.toString();
-    }else if(trigger == 0){
-        if(d01_gOpa >= d01_rOpa*.5){
-            //go to root
-        }else{
-            //go to target
+    }else{
+        while(gO>0.00000001){
+            var nO = 0.-gO;
+            gO+=nO*oO;
+            naviUpdate();
         }
     }
+};
+var navigation = function(event){
+    var trigger = event.wheelDeltaY;
+    //console.log(trigger);
+    if(trigger < 0){
+        var nO = 0.-gO;
+        gO += nO*oO;
+        if(gO < 0.){ //-stop when it approach to edge
+            gO = 0.;
+        }
+    }else if(trigger > 0){
+        var nO = .8-gO;
+        gO += nO*oO;
+        if(gO > .8){ //-stop when it approach to edge
+            gO = .8;
+        }
+    }else if(trigger == 0){
+        naviClear();
+    }
+    naviUpdate();
 };
 
 /* to convert duration to time code */
@@ -362,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var init = function(){
         getTracks();
         loading();
-        //document.addEventListener('wheel', navigation, false);
+        document.addEventListener('wheel', navigation, false);
     };
     init();
 });

@@ -137,7 +137,7 @@ var init = function(){
         depthWrite : true,
         transparent: false,
     });
-    var mDS_01_geo = new THREE.SphereGeometry( 160, 32, 32 );
+    var mDS_01_geo = new THREE.SphereGeometry( 160, 64, 64 );
     mDS_01_mesh = new THREE.Mesh( mDS_01_geo, mDS_01_mat );
     //-set background quad
     mBKG_mat = new THREE.ShaderMaterial({
@@ -181,6 +181,8 @@ var init = function(){
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.top = '25px';
     stats.domElement.style.right = '15px';
+    stats.domElement.style['z-index'] = '1500';
+    stats.domElement.style['position'] = 'fixed';
     container.appendChild( stats.domElement );
 
     //-add canvas(renderer) dom to body
