@@ -22,7 +22,7 @@ var isPlaying = true;
 /* --------------------------------------------------------- */
 
 /* navigation */
-var gO = .0, oO = .16;
+var gO = .0, oO = .08;
 var naviUpdate = function(){
     //-get doms 
     var d1 = document.getElementById('project-title');
@@ -55,7 +55,7 @@ var clearNaviInterval = function(){
 };
 var initNavi = function(){
     var nO = .8-gO;
-    gO += nO*oO;
+    gO += nO*oO*2;
     if(gO > .78){ //-stop when it approach to edge
         gO = .8;
         clearNaviInterval();
