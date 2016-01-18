@@ -48,14 +48,6 @@ var naviUpdate = function(){
     d5.style['opacity'] = gO.toString();
     d5.style['bottom'] = d5_gP.toString();
 };
-var naviClear = function(){
-    if(gO >= .4){
-        gO = .8;
-    }else{
-        gO = 0.;
-    }
-    naviUpdate();
-};
 var navigation = function(event){
     var trigger = event.wheelDeltaY;
     if(event.srcElement.id == 'mCanvas')
@@ -73,10 +65,6 @@ var navigation = function(event){
             }
         }
         naviUpdate();
-        
-        if(trigger == 0){
-            naviClear();
-        }
 };
 
 /* to convert duration to time code */
@@ -174,7 +162,6 @@ var addTrack = function(track_url){
             });
         } else {
             SC.resolve(track_url).then(function(_track){//-single track
-                console.log(_track);
                 user.push(_track.user.username);
                 userProfile.push(_track.user.permalink_url);
                 permalink.push(_track.permalink_url);

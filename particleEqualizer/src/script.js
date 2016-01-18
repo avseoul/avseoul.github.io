@@ -183,6 +183,7 @@ var init = function(){
     stats.domElement.style.right = '15px';
     stats.domElement.style['z-index'] = '1500';
     stats.domElement.style['position'] = 'fixed';
+    stats.domElement.style['opacity'] = '0.5';
     container.appendChild( stats.domElement );
 
     //-add canvas(renderer) dom to body
