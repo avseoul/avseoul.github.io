@@ -62,8 +62,6 @@ var initNavi = function(){
     }
     naviUpdate();
 };
-naviInterval = setInterval(initNavi, 50);
-
 var navigation = function(event){
     var trigger = event.wheelDeltaY;
     if(event.srcElement.id == 'mCanvas')
@@ -349,6 +347,7 @@ var checkArray = function(){
     if(user.length === mTracks.length){//-only run playTracks when my arrays are fully filled
         clearInterval(interval);
         playTracks();
+        naviInterval = setInterval(initNavi, 50);
     }
 };
 var loading = function(){ //-keep calling checkArray() until my arrays are filled
