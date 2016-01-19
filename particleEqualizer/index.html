@@ -234,8 +234,8 @@
             uniform sampler2D uTex;
             void main(){
                 float mR = vR*.4;
-                vec3 mColor = vec3(1.+mR,vG,.0);
-                mColor = pow(mColor,vec3(1./2.2));
+                vec3 mColor = vec3(mR,vG,.0);
+                mColor = pow(mColor,vec3(2.2));
                 //gl_FragColor = vec4(vec3(1.,1.,1.),1.)*texture2D(uTex,gl_PointCoord);
                 gl_FragColor = vec4(mColor,vA);
             }
