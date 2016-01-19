@@ -1,4 +1,5 @@
 /*
+var naviInterval = setInterval(initNavi, 50);
  *  'particle equalizer' author av(Sehyun Kim)
  *  computer graphics 2015 @itp
  *
@@ -79,7 +80,7 @@ var init = function(){
     var BKG_vert = document.getElementById('BKG_vert').textContent;
     var BKG_frag = document.getElementById('BKG_frag').textContent;
     //-set PS_01 trails
-    PS_01_size = 3;
+    PS_01_size = 2;
     mPS_01 = [PS_01_size];
     tick_pre = [PS_01_size];
     for(var i = 0; i < PS_01_size; i++){
@@ -111,15 +112,15 @@ var init = function(){
     });
     //-set PS_04
     mPS_04 = new THREE.PS_04({
-        'slice': 50,
-        'segment': 50,
+        'slice': 30,
+        'segment': 30,
         'ps03vert': PS_04_vert,
         'ps03frag': PS_04_frag,
         'radius': 200
     });
     //-set PS_05
     mPS_05 = new THREE.PS_05({
-        'size': 2000,
+        'size': 1200,
         'ps05vert': PS_05_vert,
         'ps05frag': PS_05_frag
     });
