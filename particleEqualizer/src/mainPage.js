@@ -252,8 +252,8 @@ var setPlayer = function(){
     pBar.id = 'pBar';
     var pTime = document.createElement('div');
     pTime.id = 'pTime';
-        //-cal progress the width of bar is 170px set in css
-        pBarIntervar = setInterval(getProgressBar, 200);
+    //-cal progress the width of bar is 170px set in css
+    pBarIntervar = setInterval(getProgressBar, 200);
 
     //-get new track from soundcloud url
     var input = document.createElement('input');
