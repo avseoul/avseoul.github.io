@@ -251,7 +251,7 @@ var setPlayer = function(){
     var pBar = document.createElement('div');
     pBar.id = 'pBar';
     var pTime = document.createElement('div');
-    pTime.id = 'pTime'
+    pTime.id = 'pTime';
         //-cal progress the width of bar is 170px set in css
         pBarIntervar = setInterval(getProgressBar, 200);
 
