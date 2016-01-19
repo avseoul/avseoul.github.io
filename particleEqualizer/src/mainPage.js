@@ -111,7 +111,6 @@ var getProgressBar = function(){
 //-playback control by progress bar
 var playbackControl = function(event){
     var input = event.offsetX;
-    console.log(input/170*duration[selector]/1000);
     mAudio.currentTime = input/170*duration[selector]/1000;
     getProgressBar();
 };
