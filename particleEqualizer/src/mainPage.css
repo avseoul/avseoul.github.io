@@ -199,13 +199,12 @@ body{
     color: #888;
 }
 .player #mUI #cBar{
+    cursor: pointer;
     position: absolute;
-    top: 1px;
+    top: -2px;
     left: 23px;
     width: 170px;
-    height: 10px;
-    background:red;
-    opacity: 0;
+    height: 18px;
 }
 .player #mUI #pBar{
     position: absolute;
