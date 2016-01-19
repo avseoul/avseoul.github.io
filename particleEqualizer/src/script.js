@@ -1,5 +1,4 @@
 /*
-var naviInterval = setInterval(initNavi, 50);
  *  'particle equalizer' author av(Sehyun Kim)
  *  computer graphics 2015 @itp
  *
@@ -30,6 +29,15 @@ var windowResize = function(){
 var getMousePos = function(event) {
     mouseX = ( event.clientX - window.innerWidth/2 );
     mouseY = ( event.clientY - window.innerHeight/2 );
+};
+
+/* check framedrops */
+var lD = new Date;
+var checkFramedrops = function(){
+    var tD = new Date;
+    var fps = 1000/(tD-lD);
+    lD = tD;
+
 };
 
 /* set init */
@@ -185,6 +193,7 @@ var init = function(){
     stats.domElement.style['z-index'] = '1500';
     stats.domElement.style['position'] = 'fixed';
     stats.domElement.style['opacity'] = '0.5';
+    var mFrameRate = stats.domElement.firstChild.firstChild.innerHTML;
     container.appendChild( stats.domElement );
 
     //-add canvas(renderer) dom to body
@@ -323,6 +332,7 @@ var animate = function(){
     requestAnimationFrame( animate );
     stats.update();
     render();
+    checkFramedrops();
 };
 
 /* excute app */
