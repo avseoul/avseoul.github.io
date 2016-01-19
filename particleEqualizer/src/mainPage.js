@@ -108,6 +108,13 @@ var getProgressBar = function(){
         mTime.innerHTML = '00:00:00';
     }
 };
+//-playback control by progress bar
+var playbackControl = function(event){
+    var input = event.offsetX;
+    console.log(input/170*duration[selector]/1000);
+    mAudio.currentTime = input/170*duration[selector]/1000;
+    getProgressBar();
+};
 //-store tracks info
 var getTracks = function(){
     for(var i = 0; i < mTracks.length; i++){
@@ -250,10 +257,14 @@ var setPlayer = function(){
     bar.id = 'bar';
     var pBar = document.createElement('div');
     pBar.id = 'pBar';
+    var cBar = document.createElement('div');
+    cBar.id = 'cBar';
     var pTime = document.createElement('div');
     pTime.id = 'pTime';
     //-cal progress the width of bar is 170px set in css
     pBarIntervar = setInterval(getProgressBar, 200);
+    //-add onclikc event
+    cBar.addEventListener('click', playbackControl);
 
     //-get new track from soundcloud url
     var input = document.createElement('input');
@@ -319,6 +330,7 @@ var setPlayer = function(){
     mUI.appendChild(stop);
     mUI.appendChild(bar);
     mUI.appendChild(pBar);
+    mUI.appendChild(cBar);
     mUI.appendChild(pTime);
     mThumb.appendChild(mImg);
     t.appendChild(mThumb);
