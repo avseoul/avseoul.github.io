@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function(){
         loading();
         document.addEventListener('wheel', navigation, false);
     };
-    if(isMobile){
+    if(!isMobile){
         init();
     }else{
         mobileNoti();
