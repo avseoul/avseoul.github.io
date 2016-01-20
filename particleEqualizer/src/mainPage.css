@@ -1,6 +1,5 @@
 body{
-    height: 100%;
-    width: 100%;
+    min-width: 1024px;
     overflow: hidden;
     margin: 0px;
     padding: 0px;

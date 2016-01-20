@@ -83,7 +83,7 @@ var preLoadlowFrameNoti = function(){
     notification_a.style['padding'] = '5px';
     notification_a.innerHTML = 
         '<br>I\'m sorry,<br><br>'+
-        'Unfortunately, your computer does not fully support Particle Equalizer #1.'+ 
+        'Unfortunately, it has shown the framerate is under 25fps on your browser.'+
         'You can try it with low frame rates by ignoring this message'+
         ' or check out the video instead.'+
         '<p>&#x20;</p>';
