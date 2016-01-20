@@ -30,7 +30,6 @@ var lowFrameNoti = function(){
     var container = document.createElement('div');
     container.id = 'isLow_container';
     container.style['width'] = '400px';
-    container.style['height'] = '600px';
     container.style['background'] = '#fff';
     container.style['position'] = 'absolute';
     container.style['top'] = '0';
