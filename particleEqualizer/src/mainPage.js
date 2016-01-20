@@ -4,7 +4,6 @@ var isMobile = false;
 /* check framedrops */
 var resume = function(){
     audioNode.mediaElement.play();
-    isPlaying = true;
     isLow = false;
 
     var b = document.getElementById('isLow_bg');
@@ -42,18 +41,24 @@ var lowFrameNoti = function(){
     container.style['z-index'] = '2000';
     container.style['opacity'] = '.8';
 
+    var notification_a = document.createElement('div');
+    notification_a.style['font-size'] = '11px';
+    notification_a.style['padding'] = '5px';
+    notification_a.innerHTML = 
+        'I\'m sorry,<br>'+
+        'Unfortunately, your computer does not fully support Particle Equalizer #1.<br><br>'+ 
+        'You can try it with low frame rates by ignoring this message'+
+        ' or check out the video instead.';
+    container.appendChild(notification_a);
+
     var videoPlayer = document.createElement('div');
     videoPlayer.innerHTML = '<iframe src="https://player.vimeo.com/video/152375642" width="400" height="255" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     container.appendChild(videoPlayer);
 
-    var notification = document.createElement('div');
-    notification.style['font-size'] = '11px';
-    notification.style['padding'] = '5px';
-    notification.innerHTML = 
-        'I\'m sorry,<br>'+
-        'Unfortunately, your computer does not fully support Particle Equalizer #1.<br><br>'+ 
-        'You can try it with low frame rates by ignoring this message'+
-        ' or check out the video instead.'+
+    var notification_b = document.createElement('div');
+    notification_b.style['font-size'] = '11px';
+    notification_b.style['padding'] = '5px';
+    notification_b.innerHTML = 
         'If you have any question, please contact me at any time, it will be my pleasure.<br><br>'+
         'Contact info is the following, <br>'+
         '<a href="javascript:contactMe()" target="_blank">av.seoul@gmail.com</a> <br>'+
@@ -64,7 +69,7 @@ var lowFrameNoti = function(){
         'Sorry for your any inconvenience.<br><br>'+
         'All the best,<br>'+
         'av';
-    container.appendChild(notification);
+    container.appendChild(notification_b);
 
     var close = document.createElement('div');
     close.innerHTML = '&#x274C;';
