@@ -270,13 +270,17 @@ SC.initialize({
 
 /* --------------------------------------------------------- */
 var mTracks = ['/tracks/222734029',     //Everything and Nothing - dj krush
-    '/tracks/220103939',                //Future Correction[45sec] - dj krush
-    '/tracks/221995257',                //Missing Link - dj krush
+    '/tracks/161617178',                //KINGMCK - Don't Get Dead Mix 'BRAIN FREEZE 2014'
+    '/tracks/82429092',                 //The Notorious B.I.G. tribute mix by YTst
+    '/tracks/199658320',                //SEOUL SIMIN [009] 깐돌 Qunadol - Gently Disappear
+    '/tracks/194237965',                //Cannibal Ox - Iron Galaxy (Cold Vein)
     '/tracks/220662300',                //Strange Light - dj krush 
-    '/tracks/222735580',                //Nostalgia feat.Takashi Niigaki[45sec] - dj krush 
-    '/tracks/222735459',                //My Light feat. Yasmine Hamdan[30sec] - dj krush
-    '/tracks/222734282',                //Coruscation[45sec] - dj krush
-    '/tracks/221995046'                 //Song of the Haze[45sec] - dj krush
+    '/tracks/69174621',                 //Donna Summer - I Feel Love (Sterac instrumental dub edit)
+    '/tracks/38732269',                 //Lafayette Afro-Rock Band / Hihache(1973)
+    '/tracks/14976296',                 //Andre Nickatina Jungle (f. Equipto)
+    '/tracks/221995257',                //Missing Link - dj krush
+    '/tracks/228635781',                //Art of Noise - Moments in Love
+    '/tracks/157010180'                 //venice venture - big wild
 ];               
 var selector = 0;
 var mAudio = new Audio(); //-for web-audio api
@@ -387,7 +391,11 @@ var getTracks = function(){
             userProfile.push(track.user.permalink_url);
             permalink.push(track.permalink_url);
             title.push(track.title);
-            imgUrl.push(track.artwork_url);
+            if(track.artwork_url){
+                imgUrl.push(track.artwork_url);
+            }else{
+                imgUrl.push('img/noThumbnail.jpg');
+            }
             stream.push(track.stream_url);
             duration.push(track.duration);
         });
