@@ -177,7 +177,7 @@ var init = function(){
     group_03.add( group_04 );
     group_03.add( group_01 );
     group_03.add( group_02 );
-    
+
     //-set camera's default distance
     camera.position.z = 2000;
 
@@ -185,7 +185,7 @@ var init = function(){
     scene.add( group_03 );
     scene.add( mBKG_mesh );
     scene.add( mPS_05 );
-    
+
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.top = '25px';
@@ -220,7 +220,7 @@ var render = function(){
     var delta = clock.getDelta();
     tick += delta;
     if(tick < 0){ tick = 0; }
-    
+
     /* update tick for trails object */
     for(var i = PS_01_size -1; i >= 0; i--){
         if(i != 0 ){
@@ -266,13 +266,13 @@ var render = function(){
         //camera.position.x += ( mouseX - camera.position.x ) * .01;
         //camera.position.y += ( -mouseY - camera.position.y ) * .01;    
     }
-    
+
     group_01.rotation.y += .003 * nR_b;
     group_01.rotation.x += .001 * nR_b;
     group_02.rotation.y -= .003 * nR_b;
     group_04.rotation.y += .003 * nR_b;
     group_04.rotation.x += .001 * nR_b;
-    
+
     /*  loc&rot event
      *  
      *  cL - current location
@@ -337,8 +337,10 @@ var animate = function(){
 
 /* excute app */
 document.addEventListener('DOMContentLoaded', function(){
-    init();
-    animate();
+    if(!isMobile){
+        init();
+        animate();
+    }
 });
 
 
