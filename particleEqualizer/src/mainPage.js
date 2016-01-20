@@ -90,7 +90,7 @@ var preLoadlowFrameNoti = function(){
     container.appendChild(notification_a);
 
     var videoPlayer = document.createElement('div');
-    videoPlayer.innerHTML = '<iframe src="http://player.vimeo.com/video/152375642" width="400" height="255" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+    videoPlayer.innerHTML = '<iframe src="https://player.vimeo.com/video/152375642" width="400" height="255" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     container.appendChild(videoPlayer);
 
     var notification_b = document.createElement('div');
@@ -141,13 +141,13 @@ var checkFramedrops = function(){
     var fps = 1000/(tD-lD);
     lD = tD;
 
-    if (fdct < 270){
+    if (fdct < 180){
         fdct++;
     } else {
         fdcb = true;
     }
     
-    if (fdct > 240){
+    if (fdct > 150){
         if(fps < 25 && !fdcb){
             isLow = true;
             fdcb = true;
