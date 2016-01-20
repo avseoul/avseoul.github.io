@@ -146,7 +146,7 @@ var init = function(){
         depthWrite : true,
         transparent: false,
     });
-    var mDS_01_geo = new THREE.SphereGeometry( 160, 64, 64 );
+    var mDS_01_geo = new THREE.SphereGeometry( 160, 128, 128 );
     mDS_01_mesh = new THREE.Mesh( mDS_01_geo, mDS_01_mat );
     //-set background quad
     mBKG_mat = new THREE.ShaderMaterial({
@@ -283,19 +283,18 @@ var render = function(){
      *
      */
     cL = group_03.position.z;
-    if(treble == 1){
-        var r = Math.floor(Math.random() * 21);
-        if(tL > 100.){
-            if(r%21 == 0){  
-                tL = Math.random()*1500-2000;
-                //tL = tL * .99;
+    if(treble > 0.9){
+        //2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199
+        var r = Math.floor(Math.random() * 11);
+            if(r%11 == 0){  
+                console.log('hit');
+                tL = Math.random()*500-1000;
             }
-        }
     }
-    if(in_bass > 1. && tL < 1800.){
-        tL += in_bass*10.3; //-get intensity by level of input
+    if(in_bass > 0. && tL < 2500.){
+        tL += in_bass*1.; //-get intensity by level of input
     } else {
-        tL = tL * .99; //-get back when out of input event
+        tL = tL * .96; //-get back when out of input event
     }
     oL = (tL-cL)*.0023; //-normalize
     if(oL < 2.5 && oL > -2.5){
