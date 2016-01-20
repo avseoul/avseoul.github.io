@@ -148,7 +148,7 @@ var checkFramedrops = function(){
     }
     
     if (fdct > 240){
-        if(fps < 80 && !fdcb){
+        if(fps < 25 && !fdcb){
             isLow = true;
             fdcb = true;
             lowFrameNoti();
