@@ -25,18 +25,18 @@ var lowFrameNotiTransition = function(){
     bg.style['opacity'] = lfnt_bg_opacity.toString();
     var container = document.getElementById('isLow_container');
     container.style['opacity'] = lfnt_ct_opacity.toString();
-    var pos = (1-lfnt_ct_opacity/.8) * 100; 
+    var pos = (1-lfnt_ct_opacity/.9) * 100; 
     container.style['top'] = pos.toString();
-    var vol = 1-lfnt_ct_opacity/.8;
+    var vol = 1-lfnt_ct_opacity/.9;
     mAudio.volume = vol;
     lfnt_bg_opacity += .04;
-    var t = .8-lfnt_ct_opacity;
+    var t = .9-lfnt_ct_opacity;
     lfnt_ct_opacity += t*.1;
-    if(lfnt_bg_opacity > .5){
-        lfnt_bg_opacity = .5;
+    if(lfnt_bg_opacity > .6){
+        lfnt_bg_opacity = .6;
     }   
-    if(lfnt_ct_opacity > .79){
-        lfnt_ct_opacity = .8;
+    if(lfnt_ct_opacity > .89){
+        lfnt_ct_opacity = .9;
         audioNode.mediaElement.pause();
         mAudio.volume = 1;
         lfnt_boolean = true;
@@ -133,6 +133,7 @@ var preLoadlowFrameNoti = function(){
 var lD = new Date;
 var fdct = 0;
 var fdcb = false;
+var pFps = 0;
 var checkFramedrops = function(){
     if(!isLow && !fdcb){
         requestAnimationFrame( checkFramedrops );
@@ -148,12 +149,13 @@ var checkFramedrops = function(){
     }
     
     if (fdct > 150){
-        if(fps < 25 && !fdcb){
+        if(fps < 25 && pFps < 25 && !fdcb){
             isLow = true;
             fdcb = true;
             lowFrameNoti();
         }
     }
+    pFps = fps;
 };
 
 /**/
