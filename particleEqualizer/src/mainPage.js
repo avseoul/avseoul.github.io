@@ -12,12 +12,16 @@ var sendEmail = function(){
         'av.seoul@gmail.com \n'+
         'github.com/avseoul \n'+
         'twitter.com/avseoul \n'+
+        'vimeo.com/visualozik \n'+
         'kimsehyun.kr\n\n'+
         'All the best,\n'+
         'av';
     document.location.href = "mailto:" + address + "?subject="
         + encodeURIComponent(subject)
         + "&body=" + encodeURIComponent(content);
+};
+var contactMe = function(){
+    document.location.href = "mailto:av.seoul@gmail.com";
 };
 var mobileNoti = function(){
     var p = document.getElementById('bgm');
@@ -41,7 +45,6 @@ var mobileNoti = function(){
 
     var container = document.createElement('div');
     container.style['width'] = '300px';
-    container.style['height'] = 'auto';
     container.style['background'] = '#fff';
     container.style['position'] = 'absolute';
     container.style['top'] = '0';
@@ -53,7 +56,7 @@ var mobileNoti = function(){
     container.style['opacity'] = '0.8';
 
     var videoPlayer = document.createElement('div');
-    videoPlayer.innerHTML = '<iframe src="https://player.vimeo.com/video/148184905" width="300" height="auto" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+    videoPlayer.innerHTML = '<iframe src="https://player.vimeo.com/video/152375642" width="300" height="auto" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     container.appendChild(videoPlayer);
 
     var notification_a = document.createElement('div');
@@ -61,7 +64,7 @@ var mobileNoti = function(){
     notification_a.style['padding'] = '5px';
     notification_a.innerHTML = 
         'Particle Equalizer #1 currently only supports chrome for desktop.<br><br>'+ 
-        'Please leave your email address then I will send you the link for you to check this app later on your computer.<br>';
+        'Please check out the video instead or leave your email address then I will send you the link for you to check this app later on your computer.<br>';
     container.appendChild(notification_a);
 
     var inputContainer = document.createElement('div');
@@ -88,9 +91,10 @@ var mobileNoti = function(){
     notification_b.innerHTML = 
         'If you have any question, please contact me at any time, it will be my pleasure.<br><br>'+
         'Contact info is the following, <br>'+
-        'av.seoul@gmail.com <br>'+
+        '<a href="javascript:contactMe()" target="_blank">av.seoul@gmail.com</a> <br>'+
         '<a href="https://github.com/avseoul" target="_blank">github.com/avseoul</a> <br>'+
         '<a href="https://twitter.com/avseoul" target="_blank">twitter.com/avseoul<a> <br>'+
+        '<a href="vimeo.com/visualozik" target="_blank">vimeo.com/visualozik</a><br>'+
         '<a href="http://kimsehyun.kr" target="_blank">kimsehyun.kr</a><br><br>'+
         'Sorry for your any inconvenience.<br><br>'+
         'All the best,<br>'+
@@ -451,6 +455,7 @@ var navTracks = function(){
 
 //-stream track
 var playTracks = function(){
+    isPlaying = true;
     mAudio.src = stream[selector]+'?client_id=1c78c29753054d2e9af8926dd4a77db3';
     setPlayer();
     audioNode.mediaElement.play();//-web audio audioInput.js
