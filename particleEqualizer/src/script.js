@@ -31,15 +31,6 @@ var getMousePos = function(event) {
     mouseY = ( event.clientY - window.innerHeight/2 );
 };
 
-/* check framedrops */
-var lD = new Date;
-var checkFramedrops = function(){
-    var tD = new Date;
-    var fps = 1000/(tD-lD);
-    lD = tD;
-
-};
-
 /* set init */
 var init = function(){
     /* initialize global variable */
@@ -287,7 +278,6 @@ var render = function(){
         //2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199
         var r = Math.floor(Math.random() * 11);
             if(r%11 == 0){  
-                console.log('hit');
                 tL = Math.random()*500-1000;
             }
     }
@@ -330,8 +320,8 @@ var render = function(){
 var animate = function(){
     requestAnimationFrame( animate );
     //stats.update();
+    if(!isLow)
     render();
-    checkFramedrops();
 };
 
 /* excute app */
