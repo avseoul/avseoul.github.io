@@ -54,6 +54,7 @@ var mobileNoti = function(){
     container.style['margin'] = 'auto';
     container.style['z-index'] = '2000';
     container.style['opacity'] = '0.8';
+    container.style['overflow'] = 'hidden';
 
     var videoPlayer = document.createElement('div');
     videoPlayer.innerHTML = '<iframe src="https://player.vimeo.com/video/152375642" width="300" height="auto" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
@@ -94,7 +95,7 @@ var mobileNoti = function(){
         '<a href="javascript:contactMe()" target="_blank">av.seoul@gmail.com</a> <br>'+
         '<a href="https://github.com/avseoul" target="_blank">github.com/avseoul</a> <br>'+
         '<a href="https://twitter.com/avseoul" target="_blank">twitter.com/avseoul<a> <br>'+
-        '<a href="vimeo.com/visualozik" target="_blank">vimeo.com/visualozik</a><br>'+
+        '<a href="https://vimeo.com/visualozik" target="_blank">vimeo.com/visualozik</a><br>'+
         '<a href="http://kimsehyun.kr" target="_blank">kimsehyun.kr</a><br><br>'+
         'Sorry for your any inconvenience.<br><br>'+
         'All the best,<br>'+
@@ -488,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function(){
         loading();
         document.addEventListener('wheel', navigation, false);
     };
-    if(!isMobile){
+    if(isMobile){
         init();
     }else{
         mobileNoti();
