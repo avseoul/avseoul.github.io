@@ -34,7 +34,7 @@ body{
 }
 #project-info{
     position: absolute; 
-    width: 180px;
+    width: 220px;
     height: 160px;
     bottom: 25px;
     left: 340px;
@@ -45,13 +45,13 @@ body{
     width: 180px;
     height: 160px;
     bottom: 25px;
-    left: 523px;
+    left: 562px;
     z-index: 1000;
 }
 #bgm{
     position: absolute; 
     width: 300px;
-    height: 199px;
+    height: 204px;
     bottom: 25px;
     right: 15px;
     background: #000;
@@ -97,8 +97,8 @@ body{
     opacity: 0.8;
 }
 .body-description a{
-    color: #b0b0b5;
-    text-decoration: underline;
+    color: #fff;
+    text-decoration: none;
 }
 .body-description a:hover{
     text-decoration: line-through;
@@ -110,7 +110,7 @@ body{
     word-break: break-all; 
     color: #fff;
     letter-spacing: 0.6px;
-    line-height: 12px;
+    line-height: 13px;
     position: relative;
     opacity: 0.8;
 }
@@ -224,7 +224,7 @@ body{
 .player #list{
     position: absolute;
     top: 55px;
-    width: 100%;
+    width: 95%;
     height: 90px;
     overflow-y: scroll;
     overflow-x: hidden;    
@@ -241,7 +241,7 @@ body{
 }
 .player #list .user{
     padding-left: 5px;
-    width: 90px;
+    width: 70px;
     right: 0px;
     float: right;
     overflow-x: hidden;

@@ -563,7 +563,7 @@ var setPlayer = function(){
     for(var i = 0; i < user.length; i++){
         var _user = document.createElement('div');
         _user.className = 'user';
-        _user.innerHTML = ' <a href="' + permalink[i] + '" target="_blank">by ' + user[i]+'</a>';
+        _user.innerHTML = ' <a href="' + permalink[i] + '" target="_blank">' + user[i]+'</a>';
         _title = document.createElement('div');
         _title.className = 'title';
         _title.id = i;
