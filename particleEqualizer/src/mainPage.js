@@ -40,11 +40,12 @@ var mobileNoti = function(){
     }
 
     var container = document.createElement('div');
-    container.style['width'] = '300px';
+    container.style['width'] = 'auto';
     container.style['height'] = 'auto';
     container.style['background'] = '#fff';
     container.style['position'] = 'absolute';
     container.style['top'] = '0';
+    container.style['bottom'] = '0';
     container.style['left'] = '0';
     container.style['right'] = '0';
     container.style['margin'] = 'auto';
@@ -52,7 +53,7 @@ var mobileNoti = function(){
     container.style['opacity'] = '0.8';
 
     var videoPlayer = document.createElement('div');
-    videoPlayer.innerHTML = '<iframe src="https://player.vimeo.com/video/148184905" width="300" height="169" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+    videoPlayer.innerHTML = '<iframe src="https://player.vimeo.com/video/148184905" width="auto" height="auto" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     container.appendChild(videoPlayer);
 
     var notification_a = document.createElement('div');
