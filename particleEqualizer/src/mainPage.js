@@ -95,13 +95,13 @@ var checkFramedrops = function(){
     var fps = 1000/(tD-lD);
     lD = tD;
 
-    if (fdct < 420){
+    if (fdct < 270){
         fdct++;
     } else {
         fdcb = true;
     }
     
-    if (fdct > 360){
+    if (fdct > 240){
         if(fps < 25 && !fdcb){
             audioNode.mediaElement.pause();
             isPlaying = false;
