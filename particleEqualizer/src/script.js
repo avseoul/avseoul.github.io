@@ -47,7 +47,7 @@ var init = function(){
     ratio = width/height;
     //-set threejs objects
     scene = new THREE.Scene();
-    //scene.fog = new THREE.FogExp2( 0x000000, .25 );
+    scene.fog = new THREE.Fog( 0xff0000, .25, 1900 );
     group_01 = new THREE.Object3D();
     group_02 = new THREE.Object3D();
     group_03 = new THREE.Object3D();
@@ -123,19 +123,23 @@ var init = function(){
         'ps05vert': PS_05_vert,
         'ps05frag': PS_05_frag
     });
-
     //-set displaced sphere
+    //console.log(THREE.ShaderChunk.common);
     mDS_01_mat = new THREE.ShaderMaterial({
         uniforms:{
             'uTime': { type: 'f', value: 0.0 },
             'uIn_01': { type: 'f', value: 0.0 },
-            'uTreble': { type: 'f', value: 0.0 }
+            'uTreble': { type: 'f', value: 0.0 },
+            'fogColor': { type: 'c', value: scene.fog.color },
+            'fogNear': { type: 'f', value: scene.fog.near },
+            'fogFar': { type: 'f', value: scene.fog.far }
         },
         vertexShader: DS_01_vert,
         fragmentShader: DS_01_frag,
         blending: THREE.NormalBlending,
         depthWrite : true,
         transparent: false,
+        fog: true
     });
     var mDS_01_geo = new THREE.SphereGeometry( 160, 128, 128 );
     mDS_01_mesh = new THREE.Mesh( mDS_01_geo, mDS_01_mat );

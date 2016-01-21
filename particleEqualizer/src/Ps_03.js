@@ -30,12 +30,16 @@ THREE.PS_03 = function(_options){
             'uTime': {type: 'f', value: 0.0 },
             'uLife': {type: 'f', value: 0.0 },
             'uBass': {type: 'f', value: 0.0 },
-            'uTreble': {type: 'f', value: 0.0 }
+            'uTreble': {type: 'f', value: 0.0 },
+            'fogColor': { type: 'c', value: scene.fog.color },
+            'fogNear': { type: 'f', value: scene.fog.near },
+            'fogFar': { type: 'f', value: scene.fog.far }
         },
         blending: THREE.AdditiveBlending,
         depthWrite: false,
         vertexShader: PS_03_vert,
-        fragmentShader: PS_03_frag
+        fragmentShader: PS_03_frag,
+        fog: true
     });
     //-append vertices to position attribute
     for(var v = 0; v < self.slice; v++){

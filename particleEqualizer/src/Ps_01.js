@@ -35,13 +35,16 @@ THREE.PS_01 = function(_options){
             'uIndex' : {type: 'i', value: 0 },
             'uTotalIndices' : {type: 'i', value: 0},
             'uTreble' : {type: 'f', value: 0.0},
-            'uTex' : {type: 't', value: THREE.TextureLoader('img/p01.png')}
+            'fogColor': { type: 'c', value: scene.fog.color },
+            'fogNear': { type: 'f', value: scene.fog.near },
+            'fogFar': { type: 'f', value: scene.fog.far }
         },
         blending: 'THREE.AdditiveBlending',
         depthWrite: false,
         transparent: true,
         vertexShader: PS_01_vert,
-        fragmentShader: PS_01_frag
+        fragmentShader: PS_01_frag,
+        fog: true
     });
 
     //-append vertices

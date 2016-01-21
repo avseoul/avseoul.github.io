@@ -27,13 +27,16 @@ THREE.PS_02 = function(_options){
         uniforms:{
             'uTime': {type: 'f', value: 0.0 },
             'uBase': {type: 'f', value: 0 },
-            'uTex': {type: 't', value: THREE.TextureLoader('img/p01.png')}
+            'fogColor': { type: 'c', value: scene.fog.color },
+            'fogNear': { type: 'f', value: scene.fog.near },
+            'fogFar': { type: 'f', value: scene.fog.far }
         },
         vertexShader: PS_02_vert,
         fragmentShader: PS_02_frag,
         blending: THREE.AdditiveBlending,
         depthTest: false,
-        transparent: true
+        transparent: true,
+        fog: true
     });
     //-append vertices to position attribute
     for(var v = 0; v < self.slice; v++){

@@ -29,12 +29,16 @@ THREE.PS_04 = function(_options){
         uniforms:{
             'uTime': {type: 'f', value: 0.0 },
             'uLife': {type: 'f', value: 0.0 },
-            'uTreble': {type: 'f', value: 0.0 }
+            'uTreble': {type: 'f', value: 0.0 },
+            'fogColor': { type: 'c', value: scene.fog.color },
+            'fogNear': { type: 'f', value: scene.fog.near },
+            'fogFar': { type: 'f', value: scene.fog.far }
         },
         blending: THREE.AdditiveBlending,
         depthWrite: false,
         vertexShader: PS_04_vert,
-        fragmentShader: PS_04_frag
+        fragmentShader: PS_04_frag,
+        fog: true
     });
     //-append vertices
     for(var v = 0; v < self.slice; v++){
