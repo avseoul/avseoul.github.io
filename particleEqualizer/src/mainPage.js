@@ -280,7 +280,8 @@ var mTracks = ['/tracks/222734029',     //Everything and Nothing - dj krush
     '/tracks/14976296',                 //Andre Nickatina Jungle (f. Equipto)
     '/tracks/221995257',                //Missing Link - dj krush
     '/tracks/228635781',                //Art of Noise - Moments in Love
-    '/tracks/157010180'                 //venice venture - big wild
+    '/tracks/157010180',                //venice venture - big wild
+    '/tracks/96379023'                  //Disclosure - You & Me (Flume Remix)
 ];               
 var selector = 0;
 var mAudio = new Audio(); //-for web-audio api
