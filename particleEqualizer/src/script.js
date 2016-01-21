@@ -136,9 +136,9 @@ var init = function(){
         },
         vertexShader: DS_01_vert,
         fragmentShader: DS_01_frag,
-        blending: THREE.AdditiveBlending,
-        depthWrite : false,
-        transparent: true,
+        blending: THREE.NormalBlending,
+        depthWrite : true,
+        transparent: false,
         fog: true
     });
     var mDS_01_geo = new THREE.SphereGeometry( 160, 128, 128 );
@@ -286,7 +286,7 @@ var render = function(){
             }
     }
     if(in_bass > 0. && tL < 2500.){
-        tL += in_bass*1.; //-get intensity by level of input
+        tL += in_bass*2.; //-get intensity by level of input
     } else {
         tL = tL * .96; //-get back when out of input event
     }

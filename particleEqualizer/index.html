@@ -117,8 +117,8 @@
                 float mBase = aBass*.9;
                 if(mBase<0.001){mBase=0.;}else if(mBase>1.){mBase=1.;} //-clamp mBase between 0-1 
                 float mR = (1.-mV)*mO*10. - mV*mO + mBase + mTreble*mV*.99+uTreble*aBass; //-root+blackring+base+treble+whity
-                float mG = 0. - mV*mO*.5 + mBase + mTreble*mV*1.99+uTreble*aBass; 
-                float mB = 0. - mV*mO*.5 + mBase + mTreble*mV*.1+uTreble*aBass;
+                float mG = 0. - mV*mO*.5 + mBase + mTreble*mV*1.99+uTreble*aBass*.007; 
+                float mB = 0. - mV*mO*.5 + mBase + mTreble*mV*.1+uTreble*aBass*.007;
                 float mA = mV*mO*.7+uTreble*aBass*.05;
                 vColor = vec4(mR,mG,mB,mA);                
                 //set position
@@ -211,7 +211,7 @@
             varying vec4 vColor;
             
             void main(){
-                vec3 mColor = vec3(pow(abs(vColor).rgb,vec3(2.2)))*.2; //-gamma correction
+                vec3 mColor = vec3(pow(abs(vColor.rgb),vec3(2.2)))*.2; //-gamma correction
                 #ifdef USE_FOG
             	#ifdef USE_LOGDEPTHBUF_EXT
             		float depth = gl_FragDepthEXT / gl_FragCoord.w;
@@ -696,8 +696,8 @@
                 mPos = mPos + mNormal * mLNoise;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //-set varying
-                vG = pow(abs(mAttrBase,2.2))*.0005+uTreble*aBase;
-                vB = pow(abs(mAttrBase,2.2))*.00005+uTreble*aBase;
+                vG = pow(abs(mAttrBase),2.2)*.0005+uTreble*aBase;
+                vB = pow(abs(mAttrBase),2.2)*.00005+uTreble*aBase;
                 vA = (1.6-randomLife/randomLifeTarget)*3.;
             }
         </script>
