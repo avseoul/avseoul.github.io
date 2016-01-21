@@ -119,14 +119,14 @@
                 float mR = (1.-mV)*mO*10. - mV*mO + mBase + mTreble*mV*.99+uTreble*aBass; //-root+blackring+base+treble+whity
                 float mG = 0. - mV*mO*.5 + mBase + mTreble*mV*1.99+uTreble*aBass; 
                 float mB = 0. - mV*mO*.5 + mBase + mTreble*mV*.1+uTreble*aBass;
-                float mA = mV*mO*.7+uTreble*aBass*.01;
+                float mA = mV*mO*.7+uTreble*aBass*.05;
                 vColor = vec4(mR,mG,mB,mA);                
                 //set position
                 vec3 mPos = position + mNormal*mNoise - mNormal*mIn01;       
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //set point size 
                 float mPointSize = (1.-mV)*mO;
-                mPointSize = mPointSize*20.-mBase*11.+mTreble*2.; //-root+base+treble
+                mPointSize = mPointSize*22.-mBase*11.+mTreble*2.; //-root+base+treble
                 if(mPointSize<0.){mPointSize=0.;}
                 gl_PointSize = mPointSize;
             }
@@ -223,7 +223,7 @@
             	#else
             		float fogFactor = smoothstep( fogFar, fogNear, depth );
             	#endif
-                	mColor = mix( mColor, fogColor, fogFactor );
+                	mColor = mix( mColor, vec3(1.,1.,1.), fogFactor );
                 #endif
 
                 gl_FragColor = vec4(mColor, vColor.a);
