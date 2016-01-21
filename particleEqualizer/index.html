@@ -112,7 +112,7 @@
                 //cal custom v based on vertical height
                 float mV = abs(.7-.5*mNoise)*.04; //-set custom uv intensity with treble input
                 if(mV<0.001){mV=0.;}else if(mV>1.){mV=1.;} //-clamp custom uv between 0-1                
-                mV=pow(mV,3.);
+                mV=pow(abs(mV),3.);
                 //set color
                 float mBase = aBass*.9;
                 if(mBase<0.001){mBase=0.;}else if(mBase>1.){mBase=1.;} //-clamp mBase between 0-1 
@@ -211,7 +211,7 @@
             varying vec4 vColor;
             
             void main(){
-                vec3 mColor = vec3(pow(vColor.rgb,vec3(2.2)))*.2; //-gamma correction
+                vec3 mColor = vec3(pow(abs(vColor).rgb,vec3(2.2)))*.2; //-gamma correction
                 #ifdef USE_FOG
             	#ifdef USE_LOGDEPTHBUF_EXT
             		float depth = gl_FragDepthEXT / gl_FragCoord.w;
@@ -305,11 +305,11 @@
                 //set pointsize
                 float mPointSize = 1.;
                 mPointSize = mAlign*.008+mNoise*.008*mBase;
-                mPointSize = pow(mPointSize,2.2);
+                mPointSize = pow(abs(mPointSize),2.2);
                 //if(mPointSize>50.){mPointSize=50.;}
                 gl_PointSize = mPointSize;
                 //set varying variables
-                vA = pow(uBase*.005,2.2);
+                vA = pow(abs(uBase*.005),2.2);
                 vR = mPointSize;
                 vG = mPointSize*.4*randomTrigger;
             }
@@ -682,7 +682,7 @@
             void main(){
                 vec3 mNormal = normalize( vec3(0.,0.,0.) - position );
                 float mNoise = 60. * -2. * noise( position + uTime );
-                float mAttrBase = pow(aBase * .011, 3.);
+                float mAttrBase = pow(abs(aBase * .011), 3.);
                 //-cal location 
                 mExplosion = -.1 * randomLifeTarget * mNormal * (.1 - randomLife/randomLifeTarget);
                 mVel = ( mExplosion + mGravity ) * randomLife + mNormal*mNoise;
@@ -999,7 +999,7 @@
                 if(mGB < 0.){mGB = 0.;}
                 float mEnergy = mGB * uTreble * .5;
                 vec3 mColor = vec3( mR + mGB * 1. + mEnergy, mGB*.1 + mEnergy, mGB*.1 + mEnergy*.1 ); 
-                mColor = pow(mColor,vec3(2.2));//-gamma correction, you will lose vertically shading
+                mColor = pow(abs(mColor),vec3(2.2));//-gamma correction, you will lose vertically shading
 
                 #ifdef USE_FOG
             	#ifdef USE_LOGDEPTHBUF_EXT
