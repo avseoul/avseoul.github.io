@@ -233,7 +233,7 @@ body{
 }
 .player #list .title{
     cursor: pointer;
-    max-width: 200px;
+    width: 200px;
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

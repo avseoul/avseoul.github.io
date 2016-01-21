@@ -696,8 +696,8 @@
                 mPos = mPos + mNormal * mLNoise;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(mPos, 1.0);
                 //-set varying
-                vG = pow(mAttrBase,2.2)*.0005+uTreble*aBase;
-                vB = pow(mAttrBase,2.2)*.00005+uTreble*aBase;
+                vG = pow(abs(mAttrBase,2.2))*.0005+uTreble*aBase;
+                vB = pow(abs(mAttrBase,2.2))*.00005+uTreble*aBase;
                 vA = (1.6-randomLife/randomLifeTarget)*3.;
             }
         </script>
