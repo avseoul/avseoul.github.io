@@ -156,6 +156,15 @@ var checkFramedrops = function(){
         }
     }
     pFps = fps;
+
+    //-add to canvas
+    var d = document.createElement('div');
+    d.InnterHTML = fps;
+    d.style.position = 'absolute';
+    d.style['z-index'] = '9000';
+    d.style['top'] = '0px';
+    d.style['right'] = '0px';
+    document.body.appendChild(d);
 };
 
 /**/
