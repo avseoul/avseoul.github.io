@@ -189,7 +189,7 @@ var init = function(){
     stats.domElement.style['position'] = 'fixed';
     stats.domElement.style['opacity'] = '0.5';
     var mFrameRate = stats.domElement.firstChild.firstChild.innerHTML;
-    //container.appendChild( stats.domElement );
+    container.appendChild( stats.domElement );
 
     //-add canvas(renderer) dom to body
     var retina = renderer.domElement;
@@ -323,7 +323,7 @@ var render = function(){
 /* setting animate */
 var animate = function(){
     requestAnimationFrame( animate );
-    //stats.update();
+    stats.update();
     if(!isLow)
     render();
 };
