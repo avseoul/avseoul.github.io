@@ -161,9 +161,10 @@ var checkFramedrops = function(){
     var d = document.createElement('div');
     d.InnterHTML = fps;
     d.style.position = 'absolute';
+    d.style.color = 'white';
     d.style['z-index'] = '9000';
-    d.style['top'] = '0px';
-    d.style['right'] = '0px';
+    d.style['top'] = '25px';
+    d.style['right'] = '15px';
     document.body.appendChild(d);
 };
 
