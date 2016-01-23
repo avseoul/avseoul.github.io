@@ -236,7 +236,7 @@ var render = function(){
     if(isPlaying){
         in_bass = micInput[2]*.8;
     }else{
-        in_bass = micInput[2]*1.7;
+        in_bass = micInput[2]*1.5;
     }
     var in_treble = micInput[200]*.63;
     var in_mid_01 = micInput[100]*.63;
@@ -325,7 +325,6 @@ var animate = function(){
     requestAnimationFrame( animate );
     stats.update();
     getMICInput();
-    if(!isLow)
     render();
 };
 
