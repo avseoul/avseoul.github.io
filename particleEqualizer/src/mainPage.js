@@ -18,9 +18,6 @@ var lfnt_bg_opacity = 0;
 var lfnt_ct_opacity = 0;
 var lfnt_boolean = false;
 var lowFrameNotiTransition = function(){
-    if(!lfnt_boolean){
-        requestAnimationFrame( lowFrameNotiTransition );
-    }
     var bg = document.getElementById('isLow_bg');
     bg.style['opacity'] = lfnt_bg_opacity.toString();
     var container = document.getElementById('isLow_container');
@@ -135,9 +132,6 @@ var fdct = 0;
 var fdcb = false;
 var pFps = 0;
 var checkFramedrops = function(){
-    if(!isLow && !fdcb){
-        requestAnimationFrame( checkFramedrops );
-    }
     var tD = new Date;
     var fps = 1000/(tD-lD);
     lD = tD;
@@ -294,6 +288,7 @@ var isPlaying = true;
 
 /* navigation */
 var gO = .0, oO = .08;
+var isNav = false;
 var naviUpdate = function(){
     //-get doms 
     var d1 = document.getElementById('project-title');
@@ -318,20 +313,6 @@ var naviUpdate = function(){
     d4.style['bottom'] = d4_gP.toString();
     d5.style['opacity'] = gO.toString();
     d5.style['bottom'] = d5_gP.toString();
-};
-
-var naviInterval;
-var clearNaviInterval = function(){
-    clearInterval(naviInterval);
-};
-var initNavi = function(){
-    var nO = .8-gO;
-    gO += nO*oO*2;
-    if(gO > .78){ //-stop when it approach to edge
-        gO = .8;
-        clearNaviInterval();
-    }
-    naviUpdate();
 };
 var navigation = function(event){
     var trigger = event.wheelDeltaY;
@@ -632,13 +613,14 @@ var playTracks = function(){
 var interval;
 var checkArray = function(){
     if(user.length === mTracks.length){//-only run playTracks when my arrays are fully filled
-        clearInterval(interval);
+        clearTimeout(interval);
         playTracks();
-        naviInterval = setInterval(initNavi, 50);
+        //naviInterval = setTimeout(initNavi, 200);
+        //initNavi();
     }
 };
 var loading = function(){ //-keep calling checkArray() until my arrays are filled
-    interval = setInterval(checkArray, 500);
+    interval = setTimeout(checkArray, 500);
 };
 
 //-get playback event and change tracks
@@ -656,7 +638,7 @@ document.addEventListener('DOMContentLoaded', function(){
         getTracks();
         loading();
         preLoadlowFrameNoti();
-        checkFramedrops();
+        //checkFramedrops();
         document.addEventListener('wheel', navigation, false);
     };
     if(!isMobile){

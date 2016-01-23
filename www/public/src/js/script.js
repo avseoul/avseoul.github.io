@@ -13,7 +13,7 @@ var isNavigate = false;//-to detect navigation
 var isUp = false;
 var isDown = false;
 var pv=0;
-var isWheel;
+var w_count=0;
 var window_w, window_h;
 var wf=0, cL=0, nL=0, isOn = false;//-for wheel event
 var ct='';
@@ -23,7 +23,6 @@ var go_landing = function(current_target){
     var _ct = current_target;
     var _t = document.getElementById('landing_container');
     wheel_page_down(_t);
-    //console.log('go_landing');
 };  
 var go_about = function(current_target){
     var _ct = current_target;
@@ -35,30 +34,34 @@ var go_about = function(current_target){
         _t = document.getElementById('about_container');
         wheel_page_down(_t);
     }
-    //console.log('go_about');
 };
 var go_works = function(current_target){
     var _ct = current_target;
     var _t = document.getElementById('about_container');
     wheel_page_up(_t);
-    //console.log('go_works');
+};
+
+/* set url */
+var set_url = function(_t){
+    var id = _t;
+    console.log(id, isUp, isDown);
+    if(id=='about_img' && isUp==false && isDown==true){window.history.pushState(null,null,'/');}
+    else if(id=='about_img' && isUp==true && isDown==false){window.history.pushState(null,null,'/works');}
+    else if(id=='landing_container' && isUp==true && isDown==false){window.history.pushState(null,null,'/about');}
+    //else if(id=='work_container' && isUp==false && isDown==true){window.history.pushState(null,null,'/about');}
 };
 
 
 /* wheel event controller */
 var wheel_page_up = function(_t){
-    //console.log(_t.style['top']);
     cL = parseFloat(_t.style['top']);
-    //console.log(cL);
     if(!isOn && cL<99999){nL = parseFloat(_t.style['top']);isOn=true;}
-    if(nL < (window_h*-.7)){         //3.-ease out
-        nL -= (window_h + cL) * .25; 
-    }else if(nL > (window_h*-.1)){   //1.-ease in
-        nL += wf*.05;
-    }else{                           //2.-ease
-        nL -= (window_h + cL) * .13;
+    if(nL < (window_h*-.3)){         //2.-ease out
+        nL -= (window_h + cL) * .1; 
+    }else{                           //1.-ease
+        nL -= (window_h + cL) * .04;
     }
-    if(nL < (-1*window_h+1)){        //4.-settle
+    if(nL < (-1*window_h+2)){        //3.-settle
         nL = -1*window_h; 
         wheel_reset();
     }
@@ -68,62 +71,50 @@ var wheel_page_down = function(_t){
     cL = parseFloat(_t.style['top']);
     if(!isOn && cL<99999){nL = parseFloat(_t.style['top']);isOn=true;}
     if(nL > (window_h*-.7)){        //2.-ease out
-        nL += cL * -.13;
+        nL += cL * -.1;
     }else{                          //1.-ease
-        nL +=  cL * -.03;          
+        nL +=  cL * -.04;          
     }
-    if(nL > -1){                    //3.-settle
+    if(nL > -2){                    //3.-settle
         nL = 0; 
         wheel_reset();
     }
     _t.style['top'] = nL.toString() + 'px';
 };
 var wheel_reset = function(){
-        isUp = false;
-        isDown = false;
-        isOn = false;
-        isNavigate = false;
-        cL = 99999999;
+    isUp = false;
+    isDown = false;
+    isOn = false;
+    isNavigate = false;
+    cL = 99999999;
 };
 var wheel_event_trigger = function(event){
     if(event !== null){     
         wf = event.wheelDeltaY;
-        if(wf>3){wf=0;}//-constrain trackpad value
-        if(!isNavigate && wf != 0){ 
+        if(!isNavigate){ 
             ct = event.srcElement.id;
             console.log('ct: ',ct);
             if(wf<0 && ct !== 'works_container'){//-not for last page
                 isNavigate = true;
                 isUp=true;
+                set_url(ct);
             }else if(wf>0 && ct !== 'landing_container'){//-not for first page
                 isNavigate = true;
                 isDown=true;
+                set_url(ct);
             }
         }
     }
-    //-do navigation!!
-    if(ct == 'landing_container' && isUp){go_about(ct);}
-    else if(ct == 'about_img' && isUp){go_works(ct);}
-    else if(ct == 'about_img' && isDown){go_landing(ct);}
-    else if(ct == 'works_container' && isDown){go_about(ct);}
 };
 var wheel_optimize = function(event){
     var v = Math.abs(event.wheelDeltaY);
     if(v>pv){ //-prevent unnecessary fire from trackpad
         wheel_event_trigger(event);
+    }else if(v>100 && v==pv){ //-for mouse wheeel
+        wheel_event_trigger(event);
     }
-    //console.log('pv: ',pv,', v: ',v);
-    pv = v; //-pv will be reset when wheel_event is done for next event
-    clearTimeout(isWheel);
-    //-after 100ms reset pv and isNavigate
-    isWheel = setTimeout(function() {
-        if(!isUp && !isDown){
-            pv = 0;
-            isNavigate = false; //-for safety
-            console.log(pv, isNavigate);
-        }
-        //console.log('setTimeout working');
-    }, 100);
+    //console.log('pv: ',pv,', v: ',v, ', rv: ',event.wheelDeltaY);
+    pv = v; 
 };
 
 /* get new image location */
@@ -237,7 +228,7 @@ var get_works = function(){
     var w_c = document.createElement('div');
     w_c.id = 'works_container';
     w_c.style['top'] = '0px';
-    
+
     t.appendChild(w_c);
 };
 
@@ -255,15 +246,19 @@ var get_header = function(){
 var animate = function(){
     window.requestAnimationFrame(animate);
     if(isNavigate){
-        wheel_event_trigger(null);//-to clear wheel event for accident
-        console.log('isNavi: ',isNavigate,', isUp: ',isUp,', isDown: ',isDown);
+        //-do navigation!!
+        if(ct == 'landing_container' && isUp){go_about(ct);}
+        else if(ct == 'about_img' && isUp){go_works(ct);}
+        else if(ct == 'about_img' && isDown){go_landing(ct);}
+        else if(ct == 'works_container' && isDown){go_about(ct);}
+        //console.log('isNavi: ',isNavigate,', isUp: ',isUp,', isDown: ',isDown);
     }
 };
 
 /* init */
 var init = function(){
-    animate();
     get_window_ratio();
+    animate();
     get_header();
     get_landing();
     get_about();

@@ -60,7 +60,6 @@ var setupAudioNodes_b = function() {
 };
 
 var getMICInput = function(){
-    requestAnimationFrame( getMICInput );
     analyserNode.getByteFrequencyData(micInput);
     //for(var i = 0; i < micInput.length; i++){
     //if(micInput[i] > 100)
@@ -84,5 +83,5 @@ window.addEventListener("load", function(){
     } else {
         console.log('getUserMedia not supported on your browser!');
     }
-    getMICInput();
+
 });

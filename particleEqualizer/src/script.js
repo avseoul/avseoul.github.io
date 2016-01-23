@@ -324,6 +324,7 @@ var render = function(){
 var animate = function(){
     requestAnimationFrame( animate );
     stats.update();
+    getMICInput();
     if(!isLow)
     render();
 };
