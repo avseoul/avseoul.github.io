@@ -287,7 +287,7 @@ var isPlaying = true;
 /* --------------------------------------------------------- */
 
 /* navigation */
-var gO = .0, oO = .08;
+var gO = .8, oO = .08;
 var isNav = false;
 var naviUpdate = function(){
     //-get doms 
@@ -317,13 +317,13 @@ var naviUpdate = function(){
 var navigation = function(event){
     var trigger = event.wheelDeltaY;
     if(event.srcElement.id == 'mCanvas')
-        if(trigger < 0){
+        if(trigger > 0){
             var nO = 0.-gO;
             gO += nO*oO;
             if(gO < 0.02){ //-stop when it approach to edge
                 gO = 0.;
             }
-        }else if(trigger > 0){
+        }else if(trigger < 0){
             var nO = .8-gO;
             gO += nO*oO;
             if(gO > .78){ //-stop when it approach to edge
