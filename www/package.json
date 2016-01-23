@@ -1,0 +1,14 @@
+{
+  "name": "kimsehyun.kr",
+  "version": "1.0.0",
+  "description": "official portfolio website of visual artist sehyun kim (also known as av or visualozik)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "avseoul",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}

@@ -1,0 +1,69 @@
+body{
+    width:100%;
+    height:100%;
+    margin:auto;
+    overflow:hidden;
+
+    background: #fafafa; 
+    color: #333;
+    font-size: 12px;
+    font-family: 'Inconsolata', "Courier New", Courier, monospace, "Times New Roman", Times, serif;
+}
+#header{
+    position:fixed;
+    width:100%;
+    height:50px;
+    top:0px;
+    left:0px;
+    z-index:1000;
+}
+#container{
+    width:100vw;
+    height:100vh;
+}
+#footer{
+    position:fixed;
+    width:100%;
+    height:10px;
+    bottom:0px;
+    left:0px;
+    z-index:1000;
+}
+
+#landing_container{
+    position:absolute;
+    top:0px;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    z-index:3;
+    background: #fafafa;
+}
+#about_container{
+    position:absolute;
+    top:0px;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    z-index:2;
+    background: #fafafa;
+}
+#works_container{
+    position:absolute;
+    top:0px;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    z-index:1;
+    background: #fafafa;
+}
+
+
+
+
+.title{
+    font-size: 35px;
+    font-color: #fff;
+    font-style: italic;
+    letter-spacing: -1px;
+}
