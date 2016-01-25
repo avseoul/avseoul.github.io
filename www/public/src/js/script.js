@@ -15,14 +15,16 @@ var isDown = false;
 var pv=0;
 var w_count=0;
 var window_w, window_h;
-var wf=0, cL=0, nL=0, isOn = false;//-for wheel event
+var wf=0, cL=99999, nL=0, isOn = false;//-for wheel event
 var ct='';
-
 /* navigate page */
 var go_landing = function(current_target){
     var _ct = current_target;
     var _t = document.getElementById('landing_container');
     wheel_page_down(_t);
+    //-lock overflow
+    var works_ct = document.getElementById('works_container');
+    works_ct.style['overflow'] = 'hidden';
 };  
 var go_about = function(current_target){
     var _ct = current_target;
@@ -30,24 +32,30 @@ var go_about = function(current_target){
     if(_ct == 'landing_container'){
         _t = document.getElementById('landing_container');
         wheel_page_up(_t);
-    }else if(_ct == 'works_container'){
+    }else if(_ct === 'works_container' || _ct === '' || ct === 'works_ui_container'){
         _t = document.getElementById('about_container');
         wheel_page_down(_t);
     }
+    //-lock overflow
+    var works_ct = document.getElementById('works_container');
+    works_ct.style['overflow'] = 'hidden';
 };
 var go_works = function(current_target){
     var _ct = current_target;
     var _t = document.getElementById('about_container');
     wheel_page_up(_t);
+    //-unlock overflow
+    var works_ct = document.getElementById('works_container');
+    works_ct.style['overflow'] = 'auto';
 };
 
 /* set url */
 var set_url = function(_t){
     var id = _t;
     console.log(id, isUp, isDown);
-    if(id=='about_img' && isUp==false && isDown==true){window.history.pushState(null,null,'/');}
-    else if(id=='about_img' && isUp==true && isDown==false){window.history.pushState(null,null,'/works');}
-    else if(id=='landing_container' && isUp==true && isDown==false){window.history.pushState(null,null,'/about');}
+    //if(id=='about_img' && isUp==false && isDown==true){window.history.pushState(null,null,'/');}
+    //else if(id=='about_img' && isUp==true && isDown==false){window.history.pushState(null,null,'/works');}
+    //else if(id=='landing_container' && isUp==true && isDown==false){window.history.pushState(null,null,'/about');}
     //else if(id=='work_container' && isUp==false && isDown==true){window.history.pushState(null,null,'/about');}
 };
 
@@ -93,15 +101,25 @@ var wheel_event_trigger = function(event){
         wf = event.wheelDeltaY;
         if(!isNavigate){ 
             ct = event.srcElement.id;
-            console.log('ct: ',ct);
-            if(wf<0 && ct !== 'works_container'){//-not for last page
-                isNavigate = true;
-                isUp=true;
-                set_url(ct);
-            }else if(wf>0 && ct !== 'landing_container'){//-not for first page
-                isNavigate = true;
-                isDown=true;
-                set_url(ct);
+            console.log('ct: ',ct,', isNavigate: ',isNavigate);
+            var scroll_position = document.getElementById('works_container').scrollTop;
+            if(ct!=='footer'&&ct!=='header'&&ct!==''&&ct!=='works_ui_container'){
+                if(wf<0 && ct !== 'works_container'){//-not for last page
+                    isNavigate = true;
+                    isUp=true;
+                    set_url(ct);
+                }else if(wf>0 && ct !== 'landing_container'){//-not for first page
+                    isNavigate = true;
+                    isDown=true;
+                    set_url(ct);
+                }
+            }else{
+                if(ct==='' || ct==='works_ui_container'){
+                    if(wf>0&&scroll_position==0){
+                        isNavigate = true;
+                        isDown=true;
+                    }
+                }
             }
         }
     }
@@ -120,7 +138,7 @@ var wheel_optimize = function(event){
 /* get new image location */
 var getImgLoc = function(w,h){
     var s = [2];
-    if(isInit){
+    if(w != 0){
         s[0] = w*-.5+window_w*.5; //-left
         s[1] = h*-.5+window_h*.5; //-top
     }else{
@@ -165,27 +183,17 @@ var get_window_ratio = function(){//-1.77 is default
 /* get landing page */
 var get_landing = function(){
     //-get container
-    var t = document.getElementById('container');
-    //-create contianer div for img 
-    var l_c = document.createElement('div');
-    l_c.style['top'] = '0px';
-    l_c.id = 'landing_container';
-
-    t.appendChild(l_c);
+    var t = document.getElementById('landing_container');
+    t.style['top'] = '0px';
 };
 
 /* get about page */
 var get_about = function(){
     //-get container
-    var t = document.getElementById('container');
-    //-create contianer div 
-    var a_c = document.createElement('div');
-    a_c.id = 'about_container';
-    a_c.style['top'] = '0px';
+    var t = document.getElementById('about_container');
+    t.style['top'] = '0px';
     //-create img dom
-    var a_i = document.createElement('img');
-    a_i.id = 'about_img';
-    a_i.src = 'img/profile.jpg';
+    var a_i = document.getElementById('about_img');
     if(isPortrait){
         a_i.style['width'] = 'auto';
         a_i.style['height'] = '100vh';
@@ -194,9 +202,10 @@ var get_about = function(){
         a_i.style['height'] = 'auto';
     }
     var nL = getImgLoc(a_i.clientWidth, a_i.clientHeight);
+    //console.log(a_i.clientWidth);
     a_i.style['margin-left'] = nL[0].toString() + 'px';
     a_i.style['margin-top'] = nL[1].toString() + 'px';
-    a_c.appendChild(a_i);
+    t.appendChild(a_i);
     var a_d1 = document.createElement('div');
     a_d1.id = 'about_d1';
     a_d1.style['margin'] = '0 auto';
@@ -206,40 +215,42 @@ var get_about = function(){
     a_d1.style['color'] = '#fafafa';
     a_d1.className = 'title';
     a_d1.innerHTML = '_about';
-    a_c.appendChild(a_d1);
+    t.appendChild(a_d1);
     var a_d2 = document.createElement('div');
     a_d2.id = 'about_d2';
     a_d2.style['margin'] = '0 auto';
     a_d2.style['position'] = 'absolute';
-    a_d2.style['top'] = '0px';
+    a_d2.style['margin-top'] = window.innerHeight.toString();
     a_d2.style['width'] = '70vw';
     a_d2.style['color'] = '#fafafa';
     a_d2.innerHTML = a_d2_content;
-    a_c.appendChild(a_d2);
-
-    t.appendChild(a_c);
+    t.appendChild(a_d2);
 };
 
-/* get about page */
+/* get work content page */
+var get_work_content = function(_id){
+    var t = document.getElementById('works_content_container');
+    t.style['top'] = window_h;
+
+};
+
+/* get works page */
 var get_works = function(){
     //-get container
-    var t = document.getElementById('container');
-    //-create contianer div 
-    var w_c = document.createElement('div');
-    w_c.id = 'works_container';
-    w_c.style['top'] = '0px';
-
-    t.appendChild(w_c);
+    var t = document.getElementById('works_container');
+    t.style['top'] = '0px';
 };
 
 /* get footer */
 var get_footer = function(){
     var t = document.getElementById('footer');     
+    t.style['top'] = '0px';
 };
 
 /* get header */
 var get_header = function(){
     var t = document.getElementById('header');
+    t.style['top'] = '0px';
 };
 
 /* animate */
@@ -250,7 +261,9 @@ var animate = function(){
         if(ct == 'landing_container' && isUp){go_about(ct);}
         else if(ct == 'about_img' && isUp){go_works(ct);}
         else if(ct == 'about_img' && isDown){go_landing(ct);}
-        else if(ct == 'works_container' && isDown){go_about(ct);}
+        else if(ct == 'works_container' || ct === '' || ct === 'works_ui_container'){
+            if(isDown){go_about(ct);}
+        }
         //console.log('isNavi: ',isNavigate,', isUp: ',isUp,', isDown: ',isDown);
     }
 };

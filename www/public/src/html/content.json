@@ -1,0 +1,276 @@
+{
+    "projects":[
+        {
+            "thumbnail_src":"/img/moreraytracing.jpg",
+            "id":"033",
+            "subject":"Casestudy 'More Raytracing'",
+            "description":"Javascript, webGL, GLSL/Computer Graphics @CS",
+            "date":"Sep,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/fuckdetector.jpg",
+            "id":"033",
+            "subject":"Casestudy 'String Processing'",
+            "description":"Javascript, HTML, CSS, p5.js/Programming AtoZ @ITP",
+            "date":"Sep,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/noise.jpg",
+            "id":"032",
+            "subject":"Casestudy 'Noise'",
+            "description":"Javascript, webGL, GLSL/Computer Graphics @CS",
+            "date":"Sep,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/fragthumbnail.jpg",
+            "id":"031",
+            "subject":"Casestudy 'FragmentShader'",
+            "description":"Javascript, webGL, GLSL/Computer Graphics @CS",
+            "date":"Sep,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/NOC_W05_thumb.jpg",
+            "id":"030",
+            "subject":"Strange Attractor",
+            "description":"CINDER/Creative Coding/Nature of Code @ITP",
+            "date":"May,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/cityweatherThumb.jpg",
+            "id":"029",
+            "subject":"City Weather(Working Title)",
+            "description":"Javascript, CSS, HTML, P5js/Critical APIs @ITP",
+            "date":"May,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/rainytypewriter.jpg",
+            "id":"028",
+            "subject":"Rainy Typewriter",
+            "description":"Javascript, HTML, CSS, P5.JS, TONE.JS/Interactive AudioVisual Content/Interactive Music @ITP",
+            "date":"Mar,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/rg_thumbnail.jpg",
+            "id":"027",
+            "subject":"Logo for Ross Goodwin",
+            "description":"Identity Design",
+            "date":"Jan,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/DTS_W01.jpg",
+            "id":"026",
+            "subject":"Mesh Generator(Working Title)",
+            "description":"CINDER/Design Tool Studio @ITP",
+            "date":"Jan,2015",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/NM01.jpg",
+            "id":"025",
+            "subject":"Message Generator",
+            "description":"Javascript/Networked Media @ITP",
+            "date":"Nov,2014",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/cosmosonic.jpg",
+            "id":"024",
+            "subject":"Cosmosonic",
+            "description":"Interactive Audio Visual Installation/Projection on Canvas",
+            "date":"Oct,2014",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/expressivetypography.jpg",
+            "id":"023",
+            "subject":"Expressive Typography",
+            "description":"Expressive Typography/Graphic Design/Visual Language @ITP",
+            "date":"Sep,2014",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/itplogo.jpg",
+            "id":"022",
+            "subject":"ITP T-SHIRTS Design",
+            "description":"Illustrator/Graphic Desgin/Personal Work @ITP",
+            "date":"Sep,2014",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/nonagon.jpg",
+            "id":"021",
+            "subject":"Experiment Video for NONAGON with Parris goebel",
+            "description":"Experimental Film/1m20s/Directing&Producing",
+            "date":"Apr,2014",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/unpredictable.jpg",
+            "id":"020",
+            "subject":"Unpredictable",
+            "description":"Experimental Film/2m40s/Directing&Producing",
+            "date":"Apr,2013",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/wooven.jpg",
+            "id":"019",
+            "subject":"'ART OF WOVEN' VISUALOZIK X GOLDSTEP COLLABORATION FOR NIKE",
+            "description":"Projection Mapping/0m53s/Projection on Painting/Directing&Producing",
+            "date":"May,2013",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/optpym3.jpg",
+            "id":"018",
+            "subject":"Optical Pyramid 003 - China international Gallery Exposition 2012",
+            "description":"Projection Mapping/5m15s/Projection on Painting/Directing&Producing",
+            "date":"Apr,2012",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/8sec2.jpg",
+            "id":"017",
+            "subject":"8SECONDS X C.Y CHOI (2012 SFDF WINNER OF THIS YEAR) COLLABORATION FASHION FILM",
+            "description":"Fashion Film/1m24s/Directing&Producing",
+            "date":"Dec,2012",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/8sec1.jpg",
+            "id":"016",
+            "subject":"8SECONDS X EUDON CHOI (2012 SFDF WINNER OF THIS YEAR) COLLABORATION FASHION FILM",
+            "description":"Fashion Film/1m24s/Directing&Producing",
+            "date":"Dec,2012",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg",
+            "id":"015",
+            "subject":"Visualozik & Buzrun - Augmented Painting 001",
+            "description":"Projection Mapping/3m06s/Directing&Producing",
+            "date":"Jan,2012",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/visexp.jpg",
+            "id":"014",
+            "subject":"Visualozik Experiment 3D Projection Mapping + X",
+            "description":"Projection Mapping/Reel/3m52s/Directing&Producing",
+            "date":"Apr,2011",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/hoam.jpg",
+            "id":"013",
+            "subject":"Video for the centennial anniversary of hoam lee",
+            "description":"3D Animation/1m59s/Directing&Producing",
+            "date":"May,2010",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/asdf.jpg",
+            "id":"012",
+            "subject":"OpticalPyramid 002",
+            "description":"Projection Mapping/4m53s/Projection on Painting/Directing&Producing",
+            "date":"Jun,2010",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/artcol.jpg",
+            "id":"011",
+            "subject":"KT&G ARTCOLLABORATION KOMBA X AV X QUANDOL",
+            "description":"Projection Mapping/2m21s/Projection on Painting/Directing&Producing",
+            "date":"Jun,2010",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/bemyluv.jpg",
+            "id":"010",
+            "subject":"THE QUIETT 'BE MY LUV'",
+            "description":"Music Video/4m01s/Directing&Producing",
+            "date":"Apr,2010",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/ofs_mv.jpg",
+            "id":"009",
+            "subject":"O.F.S(Oriental Funk Stew) 'Super Sonic'",
+            "description":"Music Video/3m54s/Directing&Producing",
+            "date":"May,2010",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/opticalpiramid.jpg",
+            "id":"008",
+            "subject":"OpticalPyramid 001",
+            "description":"Projection Mapping/9m39s/Projection on Installation/Directing&Producing",
+            "date":"Nov,2009",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/10years.jpg",
+            "id":"007",
+            "subject":"DIY Universe '10 years after'",
+            "description":"Projection Mapping/5m21s/Projection on Pacade/Directing&Producing",
+            "date":"Nov,2009",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/3-answer.jpg",
+            "id":"006",
+            "subject":"ANSWER 'NAK UH'",
+            "description":"Music Video/3m39s/Directing&Producing",
+            "date":"May,2009",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/drpepper.jpg",
+            "id":"005",
+            "subject":"skit",
+            "description":"Projection Mapping/1m48s/Projection on Product/Directing&Producing",
+            "date":"Nov,2009",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/ujnnova.jpg",
+            "id":"004",
+            "subject":"Visualozik LAB project # UJN&NOVA ELECTRON ENERGY",
+            "description":"Projection Mapping,Music Video/4m16s/Projection on Space/Directing&Producing",
+            "date":"Dec,2009",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/jthtime.jpg",
+            "id":"003",
+            "subject":"J-th Time",
+            "description":"Projection Mapping/3m16s/Projection on Structure/Directing&Producing",
+            "date":"Sep,2009",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/360stadium.jpg",
+            "id":"002",
+            "subject":"Total Experience 3",
+            "description":"Projection Mapping/3m58s/Projection with Live Painting",
+            "date":"Aug,2009",
+            "category":""
+        },
+        {
+            "thumbnail_src":"/img/2-agrippa.jpg",
+            "id":"001",
+            "subject":"Visualozik 1st experiment",
+            "description":"Projection Mapping/3m13s/Projection on statue/Directing&Producing",
+            "date":"Jul,2009",
+            "category":""
+        }
+    ]
+}

@@ -1,21 +1,52 @@
-var express = require('express');
-var favicon = require('serve-favicon');
+var express     = require('express');
+var app         = express();
+var fs          = require('fs');
+var favicon     = require('serve-favicon');
+var cheerio     = require('cheerio');
 
-//-start express
-var app = express();
-//-set public folder
+var get_data = function(){
+    var path = __dirname + '/public/src/html/content.json';
+    var mJson = JSON.parse(fs.readFileSync(path,'utf8'));
+    return mJson
+};
+
+var set_works = function(req, res){
+    ////set works container
+    var path = '/public/src/html/av.html';
+    var html = fs.readFileSync(__dirname + path, 'utf8');
+    var $ = cheerio.load(html);
+    var mJson = get_data();
+    var num = mJson['projects'].length;
+    for(var i = 0; i < num; i++){
+        var s = mJson['projects'][i];
+        var scriptNode = 
+            '<div class=\"ui_grid\">'+
+                '<img class=\"ui_thumbnail\" src=\''+ s['thumbnail_src'] + '\' onclick=\"get_work_content(\''+ s['id'] +'\')\">'+
+                '<div class=\"ui_subject\"><span onclick=\"get_work_content(\''+ s['id'] +'\')\">'+ s['subject'] +'</span></div>'+
+                '<div class=\"ui_description\">'+ s['description'] +'</div>'+
+                '<div class=\'ui_date\'>'+ s['date'] +'</div>'+
+            '</div>';
+        $('#works_ui_container').append(scriptNode);
+    }
+    //console.log($.html());
+    res.send($.html());
+};
+
+//-setup app
 app.use(express.static(__dirname + '/public'));
-//-set favicon
-app.use(favicon(__dirname + '/public/img/favicon.ico'));    
-
-//
+app.use(favicon(__dirname + '/public/img/favicon.ico')); 
 app.get('/', function(req, res){
-    //res.send('hello world');
-    res.sendFile(__dirname + '/public/index.html');
+    //console.log('get"/" is working');
+    res.sendFile(__dirname + '/public/src/html/av.html');
+    set_works(req, res);
 });
 
+app.get('/001', function(req, res){
+    console.log(req);
+});
 
-//
+//-run
 app.listen(3000, function(){
-    console.log('3000 is running');
+    console.log('\n$$$\napp is running on 3000');
 });
+

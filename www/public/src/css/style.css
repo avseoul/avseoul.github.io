@@ -4,7 +4,7 @@ body{
     margin:auto;
     overflow:hidden;
 
-    background: #fafafa; 
+    background: #f5f5f5; 
     color: #333;
     font-size: 12px;
     font-family: 'Inconsolata', "Courier New", Courier, monospace, "Times New Roman", Times, serif;
@@ -36,8 +36,8 @@ body{
     width:100vw;
     height:100vh;
     overflow:hidden;
-    z-index:3;
-    background: #fafafa;
+    z-index:4;
+    background: #f5f5f5;
 }
 #about_container{
     position:absolute;
@@ -45,8 +45,8 @@ body{
     width:100vw;
     height:100vh;
     overflow:hidden;
-    z-index:2;
-    background: #fafafa;
+    z-index:3;
+    background: #f5f5f5;
 }
 #works_container{
     position:absolute;
@@ -54,8 +54,25 @@ body{
     width:100vw;
     height:100vh;
     overflow:hidden;
+    z-index:2;
+    background: #f5f5f5;
+}
+#works_content_container{
+    position:absolute;
+    top:0px;
+    width:100vw;
+    height:100vh;
     z-index:1;
-    background: #fafafa;
+    background: #f5f5f5;
+}
+#works_ui_container{
+    margin:0 auto;
+    position:absolute;
+    top:0px;
+    width:100vw;
+    height:100vh;
+    z-index:1;
+    background: #f5f5f5;
 }
 
 
@@ -66,4 +83,52 @@ body{
     font-color: #fff;
     font-style: italic;
     letter-spacing: -1px;
+}
+.ui_grid{
+    background:#fff;
+    width:200px;
+    height:280px;
+    margin:0px;
+    overflow:hidden;
+    display:inline-block;
+}
+.ui_thumbnail{
+    cursor:pointer;
+    width:200px;
+    margin:0px;
+    opacity:.8;
+    -webkit-filter: grayscale(100%);
+}
+.ui_thumbnail:hover{
+    opacity:1.0;
+    -webkit-filter: grayscale(60%);
+}
+.ui_subject{
+    cursor:pointer;
+    width:196px;
+    margin:5px 2px 0 2px;
+    overflow : hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-bottom-style:dotted;
+    border-bottom-width:1px;
+    border-bottom-color:#ddd;
+}
+.ui_subject span:hover{
+    color:#ddd;
+    background:#000;
+}
+
+.ui_description{
+    font-size:11px;
+    margin:4px 2px 0px 2px;
+    width:196px;
+    height:40px;
+    color:#888;
+    word-break:break-all;
+}
+.ui_date{
+    font-size:10px;
+    margin: 0px 0px 0px 2px;
+    color: #888;
 }
