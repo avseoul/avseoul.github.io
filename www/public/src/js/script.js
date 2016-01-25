@@ -12,11 +12,15 @@ var isInit = false;//-to detect first load
 var isNavigate = false;//-to detect navigation
 var isUp = false;
 var isDown = false;
+var isLeft = false; //-to show content window
+var isRight = false;
+var isScrollToTop = false;
 var pv=0;
 var w_count=0;
 var window_w, window_h;
 var wf=0, cL=99999, nL=0, isOn = false;//-for wheel event
 var ct='';
+var scroll_target = null;
 /* navigate page */
 var go_landing = function(current_target){
     var _ct = current_target;
@@ -59,7 +63,6 @@ var set_url = function(_t){
     //else if(id=='work_container' && isUp==false && isDown==true){window.history.pushState(null,null,'/about');}
 };
 
-
 /* wheel event controller */
 var wheel_page_up = function(_t){
     cL = parseFloat(_t.style['top']);
@@ -89,9 +92,52 @@ var wheel_page_down = function(_t){
     }
     _t.style['top'] = nL.toString() + 'px';
 };
+var wheel_page_left = function(_t){
+    cL = parseFloat(_t.style['left']);
+    if(!isOn && cL<99999){nL = parseFloat(_t.style['left']);isOn=true;}
+    if(nL < (window_w*-.3)){         //2.-ease out
+        nL -= (window_w + cL) * .1; 
+    }else{                           //1.-ease
+        nL -= (window_w + cL) * .04;
+    }
+    if(nL < (-1*window_w+2)){        //3.-settle
+        nL = -1*window_w; 
+        wheel_reset();
+    }
+    _t.style['left'] = nL.toString() + 'px';
+};
+var wheel_page_right = function(_t){
+    cL = parseFloat(_t.style['left']);
+    if(!isOn && cL<99999){nL = parseFloat(_t.style['left']);isOn=true;}
+    if(nL > (window_w*-.7)){        //2.-ease out
+        nL += cL * -.1;
+    }else{                          //1.-ease
+        nL +=  cL * -.04;          
+    }
+    if(nL > -2){                    //3.-settle
+        nL = 0; 
+        wheel_reset();
+    }
+    //console.log(_t.style['left']);
+    _t.style['left'] = nL.toString() + 'px';
+};
+var scroll_to_top = function(_t){
+    var _cL = parseFloat(_t.scrollTop);
+    var _nL = _cL*.9;
+    if(_nL < .5){
+        _nL = 0;
+        isScrollToTop = false;
+        _t.style['overflow'] = 'hidden';
+    }
+    _t.scrollTop = _nL;
+    //*
+    document.getElementById('works_content_container').style['top'] = _nL.toString() + 'px';
+};
 var wheel_reset = function(){
     isUp = false;
     isDown = false;
+    isLeft = false;
+    isRight = false;
     isOn = false;
     isNavigate = false;
     cL = 99999999;
@@ -99,23 +145,23 @@ var wheel_reset = function(){
 var wheel_event_trigger = function(event){
     if(event !== null){     
         wf = event.wheelDeltaY;
-        if(!isNavigate){ 
+        if(!isNavigate&&!isLeft&&!isRight){ 
             ct = event.srcElement.id;
             console.log('ct: ',ct,', isNavigate: ',isNavigate);
             var scroll_position = document.getElementById('works_container').scrollTop;
-            if(ct!=='footer'&&ct!=='header'&&ct!==''&&ct!=='works_ui_container'){
-                if(wf<0 && ct !== 'works_container'){//-not for last page
-                    isNavigate = true;
-                    isUp=true;
-                    set_url(ct);
-                }else if(wf>0 && ct !== 'landing_container'){//-not for first page
-                    isNavigate = true;
-                    isDown=true;
-                    set_url(ct);
-                }
-            }else{
-                if(ct==='' || ct==='works_ui_container'){
-                    if(wf>0&&scroll_position==0){
+            if(ct!=='footer'&&ct!=='header'){
+                if(ct!==''&&ct!=='works_container'&&ct!=='works_ui_container'&&ct!=='works_content_container'){
+                    if(wf<0 && ct !== 'works_container'){//-not for last page
+                        isNavigate = true;
+                        isUp=true;
+                        set_url(ct);
+                    }else if(wf>0 && ct !== 'landing_container'){//-not for first page
+                        isNavigate = true;
+                        isDown=true;
+                        set_url(ct);
+                    }
+                }else if(ct==='' || ct ==='works_container' || ct === 'works_ui_container'){
+                    if(wf>0&&scroll_position==0&&ct!=='works_content_container'){
                         isNavigate = true;
                         isDown=true;
                     }
@@ -161,6 +207,12 @@ var resetElements = function(){
     var nL = getImgLoc(t1.clientWidth, t1.clientHeight);
     t1.style['margin-left'] = nL[0].toString() + 'px';
     t1.style['margin-top'] = nL[1].toString() + 'px';
+    //-content window
+    var t2 = document.getElementById('works_content_container');
+    t2.style['width'] = '100vw';
+    t2.style['height'] = '90vh';
+    var t2_nt = document.getElementById('works_container').scrollTop + (window_h-t2.clientHeight)*.5;
+    t2.style['top'] = t2_nt.toString()+'px';
 };
 
 /* detect window ratio */
@@ -230,8 +282,39 @@ var get_about = function(){
 /* get work content page */
 var get_work_content = function(_id){
     var t = document.getElementById('works_content_container');
-    t.style['top'] = window_h;
-
+    t.style['width'] = window_w.toString()+'px';
+    t.style['height'] = window_h.toString()+'px';
+    var t_nt = document.getElementById('works_container').scrollTop + (window_h-t.clientHeight)*.5;
+    t.style['top'] = t_nt.toString()+'px';
+    t.style['left'] = (-1 * window_w).toString()+'px';
+    scroll_target = document.getElementById('works_container');
+    scroll_target.style['overflow'] = 'hidden';
+    //isScrollToTop = true;
+    var close = document.createElement('div');
+    close.style['position'] = 'absolute';
+    close.style['right'] = '10px';
+    close.style['top'] = '10px';
+    close.innerHTML = '&#215;';
+    close.style['width'] = '20px';
+    close.style['height'] = '20px';
+    close.style['cursor'] = 'pointer';
+    close.style['font-size'] = '60px';
+    close.style['z-index'] = '10000';
+    close.addEventListener('mouseover', function(){
+        close.style['color'] = '#ddd';
+    });
+    close.addEventListener('mouseout', function(){
+        close.style['color'] = '#333';
+    });
+    close.addEventListener('click', function(){
+        scroll_target.style['overflow'] = 'auto';
+        ct = t;
+        isLeft = true;   
+    });
+    t.appendChild(close);
+    //t.innerHTML = 'hello';
+    ct = t;
+    isRight = true;
 };
 
 /* get works page */
@@ -261,10 +344,18 @@ var animate = function(){
         if(ct == 'landing_container' && isUp){go_about(ct);}
         else if(ct == 'about_img' && isUp){go_works(ct);}
         else if(ct == 'about_img' && isDown){go_landing(ct);}
-        else if(ct == 'works_container' || ct === '' || ct === 'works_ui_container'){
+        else if(ct == 'works_container' || ct === '' || ct ==='works_ui_container'){
             if(isDown){go_about(ct);}
         }
         //console.log('isNavi: ',isNavigate,', isUp: ',isUp,', isDown: ',isDown);
+    }
+    if(isRight){
+        wheel_page_right(ct);
+    }else if(isLeft){
+        wheel_page_left(ct);
+    }
+    if(isScrollToTop){
+        scroll_to_top(scroll_target);
     }
 };
 

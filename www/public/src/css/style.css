@@ -36,7 +36,7 @@ body{
     width:100vw;
     height:100vh;
     overflow:hidden;
-    z-index:4;
+    z-index:5;
     background: #f5f5f5;
 }
 #about_container{
@@ -45,7 +45,7 @@ body{
     width:100vw;
     height:100vh;
     overflow:hidden;
-    z-index:3;
+    z-index:4;
     background: #f5f5f5;
 }
 #works_container{
@@ -54,19 +54,19 @@ body{
     width:100vw;
     height:100vh;
     overflow:hidden;
-    z-index:2;
+    z-index:3;
     background: #f5f5f5;
 }
 #works_content_container{
     position:absolute;
     top:0px;
+    left:-9999px;
     width:100vw;
-    height:100vh;
-    z-index:1;
+    height:90vh;
+    z-index:2;
     background: #f5f5f5;
 }
 #works_ui_container{
-    margin:0 auto;
     position:absolute;
     top:0px;
     width:100vw;
