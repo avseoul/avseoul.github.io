@@ -21,8 +21,8 @@ var set_works = function(req, res){
         var s = mJson['projects'][i];
         var scriptNode = 
             '<div class=\"ui_grid\">'+
-                '<img class=\"ui_thumbnail\" src=\''+ s['thumbnail_src'] + '\' onclick=\"get_work_content(\''+ s['id'] +'\')\">'+
-                '<div class=\"ui_subject\"><span onclick=\"get_work_content(\''+ s['id'] +'\')\">'+ s['subject'] +'</span></div>'+
+                '<img class=\"ui_thumbnail\" src=\''+ s['thumbnail_src'] + '\' onclick=\"get_work_content(\''+ i +'\')\">'+
+                '<div class=\"ui_subject\"><span onclick=\"get_work_content(\''+ i +'\')\">'+ s['title'] +'</span></div>'+
                 '<div class=\"ui_description\">'+ s['description'] +'</div>'+
                 '<div class=\'ui_date\'>'+ s['date'] +'</div>'+
             '</div>';
@@ -41,8 +41,10 @@ app.get('/', function(req, res){
     set_works(req, res);
 });
 
-app.get('/001', function(req, res){
-    console.log(req);
+app.get('/data', function(req, res){
+    var mJson = get_data();
+    res.setHeader('Content-Type', 'application/json');
+    res.json(mJson);
 });
 
 //-run

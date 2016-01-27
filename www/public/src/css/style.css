@@ -60,11 +60,12 @@ body{
 #works_content_container{
     position:absolute;
     top:0px;
-    left:-9999px;
     width:100vw;
-    height:90vh;
+    height:100vh;
     z-index:2;
     background: #f5f5f5;
+    overflow: auto;
+    display:none;
 }
 #works_ui_container{
     position:absolute;
@@ -83,6 +84,15 @@ body{
     font-color: #fff;
     font-style: italic;
     letter-spacing: -1px;
+}
+.content_subject{
+    font-size:11px;
+}
+.content_subject span{
+    padding-right:2px;
+    font-style:italic;
+    background:#000;
+    color:#ddd;
 }
 .ui_grid{
     background:#fff;
