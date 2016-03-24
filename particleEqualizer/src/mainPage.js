@@ -263,7 +263,7 @@ SC.initialize({
 
 
 /* --------------------------------------------------------- */
-/*var mTracks = ['/tracks/222734029',     //Everything and Nothing - dj krush
+var mTracks = ['/tracks/222734029',     //Everything and Nothing - dj krush
     '/tracks/161617178',                //KINGMCK - Don't Get Dead Mix 'BRAIN FREEZE 2014'
     '/tracks/82429092',                 //The Notorious B.I.G. tribute mix by YTst
     '/tracks/199658320',                //SEOUL SIMIN [009] 깐돌 Qunadol - Gently Disappear
@@ -276,8 +276,8 @@ SC.initialize({
     '/tracks/228635781',                //Art of Noise - Moments in Love
     '/tracks/157010180',                //venice venture - big wild
     '/tracks/96379023'                  //Disclosure - You & Me (Flume Remix)
-];*/
-var mTracks = ['/tracks/96379023'];                  //Disclosure - You & Me (Flume Remix)
+];
+//var mTracks = ['/tracks/96379023'];                  //Disclosure - You & Me (Flume Remix)
 var selector = 0;
 var mAudio = new Audio(); //-for web-audio api
 mAudio.crossOrigin = "anonymous"; 
