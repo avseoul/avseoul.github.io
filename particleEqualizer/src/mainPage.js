@@ -284,7 +284,7 @@ var mAudio = new Audio(); //-for web-audio api
 mAudio.crossOrigin = "anonymous"; 
 var user = [], userProfile = [], permalink = [], title = [], imgUrl = [], stream = [], duration = [];
 //mAudio.loop = true;
-var isPlaying = true;
+var isPlaying = false;
 /* --------------------------------------------------------- */
 
 /* navigation */
