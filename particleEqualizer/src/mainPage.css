@@ -3,7 +3,7 @@ body{
     overflow: hidden;
     margin: 0px;
     padding: 0px;
-    background: #000;
+    /*background: #000;*/
     font-family: Helvetica, arial, sans-serif;
 }   
 #mCanvas{
@@ -21,15 +21,19 @@ body{
     opacity: 0.8;
 }
 #project-title span{
-    background: #000;
+    /*background: #000;*/
+}
+
+p{
+    margin:3px 0 3px 0;
 }
 
 #description{
     position: absolute;
-    width: 300px;
-    height: 160px;
-    left: 15px;
-    bottom: 25px;
+    width: 510px;
+    text-align:justify;
+    left: 20px;
+    top: 105px;
     z-index: 1000;
 }
 #project-info{
@@ -50,38 +54,29 @@ body{
 }
 #bgm{
     position: absolute; 
-    width: 300px;
-    height: 204px;
-    bottom: 40px;
-    right: 15px;
-    /*background: #000;*/
+    width: 400px;
+    height: 250px;
+    bottom: 0px;
+    left: 20px;
     opacity: 0.8;
     z-index: 1000;
 }
 
 .body-title{
-    position: relative;
-    padding-bottom:2px;
-    left: 2px;
-    top: -8px;
-    font-size: 10px;
-    letter-spacing: 0.6px;
+    padding-bottom:12px;
+    font-size: 20px;
     font-weight: 600;
-    color:#e8e8ef;
-    opacity: 0.8;
+    color:#fff;
+    /*opacity*/: 1.0;
 }
 .body-title span{
-    background: #000;
+    /*background: #000;*/
 }
 .body-description{
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 100;
-    color: #a0a0a5;
+    color: #a7a7a7;
     letter-spacing: 0.6px;
-    line-height: 15px;
-    position: relative;
-    background: #000;
-    opacity: 0.8;
 }
 .body-description li{
     margin:0px;
@@ -93,7 +88,7 @@ body{
     letter-spacing: 0.6px;
     line-height: 15px;
     position: relative;
-    background: #000;
+    /*background: #000;*/
     opacity: 0.8;
 }
 .body-description a{
@@ -105,7 +100,7 @@ body{
 }
 
 .player{
-    font-size: 13px;
+    font-size: 20px;
     font-weight: 100;
     word-break: break-all; 
     color: #fff;
@@ -138,7 +133,7 @@ body{
     padding-top: 4px;
     padding-bottom: 4px;
     left: 52px;
-    max-width: 248px;
+    max-width: 345px;
     overflow : hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -162,17 +157,17 @@ body{
 }
 .player #mLogo{
     position: absolute;
-    top: 195px;
-    right: 2px;
+    top: 205px;
+    left: 0px;
     cursor: pointer;
-    width: 90px;
+    width: 85px;
     height: auto;
 }
 .player #mUI{
     position: absolute;
     top: 38px;
     left: 54px;
-    font-size: 9px;
+    font-size: 11px;
 }
 .player #mUI #play{
 }
@@ -189,9 +184,9 @@ body{
 }
 .player #mUI #bar{
     position: absolute;
-    top: 4px;
-    left: 23px;
-    width: 170px;
+    top: 5px;
+    left: 26px;
+    width: 267px;
     height: 1px;
     border-style: none none solid none;
     border-width: 1px;
@@ -202,24 +197,24 @@ body{
     position: absolute;
     top: -2px;
     left: 23px;
-    width: 170px;
+    width: 267px;
     height: 18px;
 }
 .player #mUI #pBar{
     position: absolute;
-    top: 4px;
-    left: 23px;
+    top: 5px;
+    left: 26px;
     height: 1px;
     border-style: none none solid none;
     border-width: 1px;
     color: #fff;
 }
 .player #mUI #pTime{
-    font-size: 8px;
+    font-size: 9px;
     position: absolute;
     top: 0px;
     width: 50px;
-    left: 200px;
+    left: 299px;
 }
 .player #list{
     position: absolute;
@@ -255,7 +250,7 @@ body{
     margin: 5px;
     padding-left: 2px;
     position: absolute;
-    width: 270px;
+    width: 368px;
     height: 25px;
     border-style: none;
     top: 155px;
@@ -274,8 +269,8 @@ body{
     position: absolute;
     width: 15px;
     height: 13px;
-    top: 161px;
-    left: 274px;
+    top: 162px;
+    left: 374px;
 }
 .player #button:hover{
     background: none;

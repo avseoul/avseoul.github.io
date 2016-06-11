@@ -275,8 +275,8 @@ SC.initialize({
 //     '/tracks/228635781',                //Art of Noise - Moments in Love
 //     '/tracks/157010180'                //venice venture - big wild
 // ];
-//var mTracks = ['/tracks/96379023'];                  //Disclosure - You & Me (Flume Remix)
-var mTracks = [];
+var mTracks = ['/tracks/220662300'];                  //Disclosure - You & Me (Flume Remix)
+// var mTracks = [];
 var selector = 0;
 var mAudio = new Audio(); //-for web-audio api
 mAudio.crossOrigin = "anonymous"; 
@@ -351,7 +351,7 @@ var pBarIntervar;
 var getProgressBar = function(){
     mBar = document.getElementById('pBar');
     mTime = document.getElementById('pTime');
-    var progress = mAudio.currentTime*1000/duration[selector] * 170;
+    var progress = mAudio.currentTime*1000/duration[selector] * 267;
     mBar.style.width = progress;
     if(mAudio.currentTime){
         mTime.innerHTML = toTimer(mAudio.currentTime);
@@ -362,7 +362,7 @@ var getProgressBar = function(){
 //-playback control by progress bar
 var playbackControl = function(event){
     var input = event.offsetX;
-    mAudio.currentTime = input/170*duration[selector]/1000;
+    mAudio.currentTime = input/267*duration[selector]/1000;
     getProgressBar();
 };
 //-store tracks info
@@ -473,13 +473,14 @@ var setPlayer = function(){
     mLink.id = 'mLink';
     mLink.setAttribute('href', _permalink);
     mLink.target = '_blank';
-    mLink.innerHTML = (title[selector])? title[selector] : 'add sound cloud url to play';
+    mLink.innerHTML = (title[selector])? title[selector] : 'add sound cloud url to the box below';
     var mUsrLink = document.createElement('a');
     mUsrLink.id = 'mUsrLink';
     var _userProfile = (permalink[selector])? permalink[selector] : 'https://soundcloud.com/';
     mUsrLink.setAttribute('href', _userProfile);
     mUsrLink.target = '_blank';
-    mUsrLink.innerHTML = ' by ' + user[selector];
+    var _user = (user[selector])? 'by ' + user[selector] : '';
+    mUsrLink.innerHTML = _user;
     var mLogo = document.createElement('img');
     mLogo.id = 'mLogo';
     mLogo.src = 'img/logo_s.png';
@@ -606,10 +607,12 @@ var navTracks = function(){
 
 //-stream track
 var playTracks = function(){
-    isPlaying = true;
-    mAudio.src = stream[selector]+'?client_id=1c78c29753054d2e9af8926dd4a77db3';
     setPlayer();
-    audioNode.mediaElement.play();//-web audio audioInput.js
+    if(stream[selector] !== undefined){
+        isPlaying = true;
+        mAudio.src = stream[selector]+'?client_id=1c78c29753054d2e9af8926dd4a77db3';
+        audioNode.mediaElement.play();//-web audio audioInput.js
+    }
 };
 var interval;
 var checkArray = function(){

@@ -336,5 +336,21 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 });
 
+window.addEventListener('resize', function(){
+    // check full screen
+    var _title = document.getElementById('project-title');
+    var _description = document.getElementById('description');
+    var _player = document.getElementById('bgm');
+    if(window.innerHeight == screen.height){
+        _title.style['display'] = 'none';
+        _description.style['display'] = 'none';
+        _player.style['display'] = 'none';
+    } else {
+        _title.style['display'] = 'block';
+        _description.style['display'] = 'block';
+        _player.style['display'] = 'block';
+    }
+});
+
 
 
