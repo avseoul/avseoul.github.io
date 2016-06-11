@@ -52,9 +52,9 @@ body{
     position: absolute; 
     width: 300px;
     height: 204px;
-    bottom: 25px;
+    bottom: 40px;
     right: 15px;
-    background: #000;
+    /*background: #000;*/
     opacity: 0.8;
     z-index: 1000;
 }
@@ -105,7 +105,7 @@ body{
 }
 
 .player{
-    font-size: 17px;
+    font-size: 13px;
     font-weight: 100;
     word-break: break-all; 
     color: #fff;
@@ -162,10 +162,10 @@ body{
 }
 .player #mLogo{
     position: absolute;
-    top: 173px;
+    top: 195px;
     right: 2px;
     cursor: pointer;
-    width: 70px;
+    width: 90px;
     height: auto;
 }
 .player #mUI{
@@ -250,15 +250,16 @@ body{
     display: inline-block;
 }
 .player #input{
-    font-size: 10px;
+    font-size: 20px;
     background: #ccc;
     margin: 5px;
     padding-left: 2px;
     position: absolute;
     width: 270px;
-    height: 13px;
+    height: 25px;
     border-style: none;
     top: 155px;
+    font-weight: 100;
 }
 .player #input:focus{
     background: #fff;
@@ -269,12 +270,12 @@ body{
     padding-left: 4px;
     padding-bottom: 2px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 32px;
     position: absolute;
     width: 15px;
     height: 13px;
-    top: 159px;
-    left: 280px;
+    top: 161px;
+    left: 274px;
 }
 .player #button:hover{
     background: none;

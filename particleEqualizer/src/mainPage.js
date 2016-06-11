@@ -263,20 +263,18 @@ SC.initialize({
 
 
 /* --------------------------------------------------------- */
-/*var mTracks = ['/tracks/222734029',     //Everything and Nothing - dj krush
-    '/tracks/161617178',                //KINGMCK - Don't Get Dead Mix 'BRAIN FREEZE 2014'
-    '/tracks/82429092',                 //The Notorious B.I.G. tribute mix by YTst
-    '/tracks/199658320',                //SEOUL SIMIN [009] 깐돌 Qunadol - Gently Disappear
-    '/tracks/194237965',                //Cannibal Ox - Iron Galaxy (Cold Vein)
-    '/tracks/220662300',                //Strange Light - dj krush 
-    '/tracks/69174621',                 //Donna Summer - I Feel Love (Sterac instrumental dub edit)
-    '/tracks/38732269',                 //Lafayette Afro-Rock Band / Hihache(1973)
-    '/tracks/14976296',                 //Andre Nickatina Jungle (f. Equipto)
-    '/tracks/221995257',                //Missing Link - dj krush
-    '/tracks/228635781',                //Art of Noise - Moments in Love
-    '/tracks/157010180',                //venice venture - big wild
-    '/tracks/96379023'                  //Disclosure - You & Me (Flume Remix)
-];*/
+// var mTracks = ['/tracks/222734029',     //Everything and Nothing - dj krush
+//     '/tracks/161617178',                //KINGMCK - Don't Get Dead Mix 'BRAIN FREEZE 2014'
+//     '/tracks/82429092',                 //The Notorious B.I.G. tribute mix by YTst
+//     '/tracks/199658320',                //SEOUL SIMIN [009] 깐돌 Qunadol - Gently Disappear
+//     '/tracks/194237965',                //Cannibal Ox - Iron Galaxy (Cold Vein)
+//     '/tracks/220662300',                //Strange Light - dj krush 
+//     '/tracks/69174621',                 //Donna Summer - I Feel Love (Sterac instrumental dub edit)
+//     '/tracks/14976296',                 //Andre Nickatina Jungle (f. Equipto)
+//     '/tracks/221995257',                //Missing Link - dj krush
+//     '/tracks/228635781',                //Art of Noise - Moments in Love
+//     '/tracks/157010180'                //venice venture - big wild
+// ];
 //var mTracks = ['/tracks/96379023'];                  //Disclosure - You & Me (Flume Remix)
 var mTracks = [];
 var selector = 0;
@@ -466,25 +464,27 @@ var setPlayer = function(){
     mThumb.id = 'mThumb';
     var mImg = document.createElement('img');
     mImg.id = 'mImg';
-    mImg.src = imgUrl[selector];
+    mImg.src = (imgUrl[selector])? imgUrl[selector] : '/img/noThumbnail.jpg';
+    var _permalink = (permalink[selector])? permalink[selector] : 'https://soundcloud.com/';
     mImg.addEventListener('click',function(){
-        window.open(permalink[selector]);
+        window.open(_permalink);
     });
     var mLink = document.createElement('a');
     mLink.id = 'mLink';
-    mLink.setAttribute('href', permalink[selector]);
+    mLink.setAttribute('href', _permalink);
     mLink.target = '_blank';
-    mLink.innerHTML = title[selector];
+    mLink.innerHTML = (title[selector])? title[selector] : 'add sound cloud url to play';
     var mUsrLink = document.createElement('a');
     mUsrLink.id = 'mUsrLink';
-    mUsrLink.setAttribute('href', userProfile[selector]);
+    var _userProfile = (permalink[selector])? permalink[selector] : 'https://soundcloud.com/';
+    mUsrLink.setAttribute('href', _userProfile);
     mUsrLink.target = '_blank';
     mUsrLink.innerHTML = ' by ' + user[selector];
     var mLogo = document.createElement('img');
     mLogo.id = 'mLogo';
     mLogo.src = 'img/logo_s.png';
     mLogo.addEventListener('click',function(){
-        window.open(permalink[selector]);
+        window.open(_permalink);
     });
     /*
        var mCredit = document.createElement('div');
@@ -525,18 +525,18 @@ var setPlayer = function(){
     //-get new track from soundcloud url
     var input = document.createElement('input');
     input.id = 'input';
-    input.value = 'paste soundcloud url';
+    input.value = 'paste soundcloud url here';
     input.addEventListener('focus', function(){
         this.value = '';
     });
     input.addEventListener('focusout', function(){
         if(this.value == '' || this.value == ' ' || this.value == '   '){
-            this.value = 'paste soundcloud url';
+            this.value = 'paste soundcloud url here';
         }
     });
     input.addEventListener('keypress', function(event){
         var key = event.which || event.keyCode;
-        if(key === 13 && this.value != 'paste soundcloud url'){
+        if(key === 13 && this.value != 'paste soundcloud url here'){
             var track_url = input.value;
             addTrack(track_url);
         }
