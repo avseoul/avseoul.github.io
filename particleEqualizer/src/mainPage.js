@@ -275,8 +275,8 @@ SC.initialize({
 //     '/tracks/228635781',                //Art of Noise - Moments in Love
 //     '/tracks/157010180'                //venice venture - big wild
 // ];
-var mTracks = ['/tracks/220662300'];                  //Disclosure - You & Me (Flume Remix)
-// var mTracks = [];
+// var mTracks = ['/tracks/220662300'];                  //Disclosure - You & Me (Flume Remix)
+var mTracks = [];
 var selector = 0;
 var mAudio = new Audio(); //-for web-audio api
 mAudio.crossOrigin = "anonymous"; 
