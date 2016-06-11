@@ -464,7 +464,7 @@ var setPlayer = function(){
     mThumb.id = 'mThumb';
     var mImg = document.createElement('img');
     mImg.id = 'mImg';
-    mImg.src = (imgUrl[selector])? imgUrl[selector] : '/img/noThumbnail.jpg';
+    mImg.src = (imgUrl[selector])? imgUrl[selector] : 'img/noThumbnail.jpg';
     var _permalink = (permalink[selector])? permalink[selector] : 'https://soundcloud.com/';
     mImg.addEventListener('click',function(){
         window.open(_permalink);
