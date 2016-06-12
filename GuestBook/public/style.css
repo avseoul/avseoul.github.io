@@ -1,0 +1,152 @@
+html,
+body {
+	margin-top: 10px;
+	margin-left: 5px;
+	background: #F6F6F6;
+	font-family: Monaco, "Lucida Console", monospace;
+	font-size: 15px;
+	line-height: 170%;
+} 
+
+#board1 {
+	color: #000;
+	background-color: #F0F0F0;
+	opacity: 0.8;
+}
+
+#board2 {
+	color: #000;
+	background-color: #fff;
+	opacity: 0.8;
+}
+
+#number1 {
+	color: #fff;
+	background-color: #CC0000;
+	opacity: 0.8;	
+}
+
+#number2 {
+	color: #fff;
+	background-color: #CC0000;
+}
+
+#stress1{
+	color: #fff;
+	background-color: #CC0000;
+}
+
+#stress2{
+	color: #00CCFF;
+	background-color: #F0F0F0;
+}
+
+#stress3{
+	color: #00CCFF;
+	background-color: #fff;
+}
+
+#stress4{
+	color: #fff;
+	background-color: #CC0000;
+}
+
+#bg1 {
+	background-color: #FCFCFC;
+	margin-left: 5px;
+	padding-bottom:50px;
+	/*width:650px;*/
+}
+
+#bg2 {
+	background-color: #F9F9F9;
+	margin-left: 5px;
+	padding-bottom:50px;
+	/*width:650px;*/
+}
+
+#lineBr {
+	margin-bottom:5px;
+}
+
+#dialog-confirm {
+	background: #fff;
+}
+
+.bodyDiv{
+	margin-top: 10px;
+	font-size: 30px;
+	color: #333;
+	line-height: 130%;
+}
+
+.AJAXDiv{
+	margin-top: 10px;
+	font-size: 20px;
+	color: #333;
+	line-height: 130%;
+}
+
+textarea {
+	margin-top: 10px;
+	/*text-transform: uppercase;*/
+	border: 0px;
+  opacity: 0.8;
+  font-family: Monaco, "Lucida Console", monospace;
+	font-size: 50px;
+	color: #ff0000;
+	background:#fff;
+	height: 300px;	
+}
+textarea:focus {
+  outline: 0;
+}
+ 
+
+.tryAgain {
+	margin-top: 10px;
+	margin-bottom: 100px;
+	margin-right: 5px;
+	padding: 5px;
+	text-transform: uppercase;
+	border: 0px;
+  opacity: 0.8;
+  font-family: Monaco, "Lucida Console", monospace;
+	font-size: 50px;
+	color: #fff;
+	background:#CC0000;
+}
+.tryAgain:hover {
+  opacity: 1;
+}
+
+.boardTitle{
+	margin-top: 10px;
+	margin-bottom: 60px;
+}
+
+#boardTitle{
+	font-size: 50px;
+	color: #333;
+}
+
+
+input {
+	margin-top: 10px;
+	margin-right: 5px;
+	padding: 5px;
+	border: 0px;
+  opacity: 0.8;
+  font-family: Monaco, "Lucida Console", monospace;
+	font-size: 50px;
+	color: #ff0000;
+	background:#fff;
+}
+
+input:hover {
+	opacity: 1;
+}
+input:focus {
+  outline: 0;
+}
+ 

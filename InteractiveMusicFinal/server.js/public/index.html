@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - loaders - OBJ loader</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+            
+            #interface {
+                z-index: 1;
+            }
+		</style>
+        <script src="src/three.min.js"></script>
+		<script src="src/OBJLoader.js"></script>
+        <script src="src/Detector.js"></script>
+        <script src="src/TrackballControls.js"></script>
+        <script src="src/objData.js"></script>
+        <script type="text/javascript" src="http://cdn.tonejs.org/r4-dev/Tone.js"></script>
+        <script src="src/ambience.js"></script>
+        
+        
+        
+
+        
+		<script>
+            if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+            
+            // sound
+            var swoosh = 0.12;;
+            var addambience = new Ambience();
+            addambience.wind();
+            var landing = false;
+            var landed      = false;
+            var synthRelease = "32n";
+            
+            var ambient;
+			var container;
+			var camera, scene, renderer;
+            var cameraTarget;
+            var target = new THREE.Vector3( 0, 0, 0 );
+            var camPosOffset = new THREE.Vector3(0, 0, 0);
+			var mouseX = 0, mouseY = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+            
+            var flockingLights  = [];
+            var fireLights      = [];
+            var particleLights  = [];
+            var numFlockingParticles= 20;
+            var numFireParticles    = 1;
+            var numParticles        = 500;
+            
+            var materials = [];
+            
+            var clock = new THREE.Clock();
+            
+            var transitionIsTure = false;
+            var goInside = false;
+            var isControled = false;
+            
+            function start(){
+                init();
+                animate();
+            }
+
+			function init() {
+                container = document.getElementById( 'mContainer' );
+                    
+                //create camera object
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 6000 );
+				camera.position.x = 965;
+                camera.position.y = 2806;
+                camera.position.z = 3582;
+                
+                
+                //cam control
+                var fly = false;
+                
+                    if ( !fly ) {
+
+                            controls = new THREE.TrackballControls( camera );
+                            controls.target.set( 0, 0, 0 );
+
+                            controls.rotateSpeed = 0.5;
+                            controls.zoomSpeed = 1.2;
+                            controls.panSpeed = 0.8;
+
+                            controls.noZoom = false;
+                            controls.noPan = false;
+
+                            controls.staticMoving = false;
+                            controls.dynamicDampingFactor = 0.15;
+
+                            controls.keys = [ 65, 83, 68 ];
+
+                    } else {
+                        controls = new THREE.FirstPersonControls(camera);
+
+                        controls.movementSpeed = 25;
+                        controls.lookSpeed = 0.05;
+                        controls.lookVertical = true;
+
+                        controls.lon = -90;
+                    }
+
+
+				//create scene object
+				scene = new THREE.Scene();
+//                scene.fog = new THREE.FogExp2( 0x000000, 0.000025 );
+                cameraTarget = new THREE.Vector3(0, 0, 0);
+                cameraTarget.set(scene.position.x, -80, scene.position.z);
+//                scene.fog = new THREE.Fog( 0x000000, 1300, 2800 );
+
+                //create environmental light
+				var spotLight = new THREE.SpotLight( 0xffffff, 1 );
+                spotLight.position.set( 0, 200, 0 );
+
+                scene.add( spotLight );
+                
+                //create flocking particle lights 
+                for (var i = 0; i < numFlockingParticles; i++){
+                    var flockingParticle = new THREE.SphereGeometry( Math.random() + 1, 8, 8 );
+                    flockingLights[i] = new THREE.PointLight( 0xffffff, 3, 100 );
+                    flockingLights[i].position.set(Math.random() * 800 - 400, -170, Math.random() * 800 - 400);
+                    flockingLights[i].add( new THREE.Mesh( flockingParticle, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) );
+                    scene.add( flockingLights[i] );
+                }
+                
+                //create fire particle lights 
+                var fireParticle = new THREE.SphereGeometry( 2, 8, 8 );
+                
+                for (var i = 0; i < numFireParticles; i++){
+                    fireLights[i] = new THREE.PointLight( 0xff9944, 4, 500 );
+                    fireLights[i].position.set(0, -190, 0);
+                    fireLights[i].add( new THREE.Mesh( fireParticle, new THREE.MeshBasicMaterial ( { color: 0xffaa22 } ) ) );
+                    scene.add( fireLights[i] );
+                }
+                
+                //background particle
+                geometry = new THREE.Geometry();
+
+				sprite1 = THREE.ImageUtils.loadTexture( "resources/p1.png" );
+				sprite2 = THREE.ImageUtils.loadTexture( "resources/p2.png" );
+				sprite3 = THREE.ImageUtils.loadTexture( "resources/p3.png" );
+				sprite4 = THREE.ImageUtils.loadTexture( "resources/p4.png" );
+				sprite5 = THREE.ImageUtils.loadTexture( "resources/p5.png" );
+
+				for ( i = 0; i < numParticles; i ++ ) {
+					var vertex = new THREE.Vector3();
+					vertex.x = Math.random() * 2000 - 1000;
+					vertex.y = Math.random() * 2000 - 1000;
+					vertex.z = Math.random() * 2000 - 1000;
+
+					geometry.vertices.push( vertex );
+				}
+
+				parameters = [ [ [1.0, 0.2, 0.7], sprite2, 3 ],
+							   [ [0.95, 0.1, 0.6], sprite3, 10 ],
+							   [ [0.90, 0.05, 0.5], sprite1, 9 ],
+							   [ [0.85, 0, 0.3], sprite5, 8 ],
+							   [ [0.80, 0, 0.1], sprite4, 5 ],
+							   ];
+
+				for ( i = 0; i < parameters.length; i ++ ) {
+					color  = parameters[i][0];
+					sprite = parameters[i][1];
+					size   = parameters[i][2];
+
+					materials[i] = new THREE.PointCloudMaterial( { size: size, map: sprite, blending: THREE.AdditiveBlending, depthTest: false, transparent : true } );
+					materials[i].color.setHSL( color[0], color[1], color[2] );
+
+					particles = new THREE.PointCloud( geometry, materials[i] );
+                
+                    particles.rotation.x = Math.random() * 6;
+                    particles.rotation.y = Math.random() * 6;
+                    particles.rotation.z = Math.random() * 6;
+                
+                    particles.position.y = 400;
+
+					scene.add( particles );
+            }
+                
+                
+                //obj
+				// texture
+                var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+					}
+				};
+				var onError = function ( xhr ) {
+				};
+            
+            
+				
+                
+                //texture
+                var manager01 = new THREE.LoadingManager();
+				manager01.onProgress = function ( item, loaded, total ) {
+					console.log( item, loaded, total );
+				};
+                var stoneTex = new THREE.Texture();
+                stoneTex.repeat.set( 1, 1 );
+				stoneTex.wrapS = stoneTex.wrapT = THREE.RepeatWrapping;
+				stoneTex.format = THREE.RGBFormat;
+
+                var loader01 = new THREE.ImageLoader( manager01 );
+                    loader01.load( 'resources/wall.jpg', function ( image ) {
+					stoneTex.image = image;
+					stoneTex.needsUpdate = true;
+				} );
+            
+                var manager02 = new THREE.LoadingManager();
+				manager02.onProgress = function ( item, loaded, total ) {
+					console.log( item, loaded, total );
+				};
+                var grassTex = new THREE.Texture();
+                grassTex.repeat.set( 4, 4 );
+                grassTex.wrapS = grassTex.wrapT = THREE.RepeatWrapping;
+                grassTex.format = THREE.RGBFormat;
+
+                var loader02 = new THREE.ImageLoader( manager02 );
+                    loader02.load( 'resources/grass.png', function ( image ) {
+                    grassTex.image = image;
+                    grassTex.needsUpdate = true;
+                } );
+
+
+				// model
+            var material01 = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x333333, shininess: 20, map: stoneTex, bumpMap: stoneTex, bumpScale: 3, metal: false } );
+                material01.shading = THREE.FlatShading;
+				var loader01 = new THREE.OBJLoader( manager01 );
+				loader01.load( 'resources/brazier_bottom.obj', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material = material01;
+                            child.geometry.computeFaceNormals();
+						}
+					} );
+					object.position.y = - 80;
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+					scene.add( object );
+				}, onProgress, onError );
+            // model
+            var material02 = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x333333, shininess: 20, map: stoneTex, bumpMap: stoneTex, bumpScale: 3, metal: false } );
+                material02.shading = THREE.FlatShading;
+				var loader02 = new THREE.OBJLoader( manager01 );
+				loader02.load( 'resources/brazier_top.obj', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material = material02;
+                            child.geometry.computeFaceNormals();
+						}
+					} );
+					object.position.y = - 80;
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+					scene.add( object );
+				}, onProgress, onError );
+            // model
+            var material03 = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x333333, shininess: 20, map: stoneTex, bumpMap: stoneTex, bumpScale: 3, metal: false } );
+                material03.shading = THREE.FlatShading;
+				var loader03 = new THREE.OBJLoader( manager01 );
+				loader03.load( 'resources/columns.obj', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material = material03;
+                            child.geometry.computeFaceNormals();
+						}
+					} );
+					object.position.y = - 80;
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+					scene.add( object );
+				}, onProgress, onError );
+            // model
+            var material04 = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x333333, shininess: 20, map: stoneTex, bumpMap: stoneTex, bumpScale: 3, metal: false } );
+                material04.shading = THREE.FlatShading;
+				var loader04 = new THREE.OBJLoader( manager01 );
+				loader04.load( 'resources/stairs.obj', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material = material04;
+                            child.geometry.computeFaceNormals();
+						}
+					} );
+					object.position.y = - 80;
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+					scene.add( object );
+				}, onProgress, onError );
+            // model
+            var material05 = new THREE.MeshPhongMaterial( { color: 0x333333, specular: 0x111111, shininess: 1, map: stoneTex, bumpMap: stoneTex, bumpScale: 2, metal: false } );
+                material05.shading = THREE.FlatShading;
+				var loader05 = new THREE.OBJLoader( manager01 );
+				loader05.load( 'resources/structure_floor_inside.obj', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material = material05;
+                            child.geometry.computeFaceNormals();
+						}
+					} );
+					object.position.y = - 80;
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+					scene.add( object );
+				}, onProgress, onError );
+            // model
+            var material06 = new THREE.MeshPhongMaterial( { color: 0x333333, specular: 0x333333, shininess: 10, map: grassTex, bumpMap: grassTex, bumpScale: 10, metal: false } );
+                material06.shading = THREE.FlatShading;
+				var loader06 = new THREE.OBJLoader( manager02 );
+				loader06.load( 'resources/structure_floor_outside.obj', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material = material06;
+                            child.geometry.computeFaceNormals();
+						}
+					} );
+					object.position.y = - 70;
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+					scene.add( object );
+				}, onProgress, onError );
+
+				//
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+            
+//                renderer.shadowMapEnabled = true;
+				renderer.shadowMapCullFace = THREE.CullFaceBack;
+            
+				if(container != null){
+                    container.appendChild( renderer.domElement );
+                }
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				//
+				window.addEventListener( 'resize', onWindowResize, false );
+			};
+
+			function onWindowResize() {
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+                
+                if(isControled){
+                    controls.handleResize();
+                }
+			};
+
+			function onDocumentMouseMove( event ) {
+				mouseX = ( event.clientX - windowHalfX ) / 2;
+				mouseY = ( event.clientY - windowHalfY ) / 2;
+			};
+
+			//
+			function animate() {
+				requestAnimationFrame( animate );
+				render();
+                if(!isControled){
+                    transitionCamera();
+                }
+			};
+
+			function render() {
+                var time = Date.now() * 0.005;
+                
+                if(!isControled){
+                    if(transitionIsTure){
+                        cameraTarget.x += ( mouseX - cameraTarget.x ) * 0.05;
+                        cameraTarget.y += ( -mouseY - cameraTarget.y ) * 0.05;
+                    }else {
+                        cameraTarget.x += ( mouseX - cameraTarget.x ) * 0.05;
+                        cameraTarget.y += ( -mouseY - cameraTarget.y ) * 0.05;
+                    }
+                } else {
+//                    update controller
+                    controls.update( clock.getDelta() );
+                }
+                
+                particles.rotation.y += 0.001;
+
+                camera.lookAt( cameraTarget );
+//                camera.lookAt( scene );
+                
+                //update lights' position
+                for (var i = 0; i < numFlockingParticles; i++){
+                    flockingLights[i].scale.x += Math.sin( time ) * 0.02;
+                    flockingLights[i].scale.y += Math.sin( time ) * 0.02;
+                    flockingLights[i].scale.z += Math.sin( time ) * 0.02;
+                }
+                
+				renderer.render( scene, camera );
+                
+                //audio
+                if(landing){
+                	if (swoosh<1){
+                        swoosh = swoosh + 0.008;
+                        addambience.filter.set({"frequency":swoosh*500});
+					}
+                } else {
+                    if (swoosh>0.12){
+                        swoosh = swoosh - 0.008;
+                        addambience.filter.set({"frequency":swoosh*500});
+                    }
+                }
+                if(landed){
+                    synthRelease = "2n";
+                }else {
+                    synthRelease = "32n";
+                }
+            };
+            
+            
+            function transitionCamera(){
+                if(transitionIsTure && !goInside){
+                    target.x = -106;
+                    target.y = -150;
+                    target.z = 280;
+                    
+                    var dist = target.distanceTo(camera.position);
+                    
+                    var desired = target.sub(camera.position);
+                    desired.normalize();
+                    
+                    if(dist > 3){
+                        desired.multiplyScalar(dist*0.02);
+                    }else if (dist < 3){
+                        desired.multiplyScalar(0);
+                    }
+                    
+                    if(dist < 500){
+                        landing = false;
+                        addambience.scenario = 2;
+                    }
+                    
+                    camera.position.x += desired.x;
+                    camera.position.y += desired.y;
+                    camera.position.z += desired.z;
+                    
+                    
+                } else if(transitionIsTure && goInside){
+                    target.x = -106;
+                    target.y = -170;
+                    target.z = 10;
+                    
+                    var dist = target.distanceTo(camera.position);
+                    
+                    var desired = target.sub(camera.position);
+                    desired.normalize();
+                    
+                    if(dist > 3){
+                        desired.multiplyScalar(dist*0.02);
+                    }else if (dist < 3){
+                        desired.multiplyScalar(0);
+                    }
+                    
+                    if(dist < 500){
+                        landing = false;
+                        addambience.scenario = 2;
+                    }
+                    
+                    camera.position.x += desired.x;
+                    camera.position.y += desired.y;
+                    camera.position.z += desired.z;
+                    
+                    
+                } else {
+                    target.x = 965;
+                    target.y = 1006;
+                    target.z = 0;
+                    
+                    var dist = target.distanceTo(camera.position);
+                    
+                    var desired = target.sub(camera.position);
+                    desired.normalize();
+                    
+                    if(dist > 3){
+                        desired.multiplyScalar(dist*0.02);
+                    }else if (dist < 3){
+                        desired.multiplyScalar(0);
+                    }
+                    
+                    if(dist < 500){
+                        landing = false;
+                        addambience.scenario = 1;
+                    }
+                    
+                    camera.position.x += desired.x;
+                    camera.position.y += desired.y;
+                    camera.position.z += desired.z;
+                }
+            };
+            
+            function transitionIsClicked(){
+                transitionIsTure    = !transitionIsTure;
+                landing             = !landing;
+                landed              = !landed;
+            };
+            function controllerIsClicked(){
+                isControled = !isControled;
+            };
+            function isItInside(){
+                goInside = !goInside;
+            };
+
+		</script>
+	</head>
+
+	<body onload='start()'>
+        <div id='interface'>      
+            <button onclick="transitionIsClicked()">transition</button>
+            <button onclick="isItInside()">goInside</button>
+            <button onclick="controllerIsClicked()">controller</button>
+            <div id='mContainer'></div>
+        </div>
+
+	</body>
+</html>

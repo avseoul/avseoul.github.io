@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <title><%=title%></title>
+    <script type="text/javascript" src="p5.js"></script>
+		<script type="text/javascript" src="guestbook.js"></script>
+  </head>
+  <body>
+    <div class="boardTitle"><span id="boardTitle">Dear Shawn,</span></div>
+	    <div id="lineBr">
+			  <% for (i = 0; i < allComments.length; i++) { %>
+					  <% if(i%2 == 0) { %>
+							  <div id="lineBr">
+							  	<div id="bg1">
+							    	<span id="number1"><%= allComments[i].Q1 + '.'%></span>
+							    	<span id="board1">This person is <span id="stress2"><%= allComments[i].Q2 + '. '%></span><br />
+							    	<%= allComments[i].Q3%><br />
+							    	<%= allComments[i].Q4%><br />
+							    	<%= allComments[i].Q5%><span id="stress1"><%= allComments[i].Q5B%></span><br />
+							    	<%= allComments[i].Q6%><br /></span>
+						    	</div>
+					    	</div>
+			    	<% } %>
+					  <% if(i%2 == 1) { %>
+							  <div id="lineBr">
+							  	<div id="bg2">
+							    	<span id="number2"><%= allComments[i].Q1 + '.'%></span>
+							    	<span id="board2">This person is  <span id="stress3"><%= allComments[i].Q2 + '. '%></span><br />
+							    	<%= allComments[i].Q3%><br />
+							    	<%= allComments[i].Q4%><br />
+							    	<%= allComments[i].Q5%><span id="stress4"><%= allComments[i].Q5B%></span><br />
+							    	<%= allComments[i].Q6%><br /></span>
+						    	</div>
+					    	</div>
+			    	<% } %>
+				<% } %>
+	    </div>
+    <div id="lineBr">
+    	<input type="button" class="tryAgain" id="tryAgain" onclick="goReplace('/')" value="TRY AGAIN">
+    </div>
+  </body>
+</html>
