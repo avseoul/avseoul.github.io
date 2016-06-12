@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function(){
         loading();
         preLoadlowFrameNoti();
         //checkFramedrops();
-        document.addEventListener('wheel', navigation, false);
+        // document.addEventListener('wheel', navigation, false);
     };
     if(!isMobile){
         init();
