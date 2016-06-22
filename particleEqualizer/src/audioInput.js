@@ -1,11 +1,9 @@
-// fork getUserMedia for multiple browser versions, for those
-// that need prefixes
 navigator.getUserMedia = (navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia);
 
-var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+var audioCtx = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext)();
 var analyserNode = audioCtx.createAnalyser();
 var bufferLength = analyserNode.frequencyBinCount;
 var micInput = new Uint8Array(bufferLength);

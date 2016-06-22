@@ -14,20 +14,14 @@ console.log('$$$: content.js is working');
 
 /* add data to chrome extension storage */
 var appendToStorage = function(url, title, favicon, category){
-    chrome.storage.sync.get(null, function(data){ 
-        if(typeof(data['url']) !== 'undefined' && data['url'] instanceof Array){
-            data['url'].push(url);
-            data['title'].push(title);
-            data['favicon'].push(favicon);
-            data['category'].push(category);
+    chrome.storage.local.get(null, function(data){ 
+        if(typeof(data['article']) !== 'undefined'){
+            data['article'].push({ 'url':url, 'title':title, 'favicon':favicon, 'category':category });
         } else {
-            data['url'] = [url];
-            data['title'] = [title];
-            data['favicon'] = [favicon];
-            data['category'] = [category];
+            data['article'] = [{ 'url':url, 'title':title, 'favicon':favicon, 'category':category }];
         }
-        chrome.storage.sync.set(data);
-        console.log(Object.keys(data.url).length + ' urls');
+        chrome.storage.local.set(data);
+        // console.log(Object.keys(data.url).length + ' urls');
     });
 };
 
@@ -38,9 +32,8 @@ chrome.runtime.onMessage.addListener(function(msg, sender, rsp){
     var favicon = msg.FAVICON;
     var category = msg.CATEGORY;
     
-    if(url){
+    if(url)
         appendToStorage(url, title, favicon, category);
-    }
 });
 
 
