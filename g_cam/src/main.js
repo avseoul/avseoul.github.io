@@ -54,7 +54,7 @@ var get_webcam = function(){
 	video.muted = true; //- to prevent create feedback from mic input ***
 
 	if(navigator.getUserMedia){
-		navigator.getUserMedia({ audio: true, video:{ width: ortho_width, height: ortho_height } }, function(stream){
+		navigator.getUserMedia({ audio: true, video:{ width: ortho_width, height: ortho_height, facingMode: { exact: "environment" } } }, function(stream){
 			video.src = window.URL.createObjectURL(stream);
 			video.play();
 			setupAudioNodes(stream);
