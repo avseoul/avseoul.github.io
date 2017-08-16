@@ -16,6 +16,7 @@ var init = function(){
 			'</div>';
 			$('#container').append(scriptNode);
 		}
+		console.log("working");
 	});
 };
 document.addEventListener('DOMContentLoaded', init, false);
