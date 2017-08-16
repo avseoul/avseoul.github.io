@@ -6,7 +6,7 @@ var init = function(){
 			var scriptNode = 
 			'<div class=\"ui_grid\" id=\'' + s['id'] + '\'>'+
 			'	<div class=\"ui_thumbnail_mask\">'+
-			'		<img class=\"ui_thumbnail\" src=\'/assets/'+ s['thumbnail_src'] + '\' onclick=\"get_work_content(\''+ i +'\')\">'+
+			'		<img class=\"ui_thumbnail\" src=\'./assets/'+ s['thumbnail_src'] + '\' onclick=\"get_work_content(\''+ i +'\')\">'+
 			'	</div>'+
 			'	<div class=\'ui_description_mask\'>'+
 			'		<div class=\"ui_subject\"><span onclick=\"get_work_content(\''+ i +'\')\">'+ s['title'] +'</span></div>'+
