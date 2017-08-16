@@ -1,5 +1,5 @@
 var init = function(){
-	$.getJSON("/json/content.json", function(json) {
+	$.getJSON("avseoul/json/content.json", function(json) {
 		var num_projects = json['projects'].length;
 		for(var i = 0; i < num_projects; i++){
 			var s = json['projects'][i];
