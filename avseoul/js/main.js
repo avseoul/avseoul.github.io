@@ -212,8 +212,8 @@ var init = function(){
 			'</div>';
 			$('#container').append(scriptNode);
 		}
-		// if(device.is_mobile)
-		set_mobile_css();
+		if(device.is_mobile)
+			set_mobile_css();
 	});
 };
 
