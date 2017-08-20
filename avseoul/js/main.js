@@ -1,3 +1,7 @@
+var open_content = function(){
+	
+};
+
 var init = function(){
 	$.getJSON("/avseoul/json/content.json", function(json) {
 		var num_projects = json['projects'].length;
@@ -12,6 +16,7 @@ var init = function(){
 			'		<div class=\"ui_subject\"><span onclick=\"get_work_content(\''+ i +'\')\"><av_title>'+ s['title'] +'</av_title></span></div>'+
 			'		<div class=\"ui_description\"><p>'+ s['description'] +'</p></div>'+
 			'		<div class=\'ui_date\'><p>'+ s['date'] +'</p></div>'+
+			'		<div class=\'ui_detail\'><p><--details--></p></div>'+
 			'	</div>'+
 			'</div>';
 			$('#container').append(scriptNode);

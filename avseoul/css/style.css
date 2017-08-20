@@ -35,7 +35,7 @@ body::-webkit-scrollbar {
 
 av_title{
 	width: 100vw;
-    color: #FFF;
+    color: #000;
     font-family: Ubuntu;
     font-size: 16px;
     font-style: normal;
@@ -55,17 +55,42 @@ av_title{
 }
 
 #logo{
-	margin-top: 15px;
-	width: 100px;
+	margin-top: 20px;
+	background-color: #fff;
+}
+#logo_img{
+
 }
 #bio_title{
-	margin-top: 20px;
-	background: #000;
-	color: #FFF;
+	width: 300px;
+    background: #fff;
+    color: #000;
 }
 #bio{
-    padding-bottom: 40px;
     background: #fff;
+}
+#works_title{
+	width: 300px;
+    background: #fff;
+    color: #000;
+}
+#cv_link{
+    position: absolute;
+    right: 0;
+    background: #fff;
+    color: #00f;
+    text-decoration: underline;
+}
+#cv_link:hover{
+    cursor: pointer;
+}
+#others_link{
+	position: absolute;
+    top: 20px;
+    right: 0;
+    background: #fff;
+    color: #00f;
+    text-decoration: underline;
 }
 
 .ui_container{
@@ -74,7 +99,6 @@ av_title{
 	margin: 0;
 	padding: 0;
 }
-
 .ui_thumbnail_mask{
 	position:absolute;
 	left:0px;
@@ -107,7 +131,8 @@ av_title{
 	background: #EEE;
 }
 .ui_subject{
-	background:#000;
+	background:#fff;
+    width: fit-content;
 }
 .ui_description{
 	border: none;
@@ -116,9 +141,18 @@ av_title{
     background: #ffffff;
 }
 .ui_date{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+    width: fit-content;
     background: #bfbfbf;
     color: #313131;
+}
+.ui_detail{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: fit-content;
+    color: #00f;
+    text-decoration: underline;		
+}
+.ui_detail:hover{
+    cursor: pointer;
 }
