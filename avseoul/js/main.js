@@ -1,6 +1,18 @@
+var device = {
+    is_android: function() {return navigator.userAgent.match(/Android/i);},
+    is_blackberry: function() {return navigator.userAgent.match(/BlackBerry/i);},
+    is_iphone: function() {return navigator.userAgent.match(/iPhone/i);},
+    is_ipad: function() {return navigator.userAgent.match(/iPad/i);},
+    is_ipod: function() {return navigator.userAgent.match(/iPod/i);},
+    is_ios: function() {return navigator.userAgent.match(/iPhone|iPad|iPod/i);},
+    is_windows_phone: function() {return navigator.userAgent.match(/IEMobile/i);},
+    is_mobile: function(){return (device.is_android() || device.is_blackberry() || device.is_ios() || device.is_windows_phone() );}
+}
+
 var insert_next = function(_tar_node, _ref_node){
 	_ref_node.parentNode.insertBefore(_tar_node, _ref_node.nextSibling);
 }
+
 var set_location = function(_id){
 	window.location.hash = _id;
 }
@@ -13,20 +25,21 @@ var get_hash = function(){
 }
 
 var open_content = function(_id){
-	// set browser hash
-	set_location(m_json['projects'][_id]['id']);
-
+	// set mobile css
+	var content_width_offset = device.is_mobile ? 0 : 300;
+	var content_container_class = device.is_mobile ? "content_container_mobile" : "content_container";
 	// reset the dom
-	var _dom = document.getElementsByClassName("content_container");
+	var _dom = document.getElementsByClassName(content_container_class);
 	for(var i = 0; i < _dom.length; i++)
 		_dom[i].parentNode.removeChild(_dom[i]);
-
+	// set browser hash
+	set_location(m_json['projects'][_id]['id']);
 
 	// vars
 	var proj = m_json['projects'][_id];
 	var t = document.getElementById(proj['id']);
 	var dst = document.createElement('div');
-	dst.className = "content_container";
+	dst.className = content_container_class;
 	insert_next(dst, t);
     
     // media
@@ -35,7 +48,7 @@ var open_content = function(_id){
     switch(proj.content.is){
     	case 'video':
 	    	(function(){
-	    		var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - 300;
+	    		var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 	    		var _v_height = _v_width * proj.content.size.h/proj.content.size.w;
 	    		_content.style['cursor'] = 'pointer';
 	    		_content.style['width'] = _v_width.toString()+'px';
@@ -48,12 +61,12 @@ var open_content = function(_id){
 	    	}());
 	    	break;
     	case 'image':
-	    	var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - 300;
+	    	var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 	    	var _v_height = _v_width * proj.content.size.h/proj.content.size.w;
 	    	_content.innerHTML = '<img src=\"assets/' + proj.content.url + '\" width=\"'+_v_width+'\" height=\"'+_v_height+'\">';
 	    	break;
     	case 'realtime':
-	    	var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - 300;
+	    	var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 	    	var _v_height = _v_width * proj.content.size.h/proj.content.size.w;
 	    	_content.style['cursor'] = 'pointer';
 	    	_content.style['width'] = _v_width.toString()+'px';
@@ -92,7 +105,7 @@ var open_content = function(_id){
 	        		switch(proj.info[j].is){
 	        			case 'video':
 		        			(function(index){
-		        				var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - 300;
+		        				var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 		        				var _v_height = _v_width * proj.info[index].size.h/proj.info[index].size.w;
 		        				var _div = document.createElement('div');
 		        				_div.style['width'] = _v_width+'px';
@@ -103,7 +116,7 @@ var open_content = function(_id){
 		        			})(j);
 		        			break;
 	        			case 'image':
-		        			var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - 300;
+		        			var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 		        			var _img = document.createElement('img');
 		        			_img.src = "assets/" + proj.info[j].url;
 		        			_img.width = _v_width;
@@ -124,7 +137,7 @@ var open_content = function(_id){
 	        		switch(proj.process[j].is){
 	        			case 'video':
 		        			(function(index){
-		        				var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - 300;
+		        				var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 		        				var _v_height = _v_width * proj.process[index].size.h/proj.process[index].size.w;
 		        				var _div = document.createElement('div');
 		        				_div.style['width'] = _v_width+'px';
@@ -134,7 +147,7 @@ var open_content = function(_id){
 		        			})(j);
 		        			break;
 	        			case 'image':
-		        			var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - 300;
+		        			var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 		        			var _img = document.createElement('img');
 		        			_img.src = "assets/" + proj.process[j].url;
 		        			_img.width = _v_width;
@@ -199,6 +212,8 @@ var init = function(){
 			'</div>';
 			$('#container').append(scriptNode);
 		}
+		// if(device.is_mobile)
+		set_mobile_css();
 	});
 };
 
