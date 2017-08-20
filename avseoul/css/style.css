@@ -34,7 +34,6 @@ body::-webkit-scrollbar {
 }
 
 av_title{
-	width: 100vw;
     color: #000;
     font-family: Ubuntu;
     font-size: 16px;
@@ -42,6 +41,14 @@ av_title{
     font-variant: normal;
     font-weight: 600;
     line-height: 20px;
+}
+credit{
+    color: #999;
+    font-family: Ubuntu;
+    font-size: 14px;
+    font-style: italic;
+    font-variant: normal;
+    font-weight: 400;
 }
 
 #header{
@@ -55,11 +62,14 @@ av_title{
 }
 
 #logo{
-	margin-top: 20px;
-	background-color: #fff;
+	/*margin-top: 20px;*/
+	/*margin-bottom: 20px;*/
+	background-color: #000;
 }
 #logo_img{
-
+    width: 100px;
+    -webkit-filter: brightness(100%);
+    filter: brightness(1000%);
 }
 #bio_title{
 	width: 300px;
@@ -68,6 +78,7 @@ av_title{
 }
 #bio{
     background: #fff;
+    margin-top: 20px;
 }
 #works_title{
 	width: 300px;
@@ -75,29 +86,21 @@ av_title{
     color: #000;
 }
 #cv_link{
-    position: absolute;
-    right: 0;
-    background: #fff;
-    color: #00f;
-    text-decoration: underline;
-}
-#cv_link:hover{
-    cursor: pointer;
+    
 }
 #others_link{
-	position: absolute;
-    top: 20px;
-    right: 0;
-    background: #fff;
-    color: #00f;
-    text-decoration: underline;
+	
 }
 
 .ui_container{
 	width: 100vw;
 	height: 300px;
-	margin: 0;
+	margin-top: 20px;
 	padding: 0;
+}
+.ui_url{
+	width: fit-content;
+	background-color: #fff;
 }
 .ui_thumbnail_mask{
 	position:absolute;
@@ -128,7 +131,7 @@ av_title{
 	margin: 0;
 	padding: 0;
 
-	background: #EEE;
+	background: #ddd;
 }
 .ui_subject{
 	background:#fff;
@@ -148,11 +151,29 @@ av_title{
 .ui_detail{
 	position: absolute;
 	right: 0px;
-	top: 0px;
+	bottom: 0px;
 	width: fit-content;
     color: #00f;
     text-decoration: underline;		
 }
 .ui_detail:hover{
     cursor: pointer;
+}
+
+
+.content_container{
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    background-color: #fff;
+}
+.content_title{
+        color: #000;
+    font-family: Ubuntu;
+    font-size: 14px;
+    font-style: italic;
+    font-variant: normal;
+    font-weight: 600;
+    margin: 20px 0 0px 0;
 }

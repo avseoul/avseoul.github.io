@@ -6,123 +6,46 @@
             "title":"AVSKETCHES",
             "description":"openFramewokrs/c++, GLSL / a make-everyday project",
             "date":"May,2017 - present",
-            "about":[
-                {"title":"Tool", "body":"openFramewokrs/c++, GLSL"},
-                {"title":"Format", "body":"openFrameworks sketch"},
-                {"title":"Date", "body":"May, 2017 - present"}
-            ],
             "info":[
                 {"is":"text", "p":"quick openFrameworks sketches for av performances"}
             ],
             "process":[
                 {"is":"video","url":"https://player.vimeo.com/video/223726290","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N034"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/223536057","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N033"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/223407389","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N032"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/223217114","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N031 Bodhisattva in Pensive Position, a national treasure of Korea. "},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/223217028","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N031 Statue of Bodhisattva, a national treasure of Korea. "},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/223216672","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N031 Great Gilt-Bronze Incense Burner of Baekje, a national treasure of Korea. "},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/223078927","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N030"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/222886692","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N029"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/222872301","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N028"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/222798471","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N027"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/222301888","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N026"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/222143862","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N025"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/222047127","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N024"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/221956220","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N023"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/221839224","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N022"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/221689621","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N021"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/221520130","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N020"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/221377024","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N019"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/221208487","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N018"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/221124874","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N017"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/220877968","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N016"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/220750624","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N015"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/220581592","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N014"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/220418304","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N013"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/220225510","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N012"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/220169573","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N011"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/220085257","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N010"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219932311","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N009"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219790919","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N008"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219625993","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N007"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219462031","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N006"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219327422","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N005"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219217460","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N004"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219175646","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N003"},
-                {"is":"text", "p":"---"},
                 {"is":"video","url":"https://player.vimeo.com/video/219028200","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N002"},
-                {"is":"text", "p":"---"}, 
-                {"is":"video","url":"https://player.vimeo.com/video/218866484","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"text", "p":"N001"},
-                {"is":"text", "p":"---"}  
+                {"is":"video","url":"https://player.vimeo.com/video/218866484","dummy":"","size":{"w":"920","h":"920"}}
             ],
             "credit":[
                 {"role":"Role","credit":"Personal Project (Design/Development)"}
@@ -141,11 +64,6 @@
             "title":"[Works@FakeLove] VR Prototype for an Office Demo",
             "description":"Unity3D, HLSL / an interactive VR particle system",
             "date":"May,2017",
-            "about":[
-                {"title":"Tool", "body":"Unity3D, HLSL"},
-                {"title":"Format", "body":"an interactive VR particle system for an office demo at fakelove"},
-                {"title":"Date", "body":"May, 2017"}
-            ],
             "info":[
                 {"is":"text", "p":"n interactive VR particle system for an office demo at fakelove"}
             ],
@@ -169,11 +87,6 @@
             "title":"[Works@FakeLove] AR Prototype for an Office Demo",
             "description":"Unity3D, HLSL / an interactive AR particle system",
             "date":"May,2017",
-            "about":[
-                {"title":"Tool", "body":"Unity3D, HLSL"},
-                {"title":"Format", "body":"an interactive AR particle system for an office demo at fakelove"},
-                {"title":"Date", "body":"May, 2017"}
-            ],
             "info":[
                 {"is":"text", "p":"n interactive AR particle system for an office demo at fakelove"}
             ],
@@ -197,12 +110,6 @@
             "title":"[Works@FakeLove] Kia Cadenza AR Live Event",
             "description":"Unity3D, ShaderLab, HLSL / a onsite AR installation for KIA CADENZA @<a href=\"http://fakelove.tv/\" target=\"_blank\">Fake Love</a>",
             "date":"Feb,2017",
-            "about":[
-                {"title":"Tool", "body":"Unity3D, ShaderLab, HLSL"},
-                {"title":"Format", "body":"onside AR installation"},
-                {"title":"Date", "body":"Feb, 2017"},
-                {"title":"Role", "body":"developer"}
-            ],
             "info":[
                 {"is":"text", "p":"I was one and only developer for this project. I developed and polished entire app, specifically I designed and developed,<br>- <a href=\"https://medium.com/@avseoul/unity3d-sprite-animation-with-uv-coordinate-with-one-baked-sprite-texture-5ec0dad38cf5#.r4w39n8v4\" target=\"_blank\">custom sprite sequence animation</a> module based on UV coordinates, <br>- custom slideshow animation module based on UV coordinates, <br>- custom special animations trigger module in realtime AR experience, <br>- <a href=\"https://medium.com/@avseoul/unity3d-how-to-create-fake-volumetric-light-using-shader-and-geometry-cf3885991720#.lz4cncadz\" target=\"_blank\">custom volumetric light rendering</a> module in mobile devices by using fresnel shading and Alpha blending"},
                 {"is":"text", "p":"---"},
@@ -230,12 +137,6 @@
             "title":"[Works@FakeLove] Outthink Hidden",
             "description":"Unity3D, an AR mobile app to create extension to the movie \"<a href=\"http://www.ibm.com/thought-leadership/hidden-figures/\" target=\"_blank\">Hidden Figures</a>\" @<a href=\"http://fakelove.tv/\" target=\"_blank\">Fake Love</a>",
             "date":"Jan,2017",
-            "about":[
-                {"title":"Tool", "body":"Unity3D"},
-                {"title":"Format", "body":"a mobile app for android&ios"},
-                {"title":"Date", "body":"Jan,2017"},
-                {"title":"Role", "body":"developer"}
-            ],
             "info":[
                 {"is":"text", "p":"I was one of main developers among only 2 devs, I designed and developed,<br>- UV based custom image viewer(light box) and thumbnail carousel module, <br>- custom video player module, <br>- custom native photo sharing module for iOS/android in Unity3D, <br>- custom audio player module with equalizer running on GPU, <br>- building UI structure logic and animating UI, <br>- realtime dynamic 3D AR model loading pipeline, <br>- realtime texture loading pipeline,<br>- realtime rotation module for 3D AR models with gyro sensor, <br>- touch based navigation module(pan, zoom, rotate) for 3D AR models"},
                 {"is":"text", "p":"---"},
@@ -265,11 +166,6 @@
             "title":"Glitch NL",
             "description":"openFramewokrs/c++, GLSL / a realtime audio reactive glitching app in openFramewkrs",
             "date":"Jan,2017",
-            "about":[
-                {"title":"Tool", "body":"openFramewokrs/c++, GLSL"},
-                {"title":"Format", "body":"openFrameworks sketch"},
-                {"title":"Date", "body":"Jan, 2017"}
-            ],
             "info":[
                 {"is":"text", "p":"a realtime audio reactive glitching app in openFramewkrs for av performances"}
             ],
@@ -295,11 +191,6 @@
             "title":"Glitch Cam",
             "description":"Javascript, webGL, GLSL, Three.js / Audio Reactive Web App",
             "date":"Sep,2016",
-            "about":[
-                {"title":"Tool", "body":"Javascript, webGL, GLSL, Three.js"},
-                {"title":"Format", "body":"Web App"},
-                {"title":"Date", "body":"Sep, 2016"}
-            ],
             "info":[
                 {"is":"text", "p":"this app is built for live vjing"},
                 {"is":"text", "p":"only works on chrome, requires web cam"},
@@ -328,16 +219,10 @@
         },
         {
             "thumbnail_src":"/img/MUFE_screen5.jpg",
-            "id":"034",
+            "id":"033",
             "title":"[Works@EdgeDNA] MAKE UP FOR EVER",
             "description":"Javascript&Node.js / a Machine Learning Style Transfer Mobile Web-app @<a href=\"https://edgedna.co/\" target=\"_blank\">EdgeDNA</a>",
             "date":"Aug,2016",
-            "about":[
-                {"title":"Tool", "body":"Javascript/Node.js"},
-                {"title":"Format", "body":"Mobile web app"},
-                {"title":"Date", "body":"Aug, 2016"},
-                {"title":"Role", "body":"freelance developer"}
-            ],
             "info":[
                 {"is":"text", "p":"\"MAKE UP FOR EVER\" is a mobile web-app that user upload their selfie to the node server and server execute a machine learning style transfer python script made by <a href=\"http://genekogan.com/\" target=\"_blank\">Gene Kogan</a> to stylize uploaded selfie."},
                 {"is":"text", "p":"I worked with Nikolaj Petersen who is in-house product manager. I architected most of core functionalities and structures on server side and also client side. I mainly dedigned and developed,"},
@@ -373,11 +258,6 @@
             "title":"Clip (work in progress)",
             "description":"Javascript, HTML/CSS, Sketch / Chrome Extensions",
             "date":"June,2016",
-            "about":[
-                {"title":"Tool", "body":"Javascript, HTML/CSS, Sketch"},
-                {"title":"Format", "body":"Chrome Extensions"},
-                {"title":"Date", "body":"June, 2016"}
-            ],
             "info":[
                 {"is":"text", "p":"<i>\"clip\"</i> is a simple and clean bookmark app for articles, especially for those who ‘chronically’ open 1000+ tabs in one browser."},
                 {"is":"text", "p":"available to download via <a href=\"https://chrome.google.com/webstore/detail/clip/nneimfibemiegbfgjmeblmfclkfknaml\" target=\"_blank\">Chrome Store</a>"}
@@ -405,11 +285,6 @@
             "title":"FRAGMENT AND ENTITY",
             "description":"Unity3d, C#, HLSL, Oculus DK2, Leap Motion, Ableton Live",
             "date":"May,2016",
-            "about":[
-                {"title":"Tool", "body":"Unity3d, C#, HLSL, Oculus DK2, Leap Motion, Ableton Live"},
-                {"title":"Format", "body":"Experiment VR Experience"},
-                {"title":"Date", "body":"May, 2016"}
-            ],
             "info":[
                 {"is":"text", "p":"<i>\"Fragment and Entity\"</i> is an experimental VR experience which takes the users on visual and auditory journey"},
                 {"is":"text", "p":"Designed and implemented this appication for Oculus Rift in Unity 3D"}
@@ -434,10 +309,6 @@
             "title":"website renewal",
             "description":"Javascript, HTML/CSS, express/nodejs",
             "date":"Jan,2016",
-            "about":[
-                {"title":"Tool", "body":"Javascript, HTML/CSS, express/nodejs"},
-                {"title":"Date", "body":"Jan, 2016"}
-            ],
             "info":[
                 {"is":"text", "p":"I have been working on renewing this website since December '15. Currently I am a graduate student at ITP and I have learnt Javascript from here. However, I have mostly used it to create simple components for demo in classes but never tried to build something complex like websites. So, why not? I started to renew my website with javascript since last winter break."},
                 {"is":"text", "p":"-"},
@@ -467,13 +338,6 @@
             "title":"Particle Equalizer #1",
             "description":"Javascript, webGL, GLSL/Computer Graphics @CS/Nature of Code @ITP",
             "date":"Dec,2015",
-            "about":[
-                {"title":"Class", "body":"Computer Graphics 2015.Fall @CS/Nature of Code @ITP"},
-                {"title":"Format", "body":"Web Application for Chrome Desktop"},
-                {"title":"Tool", "body":"Javascript, HTML, webGL, GLSL, web-audio, sound-cloud"},
-                {"title":"Role", "body":"Personal Project"},
-                {"title":"Date", "body":"Sep, 2015"}
-            ],
             "info":[
                 {"is":"video","url":"https://player.vimeo.com/video/152375642?autoplay=0?color=ffffff","size":{"w":"920","h":"518"}},
                 {"is":"text", "p":"'Particle Equalizer #1' is the first experiment project of 'Particle Equalizer Series'. This application is inspired by 'Robert Hodgin (flight404)'s audiovisual generative coding works. This documentation video will show you how it works, you can also play it in realtime, please check this following link"},
@@ -505,13 +369,6 @@
             "title":"'untitled' an audiovisual poem",
             "description":"Cinema4d, After Effects/Big Screens @ITP",
             "date":"Dec,2015",
-            "about":[
-                {"title":"Class", "body":"Big Screens @ITP"},
-                {"title":"Format", "body":"120' HD Video"},
-                {"title":"Tool", "body":"Cinema4d, After Effects"},
-                {"title":"Role", "body":"Visual Design, 3d Animation, Compositing, Editting"},
-                {"title":"Date", "body":"Sep, 2015"}
-            ],
             "info":[
                 {"is":"text", "p":"untitled is an audiovisual poem by Av (Sehyun Kim) and Nick Bratton created specifically for the IAC Building’s 120’ HD video wall and surrounding space. the text, sound, and visuals aim to reconsider the idea of space in our hyperconnected world. in particular, the piece was made from an interest in exploring the way in which flat screens become psychological portals to different times and places and how the fractures and superpositions of sonic and visual stimuli in digital and physical spaces can modify our feelings of togetherness."},
                 {"is":"text", "p":"This piece was featured in ‘BIG SCREENS 2015 on december 4, 2015’ hosted by ITP (Interactive Telecommunication Program) at the IAC building."}
@@ -544,11 +401,6 @@
             "title":"Strange Attractor",
             "description":"CINDER/Creative Coding/Nature of Code @ITP",
             "date":"May,2015",
-            "about":[
-                {"title":"Class", "body":"Nature of Code.Spring @ITP"},
-                {"title":"Tool", "body":"CINDER"},
-                {"title":"Date", "body":"Mar, 2015"}
-            ],
             "info":[
                 {"is":"text", "p":""}
             ],
@@ -587,11 +439,6 @@
             "title":"Rainy Typewriter",
             "description":"Javascript, HTML, CSS, P5.JS, TONE.JS/Interactive AudioVisual Content/Interactive Music @ITP",
             "date":"Mar,2015",
-            "about":[
-                {"title":"Class", "body":"Interactive Music 2015.Spring @ITP"},
-                {"title":"Tool", "body":"Javascript, HTML, CSS, P5.js, TONE.js"},
-                {"title":"Date", "body":"Mar, 2015"}
-            ],
             "info":[
                 {"is":"text","p":"<a href='https://avseoul.github.io/RainyTypewriter/public/index.html' target='_blank'>https://avseoul.github.io/RainyTypewriter/public/index.html</a>"}
             ],
@@ -615,11 +462,6 @@
             "title":"Logo for Ross Goodwin",
             "description":"Identity Design",
             "date":"Jan,2015",
-            "about":[
-                {"title":"Format", "body":"Identity Design"},
-                {"title":"Tool", "body":"Adobe Illustrator"},
-                {"title":"Date", "body":"Jan, 2015"}
-            ],
             "info":[
                 {"is":"text","p":"<a href=\"https://rossgoodwin.com/\" target=\"_blank\">Ross Goodwin</a> is a technologist, a language hacker, and currently a graduate student at NYU ITP. Before attending ITP, He was a ghostwriter in the Obama administration and the private sector, then became interested in natural language processing."}
             ],
@@ -643,11 +485,6 @@
             "title":"Mesh Generator(Working Title)",
             "description":"CINDER/Design Tool Studio @ITP",
             "date":"Jan,2015",
-            "about":[
-                {"title":"Class", "body":"Design Tool Studio 2015.Spring @ITP"},
-                {"title":"Tool", "body":"CINDER"},
-                {"title":"Date", "body":"Jan, 2015"}
-            ],
             "info":[
                 {"is":"video","url":"https://player.vimeo.com/video/119088175?autoplay=0?color=ccc","size":{"w":"720","h":"405"}},
                 {"is":"text","p":"Mesh generator, simple tool for live projection mapping with mesh generating, lighting, and Shading"},
@@ -699,13 +536,6 @@
             "title":"Cosmosonic",
             "description":"Interactive Audio Visual Installation/Projection on Canvas",
             "date":"Oct,2014",
-            "about":[
-                {"title":"Class", "body":"ICM 2014.Fall @ITP"},
-                {"title":"Format", "body":"Interactive AudioVisual Installation"},
-                {"title":"Showing", "body":"Projection on Canvas"},
-                {"title":"Tool", "body":"OpenFrameworks, Kinect1414, Ableton Live"},
-                {"title":"Date", "body":"Sep, 2014"}
-            ],
             "info":[
                 {"is":"video","url":"https://player.vimeo.com/video/112602309?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}},
                 {"is":"video","url":"https://player.vimeo.com/video/111945724?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}}
@@ -730,12 +560,6 @@
             "title":"Expressive Typography",
             "description":"Expressive Typography/Graphic Design/Visual Language @ITP",
             "date":"Sep,2014",
-            "about":[
-                {"title":"Class", "body":"Visual Language 2014.Fall @ITP"},
-                {"title":"Format", "body":"Graphic Design"},
-                {"title":"Tool", "body":"Adobe Illustrator"},
-                {"title":"Date", "body":"Sep, 2014"}
-            ],
             "info":[
                 {"is":"image","url":"/img/expressivetypography01.png"},
                 {"is":"text", "p":"Medicine"},
@@ -764,12 +588,6 @@
             "title":"ITP T-SHIRTS Design",
             "description":"Illustrator/Graphic Desgin/Personal Work @ITP",
             "date":"Sep,2014",
-            "about":[
-                {"title":"Class", "body":"Visual Language 2014.Fall @ITP"},
-                {"title":"Format", "body":"Graphic Design"},
-                {"title":"Tool", "body":"Adobe Illustrator"},
-                {"title":"Date", "body":"Sep, 2014"}
-            ],
             "info":[
                 {"is":"image","url":"/img/itp-t-shirts-appl-7.jpg"},
                 {"is":"image","url":"/img/itp-t-shirts-appl-6.jpg"},
@@ -799,13 +617,6 @@
             "title":"Experiment Video for NONAGON with Parris goebel",
             "description":"Experimental Film/1m20s/Directing&Producing",
             "date":"Apr,2014",
-            "about":[
-                {"title":"Format", "body":"Experiment Film"},
-                {"title":"Showing", "body":"Screening"},
-                {"title":"Duration", "body":"1m20s"},
-                {"title":"Role", "body":"Directing, Editting, Post Production"},
-                {"title":"Date", "body":"Apr, 2014"}
-            ],
             "info":[
                 {"is":"text","p":"NONAGON is a fashion brand which made by YG Entertainment and Samsung. They needed a promotion video for their brand launching. They did not want to make it seemed like typical commercial film but more like experimental fashion film. They also want to collaborate with Parris Goebel who choreographed for TaeYang's, one of the YG artists, performance."},
                 {"is":"video","url":"https://player.vimeo.com/video/92112938?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}}
@@ -841,13 +652,6 @@
             "title":"Unpredictable",
             "description":"Experimental Film/2m40s/Directing&Producing",
             "date":"Apr,2013",
-            "about":[
-                {"title":"Format", "body":"Experiment Film"},
-                {"title":"Showing", "body":"Screening"},
-                {"title":"Duration", "body":"2m40s"},
-                {"title":"Role", "body":"Directing, Editting, Post Production"},
-                {"title":"Date", "body":"Apr, 2013"}
-            ],
             "info":[
                 {"is":"text","p":"The film, ‘Unpredictable’, demonstrates the movement of a dancer visualizing smoke and variations of a piece of fabric. Among many physical phenomena, some movements are unpredictable or inconsistent; particularly the motion of particles in liquids and gases that always move randomly at any place. The unpredictable movement of smoke, which is infinitesimally small and subtle motion generated by air flow, allured me more than any other physical phenomena of the earth and motivated me to illustrate it at a new aspect. In this film, the piece of fabric represents smoke, and the dancer represents air. I tried to visualize rising smoke gradually taking shape and transforming into a different shape. The variations in choreography, the video editing skills, and visual consonance between the dancer (air) and the piece of fabric (smoke) were used to portray the four steps: Mergence, Assimilation, and Climax, and Vanishing."},
                 {"is":"text","p":"The film was displayed in Tastemakers Promotion coordinated by BAT Korea, nominated as representative visual artist."}
@@ -889,13 +693,6 @@
             "title":"'ART OF WOVEN' VISUALOZIK X GOLDSTEP COLLABORATION FOR NIKE",
             "description":"Projection Mapping/0m53s/Projection on Painting/Directing&Producing",
             "date":"May,2013",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Live Painting"},
-                {"title":"Duration", "body":"0m53s"},
-                {"title":"Role", "body":"Directing, Producing for projection"},
-                {"title":"Date", "body":"May, 2013"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -922,13 +719,6 @@
             "title":"Optical Pyramid 003 - China international Gallery Exposition 2012",
             "description":"Projection Mapping/5m15s/Projection on Painting/Directing&Producing",
             "date":"Apr,2012",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Painting"},
-                {"title":"Duration", "body":"5m15s"},
-                {"title":"Role", "body":"Personal Project"},
-                {"title":"Date", "body":"Apr, 2013"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -952,13 +742,6 @@
             "title":"8SECONDS X C.Y CHOI (2012 SFDF WINNER OF THIS YEAR) COLLABORATION FASHION FILM",
             "description":"Fashion Film/1m24s/Directing&Producing",
             "date":"Dec,2012",
-            "about":[
-                {"title":"Format", "body":"Fashion Film"},
-                {"title":"Showing", "body":"Screening on Web"},
-                {"title":"Duration", "body":"1m24s"},
-                {"title":"Role", "body":"Directing & Producing"},
-                {"title":"Date", "body":"Dec, 2012"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -987,13 +770,6 @@
             "title":"8SECONDS X EUDON CHOI (2012 SFDF WINNER OF THIS YEAR) COLLABORATION FASHION FILM",
             "description":"Fashion Film/1m24s/Directing&Producing",
             "date":"Dec,2012",
-            "about":[
-                {"title":"Format", "body":"Fashion Film"},
-                {"title":"Showing", "body":"Screening on Web"},
-                {"title":"Duration", "body":"1m24s"},
-                {"title":"Role", "body":"Directing & Producing"},
-                {"title":"Date", "body":"Dec, 2012"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1022,13 +798,6 @@
             "title":"Visualozik & Buzrun - Augmented Painting 001",
             "description":"Projection Mapping/3m06s/Directing&Producing",
             "date":"Jan,2012",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Painting"},
-                {"title":"Duration", "body":"3m06s"},
-                {"title":"Role", "body":"Directing & Producing"},
-                {"title":"Date", "body":"Jan, 2012"}
-            ],
             "info":[
                 {"is":"text","p":"BUZRUN is a snowboard brand that represent Korea. This project(Augmented Painting 001) is a result for BUZRUN phyton binding 3rd model launching. This work will installed in international snowboard show at China & Germany."},
                 {"is":"text","p":"Augmented painting project is a advance type from Art Collaboration at KT&G in 2010, it overcome some problems(such as setting and sync for different spaces) by making set free module system. We named it 'Augmented Paining', because Projection mapping makes new images from fixed thing, like making 2D canvas to 3D space or animate fixed image."},
@@ -1060,13 +829,6 @@
             "title":"Visualozik Experiment 3D Projection Mapping + X",
             "description":"Projection Mapping/Reel/3m52s/Directing&Producing",
             "date":"Apr,2011",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping Projects Reel"},
-                {"title":"Showing", "body":"Screening on Web"},
-                {"title":"Duration", "body":"3m52s"},
-                {"title":"Role", "body":"Directing, Editting, Post Production"},
-                {"title":"Date", "body":"Apr, 2011"}
-            ],
             "info":[
                 {"is":"text","p":"“Visualozik” is the name of a visual experimental group that Joi and I formed. Collaborating with Joi, a creative visual artist himself and more importantly one of my best friends, I inspired this visual project. This show reel is a combination of our works, demonstrates our 2-year brainstorming, experiment and history of exploring about Projection Mapping application, and ultimately our own vision as young visual artists in this era."},
                 {"is":"text","p":"-"},
@@ -1109,13 +871,6 @@
             "title":"Video for the centennial anniversary of hoam lee",
             "description":"3D Animation/1m59s/Directing&Producing",
             "date":"May,2010",
-            "about":[
-                {"title":"Format", "body":"3D Animation"},
-                {"title":"Showing", "body":"Screening for Ceremony"},
-                {"title":"Duration", "body":"1m59s"},
-                {"title":"Role", "body":"Directing & Producing"},
-                {"title":"Date", "body":"May, 2010"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1141,12 +896,6 @@
             "title":"OpticalPyramid 002",
             "description":"Projection Mapping/4m53s/Projection on Painting/",
             "date":"Jun,2010",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Painting"},
-                {"title":"Duration", "body":"4m53s"},
-                {"title":"Date", "body":"Jun, 2010"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1170,12 +919,6 @@
             "title":"KT&G ARTCOLLABORATION KOMBA X AV X QUANDOL",
             "description":"Projection Mapping/2m21s/Projection on Painting/Directing&Producing",
             "date":"Jun,2010",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Printed Painting"},
-                {"title":"Duration", "body":"2m21s"},
-                {"title":"Date", "body":"Jun, 2010"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1201,12 +944,6 @@
             "title":"THE QUIETT 'BE MY LUV'",
             "description":"Music Video/4m01s/Directing&Producing",
             "date":"Apr,2010",
-            "about":[
-                {"title":"Format", "body":"Music Video"},
-                {"title":"Showing", "body":"Screening on media&web"},
-                {"title":"Duration", "body":"4m01s"},
-                {"title":"Date", "body":"Apr, 2010"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1232,12 +969,6 @@
             "title":"O.F.S(Oriental Funk Stew) 'Super Sonic'",
             "description":"Music Video/3m54s/Directing&Producing",
             "date":"May,2010",
-            "about":[
-                {"title":"Format", "body":"Music Video"},
-                {"title":"Showing", "body":"Screening on media&web"},
-                {"title":"Duration", "body":"3m54s"},
-                {"title":"Date", "body":"May, 2010"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1263,12 +994,6 @@
             "title":"OpticalPyramid 001",
             "description":"Projection Mapping/9m39s/Projection on Installation/Directing&Producing",
             "date":"Nov,2009",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Structure"},
-                {"title":"Duration", "body":"9m39s"},
-                {"title":"Date", "body":"Nov, 2009"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1294,12 +1019,6 @@
             "title":"DIY Universe '10 years after'",
             "description":"Projection Mapping/5m21s/Projection on Pacade/Directing&Producing",
             "date":"Nov,2009",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Grid Wall"},
-                {"title":"Duration", "body":"5m21s"},
-                {"title":"Date", "body":"Nov, 2009"}
-            ],
             "info":[
                 {"is":"text","p":"Participated in group exhibition 'DIY Universe(10 Years After) @Daejeon Museum of Art"}
             ],
@@ -1324,13 +1043,6 @@
             "title":"ANSWER 'NAK UH'",
             "description":"Music Video/3m39s/Directing&Producing",
             "date":"May,2009",
-            "about":[
-                {"title":"Format", "body":"Music Video"},
-                {"title":"Showing", "body":"Screening on media&web"},
-                {"title":"Duration", "body":"3m39s"},
-                {"title":"Role", "body":"Directing&Producing"},
-                {"title":"Date", "body":"May, 2009"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1355,13 +1067,6 @@
             "title":"SKIT",
             "description":"Projection Mapping/1m48s/Projection on Product/Personal Project",
             "date":"Nov,2009",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Personal Project"},
-                {"title":"Duration", "body":"1m48s"},
-                {"title":"Role", "body":"Personal Project"},
-                {"title":"Date", "body":"Nov, 2009"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1386,13 +1091,6 @@
             "title":"Visualozik LAB project # UJN&NOVA ELECTRON ENERGY",
             "description":"Projection Mapping,Music Video/4m16s/Projection on Space/Directing&Producing",
             "date":"Nov,2009",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping, Music Video"},
-                {"title":"Showing", "body":"Projection at Abandoned Place"},
-                {"title":"Duration", "body":"4m16s"},
-                {"title":"Role", "body":"Directing&Producing"},
-                {"title":"Date", "body":"Nov, 2009"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1418,13 +1116,6 @@
             "title":"Total Experience 3",
             "description":"Projection Mapping/3m58s/Projection with Live Painting",
             "date":"Aug,2009",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Live Painting"},
-                {"title":"Duration", "body":"3m58s"},
-                {"title":"Role", "body":"Projection Design"},
-                {"title":"Date", "body":"Aug, 2009"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
@@ -1450,13 +1141,6 @@
             "title":"Visualozik 1st experiment",
             "description":"Projection Mapping/3m13s/Projection on statue/Directing&Producing",
             "date":"Jul,2009",
-            "about":[
-                {"title":"Format", "body":"Projection Mapping"},
-                {"title":"Showing", "body":"Projection on Statue"},
-                {"title":"Duration", "body":"3m12s"},
-                {"title":"Role", "body":"Directing&Producing"},
-                {"title":"Date", "body":"Jul, 2009"}
-            ],
             "info":[
                 {"is":"text","p":"to be updated"}
             ],
