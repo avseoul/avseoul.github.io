@@ -1,13 +1,6 @@
-var device = {
-    is_android: function() {return navigator.userAgent.match(/Android/i);},
-    is_blackberry: function() {return navigator.userAgent.match(/BlackBerry/i);},
-    is_iphone: function() {return navigator.userAgent.match(/iPhone/i);},
-    is_ipad: function() {return navigator.userAgent.match(/iPad/i);},
-    is_ipod: function() {return navigator.userAgent.match(/iPod/i);},
-    is_ios: function() {return navigator.userAgent.match(/iPhone|iPad|iPod/i);},
-    is_windows_phone: function() {return navigator.userAgent.match(/IEMobile/i);},
-    is_mobile: function(){return (device.is_android() || device.is_blackberry() || device.is_ios() || device.is_windows_phone() );}
-}
+var is_mobile = function() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+};
 
 var insert_next = function(_tar_node, _ref_node){
 	_ref_node.parentNode.insertBefore(_tar_node, _ref_node.nextSibling);
@@ -26,8 +19,8 @@ var get_hash = function(){
 
 var open_content = function(_id){
 	// set mobile css
-	var content_width_offset = device.is_mobile === 'null' ? 0 : 300;
-	var content_container_class = device.is_mobile === 'null' ? "content_container_mobile" : "content_container";
+	var content_width_offset = is_mobile ? 0 : 300;
+	var content_container_class = is_mobile ? "content_container_mobile" : "content_container";
 	// reset the dom
 	var _dom = document.getElementsByClassName(content_container_class);
 	for(var i = 0; i < _dom.length; i++)
@@ -212,7 +205,7 @@ var init = function(){
 			'</div>';
 			$('#container').append(scriptNode);
 		}
-		if(device.is_mobile === 'null')
+		if(is_mobile)
 			set_mobile_css();
 	});
 };
