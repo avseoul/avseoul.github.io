@@ -61,6 +61,13 @@ credit{
 
 }
 
+#render_mode{
+    color: #00f;
+    text-decoration: underline;		
+}
+#render_mode:hover{
+    cursor: pointer;
+}
 #logo{
 	/*margin-top: 20px;*/
 	/*margin-bottom: 20px;*/

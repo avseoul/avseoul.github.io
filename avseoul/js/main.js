@@ -10,6 +10,21 @@ var set_location = function(_id){
 	window.location.hash = _id;
 }
 
+var render_rainbow = function(){
+	var _divs = [].slice.call(document.querySelectorAll("div"));
+	console.log(_divs.length);
+	for(var i = 0; i < _divs.length; i++){
+		var r = Math.floor(Math.random() * 255);
+		var g = Math.floor(Math.random() * 255);
+		var b = Math.floor(Math.random() * 255);
+		var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+
+		_divs[i].style["background-color"] = color;
+		_divs[i].style["color"] = r > 100 ? "rgb(255,255,255)" : "rgb(0,0,0)";
+		console.log("avseoul->render crazy");
+	}
+}
+
 var get_hash = function(){
     var _hash = location.hash;
     _hash = _hash.split('#')[1];
