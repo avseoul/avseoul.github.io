@@ -30,25 +30,25 @@ body {
 }
 
 body::-webkit-scrollbar { 
-  display: none;
+	display: none;
 }
 
 av_title{
-    color: #000;
-    font-family: Ubuntu;
-    font-size: 16px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 600;
-    line-height: 20px;
+	color: #000;
+	font-family: Ubuntu;
+	font-size: 16px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 600;
+	line-height: 20px;
 }
 credit{
-    color: #999;
-    font-family: Ubuntu;
-    font-size: 14px;
-    font-style: italic;
-    font-variant: normal;
-    font-weight: 400;
+	color: #999;
+	font-family: Ubuntu;
+	font-size: 14px;
+	font-style: italic;
+	font-variant: normal;
+	font-weight: 400;
 }
 
 #header{
@@ -62,11 +62,11 @@ credit{
 }
 
 #render_mode{
-    color: #00f;
-    text-decoration: underline;		
+	color: #00f;
+	text-decoration: underline;		
 }
 #render_mode:hover{
-    cursor: pointer;
+	cursor: pointer;
 }
 #logo{
 	/*margin-top: 20px;*/
@@ -74,26 +74,26 @@ credit{
 	background-color: #000;
 }
 #logo_img{
-    width: 100px;
-    -webkit-filter: brightness(100%);
-    filter: brightness(1000%);
+	width: 100px;
+	-webkit-filter: brightness(100%);
+	filter: brightness(1000%);
 }
 #bio_title{
 	width: 300px;
-    background: #fff;
-    color: #000;
+	background: #fff;
+	color: #000;
 }
 #bio{
-    background: #fff;
-    margin-top: 20px;
+	background: #fff;
+	margin-top: 20px;
 }
 #works_title{
 	width: 300px;
-    background: #fff;
-    color: #000;
+	background: #fff;
+	color: #000;
 }
 #cv_link{
-    
+
 }
 #others_link{
 	
@@ -125,7 +125,7 @@ credit{
 }
 .ui_thumbnail:hover{
 	-webkit-filter: grayscale(0%); 
-    filter: grayscale(0%);
+	filter: grayscale(0%);
 }
 
 .ui_description_mask{
@@ -142,51 +142,75 @@ credit{
 }
 .ui_subject{
 	background:#fff;
-    width: fit-content;
+	width: fit-content;
 }
 .ui_description{
 	border: none;
-    width: fit-content;
-    color: #000000;
-    background: #ffffff;
+	width: fit-content;
+	color: #000000;
+	background: #ffffff;
 }
 .ui_date{
-    width: fit-content;
-    background: #bfbfbf;
-    color: #313131;
+	width: fit-content;
+	background: #bfbfbf;
+	color: #313131;
 }
 .ui_detail{
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
 	width: fit-content;
-    color: #00f;
-    text-decoration: underline;		
+	color: #00f;
+	text-decoration: underline;		
 }
 .ui_detail:hover{
-    cursor: pointer;
+	cursor: pointer;
 }
 
 
 .content_container{
-    width: calc(100% - 300px);
-    margin-left: 300px;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    background-color: #fff;
+	width: calc(100% - 300px);
+	margin-left: 300px;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	background-color: #fff;
 }
 .content_container_mobile{
-    width: 100vw;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    background-color: #fff;
+	width: 100vw;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	background-color: #fff;
 }
 .content_title{
-    color: #000;
-    font-family: Ubuntu;
-    font-size: 14px;
-    font-style: italic;
-    font-variant: normal;
-    font-weight: 600;
-    margin: 20px 0 0px 0;
+	color: #000;
+	font-family: Ubuntu;
+	font-size: 14px;
+	font-style: italic;
+	font-variant: normal;
+	font-weight: 600;
+	margin: 20px 0 0px 0;
+}
+
+.is_fucked {
+	-webkit-animation-name: example; 
+	-webkit-animation-duration: 500ms;
+	-webkit-animation-iteration-count: infinite;
+	animation-name: example;
+	animation-duration: 500ms;
+	animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes example {
+	0%   {color:red;}
+	25%  {color:yellow;}
+	50%  {color:blue;}
+	75%  {color:green;}
+	100% {color:red;}
+}
+@keyframes example {
+	0%   {color:red;}
+	25%  {color:yellow;}
+	50%  {color:blue;}
+	75%  {color:green;}
+	100% {color:red;}
 }

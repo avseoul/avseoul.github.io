@@ -23,6 +23,10 @@ var render_rainbow = function(){
 		_divs[i].style["color"] = r > 100 ? "rgb(255,255,255)" : "rgb(0,0,0)";
 		console.log("avseoul->render crazy");
 	}
+
+	var _rainbow_anim_divs = [].slice.call(document.querySelectorAll("a"));
+	for(var i = 0; i < _rainbow_anim_divs.length; i++)
+		_rainbow_anim_divs[i].className = "is_fucked";
 }
 
 var get_hash = function(){
@@ -215,7 +219,7 @@ var init = function(){
 			'		<div class=\"ui_description\"><p>'+ s['description'] +'</p></div>'+
 			'		<div class=\"ui_url\"><p><a href=\'\'>www.avseoul.net/#'+s['id']+'</a></p></div>'+
 			'		<div class=\'ui_date\'><p>'+ s['date'] +'</p></div>'+
-			'		<div class=\'ui_detail\'><p onclick=\"open_content(\''+ i +'\')\"><&#33;--details--></p></div>'+
+			'		<div class=\'ui_detail\'><a><p onclick=\"open_content(\''+ i +'\')\"><&#33;--details--></p></a></div>'+
 			'	</div>'+
 			'</div>';
 			$('#container').append(scriptNode);
