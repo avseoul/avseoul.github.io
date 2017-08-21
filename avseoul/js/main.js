@@ -26,8 +26,8 @@ var get_hash = function(){
 
 var open_content = function(_id){
 	// set mobile css
-	var content_width_offset = device.is_mobile ? 0 : 300;
-	var content_container_class = device.is_mobile ? "content_container_mobile" : "content_container";
+	var content_width_offset = device.is_mobile === 'null' ? 0 : 300;
+	var content_container_class = device.is_mobile === 'null' ? "content_container_mobile" : "content_container";
 	// reset the dom
 	var _dom = document.getElementsByClassName(content_container_class);
 	for(var i = 0; i < _dom.length; i++)
@@ -212,7 +212,7 @@ var init = function(){
 			'</div>';
 			$('#container').append(scriptNode);
 		}
-		if(device.is_mobile)
+		if(device.is_mobile === 'null')
 			set_mobile_css();
 	});
 };
