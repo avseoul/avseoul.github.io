@@ -19,8 +19,8 @@ var get_hash = function(){
 
 var open_content = function(_id){
 	// set mobile css
-	var content_width_offset = is_mobile ? 0 : 300;
-	var content_container_class = is_mobile ? "content_container_mobile" : "content_container";
+	var content_width_offset = is_mobile() ? 0 : 300;
+	var content_container_class = is_mobile() ? "content_container_mobile" : "content_container";
 	// reset the dom
 	var _dom = document.getElementsByClassName(content_container_class);
 	for(var i = 0; i < _dom.length; i++)
@@ -56,7 +56,7 @@ var open_content = function(_id){
     	case 'image':
 	    	var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 	    	var _v_height = _v_width * proj.content.size.h/proj.content.size.w;
-	    	_content.innerHTML = '<img src=\"assets/' + proj.content.url + '\" width=\"'+_v_width+'\" height=\"'+_v_height+'\">';
+	    	_content.innerHTML = '<img src=\"avseoul/assets/' + proj.content.url + '\" width=\"'+_v_width+'\" height=\"'+_v_height+'\">';
 	    	break;
     	case 'realtime':
 	    	var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
@@ -111,7 +111,7 @@ var open_content = function(_id){
 	        			case 'image':
 		        			var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 		        			var _img = document.createElement('img');
-		        			_img.src = "assets/" + proj.info[j].url;
+		        			_img.src = "avseoul/assets/" + proj.info[j].url;
 		        			_img.width = _v_width;
 		        			_r.appendChild(_img);
 		        			break;
@@ -142,7 +142,7 @@ var open_content = function(_id){
 	        			case 'image':
 		        			var _v_width = parseFloat(getComputedStyle(t,null).getPropertyValue('width')) - content_width_offset;
 		        			var _img = document.createElement('img');
-		        			_img.src = "assets/" + proj.process[j].url;
+		        			_img.src = "avseoul/assets/" + proj.process[j].url;
 		        			_img.width = _v_width;
 		        			_r.appendChild(_img);
 		        			break;
@@ -205,7 +205,8 @@ var init = function(){
 			'</div>';
 			$('#container').append(scriptNode);
 		}
-		if(is_mobile)
+		
+		if(is_mobile())
 			set_mobile_css();
 	});
 };
