@@ -1,5 +1,29 @@
 {
     "projects":[
+	 {
+            "thumbnail_src":"/img/slitscan.png",
+            "id":"046",
+            "title":"Slit-Scan Experiment",
+            "description":"Cinder, Glsl",
+            "date":"Sep,2017",
+            "info":[
+                {"is":"text", "p":"n Experiments with Slit-Scan technique"}
+            ],
+            "process":[
+                {"is":"video", "url":"https://vimeo.com/233592174", "dummy":"", "size":{"w":"920","h":"460"}},
+		{"is":"video", "url":"https://vimeo.com/233402546", "dummy":"", "size":{"w":"920","h":"917"}}
+            ],
+            "credit":[
+                {"role":"Role","credit":"Personal Project (Design/Development)"}
+            ],
+            "github":"",
+            "content":{
+                "is":"video",
+                "url":"",
+                "size":{"w":"","h":""}
+            },
+            "category":"selected_works, creative_coding, show_all"
+        },
         {
             "thumbnail_src":"/img/quickavsketch01.png",
             "id":"041",
