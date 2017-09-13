@@ -10,8 +10,8 @@
                 {"is":"text", "p":"n Experiments with Slit-Scan technique"}
             ],
             "process":[
-                {"is":"video", "url":"https://vimeo.com/233592174", "dummy":"", "size":{"w":"920","h":"460"}},
-		{"is":"video", "url":"https://vimeo.com/233402546", "dummy":"", "size":{"w":"920","h":"917"}}
+                {"is":"video", "url":"https://player.vimeo.com/video/233592174", "dummy":"", "size":{"w":"920","h":"460"}},
+		{"is":"video", "url":"https://player.vimeo.com/video/233402546", "dummy":"", "size":{"w":"920","h":"917"}}
             ],
             "credit":[
                 {"role":"Role","credit":"Personal Project (Design/Development)"}
