@@ -227,6 +227,8 @@ var init = function(){
 		
 		if(is_mobile())
 			set_mobile_css();
+
+                            render_rainbow();
 	});
 };
 

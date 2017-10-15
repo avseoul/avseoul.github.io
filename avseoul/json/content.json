@@ -1,7 +1,7 @@
 {
     "projects":[
 	 {
-            "thumbnail_src":"/img/slitscan_03.jpg",
+            "thumbnail_src":"/img/slitscan_15.jpg",
             "id":"046",
             "title":"Slit-Scan Experiment",
             "description":"Cinder, Glsl",
