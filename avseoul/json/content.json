@@ -157,7 +157,7 @@
                 {"is":"text", "p":"I was one and only developer for this project. I developed and polished entire app, specifically I designed and developed,<br>- <a href=\"https://medium.com/@avseoul/unity3d-sprite-animation-with-uv-coordinate-with-one-baked-sprite-texture-5ec0dad38cf5#.r4w39n8v4\" target=\"_blank\">custom sprite sequence animation</a> module based on UV coordinates, <br>- custom slideshow animation module based on UV coordinates, <br>- custom special animations trigger module in realtime AR experience, <br>- <a href=\"https://medium.com/@avseoul/unity3d-how-to-create-fake-volumetric-light-using-shader-and-geometry-cf3885991720#.lz4cncadz\" target=\"_blank\">custom volumetric light rendering</a> module in mobile devices by using fresnel shading and Alpha blending"},
                 {"is":"text", "p":"---"},
                 {"is":"text", "p":"*Image&video courtesy of <a href=\"http://fakelove.tv/\" target=\"_blank\">Fake Love</a>"},
-                {"is":"image","url":"/img/kiacadenza.png"}
+                {"is":"image","url":"/img/kiacadenza.jpg"}
             ],
             "process":[
             ],
@@ -185,7 +185,7 @@
                 {"is":"text", "p":"---"},
                 {"is":"text", "p":"*Image&video courtesy of Fake Love"},
                 {"is":"text", "p":"Check out the offical documentation on <a href=\"http://fakelove.tv/work/outthink-hidden\" target=\"_blank\">Fake Love's website</a>"},
-                {"is":"image","url":"/img/hiddenfigures.png"}
+                {"is":"image","url":"/img/hiddenfigures.jpg"}
             ],
             "process":[
 
