@@ -54,7 +54,7 @@ float custom_distance(vec2 _a, vec2 _b){
 void main(){
     vec2 uv = gl_FragCoord.xy / BUFFER_RES;
     vec2 t_mouse = mouse;
-    t_mouse.y -= t*.5; // need to match with pos offset
+    t_mouse.y -= t*.95; // need to match with pos offset
     t_mouse = fract(t_mouse);
 
     vec2 dir = mouse_delta * 5.;

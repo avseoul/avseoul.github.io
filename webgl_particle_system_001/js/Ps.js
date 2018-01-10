@@ -1,5 +1,5 @@
 var ps_03 = function(_renderer, _is_retina){ 
-    this.SQRT_NUM_PARTICLES = _is_retina ? 128 : 256;
+    this.SQRT_NUM_PARTICLES = _is_retina ? 256 : 256;
 
     this.is_attract = false;
     this.current_attract_transition_frame = 0;
@@ -11,8 +11,8 @@ var ps_03 = function(_renderer, _is_retina){
 
     this.is_retina = _is_retina;
 
-    this.w = _renderer.w;
-    this.h = _renderer.h;
+    this.w = _is_retina ? _renderer.w * .5 : _renderer.w;
+    this.h = _is_retina ? _renderer.h * .5 : _renderer.h;
 
     this.matrix = _renderer.matrix;
 

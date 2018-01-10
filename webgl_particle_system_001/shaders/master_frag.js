@@ -10,7 +10,6 @@ uniform vec3 theme_cols[2];
 
 varying float v_size;
 varying float v_fbm;
-uniform bool is_retina;
 
 void main() {
 	vec2 uv = gl_FragCoord.xy / SCREEN_RES * .5;
@@ -27,14 +26,10 @@ void main() {
     c.r = c.b;
     c.b = _t;
 
-    //c *= is_retina ? .5 : 1.;
-
     gl_FragColor = vec4(c, 1.);
 
 #else
 	c *= (v_fbm * theme_cols[0] + (1.-v_fbm) * theme_cols[1]);
-
-	c *= is_retina ? .5 : 1.;
 
     gl_FragColor = vec4(c, 1.) * texture2D(tex_sprite, gl_PointCoord);
 #endif
