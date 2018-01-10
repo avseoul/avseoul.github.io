@@ -30,6 +30,7 @@ void main() {
 
 #else
 	c *= (v_fbm * theme_cols[0] + (1.-v_fbm) * theme_cols[1]);
+
     gl_FragColor = vec4(c, 1.) * texture2D(tex_sprite, gl_PointCoord);
 #endif
 }

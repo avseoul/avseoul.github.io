@@ -58,7 +58,7 @@ void main(){
     t_mouse = fract(t_mouse);
 
     vec2 dir = mouse_delta * 5.;
-    float dist = pow( custom_distance(uv, t_mouse), 2.)*10.;
+    float dist = pow( custom_distance(uv, t_mouse), 2.)*4.;
 
     float c = circle(uv, t_mouse, .01);
 
@@ -66,13 +66,12 @@ void main(){
     float swir_dist = .3 - custom_distance(uv, t_mouse);
 
     swir_dist = swir_dist < 0. ? 0.: swir_dist;
-    vec2 swir_f = swir_dir * swir_dist * 10.;
+    vec2 swir_f = swir_dir * swir_dist * .01;
 
-    float noise_intensity = 2.;
-    vec3 noise = (texture2D(tex_noise, fract(uv + vec2(t ,  t * 1.))).rgb - .5) * 2. *  noise_intensity;
-    vec3 p_vel = advect(tex_p_vel, uv, noise.rg + swir_f, 1./2048.).rgb + c * vec3(dir, 0.) * dist;
+    vec3 noise = (texture2D(tex_noise, fract(uv + vec2(t ,  t * .1))).rgb - .5) * 3.;
+    vec3 p_vel = advect(tex_p_vel, uv, noise.rg + swir_f, 1./1024.).rgb + c * vec3(dir, 0.) * dist;
     vec3 vel = p_vel;
-    vel *= .96;
+    vel *= .99;
 
    if(length(vel) < .01 && is_attract)
         vel = noise * attract_transition_frame * .002;

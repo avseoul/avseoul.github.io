@@ -43,6 +43,13 @@
     <script src="js/Ps.js"></script>
 
     <script>
+        function is_retina() {
+            if (window.matchMedia) {
+                var _m = window.matchMedia("only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)");
+                return (_m && _m.matches || (window.devicePixelRatio > 1)); 
+            }
+        }
+
         var theme = {
             default: 0,
             yellow: 1,
@@ -56,7 +63,7 @@
 
 
         // setup ps
-        var m_ps = new ps_03(m_renderer);
+        var m_ps = new ps_03(m_renderer, is_retina());
 
         document.getElementById("idle").addEventListener("mouseup", m_ps.trigger_attract_mode.bind(m_ps), false);
         document.getElementById("idle").addEventListener("touchend", m_ps.trigger_attract_mode.bind(m_ps), false);

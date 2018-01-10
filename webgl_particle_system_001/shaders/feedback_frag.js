@@ -41,11 +41,11 @@ void main(){
     vec2 uv = gl_FragCoord.xy / BUFFER_RES;
      
      vec3 vel = texture2D(tex_vel, uv).rgb;
-     vec2 noise = (texture2D(tex_noise, fract(uv - t * 2.)).rg - .5) * 2.;
-     vec3 p_feedback = advect(tex_p_feedback, uv, noise, 1./2048.).rgb;
+     vec2 noise = (texture2D(tex_noise, fract(uv - t * .1)).rg - .5) * 2.;
+     vec3 p_feedback = advect(tex_p_feedback, uv, noise, 1./1024.).rgb;
      
      vec3 feedback = p_feedback + vel;
-     feedback *= .96;
+     feedback *= .98;
      
      gl_FragColor = vec4(feedback,1);
 }`;

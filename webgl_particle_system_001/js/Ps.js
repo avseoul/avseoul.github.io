@@ -1,5 +1,5 @@
-var ps_03 = function(_renderer){ 
-    this.SQRT_NUM_PARTICLES = 256;
+var ps_03 = function(_renderer, _is_retina){ 
+    this.SQRT_NUM_PARTICLES = _is_retina ? 128 : 256;
 
     this.is_attract = false;
     this.current_attract_transition_frame = 0;
@@ -8,6 +8,8 @@ var ps_03 = function(_renderer){
     this.is_init = false;
 
     this.renderer = _renderer.renderer;
+
+    this.is_retina = _is_retina;
 
     this.w = _renderer.w;
     this.h = _renderer.h;
@@ -200,6 +202,7 @@ ps_03.prototype.init_shader = function(){
     this.shdr_master.uniforms.theme_cols = {value: [new THREE.Vector3(1,1,1), new THREE.Vector3(1,1,1)]};
     this.shdr_master.uniforms.is_attract = {value: this.is_attract};
     this.shdr_master.uniforms.attract_transition_frame = {value: this.current_attract_transition_frame};
+    this.shdr_master.uniforms.is_retina = {value: this.is_retina};
 
     this.shdr_master.blending = THREE.AdditiveBlending;
     this.shdr_master.transparent = true;
@@ -210,6 +213,7 @@ ps_03.prototype.init_shader = function(){
     this.shdr_standard.uniforms.theme_cols = {value: [new THREE.Vector3(1,1,1), new THREE.Vector3(1,1,1)]};
     this.shdr_standard.uniforms.is_attract = {value: this.is_attract};
     this.shdr_standard.uniforms.attract_transition_frame = {value: this.current_attract_transition_frame};
+    this.shdr_standard.uniforms.is_retina = {value: this.is_retina};
     this.shdr_standard.defines.IS_LINE = 'true';
 
     this.shdr_standard.blending = THREE.AdditiveBlending;
