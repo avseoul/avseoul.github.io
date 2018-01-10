@@ -44,12 +44,12 @@ void main() {
 
     // vertical movement with transition
     pos += .5;
-    pos.y += t*.3 + 4.5*attract_transition_frame;
+    pos.y += t*.5 + 4.5*attract_transition_frame;
     pos = fract(pos) - .5;
 
     // discard line on the edge of canvas
     const float _x_bound = .49;
-    const float _y_bound = .496;
+    const float _y_bound = .49;
     if(pos.y < -_y_bound || pos.y > _y_bound || pos.x < -_x_bound || pos.x > _x_bound)
         v_line_render_factor = 0.;
     else
@@ -69,25 +69,25 @@ void main() {
     float fbm = noise/float(oct);
 
     // layout
-    vec2 rand_dir = vec2(cal_noise(uv*complexity * (1.+length(feedback))), cal_noise(uv.yx*complexity * (1.+length(feedback)))) -.5;
+    vec2 rand_dir = vec2(cal_noise(uv*complexity * (1.+length(feedback)) + t*3.6 ), cal_noise(uv.yx*complexity * (1.+length(feedback)) + t*3.6 )) -.5;
     pos.xy += rand_dir * fbm * .4;
 
     // adjust ratio to square 
     pos.x /= aspect_x;
 
     //
-    float size = (pow(fbm, 5.) * 18. + length(feedback)*30.) * 10.;
-    
+    float size = (pow(fbm, 5.) * 30. + length(feedback)*30.) * 10.;
+
     // care retina
     size *= is_retina ? 1. : .5; 
-    feedback *= is_retina ? .5 : 1.; 
-    fbm *= is_retina ? .5 : 1.; 
+
+    v_size = size * .005;
+    v_fbm = 1. - pow(fbm, 5.) + length(feedback) * 2.5;
 
     gl_PointSize = size;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
     
-    v_size = size * .005;
-    v_fbm = 1. - pow(fbm, 5.) + length(feedback)*5.;
+    
 #endif
 }
 `;

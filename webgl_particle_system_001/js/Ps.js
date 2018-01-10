@@ -206,7 +206,6 @@ ps_03.prototype.init_shader = function(){
 
     this.shdr_master.blending = THREE.AdditiveBlending;
     this.shdr_master.transparent = true;
-    this.shdr_master.alphaTest = 1.;
 
     this.shdr_standard = load(master_vert, master_frag);
     this.shdr_standard.uniforms.tex_feedback = {value: this.fbo_feedback_dst.texture};

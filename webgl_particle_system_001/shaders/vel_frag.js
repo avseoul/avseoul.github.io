@@ -54,11 +54,11 @@ float custom_distance(vec2 _a, vec2 _b){
 void main(){
     vec2 uv = gl_FragCoord.xy / BUFFER_RES;
     vec2 t_mouse = mouse;
-    t_mouse.y -= t*.3; // need to match with pos offset
+    t_mouse.y -= t*.5; // need to match with pos offset
     t_mouse = fract(t_mouse);
 
     vec2 dir = mouse_delta * 5.;
-    float dist = pow( custom_distance(uv, t_mouse), 2.)*4.;
+    float dist = pow( custom_distance(uv, t_mouse), 2.)*10.;
 
     float c = circle(uv, t_mouse, .01);
 
@@ -71,7 +71,7 @@ void main(){
     vec3 noise = (texture2D(tex_noise, fract(uv + vec2(t ,  t * .1))).rgb - .5) * 3.;
     vec3 p_vel = advect(tex_p_vel, uv, noise.rg + swir_f, 1./1024.).rgb + c * vec3(dir, 0.) * dist;
     vec3 vel = p_vel;
-    vel *= .99;
+    vel *= .98;
 
    if(length(vel) < .01 && is_attract)
         vel = noise * attract_transition_frame * .002;

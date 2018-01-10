@@ -22,6 +22,7 @@ shared_renderer.prototype.init_renderer = function(){
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( this.w, this.h );
     this.renderer.context.disable(this.renderer.context.DEPTH_TEST);
+    this.renderer.context.disable(this.renderer.context.ALPHA);
     this.renderer.autoClear = false;
 
     console.log("shared_renderer : renderer is set with", this.w, "by", this.h);
