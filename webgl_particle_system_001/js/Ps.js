@@ -1,23 +1,9 @@
-// this classs rely on threejs lib & shared_renderer
-// threejs & shared_renderer must be loaded before this object is loaded
-
 var ps_03 = function(_renderer){ 
     this.SQRT_NUM_PARTICLES = 256;
-
-    // webgl only supports static size arrays
-    this.target_aperture_sizes = [0, 0, 0, 0];
-    this.current_aperture_sizes = [0, 0, 0, 0];
-    this.is_apertures = [false, false, false, false];
-    this.aperture_locs = [new THREE.Vector2(1,1), new THREE.Vector2(1,1), new THREE.Vector2(1,1), new THREE.Vector2(1,1)];
-    this.aperture_size_magnifiers = [1, 1, 1, 1];
-    this.aperture_sizes = [0, 0, 0, 0];
-    this.aperture_id = 0;
 
     this.is_attract = false;
     this.current_attract_transition_frame = 0;
     this.target_attract_transition_frame = 0;
-
-    this.is_unidirection = false;
 
     this.is_init = false;
 
@@ -70,140 +56,6 @@ ps_03.prototype.update_attract_mode = function(){
     } else {
         return;
     }
-};
-
-
-
-
-
-// func(target_dom, x, y, size_multiplier)
-// target_dom : trigger dom where touch event listner is registered
-// x : pixel screen coord x from left
-// y : pixel screen coord y from top
-// size_magnifier : magnification ratio based on screen size
-ps_03.prototype.register_aperture_open_crtl = function(_id, _dom, _x, _y, _s){
-    this.aperture_id = _id;
-
-    if(this.aperture_id > 3){
-        var _css = "background-color:yellow; color:red;";
-
-        console.log("%c.---------------------------$ WARNNING $---------------------------.", _css);
-        console.log("%c|                                                                  |", _css);
-        console.log("%c|  ps_03 : exceeded the maximun number of apertures -> contact av  |", _css);
-        console.log("%c|          * webgl only allows static arrays                       |", _css);
-        console.log("%c|                                                                  |", _css);
-        console.log("%c.---------------------------$ WARNNING $---------------------------.", _css);
-
-        return;
-    }
-
-    function screen_to_object(_x, _y){
-        return new THREE.Vector2(_x/this.w-.5, (1.-_y/this.h)-.5);
-    };
-    this.aperture_locs[this.aperture_id] = screen_to_object.bind(this)(_x, _y);
-    this.aperture_size_magnifiers[this.aperture_id] = _s;
-
-    this.shdr_master.uniforms.aperture_size_magnifiers.value = this.aperture_size_magnifiers;
-    this.shdr_standard.uniforms.aperture_size_magnifiers.value = this.aperture_size_magnifiers;
-
-    _dom.addEventListener("touchend", this.trigger_aperture.bind(this, this.aperture_id, true), false);
-    _dom.addEventListener("mouseup", this.trigger_aperture.bind(this, this.aperture_id, true), false);
-
-    console.log("ps_03 : trigger_aperture(open) is registered with", this.aperture_id ,"to TOUCHEND & MOUSEUP event listener to ", _dom.nodeName);
-};
-
-
-
-
-
-ps_03.prototype.register_aperture_close_crtl = function(_id, _dom){
-    this.aperture_id = _id;
-
-    _dom.addEventListener("touchend", this.trigger_aperture.bind(this, this.aperture_id, false), false);
-    _dom.addEventListener("mouseup", this.trigger_aperture.bind(this, this.aperture_id, false), false);
-
-    console.log("ps_03 : trigger_aperture(close) is registered with", this.aperture_id ,"to TOUCHEND & MOUSEUP event listener to ", _dom.nodeName);
-};
-
-
-
-
-
-ps_03.prototype.trigger_aperture = function(_id, _cmd){
-    this.is_apertures[_id] = _cmd;
-
-    var _t = this.is_apertures[_id] ? "open" : "close";
-    var _size = this.is_apertures[_id] ? 1 : 0;
-
-    this.target_aperture_sizes[_id] = _size;
-    
-    console.log("ps_03 : aperture[" + _id + "] -", _t);
-};
-
-
-
-
-
-ps_03.prototype.open_aperture = function(_id){
-    if(_id){
-        this.trigger_aperture(_id, true);
-    } else {
-        var _size = this.is_apertures.length;
-        for(var i = 0; i < _size; i++){
-            this.trigger_aperture(i, true);
-        }
-    }
-}
-
-
-
-
-
-ps_03.prototype.close_aperture = function(_id){
-    if(_id){
-        this.trigger_aperture(_id, false);
-    } else {
-        var _size = this.is_apertures.length;
-        for(var i = 0; i < _size; i++){
-            this.trigger_aperture(i, false);
-        }
-    }
-}
-
-
-
-
-
-ps_03.prototype.toggle_unidirection = function(){
-    this.is_unidirection = !this.is_unidirection;
-
-    this.shdr_master.uniforms.is_unidirection.value = this.is_unidirection;
-    this.shdr_standard.uniforms.is_unidirection.value = this.is_unidirection;
-};
-
-
-
-
-
-ps_03.prototype.update_aperture = function(){
-    var _num_aperture = this.is_apertures.length;
-
-    for(var i = 0; i < _num_aperture; i++){
-        var _dist = this.target_aperture_sizes[i] - this.current_aperture_sizes[i];
-
-        if(_dist != 0){
-            if(Math.abs(_dist) > .0001){
-                this.current_aperture_sizes[i] += _dist * .2;
-            } else {
-                this.current_aperture_sizes[i] = this.target_aperture_sizes[i];
-            }
-        } else {
-            continue;
-        }
-    }
-
-    this.shdr_master.uniforms.aperture_sizes.value = this.current_aperture_sizes;
-    this.shdr_standard.uniforms.aperture_sizes.value = this.current_aperture_sizes;
 };
 
 
@@ -314,8 +166,8 @@ ps_03.prototype.init_shader = function(){
         return new THREE.ShaderMaterial( 
         { 
             defines: {
-                buffer_res: buffer_res,
-                screen_res: screen_res
+                BUFFER_RES: buffer_res,
+                SCREEN_RES: screen_res
             },
             uniforms: {
                 mouse: {value: new THREE.Vector2(this.mouse_norm_x, this.mouse_norm_y)},
@@ -329,42 +181,36 @@ ps_03.prototype.init_shader = function(){
         });
     };
 
-    this.shdr_vel = load(shared_vert, vel_frag);
+    this.shdr_vel = load(master_vert, vel_frag);
     this.shdr_vel.uniforms.tex_p_vel = {value: this.fbo_vel_src.texture};
     this.shdr_vel.uniforms.tex_noise = {value: this.tex_noise };
     this.shdr_vel.uniforms.is_attract = {value: this.is_attract};
     this.shdr_vel.uniforms.attract_transition_frame = {value: this.current_attract_transition_frame};
+    this.shdr_vel.defines.IS_BUFFER = 'true';
 
-    this.shdr_feedback = load(shared_vert, feedback_frag);
+    this.shdr_feedback = load(master_vert, feedback_frag);
     this.shdr_feedback.uniforms.tex_vel =  {value: this.fbo_vel_dst.texture};
     this.shdr_feedback.uniforms.tex_p_feedback = {value: this.fbo_feedback_src.texture};
     this.shdr_feedback.uniforms.tex_noise = {value: this.tex_noise };
-
+    this.shdr_feedback.defines.IS_BUFFER = 'true';
 
     this.shdr_master = load(master_vert, master_frag);
     this.shdr_master.uniforms.tex_sprite = {value: this.tex_sprite};
     this.shdr_master.uniforms.tex_feedback = {value: this.fbo_feedback_dst.texture};
     this.shdr_master.uniforms.theme_cols = {value: [new THREE.Vector3(1,1,1), new THREE.Vector3(1,1,1)]};
-    this.shdr_master.uniforms.aperture_locs = {value: this.aperture_locs};
-    this.shdr_master.uniforms.aperture_sizes = {value: this.aperture_sizes};
-    this.shdr_master.uniforms.aperture_size_magnifiers = {value: this.aperture_size_magnifiers};
     this.shdr_master.uniforms.is_attract = {value: this.is_attract};
     this.shdr_master.uniforms.attract_transition_frame = {value: this.current_attract_transition_frame};
-    this.shdr_master.uniforms.is_unidirection = {value: this.is_unidirection};
 
     this.shdr_master.blending = THREE.AdditiveBlending;
     this.shdr_master.transparent = true;
     this.shdr_master.alphaTest = 1.;
 
-    this.shdr_standard = load(master_vert, standard_frag);
+    this.shdr_standard = load(master_vert, master_frag);
     this.shdr_standard.uniforms.tex_feedback = {value: this.fbo_feedback_dst.texture};
     this.shdr_standard.uniforms.theme_cols = {value: [new THREE.Vector3(1,1,1), new THREE.Vector3(1,1,1)]};
-    this.shdr_standard.uniforms.aperture_locs = {value: this.aperture_locs};
-    this.shdr_standard.uniforms.aperture_sizes = {value: this.aperture_sizes};
-    this.shdr_standard.uniforms.aperture_size_magnifiers = {value: this.aperture_size_magnifiers};
     this.shdr_standard.uniforms.is_attract = {value: this.is_attract};
     this.shdr_standard.uniforms.attract_transition_frame = {value: this.current_attract_transition_frame};
-    this.shdr_standard.uniforms.is_unidirection = {value: this.is_unidirection};
+    this.shdr_standard.defines.IS_LINE = 'true';
 
     this.shdr_standard.blending = THREE.AdditiveBlending;
     this.shdr_standard.transparent = true;
@@ -416,7 +262,6 @@ ps_03.prototype.update = function(_renderer){
         console.log("ps_03 : is initiated");
     }
 
-    this.update_aperture();
     this.update_attract_mode();
 
     this.timer = _renderer.timer;

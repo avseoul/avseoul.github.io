@@ -38,7 +38,7 @@ vec4 advect(sampler2D _tex, vec2 _uv, vec2 _dir, float _texel){
 }
 
 void main(){
-    vec2 uv = gl_FragCoord.xy / buffer_res;
+    vec2 uv = gl_FragCoord.xy / BUFFER_RES;
      
      vec3 vel = texture2D(tex_vel, uv).rgb;
      vec2 noise = (texture2D(tex_noise, fract(uv - t * 2.)).rg - .5) * 2.;

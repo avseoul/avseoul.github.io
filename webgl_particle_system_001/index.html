@@ -2,11 +2,10 @@
     <html>
     <head>
         <meta charset=utf-8>
-        <title>TITLE HERE</title>
+        <title>WEBGL - PARTICLE SYSTEM 001</title>
         <style>
         body { 
             margin: 0; 
-            /*cursor: none;*/
         }
         canvas { 
             position: absolute;
@@ -16,83 +15,33 @@
             height: 100%;
             z-index: -1; 
         }
-        #btn_a {
-            position: absolute;
-            left: 195px;
-            top: 230px;
-        }
-        #btn_b {
-            position: absolute;
-            left: 395px;
-            top: 320px;
-        }
-        #btn_a_close {
-            position: absolute;
-            left: 395px;
-            top: 230px;
-        }
-        #btn_b_close {
-            position: absolute;
-            left: 595px;
-            top: 320px;
-        }
-        #idle {
-            position: absolute;
-            left: 0px;
-            bottom: 0px;   
-        }
-
-        #direction {
-            position: absolute;
-            right: 0px;
-            bottom: 0px;   
-        }
 
         .btn {
             background: #fff;
             cursor: pointer;
             display: inline-block;
+            position: absolute;
+            right:0px;
+            bottom:0px;
         }
         .m{
-            margin: 30px;
+            margin: 10px;
         }
     </style>
 </head>
-<body><!--
-    <div class="btn" id="btn_a">OPEN APERTURE</div>
-    <div class="btn" id="btn_a_close">X</div>
-    <div class="btn" id="btn_b">OPEN MUTI APERTURES</div>
-    <div class="btn" id="btn_b_close">X - MUTI</div>
-
-
-    <div class="btn m" id="theme_def">THEME - DEFAULT</div>
-    <div class="btn m" id="theme_yel">THEME - YELLOW</div>
-    <div class="btn m" id="theme_blu">THEME - BLUE</div>
-    <div class="btn m" id="theme_gre">THEME - GREEN</div>
-          <div class="btn m" id="direction">TOGGLE RANDOM DIRECTION</div>
-          -->
+<body>
     <div class="btn m" id="idle">TOGGLE MODE</div>
-    
 
-    <!-- example of usage -->
     <script src="lib/three.min.js"></script> 
 
-    <!-- load shaders -->
-    <script src="shaders/shared_vert.js"></script>
-    <script src="shaders/ps_03_feedback_frag.js"></script>
-    <script src="shaders/ps_03_master_frag.js"></script>
-    <script src="shaders/ps_03_master_vert.js"></script>
-    <script src="shaders/ps_03_standard_frag.js"></script>
-    <script src="shaders/ps_03_vel_frag.js"></script> 
-    <script src="shaders/aperture_master_vert.js"></script> 
-    <script src="shaders/aperture_master_frag.js"></script> 
-    <script src="shaders/aperture_master_points_frag.js"></script> 
+    <script src="shaders/feedback_frag.js"></script>
+    <script src="shaders/master_frag.js"></script>
+    <script src="shaders/master_vert.js"></script>
+    <script src="shaders/vel_frag.js"></script> 
 
     <script src="js/shared_renderer.js"></script>
-    <script src="js/ps_03.js"></script>
-    <script src="js/aperture.js"></script>
+    <script src="js/Ps.js"></script>
 
-    <!-- main code -->
     <script>
         var theme = {
             default: 0,
@@ -108,62 +57,14 @@
 
         // setup ps
         var m_ps = new ps_03(m_renderer);
-        // temp listener for UI
-        //document.getElementById("theme_def").addEventListener("mouseup", m_ps.set_theme.bind(m_ps, theme.default), false);
-        //document.getElementById("theme_def").addEventListener("touchend", m_ps.set_theme.bind(m_ps, theme.default), false);
-
-        //document.getElementById("theme_yel").addEventListener("mouseup", m_ps.set_theme.bind(m_ps, theme.yellow), false);
-        //document.getElementById("theme_yel").addEventListener("touchend", m_ps.set_theme.bind(m_ps, theme.yellow), false);
-
-        //document.getElementById("theme_blu").addEventListener("mouseup", m_ps.set_theme.bind(m_ps, theme.blue), false);
-        //document.getElementById("theme_blu").addEventListener("touchend", m_ps.set_theme.bind(m_ps, theme.blue), false);
-
-        //document.getElementById("theme_gre").addEventListener("mouseup", m_ps.set_theme.bind(m_ps, theme.green), false);
-        //document.getElementById("theme_gre").addEventListener("touchend", m_ps.set_theme.bind(m_ps, theme.green), false);
-
-
 
         document.getElementById("idle").addEventListener("mouseup", m_ps.trigger_attract_mode.bind(m_ps), false);
         document.getElementById("idle").addEventListener("touchend", m_ps.trigger_attract_mode.bind(m_ps), false);
-
-
-       // document.getElementById("direction").addEventListener("mouseup", m_ps.toggle_unidirection.bind(m_ps), false);
-       // document.getElementById("direction").addEventListener("touchend", m_ps.toggle_unidirection.bind(m_ps), false);
-
-
-        
-        // func(target_dom, x, y, size_multiplier)
-        // target_dom : trigger dom where touch event listner is registered
-        // x : pixel screen coord x from left
-        // y : pixel screen coord y from top
-        // size_magnifier : magnification ratio based on screen size
-        //
-        // *
-        // close aperture functionality can be assigned to the dom 
-        // or can be called function "m_ps.close_aperture(id)"
-        // without passing any id, it will close all apertures 
-        //
-        //m_ps.register_aperture_open_crtl( 0, document.getElementById("btn_a"), 0, 0, 4.5 );
-        //m_ps.register_aperture_close_crtl( 0, document.getElementById("btn_a_close") );
-
-        //m_ps.register_aperture_open_crtl( 1, document.getElementById("btn_b"), 395, 320, 4 );
-        //m_ps.register_aperture_open_crtl( 2, document.getElementById("btn_b"), 548, 498, 7 );
-        //m_ps.register_aperture_close_crtl( 1, document.getElementById("btn_b_close") );
-        //m_ps.register_aperture_close_crtl( 2, document.getElementById("btn_b_close") );
         
         m_ps.set_theme(theme.blue);
 
-
-        // setup aperture
-        // func(renderer, x, y, size)
-        // x : pixel screen coord x from left
-        // y : pixel screen coord y from top
-        // size : relative size 0 - 0.5 (.5 to fit within screen) 
-        //m_aperture = new aperture(m_renderer, 0, 0, .06);
-
         var render_queue = [
             m_ps.update.bind(m_ps, m_renderer)
-            //m_aperture.update.bind(m_aperture, m_renderer)
         ];
         m_renderer.render(render_queue);
     </script>

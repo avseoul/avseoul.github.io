@@ -1,37 +1,44 @@
 var master_vert =
 `
-uniform sampler2D tex_feedback;
-uniform vec2 mouse;
-uniform bool is_init;
-uniform float t;
-uniform vec2 aperture_locs[4];
-uniform float aperture_sizes[4];
-uniform float aperture_size_magnifiers[4];
-uniform bool is_attract;
-uniform float attract_transition_frame;
-uniform bool is_unidirection;
-varying float v_size;
-varying float v_fbm;
-varying float v_line_render_factor;
-vec2 custom_normalize(vec2 _t){
-    vec2 _n = _t != vec2(0.) ? normalize(_t) : vec2(0.);
-    return _n;
-}
-vec3 custom_normalize(vec3 _t){
-    vec3 _n = _t != vec3(0.) ? normalize(_t) : vec3(0.);
-    return _n;
-}
-float hash( float n ){return fract(sin(n)*43758.5453);}
-float cal_noise( vec2 x ){
-    vec2 p = floor(x);
-    vec2 f = fract(x);
-    f = f*f*(3.0-2.0*f);
-    float n = p.x + p.y*57.0;
-    return mix(mix( hash(n+  0.0), hash(n+  1.0),f.x),mix( hash(n+ 57.0), hash(n+ 58.0),f.x),f.y);
-}
+#ifdef IS_BUFFER
+#else
+    uniform sampler2D tex_feedback;
+    uniform vec2 mouse;
+    uniform bool is_init;
+    uniform float t;
+    uniform vec2 aperture_locs[4];
+    uniform float aperture_sizes[4];
+    uniform float aperture_size_magnifiers[4];
+    uniform bool is_attract;
+    uniform float attract_transition_frame;
+    uniform bool is_unidirection;
+    varying float v_size;
+    varying float v_fbm;
+    varying float v_line_render_factor;
+    vec2 custom_normalize(vec2 _t){
+        vec2 _n = _t != vec2(0.) ? normalize(_t) : vec2(0.);
+        return _n;
+    }
+    vec3 custom_normalize(vec3 _t){
+        vec3 _n = _t != vec3(0.) ? normalize(_t) : vec3(0.);
+        return _n;
+    }
+    float hash( float n ){return fract(sin(n)*43758.5453);}
+    float cal_noise( vec2 x ){
+        vec2 p = floor(x);
+        vec2 f = fract(x);
+        f = f*f*(3.0-2.0*f);
+        float n = p.x + p.y*57.0;
+        return mix(mix( hash(n+  0.0), hash(n+  1.0),f.x),mix( hash(n+ 57.0), hash(n+ 58.0),f.x),f.y);
+    }
+#endif
+
 void main() {
-    float aspect_x = screen_res.x / screen_res.y;
-	float aspect_y = screen_res.y / screen_res.x;
+#ifdef IS_BUFFER
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
+#else
+     float aspect_x = SCREEN_RES.x / SCREEN_RES.y;
+    float aspect_y = SCREEN_RES.y / SCREEN_RES.x;
     vec3 pos = position;
 
     // vertical movement with transition
@@ -67,7 +74,7 @@ void main() {
         const float complexity = 26.;
         vec2 rand_dir = vec2(cal_noise(uv*complexity * (1.+length(feedback))), cal_noise(uv.yx*complexity * (1.+length(feedback)))) -.5;
         pos.xy += rand_dir * fbm * .4;
-}
+    }
 
     // apertures
     for(int i = 0; i < 4; i++){
@@ -87,5 +94,6 @@ void main() {
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
     v_size = size * .1;
     v_fbm = 1. - pow(fbm, 5.) + length(feedback)*10.;
+#endif
 }
 `;
