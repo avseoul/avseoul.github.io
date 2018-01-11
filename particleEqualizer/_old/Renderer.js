@@ -324,16 +324,14 @@ var render = function(){
 var animate = function(){
     requestAnimationFrame( animate );
     //stats.update();
-    getMICInput();
+    //getMICInput();
     render();
 };
 
 /* excute app */
 document.addEventListener('DOMContentLoaded', function(){
-    if(!isMobile){
-        init();
-        animate();
-    }
+        //init();
+        //animate();
 });
 
 window.addEventListener('resize', function(){

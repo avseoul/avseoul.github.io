@@ -127,13 +127,13 @@ ps_03.prototype.init_scene = function(){
 
 
 ps_03.prototype.init_texture = function(){
-    this.tex_sprite = new THREE.TextureLoader().load( "assets/sprite_additive.png" );
+    this.tex_sprite = new THREE.TextureLoader().load( "../common/assets/sprite_additive.png" );
     this.tex_sprite.wrapS = THREE.ClampToEdgeWrapping;
     this.tex_sprite.wrapT = THREE.ClampToEdgeWrapping;
     this.tex_sprite.magFilter = THREE.LinearFilter;
     this.tex_sprite.minFilter = THREE.LinearFilter;
 
-    this.tex_noise = new THREE.TextureLoader().load( "assets/noise.jpg" );
+    this.tex_noise = new THREE.TextureLoader().load( "../common/assets/noise.jpg" );
     this.tex_noise.wrapS = THREE.ClampToEdgeWrapping;
     this.tex_noise.wrapT = THREE.ClampToEdgeWrapping;
     this.tex_noise.magFilter = THREE.LinearFilter;
