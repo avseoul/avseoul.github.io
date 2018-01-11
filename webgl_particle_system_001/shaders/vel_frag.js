@@ -58,22 +58,27 @@ void main(){
     t_mouse = fract(t_mouse);
 
     vec2 dir = mouse_delta * 5.;
-    float dist = pow( custom_distance(uv, t_mouse), 2.)*10.;
+    float dist = pow( custom_distance(uv, t_mouse), 2.)*3.;
 
     float c = circle(uv, t_mouse, .01);
 
-    vec2 swir_dir = custom_normalize(uv -t_mouse);
-    float swir_dist = .3 - custom_distance(uv, t_mouse);
+    vec2 swir_uv = uv;
+    swir_uv.y -= .5;
+    swir_uv = fract(swir_uv);
+    vec2 swir_dir = custom_normalize(swir_uv - t_mouse);
+    float swir_dist = .2 - custom_distance(swir_uv, t_mouse);
 
-    swir_dist = swir_dist < 0. ? 0.: swir_dist;
-    vec2 swir_f = swir_dir * swir_dist * .01;
+    swir_dist = swir_dist < 0. ? .000001 : swir_dist;
+    vec2 swir_f = swir_dir * swir_dist * .015;
 
-    vec3 noise = (texture2D(tex_noise, fract(uv + vec2(t ,  t * .1))).rgb - .5) * 3.;
+    vec3 noise = (texture2D(tex_noise, fract(uv * 10. + vec2(t ,  t * .1))).rgb - .5) * 3.;
     vec3 p_vel = advect(tex_p_vel, uv, noise.rg + swir_f, 1./1024.).rgb + c * vec3(dir, 0.) * dist;
     vec3 vel = p_vel;
     vel *= .98;
 
-   if(length(vel) < .01 && is_attract)
-        vel = noise * attract_transition_frame * .002;
+   //if(length(vel) < .01 && is_attract)
+   if(is_attract)
+        vel = noise * attract_transition_frame * .001 + vec3(swir_f, 0.);
+
     gl_FragColor = vec4(vel,1);
 }`;

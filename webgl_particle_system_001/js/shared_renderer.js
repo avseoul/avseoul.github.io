@@ -8,8 +8,6 @@ var shared_renderer = function(){
     this.timer = 0;
 
     this.init_renderer();
-
-    this.register_dom_events();
 };
 
 
@@ -22,8 +20,11 @@ shared_renderer.prototype.init_renderer = function(){
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( this.w, this.h );
     this.renderer.context.disable(this.renderer.context.DEPTH_TEST);
-    this.renderer.context.disable(this.renderer.context.ALPHA);
     this.renderer.autoClear = false;
+
+    if (!this.renderer.extensions.get("OES_texture_float")) {
+        return "No OES_texture_float support for float textures.";
+    }
 
     console.log("shared_renderer : renderer is set with", this.w, "by", this.h);
 };
@@ -56,8 +57,8 @@ shared_renderer.prototype.render = function(_queue){
 
 
 shared_renderer.prototype.mouse_handler = function(_evt){
-    if(_evt.targetTouches){
-        var touch = event.targetTouches[0];
+    if (_evt.targetTouches) {
+        var touch = _evt.targetTouches[0];
 
         this.mouse_x = touch.pageX;
         this.mouse_y = touch.pageY;
@@ -90,13 +91,13 @@ shared_renderer.prototype.append_renderer_to_dom = function(_target){
 
 
 
-shared_renderer.prototype.register_dom_events = function(){
-    document.body.addEventListener("mousemove", this.mouse_handler.bind(this), false);
-    document.body.addEventListener("touchmove", this.mouse_handler.bind(this), false);
+shared_renderer.prototype.register_dom_events = function(_target){
+    _target.addEventListener("mousemove", this.mouse_handler.bind(this), false);
+    _target.addEventListener("touchmove", this.mouse_handler.bind(this), false);
 
-    console.log("shared_renderer : mouse_handler() is registered to body mousemove event listener");
+    console.log("shared_renderer : mouse_handler() is registered mousemove event listener");
 
-    document.addEventListener('touchstart', function(event){
+    _target.addEventListener('touchstart', function (event) {
         event.preventDefault();
     }, {passive: false});
 

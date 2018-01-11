@@ -9,6 +9,7 @@ var master_vert =
     uniform bool is_attract;
     uniform float attract_transition_frame;
     uniform bool is_retina;
+    uniform bool is_mobile;
     
     varying float v_size;
     varying float v_fbm;
@@ -76,10 +77,10 @@ void main() {
     pos.x /= aspect_x;
 
     //
-    float size = (pow(fbm, 5.) * 30. + length(feedback)*30.) * 5.;
+    float size = (pow(fbm, 5.) * 30. + length(feedback)*50.) * 5.;
 
     v_size = is_retina ? size * .01 : size * .005;
-    v_fbm = (1. - pow(fbm, 5.)) + length(feedback) * 2.5;
+    v_fbm = (1. - pow(fbm, 5.)) + length(feedback) * 10.;
 
     gl_PointSize = size;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
