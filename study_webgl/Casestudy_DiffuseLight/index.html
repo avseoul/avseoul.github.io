@@ -1,0 +1,134 @@
+<script src=lib1.js></script>
+
+<body bgcolor=black>
+<center>
+<td><canvas id='canvas1' width='750' height='750'></canvas></td>
+</center>
+</body>
+
+<script id='my_vertex_shader' type='x-shader/x-vertex'>
+   attribute vec3 aPosition;
+   varying   vec3 vPosition;
+   void main() {
+      gl_Position = vec4(aPosition, 1.0);
+      vPosition = aPosition;
+   }
+</script>
+
+<script id='my_fragment_shader' type='x-shader/x-fragment'>
+   precision mediump float;
+   uniform float uTime;
+   uniform vec3  uCursor;
+   varying vec3  vPosition;
+
+   vec4 sphere[15];
+   vec3 material;
+
+   vec3 Lrgb[3];
+   vec3 Ldir[3];
+
+   void setupSpheres(){
+      float timeFactor = 1.5;
+      float radius = 0.15;
+      
+      //if you want to animate sphere then do it in ray calculate
+      for(int i = 0; i < 15; i++){
+         sphere[i] = vec4(0.3 * sin(float(i)*10.0), 0.3 * cos(float(i)*10.0), 0.6 * sin(float(i)*10.0), radius * abs(sin(float(i)*10.0 + 15.0))  );
+      }
+   }
+
+   void setupLights(){
+      vec2 c = uCursor.xy;
+
+      Lrgb[0] = vec3(1.0,0.0,0.0);
+      Ldir[0] = normalize(vec3(c.x * 20.0, c.y * 20.0, -5.0 + 3.0 * dot(c, c)));
+      Lrgb[1] = vec3(0.2,0.0,0.7);
+      Ldir[1] = normalize(vec3(c.x * -1.0, c.y * -1.0, -1.0 + 2.0 * dot(c, c)));
+      Lrgb[2] = vec3(0.0,0.7,0.2);
+      Ldir[2] = normalize(vec3(sin(uTime) * 2.0, cos(uTime) * 2.0, -5.0 + 2.0 * dot(c, c)));
+   }
+
+   // Compute intersection of a ray with a sphere, if any.  Return t.
+   // If there is no intersection, return 10000.
+   float raySphere(vec3 V, vec3 W, vec4 S, int index) {
+      //animate it
+      S.y += sin(uTime * 1.6 + float(index)) * 0.13;
+      S.z += cos(uTime * 1.6 + float(index)) * 0.13;
+
+      // YOU NEED TO COMPUTE t, BY SETTING UP AND THEN SOLVING A QUADRATIC EQUATION.
+      float t; 
+      float r = S.w;
+      float a = dot(W, W);
+      float b = dot(W, V-S.xyz) * 2.;
+      float c = dot(V-S.xyz, V-S.xyz) - pow(r, 2.);
+      //quadratic fomula
+      t = (-1. * b + sqrt(pow(b, 2.) - 4. * a * c)) / 2. * a;
+
+      if( t > 0.){
+         return t;
+      } else {
+         return 10000.;
+      }
+   }
+
+   // Diffusely shade a sphere.
+   //    point is the x,y,z position of the surface point.
+   //    sphere is the x,y,z,r definition of the sphere.
+   //    material is the r,g,b color of the sphere.
+   vec3 shadeSphere(vec3 point, vec4 sphere, vec3 material) {
+      vec3 color = vec3(0.,0.,0.);
+      vec3 ambient = material/5.;
+      vec3 diffuse = vec3(0.8,0.8,0.8);
+      vec3 normal = (point - sphere.xyz) / sphere.w;
+
+      //give animated texture to diffuse
+      diffuse.r *= 0.5 + 0.6 * sin(20.0 * (point.x + 0.6 * point.z + 0.13   * cos(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
+      diffuse.g *= 0.05 + 0.2 * sin(10.0 * (point.x + 0.6 * point.y + 0.13   * cos(20.0 * point.z + uTime * 0.9 )) + uTime * 0.9) + 0.1; 
+      diffuse.b *= 0.3 + 0.3 * cos(5.0 * (point.x + 0.6 * point.z + 0.13   * sin(20.0 * point.y + uTime * 0.9 )) + uTime * 0.9) + 0.1;
+
+      //calculate shading by light
+      vec3 multLight = vec3(0.,0.,0);
+      for(int i = 0; i < 3; i++){
+         multLight += Lrgb[i] * diffuse * max(0., dot(normal, Ldir[i]));
+      }
+      color = ambient + multLight; 
+
+      return color;
+   }
+
+   void main(void) {
+      //setup lights 
+      setupLights();
+
+      // YOU NEED TO COMPUTE V AND W TO CREATE THE RAY FOR THIS PIXEL,
+      // USING vPosition.x AND vPosition.y.
+      vec2 c = uCursor.xy;
+      vec3 V, W;
+      V = vec3(-0.5 + 1.0 * c.x, -0.5 + 1.0 * c.y, 15.0);
+      W = normalize( vec3(vPosition.x - V.x, vPosition.y - V.y, 0. - V.z) );
+
+      //setup spheres
+      setupSpheres();
+
+      //setup material for ambient
+      material = vec3(0.4, 0.4, 0.4);
+
+      vec3 color = vec3(0., 0., 0.);
+      for(int i = 0; i < 15; i++){
+         float t = raySphere(V, W, sphere[i], i);
+
+         if (t < 10000.){
+            vec3 point = V + t * W;
+            color = shadeSphere(V + t * W, sphere[i], material);
+         }
+      }
+      color = pow(color, vec3(2.2,2.2,2.2)); // Do Gamma correction.
+      gl_FragColor = vec4(sqrt(color), 1.0); // Do Gamma correction.
+   }
+</script>
+
+<script>
+start_gl('canvas1', document.getElementById('my_vertex_shader'  ).innerHTML,
+                    document.getElementById('my_fragment_shader').innerHTML);
+</script>
+
