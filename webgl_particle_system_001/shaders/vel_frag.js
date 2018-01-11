@@ -77,7 +77,7 @@ void main(){
     vel *= .98;
 
    //if(length(vel) < .01 && is_attract)
-   if(is_attract)
+   if(is_attract) 
         vel = noise * attract_transition_frame * .001 + vec3(swir_f, 0.);
 
     gl_FragColor = vec4(vel,1);
