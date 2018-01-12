@@ -6,19 +6,25 @@ varying float v_noise;
   uniform sampler2D tex_sprite;
 #endif
 
-#if defined(HAS_CUBEMAP)
+#if defined(IS_PBR) && defined(HAS_CUBEMAP)
   uniform samplerCube cubemap;
-#endif
 
-#if defined(IS_PBR)
   uniform sampler2D tex_normal;
   uniform sampler2D tex_roughness;
   uniform sampler2D tex_metallic;
+  
   uniform float u_normal;
   uniform float u_roughness;
   uniform float u_metallic;
   uniform float u_exposure;
   uniform float u_gamma;
+
+  varying vec3 v_world_normal;
+  varying vec3 v_eye_pos;
+  varying vec3 v_pos;
+  varying vec3 v_normal;
+  varying vec3 v_world_pos;
+  varying vec2 v_uv;
 
   #define PI 3.1415926535897932384626433832795
 
@@ -76,8 +82,40 @@ varying float v_noise;
   }
 #endif
 
+#if defined(HAS_SHADOW)
+  uniform sampler2D u_shadow_map;
+  varying vec4 v_shadow_coord;
+
+  float sample_shadow( vec4 sc )
+  {
+    float s = 1./2048.;
+
+    vec2 unproj2D = vec2 (sc.s / sc.q,
+                          sc.t / sc.q);
+    
+    float shadow = 0.0;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2(-s,-s) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2(-s, 0.) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2(-s, s) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2( 0.,-s) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2( 0., 0.) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2( 0., s) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2( s,-s) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2( s, 0.) ).r;
+    shadow += texture2D( u_shadow_map, unproj2D + vec2( s, s) ).r;
+    return shadow/9.0;;
+  }
+#endif
+
 
 void main(){
+#if defined(IS_SHADOW)
+  gl_FragColor = vec4(0., 0., 0., 1.);
+
+  return;
+#endif
+
+
 	float m_noise = v_noise;
 	float m_noise_inv = 1.-v_noise;
 
@@ -90,67 +128,93 @@ void main(){
 
   vec3 m_col = m_diffuse;
 
-#if defined(IS_PBR)
-  vec3 N = normalize( vWsNormal );
-  N = blendNormals( N, texture2D( tex_normal, uv ).xyz );
 
-  vec3 V = normalize( vEyePosition );
-  //vec3 V = normalize( -vWsPosition.xyz );
+
+
+#if defined(IS_PBR) && defined(HAS_CUBEMAP)
+  vec3 N = normalize( v_world_normal );
+  N = blendNormals( N, texture2D( tex_normal, v_uv ).xyz );
+
+  vec3 V = normalize( v_eye_pos );
+  //vec3 V = normalize( -v_world_pos.xyz );
 
   // Light direction
-  vec3  L = normalize( uLightPos - vPosition.xyz );
+  //vec3  L = normalize( uLightPos - vPosition.xyz );
   // Surface reflection vector
-  vec3  R = normalize( -reflect( L, N ) );
+  //vec3  R = normalize( -reflect( L, N ) );
   
   // sample the roughness and metallic textures
-  float roughnessMask = texture2D( tex_roughness, uv ).r;
-  float metallicMask  = texture2D( tex_metallic, uv ).r;
+  float roughnessMask = texture2D( tex_roughness, v_uv ).r;
+  float metallicMask  = texture2D( tex_metallic, v_uv ).r;
   
   // deduce the diffuse and specular color from the baseColor and how metallic the material is
-  vec3 diffuseColor = m_diffuse - m_diffuse * u_metallic * metallicMask;
-  vec3 specularColor  = mix( vec3( 0.08 * uSpecular ), m_diffuse, u_metallic * metallicMask );
-
-  vec3 m_col;
+  vec3 m_specular_col = vec3(1.);
+  vec3 m_diffuse_col = vec3(0.3);
+  vec3 diffuseColor = m_diffuse_col - m_diffuse_col * u_metallic * metallicMask;
+  vec3 specularColor  = mix( vec3( 0.08 * m_specular_col ), m_diffuse_col, u_metallic * metallicMask );
   
   // sample the pre-filtered cubemap at the corresponding mipmap level
   int numMips     = 6;
-  float mip     = numMips - 1 + log2( u_roughness * roughnessMask );
+  float mip     = float(numMips) - 1. + log2( u_roughness * roughnessMask );
   vec3 lookup     = -reflect( V, N );
-  vec3 radiance   = pow( textureLod( cubemap, fix_cube_lookup( lookup, uRadianceMapSize, mip ), mip ).ggg, vec3( 2.2f ) );
-  vec3 irradiance   = pow( texture2D( cubemap, fix_cube_lookup( N, uIrradianceMapSize, 0 ) ).ggg, vec3( 2.2f ) );
-
+  vec3 radiance   = pow( textureCube( cubemap, fix_cube_lookup( lookup, 2048., mip ) ).ggg, vec3( 2.2 ) );
+  vec3 irradiance   = pow( textureCube( cubemap, fix_cube_lookup( N, 2048., 0. ) ).ggg, vec3( 2.2 ) );
 
   // get the approximate reflectance
   float NoV     = saturate( dot( N, V ) );
   vec3 reflectance  = EnvBRDFApprox( specularColor, pow( u_roughness * roughnessMask, 4.0 ), NoV );
 
   // combine the specular IBL and the BRDF
-  float vel_mag = length(v_vel);
-    vec3 diffuse  = diffuseColor * irradiance;
-    vec3 specular = radiance * reflectance;
+  vec3 diffuse  = diffuseColor * radiance;
+  vec3 specular = radiance * reflectance;
   m_col = diffuse + specular;
 
   // add noise diffuse
-  m_col += m_diffuse;
+  m_col += pow(m_diffuse, vec3(10.))*3.;
+
+#if defined(HAS_SHADOW)
+  float m_shadow = 1.;
+  vec4 m_shadow_coord = v_shadow_coord;
+  m_shadow_coord.z += .0003; // <- bias
+
+  m_shadow = sample_shadow(m_shadow_coord);
+  m_col *= (m_shadow + m_col*.2 + m_diffuse*.5);
+#endif
   
   // apply the tone-mapping
   m_col       = Uncharted2Tonemap( m_col * u_exposure );
   // white balance
-  m_col       = m_col * ( 1.0f / Uncharted2Tonemap( vec3( 20.0f ) ) );
+  m_col       = m_col * ( 1. / Uncharted2Tonemap( vec3( 20. ) ) );
   
   // gamma correction
-  m_col       = pow( m_col, vec3( 1.0f / u_gamma ) );
+  m_col       = pow( m_col, vec3( 1. / u_gamma ) );
 #endif
 
+
+
+
 #if defined(IS_WIRE)
-  m_col.r = 1. - m_col.r;
+  m_col.b -= m_col.b;
   m_col *= .2 * m_noise;
 #endif 
 
+
+  
+
   gl_FragColor = vec4(m_col, 1.);
+  #if defined(HAS_SHADOW)
+  gl_FragColor = vec4(vec3(pow(m_shadow, 4.)), 1.);
+  #endif
+
+
+
 
 #if defined(IS_POINTS)
   gl_FragColor *= texture2D(tex_sprite, gl_PointCoord);
+
+  vec3 m_point_col = gl_FragColor.rgb;
+  m_point_col.g += m_point_col.g;
+  gl_FragColor.rgb = m_point_col;
 #endif
 }
 `

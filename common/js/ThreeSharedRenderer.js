@@ -60,15 +60,25 @@ ThreeSharedRenderer.prototype.ziggle_cam = function(){
     _n_center.multiplyScalar(.3);
     
     this.matrix.position.copy(_n_loc);
-    this.matrix.lookAt( _n_center, new THREE.Vector3(0., 1., 0.) );        
+    this.matrix.lookAt( _n_center, new THREE.Vector3(0., 1., 0.) );  
+
+    this.matrix.updateProjectionMatrix();    
+};
+
+ThreeSharedRenderer.prototype.get_inversed_matrix = function(){
+    return this.matrix.matrixWorldInverse;
 };
 
 ThreeSharedRenderer.prototype.get_timer = function(){
     return this.timer;
 };
 
-ThreeSharedRenderer.prototype.get_matrix = function(){
+ThreeSharedRenderer.prototype.get_camera = function(){
     return this.matrix;
+};
+
+ThreeSharedRenderer.prototype.get_matrix = function(){
+    return this.matrix.matrix;
 };
 
 ThreeSharedRenderer.prototype.append_renderer_to_dom = function(_target){

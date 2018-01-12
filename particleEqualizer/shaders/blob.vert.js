@@ -7,6 +7,35 @@ uniform bool u_is_init;
 
 varying float v_noise;
 
+
+
+
+#if defined(IS_PBR) && defined(HAS_CUBEMAP)
+	uniform mat4 u_view_matrix_inverse;
+	
+	varying vec3 v_world_normal;
+	varying vec3 v_eye_pos;
+	varying vec3 v_pos;
+	varying vec3 v_normal;
+	varying vec3 v_world_pos;
+	varying vec2 v_uv;
+#endif
+
+
+
+#if defined(HAS_SHADOW)
+	uniform mat4 u_shadow_matrix;
+	varying vec4 v_shadow_coord;
+
+	const mat4 biasMat  = mat4(	0.5, 0.0, 0.0, 0.0,
+							0.0, 0.5, 0.0, 0.0,
+							0.0, 0.0, 0.5, 0.0,
+							0.5, 0.5, 0.5, 1.0 );
+#endif
+
+
+
+
 float cal_noise(vec3 _uv, float _res){
 	// original code from 
 	// https://www.shadertoy.com/user/Trisomie21
@@ -48,16 +77,38 @@ void main(){
     	);
     }
     m_fbm /= float(m_noise_oct);
-    
+
     // get color 
     float m_noise_col = pow(1.-m_fbm, 3.5);
     v_noise = m_noise_col;                
     
     vec3 m_pos = position + normal * m_fbm * m_noise_scale;
 
+
+
+
 #if defined(IS_WIRE) || defined(IS_POINTS)
-	gl_PointSize = 5000. * pow(m_fbm, 8.);
+	gl_PointSize = 1000. * pow(m_fbm, 8.);
 	m_pos += pow(m_fbm, 8.) * normal * 8.;
+#endif
+
+
+
+#if defined(IS_PBR) && defined(HAS_CUBEMAP)
+	vec4 _world_pos	= modelMatrix * vec4(m_pos, 1.);
+    vec4 _view_pos	= viewMatrix * _world_pos;
+
+    v_pos = _view_pos.xyz;
+	v_normal = normalMatrix * normal;
+	v_world_pos = _world_pos.xyz;
+	v_world_normal = vec3(u_view_matrix_inverse * vec4(v_normal, 0.));
+	v_eye_pos = -1. * vec3(u_view_matrix_inverse * (_view_pos - vec4(0.,0.,0.,1.)) );
+	v_uv = uv;
+	
+#endif
+
+#if defined(HAS_SHADOW)
+	v_shadow_coord = (biasMat * u_shadow_matrix * modelMatrix) * vec4(m_pos, 1.);
 #endif
 
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(m_pos, 1.);

@@ -1,9 +1,10 @@
-var NoiseBlob = function(_renderer, _mouse_handler, _m_analyzer){ 
+var NoiseBlob = function(_renderer, _mouse_handler, _analyzer, _light){ 
     this.is_init = false;
 
     this.renderer = _renderer;
     this.mouse_handler = _mouse_handler;
-    this.audio_analyzer = _m_analyzer;
+    this.audio_analyzer = _analyzer;
+    this.light = _light;
 
     this.w = _renderer.w;
     this.h = _renderer.h;
@@ -28,8 +29,10 @@ NoiseBlob.prototype.update = function(){
         _shdrs[i].uniforms.u_t.value = this.timer;
     }
 
-    var _matrix = this.renderer.get_matrix();
-    this.renderer.renderer.render( this.scene, _matrix );
+    this.update_shadow_map();
+
+    var _cam = this.renderer.get_camera();
+    this.renderer.renderer.render( this.scene, _cam );
 
     if(!this.is_init){ 
         this.is_init = true;
@@ -38,6 +41,22 @@ NoiseBlob.prototype.update = function(){
     }
 
     this.timer = this.renderer.get_timer();
+};
+
+NoiseBlob.prototype.update_shadow_map = function(){
+    var _shadow_cam = this.light.get_light();
+    var _shdow_fbo = this.light.get_shadow_frame_buffer();
+    
+    this.renderer.renderer.render(this.shadow_scene, _shadow_cam, _shdow_fbo);
+
+    this.shdr_mesh.uniforms.u_shadow_map.value = this.light.get_shadow_map();
+    this.shdr_mesh.uniforms.u_light_pos = {value: this.light.get_light_pos()};
+    var _shadow_matrix = new THREE.Matrix4();
+    _shadow_matrix.multiplyMatrices ( 
+        this.light.get_light().projectionMatrix, 
+        this.light.get_light().matrixWorld );
+        ;
+    this.shdr_mesh.uniforms.u_shadow_matrix.value = _shadow_matrix;
 };
 
 NoiseBlob.prototype.init_shader = function(){
@@ -63,18 +82,32 @@ NoiseBlob.prototype.init_shader = function(){
     this.shdr_mesh = load(blob_vert, blob_frag);
     this.shdr_wire = load(blob_vert, blob_frag);
     this.shdr_points =load(blob_vert, blob_frag);
+    this.shdr_shadow = load(blob_vert, blob_frag);
 
     this.shdr_mesh.defines.IS_MESH = 'true';
+    this.shdr_mesh.defines.HAS_SHADOW = 'true';
     this.shdr_wire.defines.IS_WIRE = 'true';
     this.shdr_points.defines.IS_POINTS = 'true';
+    this.shdr_shadow.defines.IS_SHADOW = 'true';
 
+    this.shdr_mesh.uniforms.u_shadow_map = {value: this.light.get_shadow_map()};
+    this.shdr_mesh.uniforms.u_light_pos = {value: this.light.get_light_pos()};
+    var _shadow_matrix = new THREE.Matrix4();
+    _shadow_matrix.multiplyMatrices ( 
+        this.light.get_light().projectionMatrix, 
+        this.light.get_light().matrixWorld );
+    this.shdr_mesh.uniforms.u_shadow_matrix = {value: _shadow_matrix};
     this.shdr_points.uniforms.tex_sprite = {value: this.tex_sprite};
     
     this.shdr_points.blending = THREE.AdditiveBlending;
     this.shdr_wire.blending = THREE.AdditiveBlending;
     
+    this.shdr_mesh.transparent = true;
     this.shdr_wire.transparent = true;
     this.shdr_points.transparent = true;
+
+    this.shdr_wire.depthTest = false;
+    this.shdr_points.depthTest = false;
 };
 
 NoiseBlob.prototype.init_texture = function(){
@@ -91,14 +124,18 @@ NoiseBlob.prototype.init_scene = function(){
     var _geom_lowres = new THREE.SphereBufferGeometry(_sphere_size, 64, 64);
 
     this.scene = new THREE.Scene();
+    this.shadow_scene = new THREE.Scene();
 
     var _mesh = new THREE.Mesh(_geom, this.shdr_mesh);
     var _wire = new THREE.Line(_geom_lowres, this.shdr_wire);
     var _points = new THREE.Points(_geom_lowres, this.shdr_points);
+    var _shadow_mesh = new THREE.Mesh(_geom, this.shdr_shadow);
     
     this.scene.add(_mesh);
     this.scene.add(_wire);
-    this.scene.add(_points);   
+    this.scene.add(_points);  
+
+    this.shadow_scene.add(_shadow_mesh);
 };
 
 NoiseBlob.prototype.set_retina = function(){
@@ -110,6 +147,10 @@ NoiseBlob.prototype.set_cubemap = function(_cube){
     this.cubemap = _cube;
     this.shdr_mesh.uniforms.cubemap = {value: this.cubemap.get_cubemap()};
     this.shdr_mesh.defines.HAS_CUBEMAP = 'true';
+
+    this.scene.background = this.cubemap;
+    //var ambient = new THREE.AmbientLight( 0xffffff );
+    //this.scene.add( ambient );
 };
 
 NoiseBlob.prototype.set_PBR = function(_pbr){
@@ -126,5 +167,11 @@ NoiseBlob.prototype.set_PBR = function(_pbr){
     this.shdr_mesh.uniforms.u_exposure = {value: this.pbr.get_exposure()};
     this.shdr_mesh.uniforms.u_gamma = {value: this.pbr.get_gamma()};
 
+    this.shdr_mesh.uniforms.u_view_matrix_inverse = {value: this.renderer.get_inversed_matrix()};
+
     this.shdr_mesh.defines.IS_PBR = 'true';
+};
+
+NoiseBlob.prototype.update_PBR = function(){
+    this.shdr_mesh.uniforms.u_view_matrix_inverse.value = this.renderer.get_inversed_matrix();
 };

@@ -18,10 +18,10 @@ var ThreePBR = function(){
     this.metallic_map.minFilter = THREE.LinearFilter;
 
 	this.normal = 1.;
-	this.roughness = 0.;
+	this.roughness = .0;
 	this.metallic = 1.;
 
-	this.exposure = 4.;
+	this.exposure = 2.;
 	this.gamma = 2.2;
 };
 
