@@ -55,6 +55,11 @@ void main(){
     
     vec3 m_pos = position + normal * m_fbm * m_noise_scale;
 
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(m_pos, 1.);
+#if defined(IS_WIRE) || defined(IS_POINTS)
+	gl_PointSize = 5000. * pow(m_fbm, 8.);
+	m_pos += pow(m_fbm, 8.) * normal * 8.;
+#endif
+
+	gl_Position = projectionMatrix * modelViewMatrix * vec4(m_pos, 1.);
 }
 `

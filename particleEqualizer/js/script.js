@@ -3,6 +3,8 @@ var m_renderer;
 var m_mouse;
 var m_render_queue;
 var m_blob;
+var m_cubemap;
+var m_pbr;
 
 var init = function(){
     // init audio input analyzer
@@ -16,8 +18,15 @@ var init = function(){
     m_renderer = new ThreeSharedRenderer(_is_perspective);
     m_renderer.append_renderer_to_dom(document.body);
 
+    // init cubemap
+    m_cubemap = new ThreeCubeMap();
+    // init pbr
+    m_pbr = new ThreePBR();
+
     // init blob
     m_blob = new NoiseBlob(m_renderer, m_mouse, m_analyzer);
+    m_blob.set_cubemap(m_cubemap);
+    m_blob.set_PBR(m_pbr);
     
     // setup render queue
     m_render_queue = [
@@ -34,6 +43,7 @@ var update = function(){
     m_analyzer.debug(document.getElementsByTagName("canvas")[0]);
 
     // update renderer
+    m_renderer.ziggle_cam();
     m_renderer.render(m_render_queue);
 };
 

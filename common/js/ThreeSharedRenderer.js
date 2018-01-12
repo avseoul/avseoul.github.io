@@ -38,15 +38,37 @@ ThreeSharedRenderer.prototype.render = function(_queue){
     	_queue[i]();
     }
 
-    this.timer+= .001;
+    this.timer += .001;
 
     if(this.timer > 999999.){
         this.timer = 0.;
     }
 };
 
+ThreeSharedRenderer.prototype.ziggle_cam = function(){
+    var _e = this.timer*10.;
+    var _n_loc = new THREE.Vector3(
+        Math.sin(_e),
+        Math.cos(_e)*Math.sin(_e),
+        Math.cos(_e)).normalize();
+    _n_loc.multiplyScalar( 5. + 2. * Math.sin(2.*_e) );
+
+    var _n_center = new THREE.Vector3(
+        Math.sin(.5*_e),
+        0.,
+        Math.cos(.5*_e)).normalize();
+    _n_center.multiplyScalar(.3);
+    
+    this.matrix.position.copy(_n_loc);
+    this.matrix.lookAt( _n_center, new THREE.Vector3(0., 1., 0.) );        
+};
+
 ThreeSharedRenderer.prototype.get_timer = function(){
     return this.timer;
+};
+
+ThreeSharedRenderer.prototype.get_matrix = function(){
+    return this.matrix;
 };
 
 ThreeSharedRenderer.prototype.append_renderer_to_dom = function(_target){
