@@ -112,15 +112,8 @@ varying float v_noise;
 
 
 void main(){
-#if defined(IS_SHADOW)
-  gl_FragColor = vec4(0., 0., 0., 1.);
-
-  return;
-#endif
-
-
-	float m_noise = v_noise;
-	float m_noise_inv = 1.-v_noise;
+  float m_noise = v_noise;
+  float m_noise_inv = 1.-v_noise;
 
   vec3 m_diffuse = vec3(0.);
   m_diffuse.r += m_noise_inv + m_noise;
@@ -132,6 +125,11 @@ void main(){
   vec3 m_col = m_diffuse;
 
 
+#if defined(IS_SHADOW)
+  gl_FragColor = vec4(m_col, 1.);
+
+  return;
+#endif
 
 
 #if defined(IS_PBR) && defined(HAS_CUBEMAP)
@@ -200,7 +198,7 @@ void main(){
   // cal shadow 
   float m_shadow = 1.;
   vec4 m_shadow_coord = v_shadow_coord;
-  m_shadow_coord.z += .0003; // <- bias
+  // m_shadow_coord.z += .0003; // <- bias
 
   m_shadow = sample_shadow(m_shadow_coord);
   m_col *= (m_shadow + m_col*.2 + m_diffuse*.5);
@@ -221,9 +219,12 @@ void main(){
 
 
 
-#if defined(IS_WIRE)
-  m_col.b -= m_col.b;
-  m_col *= .2 * m_noise;
+#if defined(IS_WIRE) || defined(IS_POINTS)
+  m_col.b -= m_col.g;
+  // inner ziggle
+  m_col *= .4 * pow(m_noise, 6.);
+  // outter ziggle
+  m_col += .2 * pow(m_noise_inv, 4.);
 #endif 
 
 

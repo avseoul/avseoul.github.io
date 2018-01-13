@@ -60,10 +60,12 @@ var update = function(){
     m_blob.update_PBR();
 
     // update light
-    m_light.ziggle( m_renderer.timer );
+    if(m_ctrl.params.light_ziggle) 
+        m_light.ziggle( m_renderer.timer );
 
     // update renderer
-    m_renderer.ziggle_cam();
+    if(m_ctrl.params.cam_ziggle) 
+        m_renderer.ziggle_cam();
     m_renderer.render(m_render_queue);
 };
 

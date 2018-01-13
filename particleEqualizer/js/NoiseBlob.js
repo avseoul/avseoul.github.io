@@ -20,13 +20,18 @@ NoiseBlob.prototype.update = function(){
     this.mouse_delta_x = this.mouse_handler.get_delta_x();
     this.mouse_delta_y = this.mouse_handler.get_delta_y();
 
-    var _shdrs = [this.shdr_mesh, this.shdr_wire, this.shdr_points];
+    var _shdrs = [this.shdr_mesh, this.shdr_wire, this.shdr_points, this.shdr_shadow];
     var _shdrs_size = _shdrs.length;
     for(var i = 0; i < _shdrs_size; i++){
         _shdrs[i].uniforms.u_mouse.value = new THREE.Vector2(this.mouse_norm_x, this.mouse_norm_y);
         _shdrs[i].uniforms.u_mouse_delta = new THREE.Vector2(this.mouse_delta_x, this.mouse_delta_y);
         _shdrs[i].uniforms.u_is_init.value = this.is_init;
         _shdrs[i].uniforms.u_t.value = this.timer;
+        
+        _shdrs[i].uniforms.u_audio_high.value = this.audio_analyzer.get_high();
+        _shdrs[i].uniforms.u_audio_mid.value = this.audio_analyzer.get_mid();
+        _shdrs[i].uniforms.u_audio_bass.value = this.audio_analyzer.get_bass();
+        _shdrs[i].uniforms.u_audio_level.value = this.audio_analyzer.get_level();
     }
 
     this.update_shadow_map();
@@ -47,18 +52,20 @@ NoiseBlob.prototype.update_shadow_map = function(){
     var _shadow_cam = this.light.get_light();
     var _shdow_fbo = this.light.get_shadow_frame_buffer();
 
+    this.renderer.renderer.render(this.shadow_scene, _shadow_cam, _shdow_fbo);
+
     var _light_pos = this.light.get_light_pos();
     _light_pos.applyMatrix4(this.renderer.matrix.modelViewMatrix);
+    
     var _shadow_matrix = new THREE.Matrix4();
+    _shadow_matrix.identity();
     _shadow_matrix.multiplyMatrices ( 
         this.light.get_light().projectionMatrix, 
         this.light.get_light().modelViewMatrix );
-        ;
-    this.shdr_mesh.uniforms.u_light_pos = {value: _light_pos};
+
+    this.shdr_mesh.uniforms.u_light_pos.value = _light_pos;
     this.shdr_mesh.uniforms.u_shadow_matrix.value = _shadow_matrix;
     this.shdr_mesh.uniforms.u_shadow_map.value = this.light.get_shadow_map();
-
-    this.renderer.renderer.render(this.shadow_scene, _shadow_cam, _shdow_fbo);
 };
 
 NoiseBlob.prototype.init_shader = function(){
@@ -74,7 +81,11 @@ NoiseBlob.prototype.init_shader = function(){
                 u_mouse: {value: new THREE.Vector2(this.mouse_norm_x, this.mouse_norm_y)},
                 u_mouse_delta: {value: new THREE.Vector2(this.mouse_delta_x, this.mouse_delta_y)},
                 u_t: {value: 0},
-                u_is_init: {value: false}
+                u_is_init: {value: false},
+                u_audio_high: {value: 0.},
+                u_audio_mid: {value: 0.},
+                u_audio_bass: {value: 0.},
+                u_audio_level: {value: 0.},
             },
             vertexShader:   _vert,
             fragmentShader: _frag
@@ -94,20 +105,22 @@ NoiseBlob.prototype.init_shader = function(){
 
     var _light_pos = this.light.get_light_pos();
     _light_pos.applyMatrix4(this.renderer.matrix.modelViewMatrix);
+    
     var _shadow_matrix = new THREE.Matrix4();
+    _shadow_matrix.identity();
     _shadow_matrix.multiplyMatrices ( 
         this.light.get_light().projectionMatrix, 
         this.light.get_light().modelViewMatrix );
+
     this.shdr_mesh.uniforms.u_light_pos = {value: _light_pos};
     this.shdr_mesh.uniforms.u_shadow_matrix = {value: _shadow_matrix};
     this.shdr_mesh.uniforms.u_shadow_map = {value: this.light.get_shadow_map()};
-    this.shdr_mesh.uniforms.u_debug_shadow = {valuse: false};
+    this.shdr_mesh.uniforms.u_debug_shadow = {value: false};
     this.shdr_points.uniforms.tex_sprite = {value: this.tex_sprite};
     
     this.shdr_points.blending = THREE.AdditiveBlending;
     this.shdr_wire.blending = THREE.AdditiveBlending;
     
-    this.shdr_mesh.transparent = true;
     this.shdr_wire.transparent = true;
     this.shdr_points.transparent = true;
 
@@ -138,7 +151,7 @@ NoiseBlob.prototype.init_scene = function(){
     
     this.scene.add(_mesh);
     this.scene.add(_wire);
-    this.scene.add(_points);  
+    this.scene.add(_points);
 
     this.shadow_scene.add(_shadow_mesh);
 };
@@ -178,9 +191,16 @@ NoiseBlob.prototype.set_PBR = function(_pbr){
 };
 
 NoiseBlob.prototype.update_PBR = function(){
+    this.shdr_mesh.uniforms.u_normal.value = this.pbr.get_normal();
+    this.shdr_mesh.uniforms.u_roughness.value = this.pbr.get_roughness();
+    this.shdr_mesh.uniforms.u_metallic.value = this.pbr.get_metallic();
+    
+    this.shdr_mesh.uniforms.u_exposure.value = this.pbr.get_exposure();
+    this.shdr_mesh.uniforms.u_gamma.value = this.pbr.get_gamma();
+
     this.shdr_mesh.uniforms.u_view_matrix_inverse.value = this.renderer.get_inversed_matrix();
 };
 
 NoiseBlob.prototype.debug_shadow_map = function(_show){
-    this.shdr_mesh.uniforms.u_debug_shadow.values = _show;
+    this.shdr_mesh.uniforms.u_debug_shadow.value = _show;
 };

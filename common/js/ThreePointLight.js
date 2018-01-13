@@ -2,26 +2,20 @@ var ThreePointLight = function(){
 	this.shadow_buffer = new THREE.WebGLRenderTarget( 2048., 2048. );
 	this.shadow_buffer.depthBuffer = true;
 	this.shadow_buffer.depthTexture = new THREE.DepthTexture();
-	// this.shadow_buffer.depthTexture.type = THREE.UnsignedShortType;
     
 	var _ratio = this.shadow_buffer.width / this.shadow_buffer.height;
-	this.light = new THREE.PerspectiveCamera( 35, _ratio, .1, 100 );
+	this.light = new THREE.PerspectiveCamera( 35., _ratio, .1, 1000. );
 
-	this.light.position = new THREE.Vector3(35., 35., 35.);
+	this.light.position = new THREE.Vector3(3., 3., 3.);
 	this.light.lookAt = new THREE.Vector3(0., 0., 0.);
-
-	this.params = {
-		pos: this.light.position,
-		lookat: this.light.lookAt
-	}
 };
 
 ThreePointLight.prototype.ziggle = function(_timer){
 	var _e = _timer*10.;
     var _n_loc = new THREE.Vector3(
-        40. * Math.sin(_e),
+        this.light.position.x * Math.sin(_e),
         this.light.position.y,
-        40. * Math.cos(_e));
+        this.light.position.z * Math.cos(_e))
     
     this.light.position.copy(_n_loc);
     this.light.lookAt = new THREE.Vector3(0.,0.,0.);  
