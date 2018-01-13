@@ -18,6 +18,8 @@ ThreeSharedRenderer.prototype.init_renderer = function(){
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( this.w, this.h );
     this.renderer.autoClear = false;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.BasicShadowMap;
 
     if (!this.renderer.extensions.get("OES_texture_float")) {
         return "No OES_texture_float support for float textures.";
@@ -46,12 +48,12 @@ ThreeSharedRenderer.prototype.render = function(_queue){
 };
 
 ThreeSharedRenderer.prototype.ziggle_cam = function(){
-    var _e = this.timer*10.;
+    var _e = this.timer*2.;
     var _n_loc = new THREE.Vector3(
         Math.sin(_e),
         Math.cos(_e)*Math.sin(_e),
         Math.cos(_e)).normalize();
-    _n_loc.multiplyScalar( 5. + 2. * Math.sin(2.*_e) );
+    _n_loc.multiplyScalar( 5. + 1. * Math.sin(2.*_e) );
 
     var _n_center = new THREE.Vector3(
         Math.sin(.5*_e),

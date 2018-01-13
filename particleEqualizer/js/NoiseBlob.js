@@ -46,17 +46,19 @@ NoiseBlob.prototype.update = function(){
 NoiseBlob.prototype.update_shadow_map = function(){
     var _shadow_cam = this.light.get_light();
     var _shdow_fbo = this.light.get_shadow_frame_buffer();
-    
-    this.renderer.renderer.render(this.shadow_scene, _shadow_cam, _shdow_fbo);
 
-    this.shdr_mesh.uniforms.u_shadow_map.value = this.light.get_shadow_map();
-    this.shdr_mesh.uniforms.u_light_pos = {value: this.light.get_light_pos()};
+    var _light_pos = this.light.get_light_pos();
+    _light_pos.applyMatrix4(this.renderer.matrix.modelViewMatrix);
     var _shadow_matrix = new THREE.Matrix4();
     _shadow_matrix.multiplyMatrices ( 
         this.light.get_light().projectionMatrix, 
-        this.light.get_light().matrixWorld );
+        this.light.get_light().modelViewMatrix );
         ;
+    this.shdr_mesh.uniforms.u_light_pos = {value: _light_pos};
     this.shdr_mesh.uniforms.u_shadow_matrix.value = _shadow_matrix;
+    this.shdr_mesh.uniforms.u_shadow_map.value = this.light.get_shadow_map();
+
+    this.renderer.renderer.render(this.shadow_scene, _shadow_cam, _shdow_fbo);
 };
 
 NoiseBlob.prototype.init_shader = function(){
@@ -90,13 +92,16 @@ NoiseBlob.prototype.init_shader = function(){
     this.shdr_points.defines.IS_POINTS = 'true';
     this.shdr_shadow.defines.IS_SHADOW = 'true';
 
-    this.shdr_mesh.uniforms.u_shadow_map = {value: this.light.get_shadow_map()};
-    this.shdr_mesh.uniforms.u_light_pos = {value: this.light.get_light_pos()};
+    var _light_pos = this.light.get_light_pos();
+    _light_pos.applyMatrix4(this.renderer.matrix.modelViewMatrix);
     var _shadow_matrix = new THREE.Matrix4();
     _shadow_matrix.multiplyMatrices ( 
         this.light.get_light().projectionMatrix, 
-        this.light.get_light().matrixWorld );
+        this.light.get_light().modelViewMatrix );
+    this.shdr_mesh.uniforms.u_light_pos = {value: _light_pos};
     this.shdr_mesh.uniforms.u_shadow_matrix = {value: _shadow_matrix};
+    this.shdr_mesh.uniforms.u_shadow_map = {value: this.light.get_shadow_map()};
+    this.shdr_mesh.uniforms.u_debug_shadow = {valuse: false};
     this.shdr_points.uniforms.tex_sprite = {value: this.tex_sprite};
     
     this.shdr_points.blending = THREE.AdditiveBlending;
@@ -111,7 +116,7 @@ NoiseBlob.prototype.init_shader = function(){
 };
 
 NoiseBlob.prototype.init_texture = function(){
-    this.tex_sprite = new THREE.TextureLoader().load( "../common/assets/sprite_additive.png" );
+    this.tex_sprite = new THREE.TextureLoader().load( "../common/assets/sprite_additive_rect.png" );
     this.tex_sprite.wrapS = THREE.ClampToEdgeWrapping;
     this.tex_sprite.wrapT = THREE.ClampToEdgeWrapping;
     this.tex_sprite.magFilter = THREE.LinearFilter;
@@ -143,14 +148,14 @@ NoiseBlob.prototype.set_retina = function(){
     this.h *= .5;
 };
 
+NoiseBlob.prototype.set_hdr_bg = function(_show){
+    this.scene.background = _show ? this.cubemap.get_cubemap() : new THREE.Vector3(0., 0., 0.);
+};
+
 NoiseBlob.prototype.set_cubemap = function(_cube){
     this.cubemap = _cube;
     this.shdr_mesh.uniforms.cubemap = {value: this.cubemap.get_cubemap()};
     this.shdr_mesh.defines.HAS_CUBEMAP = 'true';
-
-    this.scene.background = this.cubemap;
-    //var ambient = new THREE.AmbientLight( 0xffffff );
-    //this.scene.add( ambient );
 };
 
 NoiseBlob.prototype.set_PBR = function(_pbr){
@@ -174,4 +179,8 @@ NoiseBlob.prototype.set_PBR = function(_pbr){
 
 NoiseBlob.prototype.update_PBR = function(){
     this.shdr_mesh.uniforms.u_view_matrix_inverse.value = this.renderer.get_inversed_matrix();
+};
+
+NoiseBlob.prototype.debug_shadow_map = function(_show){
+    this.shdr_mesh.uniforms.u_debug_shadow.values = _show;
 };

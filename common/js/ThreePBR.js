@@ -19,7 +19,7 @@ var ThreePBR = function(){
 
 	this.normal = 1.;
 	this.roughness = .0;
-	this.metallic = 1.;
+	this.metallic = .0;
 
 	this.exposure = 2.;
 	this.gamma = 2.2;

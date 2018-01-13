@@ -84,11 +84,13 @@ varying float v_noise;
 
 #if defined(HAS_SHADOW)
   uniform sampler2D u_shadow_map;
+  uniform vec3 u_light_pos;
+  uniform bool u_debug_shadow;
   varying vec4 v_shadow_coord;
 
   float sample_shadow( vec4 sc )
   {
-    float s = 1./2048.;
+    float s = 1./1024.;
 
     vec2 unproj2D = vec2 (sc.s / sc.q,
                           sc.t / sc.q);
@@ -103,6 +105,7 @@ varying float v_noise;
     shadow += texture2D( u_shadow_map, unproj2D + vec2( s,-s) ).r;
     shadow += texture2D( u_shadow_map, unproj2D + vec2( s, 0.) ).r;
     shadow += texture2D( u_shadow_map, unproj2D + vec2( s, s) ).r;
+    
     return shadow/9.0;;
   }
 #endif
@@ -136,20 +139,21 @@ void main(){
   N = blendNormals( N, texture2D( tex_normal, v_uv ).xyz );
 
   vec3 V = normalize( v_eye_pos );
-  //vec3 V = normalize( -v_world_pos.xyz );
 
+#if defined(HAS_SHADOW)
   // Light direction
-  //vec3  L = normalize( uLightPos - vPosition.xyz );
+  vec3  L = normalize( u_light_pos - v_pos.xyz );
   // Surface reflection vector
-  //vec3  R = normalize( -reflect( L, N ) );
+  vec3  R = normalize( -reflect( L, N ) );
+#endif
   
   // sample the roughness and metallic textures
   float roughnessMask = texture2D( tex_roughness, v_uv ).r;
   float metallicMask  = texture2D( tex_metallic, v_uv ).r;
   
   // deduce the diffuse and specular color from the baseColor and how metallic the material is
-  vec3 m_specular_col = vec3(1.);
-  vec3 m_diffuse_col = vec3(0.3);
+  vec3 m_specular_col = m_diffuse * 4.;
+  vec3 m_diffuse_col = m_diffuse;
   vec3 diffuseColor = m_diffuse_col - m_diffuse_col * u_metallic * metallicMask;
   vec3 specularColor  = mix( vec3( 0.08 * m_specular_col ), m_diffuse_col, u_metallic * metallicMask );
   
@@ -169,10 +173,31 @@ void main(){
   vec3 specular = radiance * reflectance;
   m_col = diffuse + specular;
 
-  // add noise diffuse
-  m_col += pow(m_diffuse, vec3(10.))*3.;
-
 #if defined(HAS_SHADOW)
+  // from light source
+  vec3 m_light_diffuse_color = m_diffuse;
+  vec3 m_light_specular_color = m_diffuse * 4.;
+  float m_light_diffuse_intensity = 5.;
+  float m_light_specular_intensity = 4.;
+  float m_light_diffuse_pow = 14.;
+  float m_light_specular_pow = 15.;
+  
+  // Diffuse factor
+  float NdotL = max( dot( N, L ), 0.0 );
+  vec3  D = vec3( NdotL );
+  D = pow(D, vec3(m_light_diffuse_pow));
+  
+  D *= m_light_diffuse_color * m_light_diffuse_intensity;
+  
+  // Specular factor
+  vec3  S = pow( max( dot( R, V ), 0.0 ), 50.0 ) * vec3(1.);
+  S = pow(S, vec3(m_light_specular_pow));
+  
+  S *= m_light_specular_color * m_light_specular_intensity;
+
+  m_col += (D + S);
+
+  // cal shadow 
   float m_shadow = 1.;
   vec4 m_shadow_coord = v_shadow_coord;
   m_shadow_coord.z += .0003; // <- bias
@@ -180,6 +205,9 @@ void main(){
   m_shadow = sample_shadow(m_shadow_coord);
   m_col *= (m_shadow + m_col*.2 + m_diffuse*.5);
 #endif
+
+  // add noise diffuse
+  m_col += pow(m_diffuse, vec3(10.))*3.;
   
   // apply the tone-mapping
   m_col       = Uncharted2Tonemap( m_col * u_exposure );
@@ -202,9 +230,11 @@ void main(){
   
 
   gl_FragColor = vec4(m_col, 1.);
-  #if defined(HAS_SHADOW)
-  gl_FragColor = vec4(vec3(pow(m_shadow, 4.)), 1.);
-  #endif
+  
+#if defined(HAS_SHADOW)
+  if(u_debug_shadow)
+    gl_FragColor = vec4(vec3(m_shadow), 1.);
+#endif
 
 
 
