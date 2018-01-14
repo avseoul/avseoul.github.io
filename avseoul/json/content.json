@@ -401,7 +401,7 @@
             "github":"",
             "content":{
                 "is":"realtime",
-                "url":"https://avseoul.github.io/particleEqualizer/",
+                "url":"https://avseoul.net/particleEqualizer/",
                 "size":{"w":"920","h":"620"}
             },
             "category":"selected_works, creative_coding, show_all"
@@ -483,7 +483,7 @@
             "description":"Javascript, HTML, CSS, P5.JS, TONE.JS/Interactive AudioVisual Content/Interactive Music @ITP",
             "date":"Mar,2015",
             "info":[
-                {"is":"text","p":"<a href='https://avseoul.github.io/RainyTypewriter/public/index.html' target='_blank'>https://avseoul.github.io/RainyTypewriter/public/index.html</a>"}
+                {"is":"text","p":"<a href='https://avseoul.net/RainyTypewriter/public/index.html' target='_blank'>https://avseoul.net/RainyTypewriter/public/index.html</a>"}
             ],
             "process":[
                 {"is":"text","p":"to be updated"}
@@ -494,7 +494,7 @@
             "github":"https://github.com/avseoul/avseoul.github.io/blob/master/RainyTypewriter/public/index.html",
             "content":{
                 "is":"realtime",
-                "url":"https://avseoul.github.io/RainyTypewriter/public/index.html",
+                "url":"https://avseoul.net/RainyTypewriter/public/index.html",
                 "size":{"w":"920","h":"920"}
             },
             "category":"creative_coding, show_all"
