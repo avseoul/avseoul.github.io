@@ -72,7 +72,7 @@ var update = function(){
 
 var redirect = function(){
     if(window.location.protocol == 'http:')
-        window.open('https://avseoul.net/particleEqualizer/');
+        window.open('https://avseoul.net/particleEqualizer/','_top');
 };
 
 
