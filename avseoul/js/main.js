@@ -11,8 +11,9 @@ var set_location = function(_id){
 }
 
 var render_rainbow = function(){
-	var _divs = [].slice.call(document.querySelectorAll("div"));
-	console.log(_divs.length);
+	var _divs = [].slice.call(document.querySelectorAll("p"));
+	var _titles = [].slice.call(document.querySelectorAll("av_title"));
+
 	for(var i = 0; i < _divs.length; i++){
 		var r = Math.floor(Math.random() * 255);
 		var g = Math.floor(Math.random() * 255);
@@ -20,13 +21,74 @@ var render_rainbow = function(){
 		var color = 'rgb(' + r + ',' + g + ',' + b + ')';
 
 		_divs[i].style["background-color"] = color;
-		_divs[i].style["color"] = r > 100 ? "rgb(255,255,255)" : "rgb(0,0,0)";
-		console.log("avseoul->render crazy");
+
+		var _words = _divs[i].textContent.split(" ");
+		_divs[i].textContent = '';
+		for(var j = 0; j < _words.length; j++){
+			// console.log(_words[j]);
+			var _tag = document.createElement("rainbow");
+			var r = Math.floor(Math.random() * 255);
+			var g = Math.floor(Math.random() * 255);
+			var b = Math.floor(Math.random() * 255);
+			var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+			_tag.style['color'] = color;
+			
+			r = Math.floor(Math.random() * 255);
+			g = Math.floor(Math.random() * 255);
+			b = Math.floor(Math.random() * 255);
+			color = 'rgb(' + r + ',' + g + ',' + b + ')';
+			_tag.style['background-color'] = color;
+			
+			_tag.textContent = _words[j] + ' ';
+
+			_divs[i].appendChild(_tag);
+		}
+	}
+
+	for(var i = 0; i < _titles.length; i++){
+		var r = Math.floor(Math.random() * 255);
+		var g = Math.floor(Math.random() * 255);
+		var b = Math.floor(Math.random() * 255);
+		var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+
+		// _titles[i].style["background-color"] = color;
+
+		var _words = _titles[i].textContent.split(" ");
+		_titles[i].textContent = '';
+		for(var j = 0; j < _words.length; j++){
+			// console.log(_words[j]);
+			var _tag = document.createElement("rainbow");
+			var r = Math.floor(Math.random() * 255);
+			var g = Math.floor(Math.random() * 255);
+			var b = Math.floor(Math.random() * 255);
+			var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+			_tag.style['color'] = color;
+			
+			r = Math.floor(Math.random() * 255);
+			g = Math.floor(Math.random() * 255);
+			b = Math.floor(Math.random() * 255);
+			color = 'rgb(' + r + ',' + g + ',' + b + ')';
+			_tag.style['background-color'] = color;
+			
+			_tag.textContent = _words[j] + ' ';
+
+			_titles[i].appendChild(_tag);
+		}
 	}
 
 	var _rainbow_anim_divs = [].slice.call(document.querySelectorAll("a"));
-	for(var i = 0; i < _rainbow_anim_divs.length; i++)
+	for(var i = 0; i < _rainbow_anim_divs.length; i++){
 		_rainbow_anim_divs[i].className = "is_fucked";
+
+		var r = Math.floor(Math.random() * 255);
+		var g = Math.floor(Math.random() * 255);
+		var b = Math.floor(Math.random() * 255);
+		var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+
+		_rainbow_anim_divs[i].style['background-color'] = color;
+	}
+
+	console.log("avseoul->render crazy");
 }
 
 var get_hash = function(){
@@ -217,9 +279,9 @@ var init = function(){
 			'	<div class=\'ui_description_mask\'>'+
 			'		<div class=\"ui_subject\"><span onclick=\"open_content(\''+ i +'\')\"><av_title>'+ s['title'] +'</av_title></span></div>'+
 			'		<div class=\"ui_description\"><p>'+ s['description'] +'</p></div>'+
-			'		<div class=\"ui_url\"><p><a href=\'\'>www.avseoul.net/#'+s['id']+'</a></p></div>'+
+			'		<div class=\"ui_url\"><div><a href=\'\'>www.avseoul.net/#'+s['id']+'</a></div></div>'+
 			'		<div class=\'ui_date\'><p>'+ s['date'] +'</p></div>'+
-			'		<div class=\'ui_detail\'><a><p onclick=\"open_content(\''+ i +'\')\"><&#33;--details--></p></a></div>'+
+			'		<div class=\'ui_detail\'><a onclick=\"open_content(\''+ i +'\')\"><&#33;--details--></a></div>'+
 			'	</div>'+
 			'</div>';
 			$('#container').append(scriptNode);

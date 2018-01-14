@@ -1,6 +1,6 @@
 p {
-	font-family: Ubuntu;
-	font-size: 14px;
+	/*font-family: Ubuntu;*/
+	font-size: 12px;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 400;
@@ -17,14 +17,15 @@ div {
 
 
 body {
-	font-family: : Ubuntu;
-	font-size: 14px;
+	/*font-family: : Ubuntu;*/
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
 	font-style: normal;
 	font-variant: normal;
-	font-weight: 400;
+	/*font-weight: 400;*/
 	line-height: 20px;
 
-	background: #EEE;
+	/*background: #EEE;*/
 	margin: 0;
 	padding: 0;
 }
@@ -35,8 +36,8 @@ body::-webkit-scrollbar {
 
 av_title{
 	color: #000;
-	font-family: Ubuntu;
-	font-size: 16px;
+	/*font-family: Ubuntu;*/
+	font-size: 14px;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 600;
@@ -44,8 +45,8 @@ av_title{
 }
 credit{
 	color: #999;
-	font-family: Ubuntu;
-	font-size: 14px;
+	/*font-family: Ubuntu;*/
+	font-size: 12px;
 	font-style: italic;
 	font-variant: normal;
 	font-weight: 400;
@@ -71,12 +72,12 @@ credit{
 #logo{
 	/*margin-top: 20px;*/
 	/*margin-bottom: 20px;*/
-	background-color: #000;
+	/*background-color: #000;*/
 }
 #logo_img{
 	width: 50px;
-	-webkit-filter: brightness(100%);
-	filter: brightness(1000%);
+	/*-webkit-filter: brightness(100%);*/
+	/*filter: brightness(1000%);*/
 }
 #bio_title{
 	width: 300px;
@@ -138,7 +139,7 @@ credit{
 	margin: 0;
 	padding: 0;
 
-	background: #ddd;
+	/*background: #ddd;*/
 }
 .ui_subject{
 	background:#fff;
@@ -152,7 +153,7 @@ credit{
 }
 .ui_date{
 	width: fit-content;
-	background: #bfbfbf;
+	/*background: #bfbfbf;*/
 	color: #313131;
 }
 .ui_detail{
@@ -183,8 +184,8 @@ credit{
 }
 .content_title{
 	color: #000;
-	font-family: Ubuntu;
-	font-size: 14px;
+	/*font-family: Ubuntu;*/
+	/*font-size: 14px;*/
 	font-style: italic;
 	font-variant: normal;
 	font-weight: 600;
@@ -202,10 +203,16 @@ credit{
 
 @-webkit-keyframes example {
 	0%   {color:red;}
-	25%  {color:yellow;}
-	50%  {color:blue;}
-	75%  {color:green;}
-	100% {color:red;}
+	10%  {color:yellow;}
+	20%  {color:green;}
+	30%  {color:blue;}
+	40% {color:red;}
+	50%   {color:yellow;}
+	60%  {color:green;}
+	70%  {color:blue;}
+	80%  {color:red;}
+	90%  {color:yellow;}
+	100% {color:green;}
 }
 @keyframes example {
 	0%   {color:red;}
