@@ -100,7 +100,8 @@ var get_hash = function(){
 
 var open_content = function(_id){
 	// set mobile css
-	var content_width_offset = is_mobile() ? 0 : 300;
+	// var content_width_offset = is_mobile() ? 0 : 300;
+	var content_width_offset = 0;
 	var content_container_class = is_mobile() ? "content_container_mobile" : "content_container";
 	// reset the dom
 	var _dom = document.getElementsByClassName(content_container_class);
