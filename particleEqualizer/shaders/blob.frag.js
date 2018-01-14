@@ -1,6 +1,17 @@
 var blob_frag = 
 `
+
 varying float v_noise;
+
+uniform float u_audio_high;
+uniform float u_audio_mid;
+uniform float u_audio_bass;
+uniform float u_audio_level;
+uniform float u_audio_history;
+
+vec3 norm(in vec3 _v){
+  return length(_v) > .0 ? normalize(_v) : vec3(0.);
+}
 
 #if defined(IS_POINTS)
   uniform sampler2D tex_sprite;
@@ -20,6 +31,7 @@ varying float v_noise;
   uniform float u_gamma;
 
   varying vec3 v_world_normal;
+  varying vec3 v_object_pos;
   varying vec3 v_eye_pos;
   varying vec3 v_pos;
   varying vec3 v_normal;
@@ -74,7 +86,7 @@ varying float v_noise;
           vec3(n1.z, n1.y, -n1.x), // +90 degree rotation around y axis
           vec3(n1.x, n1.z, -n1.y), // -90 degree rotation around x axis
           vec3(n1.x, n1.y,  n1.z));
-      return normalize(n2.x*nBasis[0] + n2.y*nBasis[1] + n2.z*nBasis[2]);
+      return norm(n2.x*nBasis[0] + n2.y*nBasis[1] + n2.z*nBasis[2]);
   }
   vec3 blendNormals( vec3 n1, vec3 n2 )
   {
@@ -133,16 +145,21 @@ void main(){
 
 
 #if defined(IS_PBR) && defined(HAS_CUBEMAP)
-  vec3 N = normalize( v_world_normal );
+  vec3 N = norm( v_world_normal );
+
+  // blend with PBR's
   N = blendNormals( N, texture2D( tex_normal, v_uv ).xyz );
 
-  vec3 V = normalize( v_eye_pos );
+  vec3 V = norm( v_eye_pos );
+
+  // fresnel 
+  float m_fresnel = 1. + dot(norm(v_world_pos - v_eye_pos), v_world_normal);
 
 #if defined(HAS_SHADOW)
   // Light direction
-  vec3  L = normalize( u_light_pos - v_pos.xyz );
+  vec3  L = norm( u_light_pos - v_pos.xyz );
   // Surface reflection vector
-  vec3  R = normalize( -reflect( L, N ) );
+  vec3  R = norm( -reflect( L, N ) );
 #endif
   
   // sample the roughness and metallic textures
@@ -206,6 +223,9 @@ void main(){
 
   // add noise diffuse
   m_col += pow(m_diffuse, vec3(10.))*3.;
+
+  // fresnel
+   // m_col.r -= pow(m_fresnel, 3.) * 2.;
   
   // apply the tone-mapping
   m_col       = Uncharted2Tonemap( m_col * u_exposure );
@@ -221,14 +241,25 @@ void main(){
 
 #if defined(IS_WIRE) || defined(IS_POINTS)
   m_col.b -= m_col.g;
+  
   // inner ziggle
   m_col *= .4 * pow(m_noise, 6.);
+  
   // outter ziggle
-  m_col += .2 * pow(m_noise_inv, 4.);
+  m_col.rg += .2 * pow(m_noise_inv, 4.);
+  m_col.g *= .5;
+
+  // treble burn
+  m_col += pow(u_audio_high, 3.) * 2.;
+
+  // on&off
+  m_col *= u_audio_level;
+
 #endif 
 
-
-  
+  // color adjustment
+  m_col.b += m_noise * u_audio_high*.2;
+  m_col.r += m_noise * u_audio_bass*.2;
 
   gl_FragColor = vec4(m_col, 1.);
   

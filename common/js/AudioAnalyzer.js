@@ -39,6 +39,8 @@ AudioAnalyzer.prototype.init = function(_stream){
     this.mid = 0.;
     this.high = 0.;
     this.level = 0.;
+
+    this.reset_history();
     
     this.buffer_length = this.analyzer.frequencyBinCount;
     this.audio_buffer = new Uint8Array(this.buffer_length);
@@ -74,7 +76,13 @@ AudioAnalyzer.prototype.update = function(){
         this.high = this.high > _high ? this.high * .96 : _high;
 
         this.level = (this.bass + this.mid + this.high)/3.;
+
+        this.history += this.level * .01 + .005; 
     }
+};
+
+AudioAnalyzer.prototype.reset_history = function(){
+    this.history = 0.;
 };
 
 AudioAnalyzer.prototype.get_bass = function(){
@@ -91,6 +99,10 @@ AudioAnalyzer.prototype.get_high = function(){
 
 AudioAnalyzer.prototype.get_level = function(){
     return this.level;
+};
+
+AudioAnalyzer.prototype.get_history = function(){
+    return this.history;
 };
 
 AudioAnalyzer.prototype.debug = function(_canvas){

@@ -35,6 +35,8 @@ var Ctrl = function(_blob, _light, _pbr){
     _g_blob.add(this.pbr, 'gamma', 0., 10.);
 
     this.update_params();
+
+    dat.GUI.toggleHide();
 };
 
 Ctrl.prototype.update_params = function(){

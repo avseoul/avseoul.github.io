@@ -10,8 +10,8 @@ var ThreePointLight = function(){
 	this.light.lookAt = new THREE.Vector3(0., 0., 0.);
 };
 
-ThreePointLight.prototype.ziggle = function(_timer){
-	var _e = _timer*10.;
+ThreePointLight.prototype.ziggle = function(_frame){
+	var _e = _frame*10.;
     var _n_loc = new THREE.Vector3(
         this.light.position.x * Math.sin(_e),
         this.light.position.y,

@@ -47,19 +47,19 @@ ThreeSharedRenderer.prototype.render = function(_queue){
     }
 };
 
-ThreeSharedRenderer.prototype.ziggle_cam = function(){
-    var _e = this.timer*2.;
+ThreeSharedRenderer.prototype.ziggle_cam = function(_frame){
+    var _e = _frame;
     var _n_loc = new THREE.Vector3(
         Math.sin(_e),
-        Math.cos(_e)*Math.sin(_e),
+        Math.cos(_e*.9)*Math.sin(_e*.7),
         Math.cos(_e)).normalize();
     _n_loc.multiplyScalar( 5. + 1. * Math.sin(2.*_e) );
 
     var _n_center = new THREE.Vector3(
-        Math.sin(.5*_e),
+        Math.sin(.6*_e),
         0.,
-        Math.cos(.5*_e)).normalize();
-    _n_center.multiplyScalar(.3);
+        Math.cos(.4*_e)).normalize();
+    _n_center.multiplyScalar(.6);
     
     this.matrix.position.copy(_n_loc);
     this.matrix.lookAt( _n_center, new THREE.Vector3(0., 1., 0.) );  

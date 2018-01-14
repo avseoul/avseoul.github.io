@@ -32,12 +32,13 @@ NoiseBlob.prototype.update = function(){
         _shdrs[i].uniforms.u_audio_mid.value = this.audio_analyzer.get_mid();
         _shdrs[i].uniforms.u_audio_bass.value = this.audio_analyzer.get_bass();
         _shdrs[i].uniforms.u_audio_level.value = this.audio_analyzer.get_level();
+        _shdrs[i].uniforms.u_audio_history.value = this.audio_analyzer.get_history();
     }
 
     this.update_shadow_map();
 
     var _cam = this.renderer.get_camera();
-    this.renderer.renderer.render( this.scene, _cam );
+    this.renderer.renderer.render( this.scene, _cam);
 
     if(!this.is_init){ 
         this.is_init = true;
@@ -86,16 +87,20 @@ NoiseBlob.prototype.init_shader = function(){
                 u_audio_mid: {value: 0.},
                 u_audio_bass: {value: 0.},
                 u_audio_level: {value: 0.},
+                u_audio_history: {value: 0.}
             },
             vertexShader:   _vert,
             fragmentShader: _frag
         });
     };
 
+    // scene shdr
     this.shdr_mesh = load(blob_vert, blob_frag);
     this.shdr_wire = load(blob_vert, blob_frag);
     this.shdr_points =load(blob_vert, blob_frag);
     this.shdr_shadow = load(blob_vert, blob_frag);
+
+    this.shdr_mesh.extensions.derivatives = true;
 
     this.shdr_mesh.defines.IS_MESH = 'true';
     this.shdr_mesh.defines.HAS_SHADOW = 'true';
@@ -146,7 +151,7 @@ NoiseBlob.prototype.init_scene = function(){
 
     var _mesh = new THREE.Mesh(_geom, this.shdr_mesh);
     var _wire = new THREE.Line(_geom_lowres, this.shdr_wire);
-    var _points = new THREE.Points(_geom_lowres, this.shdr_points);
+    var _points = new THREE.Points(_geom, this.shdr_points);
     var _shadow_mesh = new THREE.Mesh(_geom, this.shdr_shadow);
     
     this.scene.add(_mesh);
