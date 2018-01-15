@@ -1,17 +1,17 @@
 var ThreePBR = function(){
-	this.normal_map = new THREE.TextureLoader().load( "../common/assets/normal.png" );
+	this.normal_map = new THREE.TextureLoader().load( "../common/assets/normal.jpg" );
     this.normal_map.wrapS = THREE.ClampToEdgeWrapping;
     this.normal_map.wrapT = THREE.ClampToEdgeWrapping;
     this.normal_map.magFilter = THREE.LinearFilter;
     this.normal_map.minFilter = THREE.LinearFilter;
 
-    this.roughness_map = new THREE.TextureLoader().load( "../common/assets/roughness.png" );
+    this.roughness_map = new THREE.TextureLoader().load( "../common/assets/roughness.jpg" );
     this.roughness_map.wrapS = THREE.ClampToEdgeWrapping;
     this.roughness_map.wrapT = THREE.ClampToEdgeWrapping;
     this.roughness_map.magFilter = THREE.LinearFilter;
     this.roughness_map.minFilter = THREE.LinearFilter;
 
-    this.metallic_map = new THREE.TextureLoader().load( "../common/assets/metallic.png" );
+    this.metallic_map = new THREE.TextureLoader().load( "../common/assets/metallic.jpg" );
     this.metallic_map.wrapS = THREE.ClampToEdgeWrapping;
     this.metallic_map.wrapT = THREE.ClampToEdgeWrapping;
     this.metallic_map.magFilter = THREE.LinearFilter;
