@@ -6,7 +6,8 @@ var Ctrl = function(_blob, _light, _pbr, _audio, _cube){
 		debug_shadow_map: false,
 		cam_ziggle: true,
 		light_ziggle: true,
-		toggle_bnw_hdr: false
+		toggle_bnw_hdr: false,
+		audio_gain: 70.
 	}
 	
 	// var _g_blob = new dat.GUI();
@@ -22,7 +23,8 @@ var Ctrl = function(_blob, _light, _pbr, _audio, _cube){
 
     _g_scene.add(this.params, 'cam_ziggle');
     // _g_scene.add(this.params, 'light_ziggle');
-    _g_scene.add(this.params, 'toggle_bnw_hdr').onFinishChange( this.update_params.bind(this) );;
+    _g_scene.add(this.params, 'toggle_bnw_hdr').onFinishChange( this.update_params.bind(this) );
+    _g_scene.add(this.params, 'audio_gain', 0., 200.).onChange( this.update_params.bind(this) );
 
     // _g_blob.add(this.pbr, 'normal', 0., 5.);
     // _g_blob.add(this.pbr, 'roughness', 0., 10.);
@@ -32,7 +34,7 @@ var Ctrl = function(_blob, _light, _pbr, _audio, _cube){
 
     this.update_params();
 
-    dat.GUI.toggleHide();
+    // dat.GUI.toggleHide();
 };
 
 Ctrl.prototype.update_params = function(){
@@ -42,6 +44,8 @@ Ctrl.prototype.update_params = function(){
 
 	this.cube.toggle_bnw(this.params.toggle_bnw_hdr);
 	this.blob.set_cubemap(this.cube);
+
+	this.audio.set_gain(this.params.audio_gain);
 
 	this.light.set_light_pos( new THREE.Vector3(_p.light_posx, _p.light_posy, _p.light_posz) );
 };
