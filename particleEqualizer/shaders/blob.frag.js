@@ -19,6 +19,8 @@ vec3 norm(in vec3 _v){
 
 #if defined(IS_PBR) && defined(HAS_CUBEMAP)
   uniform samplerCube cubemap;
+  uniform samplerCube cubemap_b;
+  uniform float cross_fader;
 
   uniform sampler2D tex_normal;
   uniform sampler2D tex_roughness;
@@ -134,6 +136,8 @@ void main(){
   m_diffuse -= pow(abs(1.-m_noise), 4.)*.95; //<- darken peak
   m_diffuse = clamp(m_diffuse, vec3(0.), vec3(2.));
 
+  m_diffuse *= pow(u_audio_level, 2.);
+
   vec3 m_col = m_diffuse;
 
 
@@ -176,8 +180,14 @@ void main(){
   int numMips     = 6;
   float mip     = float(numMips) - 1. + log2( u_roughness * roughnessMask );
   vec3 lookup     = -reflect( V, N );
-  vec3 radiance   = pow( abs(textureCube( cubemap, fix_cube_lookup( lookup, 2048., mip ) ).rgb), vec3( 2.2 ) );
-  vec3 irradiance   = pow( abs(textureCube( cubemap, fix_cube_lookup( N, 2048., 0. ) ).rgb), vec3( 2.2 ) );
+  
+  vec3 cube_a_rad = pow( abs(textureCube( cubemap, fix_cube_lookup( lookup, 2048., mip ) ).rgb), vec3( 2.2 ) );
+  vec3 cube_b_rad = pow( abs(textureCube( cubemap_b, fix_cube_lookup( lookup, 2048., mip ) ).rgb), vec3( 2.2 ) );
+  vec3 cube_a_irr = pow( abs(textureCube( cubemap, fix_cube_lookup( N, 2048., 0. ) ).rgb), vec3( 2.2 ) );
+  vec3 cube_b_irr = pow( abs(textureCube( cubemap_b, fix_cube_lookup( N, 2048., 0. ) ).rgb), vec3( 2.2 ) );
+
+  vec3 radiance = mix(cube_a_rad, cube_b_rad, cross_fader);
+  vec3 irradiance = mix(cube_a_irr, cube_b_irr, cross_fader);
 
   // get the approximate reflectance
   float NoV     = saturate( dot( N, V ) );
@@ -252,7 +262,15 @@ void main(){
   // treble burn
   m_col += pow(abs(u_audio_high), 3.) * 1.;
 
+  // on&off
+  m_col *= u_audio_level;
+
+  #if defined(IS_WIRE)
+    m_col *= .7;
+  #endif
 #endif 
+
+
   gl_FragColor = vec4(m_col, 1.);
   
 #if defined(HAS_SHADOW)
@@ -261,37 +279,26 @@ void main(){
 #endif
 
 
-
-
 #if defined(IS_POINTS)
   gl_FragColor *= texture2D(tex_sprite, gl_PointCoord);
-
-  vec3 m_point_col = gl_FragColor.rgb;
-  m_point_col.g += m_point_col.g;
-  gl_FragColor.rgb = m_point_col;
 #endif
 
 
 #if defined(IS_POP) || defined(IS_POP_OUT)
-  gl_FragColor.r = gl_FragColor.g = gl_FragColor.b;
   gl_FragColor.rgb = pow(abs(gl_FragColor.rgb), vec3(1.2));
-  
-  gl_FragColor.rgb *= 10.;
 
   #if defined(IS_POINTS) && defined(IS_POP)
-    gl_FragColor.rgb = 1.-gl_FragColor.rgb;
+    gl_FragColor.rgb *= pow(u_audio_level, 2.);
+    gl_FragColor.rgb *= 50.;
   #endif
+
   #if defined(IS_WIRE)
-    gl_FragColor.rgb *= .3;
+    gl_FragColor.rgb *= 2.;
 
     #if defined(IS_POP_OUT)
       gl_FragColor.rgb *= .2;
     #endif
   #endif
-
-  // on&off
-  gl_FragColor.rgb *= u_audio_level;
-
 #endif
 
 }

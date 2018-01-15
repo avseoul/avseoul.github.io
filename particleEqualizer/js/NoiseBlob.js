@@ -45,7 +45,8 @@ NoiseBlob.prototype.update = function(){
         _shdrs[i].uniforms.u_audio_history.value = this.audio_analyzer.get_history();
     }
 
-    this.update_shadow_map();
+    // this.update_shadow_map();
+    this.update_cubemap();
 
     var _cam = this.renderer.get_camera();
     this.renderer.renderer.render( this.scene, _cam);
@@ -103,6 +104,21 @@ NoiseBlob.prototype.init_shader = function(){
             fragmentShader: _frag
         });
     };
+
+    this.shdr_cubemap = new THREE.ShaderMaterial( 
+        { 
+            defines: {
+                SCREEN_RES: screen_res
+            },
+            uniforms: {
+                u_cubemap: {value: this.cubemap},
+                u_cubemap_b: {value: this.cubemap_b},
+                u_exposure: {value: 2.},
+                u_gamma: {value: 2.2}
+            },
+            vertexShader:   skybox_vert,
+            fragmentShader: skybox_frag
+        });
 
     // scene shdr
     this.shdr_mesh = load(blob_vert, blob_frag);
@@ -209,6 +225,18 @@ NoiseBlob.prototype.init_scene = function(){
     this.scene.add(_pop_wire_out);
 
     this.shadow_scene.add(_shadow_mesh);
+
+    var _geom_cube = new THREE.BoxBufferGeometry(100, 100, 100);
+    var _mesh_cube = new THREE.Mesh(_geom_cube, this.shdr_cubemap);
+
+    var mS = (new THREE.Matrix4()).identity();
+    mS.elements[0] = -1;
+    mS.elements[5] = -1;
+    mS.elements[10] = -1;
+
+    _geom_cube.applyMatrix(mS);
+
+    this.scene.add(_mesh_cube);
 };
 
 NoiseBlob.prototype.set_retina = function(){
@@ -228,10 +256,33 @@ NoiseBlob.prototype.init_cubemap = function(){
     this.cubemap = new THREE.CubeTextureLoader().load( _urls );
     this.cubemap.format = THREE.RGBFormat;
 
+    _urls = [
+        _path + 'px' + _format, _path + 'nx' + _format,
+        _path + 'py' + _format, _path + 'ny' + _format,
+        _path + 'pz' + _format, _path + 'nz' + _format
+    ];
+
+    this.cubemap_b = new THREE.CubeTextureLoader().load( _urls );
+    this.cubemap_b.format = THREE.RGBFormat;
+
     this.shdr_mesh.uniforms.cubemap = {value: this.cubemap};
+    this.shdr_cubemap.uniforms.u_cubemap.value = this.cubemap;
+    this.shdr_mesh.uniforms.cubemap_b = {value: this.cubemap_b};
+    this.shdr_cubemap.uniforms.u_cubemap_b.value = this.cubemap_b;
     this.shdr_mesh.defines.HAS_CUBEMAP = 'true';
 
-    this.scene.background = this.cubemap;
+    // this.scene.background = this.cubemap;
+};
+
+NoiseBlob.prototype.update_cubemap = function(){
+    // var _cross_fader = (Math.sin(this.audio_analyzer.get_history()) + 1.) / 2.;
+    var _cross_fader = 0.;
+    // var _cross_fader = this.audio_analyzer.get_level();
+    this.shdr_mesh.uniforms.cross_fader = {value:_cross_fader};
+    this.shdr_cubemap.uniforms.cross_fader = {value:_cross_fader};
+
+    this.shdr_cubemap.uniforms.u_exposure.value = this.pbr.get_exposure();
+    this.shdr_cubemap.uniforms.u_gamma.value = this.pbr.get_gamma();
 };
 
 NoiseBlob.prototype.set_PBR = function(_pbr){

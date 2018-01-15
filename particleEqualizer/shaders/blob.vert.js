@@ -174,11 +174,11 @@ void main(){
 	vec3 m_noise_seed = position.xyz;
 	float m_noise_complexity = .6;
 	float m_noise_time = u_audio_history * .3;
-	float m_noise_scale = .9 + m_bass;
+	float m_noise_scale = 1.2 + m_level;
     
     float m_fbm = 0.;
 
-    const int m_noise_oct = 6;
+    const int m_noise_oct = 5;
     for(int i = 0; i < m_noise_oct; i++){
     	m_fbm += snoise(
     		m_noise_seed * m_noise_complexity * float(i) + 
@@ -194,23 +194,23 @@ void main(){
     v_noise = m_noise_col + m_noise_col * m_level * 2.2;     
 
     // rand direction
-	// //m_pos += pow(abs(m_fbm), 8.) * normal * 8.;
-    float _dirx = snoise(m_pos.zyx * 5. + m_noise_time * .01);
-	float _diry = snoise(m_pos.yzx * 5. + m_noise_time * .01);
-	float _dirz = snoise(m_pos.zxy * 5. + m_noise_time * .01);
+    float _dirx = snoise(m_pos.zyx * 4. + m_noise_time * .01);
+	float _diry = snoise(m_pos.yzx * 4. + m_noise_time * .01);
+	float _dirz = snoise(m_pos.zxy * 4. + m_noise_time * .01);
 	vec3 _rand_point_dir = vec3(_dirx, _diry, _dirz);
 	_rand_point_dir = 1.-2.*_rand_point_dir;
 
 #if defined(IS_WIRE) || defined(IS_POINTS)
 	// size
-	gl_PointSize = pow(abs(m_fbm), 6.) * 1500. * m_high;
+	gl_PointSize = pow(abs(m_fbm), 6.) * 1000. * m_high;
 
 	m_pos += (_rand_point_dir * .3 * m_level);
 #endif
 
 #if defined(IS_POP)
-	m_pos *= 1.2 * m_fbm;
-	m_pos = vec3(rotationMatrix(vec3(.2,1.,.3), .5*m_history) * vec4(m_pos, 1.));
+	gl_PointSize *= .5;
+	m_pos *= 1.1 * m_fbm;
+	m_pos = vec3(rotationMatrix(vec3(.3,1.,.2), .5*m_history) * vec4(m_pos, 1.));
 #endif
 #if defined(IS_POP_OUT)
 	gl_PointSize *= .5;

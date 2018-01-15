@@ -57,9 +57,8 @@ var update = function(){
     m_blob.update_PBR();
 
     // update pbr
-    m_pbr.exposure = 2. 
-        + 5. * Math.pow(m_analyzer.get_level(), 3.)
-        + 15. * Math.sin(m_analyzer.get_level());
+    m_pbr.exposure = 5. 
+        + 30. * m_analyzer.get_level();
 
     // update light
     if(m_ctrl.params.light_ziggle) 
