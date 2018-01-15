@@ -7,7 +7,11 @@ body{
     font-family: Helvetica, arial, sans-serif;
 }   
 canvas{
-    position:fixed;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%; 
+    height: 100%;
 }
 
 ::-webkit-scrollbar {
