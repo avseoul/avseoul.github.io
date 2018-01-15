@@ -10,7 +10,20 @@ var ThreeSharedRenderer = function(_perspective){
     this.timer = 0;
 
     this.init_renderer();
+
+    window.addEventListener('resize', this.resize.bind(this), false );
 };
+
+ThreeSharedRenderer.prototype.resize = function(){
+    this.w = document.documentElement.clientWidth;
+    this.h = document.documentElement.clientHeight;
+
+    this.matrix.aspect = this.w / this.h;
+    this.matrix.updateProjectionMatrix();
+
+    this.renderer.setPixelRatio( window.devicePixelRatio );
+    this.renderer.setSize( this.w, this.h );
+}
 
 ThreeSharedRenderer.prototype.init_renderer = function(){
     this.renderer = new THREE.WebGLRenderer();
@@ -53,7 +66,7 @@ ThreeSharedRenderer.prototype.ziggle_cam = function(_frame){
         Math.sin(_e),
         Math.cos(_e*.9)*Math.sin(_e*.7),
         Math.cos(_e)).normalize();
-    _n_loc.multiplyScalar( 8. + 1. * Math.sin(2.*_e) );
+    _n_loc.multiplyScalar( 8. + 2. * Math.sin(2.*_e) );
 
     var _n_center = new THREE.Vector3(
         Math.sin(.6*_e),
