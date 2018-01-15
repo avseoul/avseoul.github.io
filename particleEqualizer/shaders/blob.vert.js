@@ -111,7 +111,7 @@ void main(){
     vec3 m_pos = position + normal * m_fbm * m_noise_scale;
 
 	// get color 
-    float m_noise_col = pow(1.-m_fbm, 3.5);
+    float m_noise_col = pow(abs(1.-m_fbm), 3.5);
     v_noise = m_noise_col + m_noise_col * m_level * 2.2;     
 
 
@@ -119,10 +119,10 @@ void main(){
 
 #if defined(IS_WIRE) || defined(IS_POINTS)
 	// size
-	gl_PointSize = pow(m_fbm, 6.) * 1500. * m_high;
+	gl_PointSize = pow(abs(m_fbm), 6.) * 1500. * m_high;
 	
 	// rand direction
-	// m_pos += pow(m_fbm, 8.) * normal * 8.;
+	// m_pos += pow(abs(m_fbm), 8.) * normal * 8.;
 	vec3 _rand_point_dir = vec3(cal_noise(m_pos.zyx + m_noise_time, 10.), cal_noise(m_pos.yzx + m_noise_time, 10.), cal_noise(m_pos.zxy + m_noise_time, 10.));
 	_rand_point_dir = 1.-2.*_rand_point_dir;
 	m_pos += _rand_point_dir * .3 * m_level;

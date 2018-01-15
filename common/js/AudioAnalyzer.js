@@ -1,5 +1,6 @@
 var AudioAnalyzer = function(){
     this.is_init = false;
+    this.is_pulse = false;
 
     navigator.getUserMedia = (
         navigator.getUserMedia ||
@@ -16,6 +17,7 @@ var AudioAnalyzer = function(){
             console.log('The following gUM error occured: ' + err);
         });
     } else {
+        alert("microphone is not detected. enable \'is_pulse\' on the ui to see the audio reactive features");
         console.log('getUserMedia not supported on your browser!');
     }
 };
@@ -43,6 +45,8 @@ AudioAnalyzer.prototype.init = function(_stream){
     this.high = 0.;
     this.level = 0.;
 
+    this.frame = 0;
+
     this.reset_history();
     
     this.buffer_length = this.analyzer.frequencyBinCount;
@@ -55,24 +59,33 @@ AudioAnalyzer.prototype.init = function(_stream){
 
 AudioAnalyzer.prototype.update = function(){   
     if(this.is_init){
-        this.analyzer.getByteFrequencyData(this.audio_buffer);
-        
-        var _pass_size = this.buffer_length/3.;
         var _bass = 0., _mid = 0., _high = 0.;
-        for(var i = 0; i < this.buffer_length; i++){
-            var _val = this.audio_buffer[i] / 256.;
 
-            if(i < _pass_size)
-                _bass += _val;
-            else if(i >= _pass_size && i < _pass_size*2)
-                _mid += _val;
-            else if(i >= _pass_size*2)
-                _high += _val;  
+        if(!this.is_pulse){
+            this.analyzer.getByteFrequencyData(this.audio_buffer);
+            
+            var _pass_size = this.buffer_length/3.;
+            for(var i = 0; i < this.buffer_length; i++){
+                var _val = this.audio_buffer[i] / 256.;
+
+                if(i < _pass_size)
+                    _bass += _val;
+                else if(i >= _pass_size && i < _pass_size*2)
+                    _mid += _val;
+                else if(i >= _pass_size*2)
+                    _high += _val;  
+            }
+
+            _bass /= _pass_size;
+            _mid /= _pass_size;
+            _high /= _pass_size;
+        } else {
+            if(this.frame % 60 == 0){
+                _bass = Math.random();
+                _mid = Math.random();
+                _high = Math.random();
+            }
         }
-
-        _bass /= _pass_size;
-        _mid /= _pass_size;
-        _high /= _pass_size;
 
         this.bass = this.bass > _bass ? this.bass * .96 : _bass;
         this.mid = this.mid > _mid ? this.mid * .96 : _mid;
@@ -82,6 +95,8 @@ AudioAnalyzer.prototype.update = function(){
 
         this.history += this.level * .01 + .005; 
     }
+
+    this.frame++;
 };
 
 AudioAnalyzer.prototype.reset_history = function(){
@@ -116,6 +131,10 @@ AudioAnalyzer.prototype.get_level = function(){
 
 AudioAnalyzer.prototype.get_history = function(){
     return this.history;
+};
+
+AudioAnalyzer.prototype.trigger_pulse = function(_is_pulse){
+    this.is_pulse = _is_pulse;
 };
 
 AudioAnalyzer.prototype.debug = function(_canvas){

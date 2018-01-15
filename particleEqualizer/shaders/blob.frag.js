@@ -131,7 +131,7 @@ void main(){
   m_diffuse.r += m_noise_inv + m_noise;
   m_diffuse.g += m_noise*1.5;
   //m_diffuse.b += m_noise;
-  m_diffuse -= pow(1.-m_noise, 4.)*.95; //<- darken peak
+  m_diffuse -= pow(abs(1.-m_noise), 4.)*.95; //<- darken peak
   m_diffuse = clamp(m_diffuse, vec3(0.), vec3(2.));
 
   vec3 m_col = m_diffuse;
@@ -181,7 +181,7 @@ void main(){
 
   // get the approximate reflectance
   float NoV     = saturate( dot( N, V ) );
-  vec3 reflectance  = EnvBRDFApprox( specularColor, pow( u_roughness * roughnessMask, 4.0 ), NoV );
+  vec3 reflectance  = EnvBRDFApprox( specularColor, pow( abs(u_roughness * roughnessMask), 4.0 ), NoV );
 
   // combine the specular IBL and the BRDF
   vec3 diffuse  = diffuseColor * radiance;
@@ -200,13 +200,13 @@ void main(){
   // Diffuse factor
   float NdotL = max( dot( N, L ), 0.0 );
   vec3  D = vec3( NdotL );
-  D = pow(D, vec3(m_light_diffuse_pow));
+  D = pow(abs(D), vec3(m_light_diffuse_pow));
   
   D *= m_light_diffuse_color * m_light_diffuse_intensity;
   
   // Specular factor
   vec3  S = pow( max( dot( R, V ), 0.0 ), 50.0 ) * vec3(1.);
-  S = pow(S, vec3(m_light_specular_pow));
+  S = pow(abs(S), vec3(m_light_specular_pow));
   
   S *= m_light_specular_color * m_light_specular_intensity;
 
@@ -222,10 +222,10 @@ void main(){
 #endif
 
   // add noise diffuse
-  m_col += pow(m_diffuse, vec3(10.))*3.;
+  m_col += pow(abs(m_diffuse), vec3(10.))*3.;
 
   // fresnel
-   // m_col.r -= pow(m_fresnel, 3.) * 2.;
+   // m_col.r -= pow(abs(m_fresnel), 3.) * 2.;
   
   // apply the tone-mapping
   m_col       = Uncharted2Tonemap( m_col * u_exposure );
@@ -233,7 +233,7 @@ void main(){
   m_col       = m_col * ( 1. / Uncharted2Tonemap( vec3( 20. ) ) );
   
   // gamma correction
-  m_col       = pow( m_col, vec3( 1. / u_gamma ) );
+  m_col       = pow( abs(m_col), vec3( 1. / u_gamma ) );
 #endif
 
 
@@ -243,14 +243,14 @@ void main(){
   m_col.b -= m_col.g;
   
   // inner ziggle
-  m_col *= .4 * pow(m_noise, 6.);
+  m_col *= .4 * pow(abs(m_noise), 6.);
   
   // outter ziggle
-  m_col.rg += .2 * pow(m_noise_inv, 4.);
+  m_col.rg += .2 * pow(abs(m_noise_inv), 4.);
   m_col.g *= .5;
 
   // treble burn
-  m_col += pow(u_audio_high, 3.) * 1.;
+  m_col += pow(abs(u_audio_high), 3.) * 1.;
 
 #endif 
   gl_FragColor = vec4(m_col, 1.);

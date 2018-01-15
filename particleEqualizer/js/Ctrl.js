@@ -25,6 +25,7 @@ var Ctrl = function(_blob, _light, _pbr, _audio, _cube){
     // _g_scene.add(this.params, 'light_ziggle');
     _g_scene.add(this.params, 'toggle_bnw_hdr').onFinishChange( this.update_params.bind(this) );
     _g_scene.add(this.params, 'audio_gain', 0., 200.).onChange( this.update_params.bind(this) );
+    _g_scene.add(this.audio, 'is_pulse');
 
     // _g_blob.add(this.pbr, 'normal', 0., 5.);
     // _g_blob.add(this.pbr, 'roughness', 0., 10.);
