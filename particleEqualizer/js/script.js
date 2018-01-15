@@ -55,7 +55,7 @@ var update = function(){
 
     // update audio analyzer
     m_analyzer.update();
-    m_analyzer.debug(document.getElementsByTagName("canvas")[0]);
+    // m_analyzer.debug(document.getElementsByTagName("canvas")[0]);
 
     // update blob
     m_blob.update_PBR();
