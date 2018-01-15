@@ -176,8 +176,8 @@ void main(){
   int numMips     = 6;
   float mip     = float(numMips) - 1. + log2( u_roughness * roughnessMask );
   vec3 lookup     = -reflect( V, N );
-  vec3 radiance   = pow( textureCube( cubemap, fix_cube_lookup( lookup, 2048., mip ) ).ggg, vec3( 2.2 ) );
-  vec3 irradiance   = pow( textureCube( cubemap, fix_cube_lookup( N, 2048., 0. ) ).ggg, vec3( 2.2 ) );
+  vec3 radiance   = pow( textureCube( cubemap, fix_cube_lookup( lookup, 2048., mip ) ).rgb, vec3( 2.2 ) );
+  vec3 irradiance   = pow( textureCube( cubemap, fix_cube_lookup( N, 2048., 0. ) ).rgb, vec3( 2.2 ) );
 
   // get the approximate reflectance
   float NoV     = saturate( dot( N, V ) );
@@ -250,17 +250,9 @@ void main(){
   m_col.g *= .5;
 
   // treble burn
-  m_col += pow(u_audio_high, 3.) * 2.;
-
-  // on&off
-  m_col *= u_audio_level;
+  m_col += pow(u_audio_high, 3.) * 1.;
 
 #endif 
-
-  // color adjustment
-  m_col.b += m_noise * u_audio_high*.2;
-  m_col.r += m_noise * u_audio_bass*.2;
-
   gl_FragColor = vec4(m_col, 1.);
   
 #if defined(HAS_SHADOW)
@@ -278,5 +270,30 @@ void main(){
   m_point_col.g += m_point_col.g;
   gl_FragColor.rgb = m_point_col;
 #endif
+
+
+#if defined(IS_POP) || defined(IS_POP_OUT)
+  gl_FragColor.r = gl_FragColor.g = gl_FragColor.b;
+  gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(1.2));
+  
+  gl_FragColor.rgb *= 10.;
+
+  #if defined(IS_POINTS) && defined(IS_POP)
+    gl_FragColor.rgb = 1.-gl_FragColor.rgb;
+  #endif
+  #if defined(IS_WIRE)
+    gl_FragColor.rgb *= .5;
+
+    #if defined(IS_POP_OUT)
+      // gl_FragColor.rgb = (1.-gl_FragColor.rgb)*.1;
+      gl_FragColor.rgb *= .2;
+    #endif
+  #endif
+
+  // on&off
+  gl_FragColor.rgb *= u_audio_level;
+
+#endif
+
 }
 `

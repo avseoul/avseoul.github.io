@@ -46,7 +46,7 @@ var init = function(){
     ];
 
     // init gui
-    m_ctrl = new Ctrl(m_blob, m_light, m_pbr);
+    m_ctrl = new Ctrl(m_blob, m_light, m_pbr, m_analyzer, m_cubemap);
 };
 
 
@@ -60,6 +60,11 @@ var update = function(){
     // update blob
     m_blob.update_PBR();
 
+    // update pbr
+    m_pbr.exposure = 2. 
+        + 5. * Math.pow(m_analyzer.get_level(), 3.)
+        + 15. * Math.sin(m_analyzer.get_level());
+
     // update light
     if(m_ctrl.params.light_ziggle) 
         m_light.ziggle( m_renderer.timer );
@@ -71,7 +76,7 @@ var update = function(){
 };
 
 var redirect = function(){
-    if(window.location.protocol == 'http:')
+    if(window.location.protocol == 'http:' && window.location.hostname != "localhost")
         window.open('https://avseoul.net/particleEqualizer/','_top');
 };
 

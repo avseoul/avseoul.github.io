@@ -59,7 +59,7 @@ ThreeSharedRenderer.prototype.ziggle_cam = function(_frame){
         Math.sin(.6*_e),
         0.,
         Math.cos(.4*_e)).normalize();
-    _n_center.multiplyScalar(.6);
+    _n_center.multiplyScalar(.3);
     
     this.matrix.position.copy(_n_loc);
     this.matrix.lookAt( _n_center, new THREE.Vector3(0., 1., 0.) );  

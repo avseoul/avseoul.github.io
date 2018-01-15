@@ -72,6 +72,19 @@ vec3 norm(in vec3 _v){
 	return length(_v) > .0 ? normalize(_v) : vec3(0.);
 }
 
+mat4 rotationMatrix(vec3 axis, float angle)
+{
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+    
+    return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
+                oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
+                oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
+                0.0,                                0.0,                                0.0,                                1.0);
+}
+
 void main(){
 	float m_bass = u_audio_bass;
 	float m_mid = u_audio_mid;
@@ -106,13 +119,25 @@ void main(){
 
 #if defined(IS_WIRE) || defined(IS_POINTS)
 	// size
-	gl_PointSize = pow(m_fbm, 6.) * 3000. * m_high;
+	gl_PointSize = pow(m_fbm, 6.) * 1500. * m_high;
 	
 	// rand direction
 	// m_pos += pow(m_fbm, 8.) * normal * 8.;
-	vec3 _rand_point_dir = vec3(cal_noise(m_pos.zyx + m_history*.1, 10.), cal_noise(m_pos.yzx + m_history*.1, 10.), cal_noise(m_pos.zxy + m_history*.1, 10.));
+	vec3 _rand_point_dir = vec3(cal_noise(m_pos.zyx + m_noise_time, 10.), cal_noise(m_pos.yzx + m_noise_time, 10.), cal_noise(m_pos.zxy + m_noise_time, 10.));
 	_rand_point_dir = 1.-2.*_rand_point_dir;
 	m_pos += _rand_point_dir * .3 * m_level;
+#endif
+
+#if defined(IS_POP)
+	m_pos *= 1.2 * m_fbm;
+	m_pos = vec3(rotationMatrix(vec3(.2,1.,.3), .5*m_history) * vec4(m_pos, 1.));
+#endif
+#if defined(IS_POP_OUT)
+	// gl_PointSize *= 2.;
+	m_pos *= 1.2;
+
+	m_pos -= _rand_point_dir*_rand_point_dir * .2 * (m_high);
+	m_pos = vec3(rotationMatrix(vec3(1.,.2,.3), -.5*m_history) * vec4(m_pos, 1.));
 #endif
 
 

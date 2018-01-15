@@ -20,7 +20,16 @@ NoiseBlob.prototype.update = function(){
     this.mouse_delta_x = this.mouse_handler.get_delta_x();
     this.mouse_delta_y = this.mouse_handler.get_delta_y();
 
-    var _shdrs = [this.shdr_mesh, this.shdr_wire, this.shdr_points, this.shdr_shadow];
+    var _shdrs = [
+        this.shdr_mesh, 
+        this.shdr_wire, 
+        this.shdr_points, 
+        this.shdr_pop_points, 
+        this.shdr_pop_wire, 
+        this.shdr_pop_points_out, 
+        this.shdr_pop_wire_out, 
+        this.shdr_shadow
+    ];
     var _shdrs_size = _shdrs.length;
     for(var i = 0; i < _shdrs_size; i++){
         _shdrs[i].uniforms.u_mouse.value = new THREE.Vector2(this.mouse_norm_x, this.mouse_norm_y);
@@ -97,8 +106,12 @@ NoiseBlob.prototype.init_shader = function(){
     // scene shdr
     this.shdr_mesh = load(blob_vert, blob_frag);
     this.shdr_wire = load(blob_vert, blob_frag);
-    this.shdr_points =load(blob_vert, blob_frag);
+    this.shdr_points = load(blob_vert, blob_frag);
     this.shdr_shadow = load(blob_vert, blob_frag);
+    this.shdr_pop_points = load(blob_vert, blob_frag);
+    this.shdr_pop_wire = load(blob_vert, blob_frag);
+    this.shdr_pop_points_out = load(blob_vert, blob_frag);
+    this.shdr_pop_wire_out = load(blob_vert, blob_frag);
 
     this.shdr_mesh.extensions.derivatives = true;
 
@@ -107,6 +120,14 @@ NoiseBlob.prototype.init_shader = function(){
     this.shdr_wire.defines.IS_WIRE = 'true';
     this.shdr_points.defines.IS_POINTS = 'true';
     this.shdr_shadow.defines.IS_SHADOW = 'true';
+    this.shdr_pop_points.defines.IS_POINTS = 'true';
+    this.shdr_pop_points.defines.IS_POP = 'true';
+    this.shdr_pop_wire.defines.IS_WIRE = 'true';
+    this.shdr_pop_wire.defines.IS_POP = 'true';
+    this.shdr_pop_points_out.defines.IS_POINTS = 'true';
+    this.shdr_pop_points_out.defines.IS_POP_OUT = 'true';
+    this.shdr_pop_wire_out.defines.IS_WIRE = 'true';
+    this.shdr_pop_wire_out.defines.IS_POP_OUT = 'true';
 
     var _light_pos = this.light.get_light_pos();
     _light_pos.applyMatrix4(this.renderer.matrix.modelViewMatrix);
@@ -122,15 +143,32 @@ NoiseBlob.prototype.init_shader = function(){
     this.shdr_mesh.uniforms.u_shadow_map = {value: this.light.get_shadow_map()};
     this.shdr_mesh.uniforms.u_debug_shadow = {value: false};
     this.shdr_points.uniforms.tex_sprite = {value: this.tex_sprite};
+    this.shdr_pop_points.uniforms.tex_sprite = {value: this.tex_sprite};
+    this.shdr_pop_wire.uniforms.tex_sprite = {value: this.tex_sprite};
+    this.shdr_pop_points_out.uniforms.tex_sprite = {value: this.tex_sprite};
+    this.shdr_pop_wire_out.uniforms.tex_sprite = {value: this.tex_sprite};
     
     this.shdr_points.blending = THREE.AdditiveBlending;
     this.shdr_wire.blending = THREE.AdditiveBlending;
+    this.shdr_pop_points.blending = THREE.AdditiveBlending;
+    this.shdr_pop_wire.blending = THREE.AdditiveBlending;
+    this.shdr_pop_points_out.blending = THREE.AdditiveBlending;
+    this.shdr_pop_wire_out.blending = THREE.AdditiveBlending;
     
     this.shdr_wire.transparent = true;
     this.shdr_points.transparent = true;
+    this.shdr_pop_points.transparent = true;
+    this.shdr_pop_wire.transparent = true;
+    this.shdr_pop_points_out.transparent = true;
+    this.shdr_pop_wire_out.transparent = true;
+
 
     this.shdr_wire.depthTest = false;
     this.shdr_points.depthTest = false;
+    this.shdr_pop_points.depthTest = false;
+    this.shdr_pop_wire.depthTest = false;
+    this.shdr_pop_points_out.depthTest = false;
+    this.shdr_pop_wire_out.depthTest = false;
 };
 
 NoiseBlob.prototype.init_texture = function(){
@@ -153,10 +191,21 @@ NoiseBlob.prototype.init_scene = function(){
     var _wire = new THREE.Line(_geom_lowres, this.shdr_wire);
     var _points = new THREE.Points(_geom, this.shdr_points);
     var _shadow_mesh = new THREE.Mesh(_geom, this.shdr_shadow);
+
+    var _pop_points = new THREE.Points(_geom_lowres, this.shdr_pop_points);
+    var _pop_wire = new THREE.Line(_geom_lowres, this.shdr_pop_wire);
+
+    var _pop_points_out = new THREE.Points(_geom_lowres, this.shdr_pop_points_out);
+    var _pop_wire_out = new THREE.Line(_geom_lowres, this.shdr_pop_wire_out);
     
     this.scene.add(_mesh);
     this.scene.add(_wire);
     this.scene.add(_points);
+
+    this.scene.add(_pop_points);
+    this.scene.add(_pop_wire);
+    this.scene.add(_pop_points_out);
+    this.scene.add(_pop_wire_out);
 
     this.shadow_scene.add(_shadow_mesh);
 };
@@ -166,14 +215,12 @@ NoiseBlob.prototype.set_retina = function(){
     this.h *= .5;
 };
 
-NoiseBlob.prototype.set_hdr_bg = function(_show){
-    this.scene.background = _show ? this.cubemap.get_cubemap() : new THREE.Vector3(0., 0., 0.);
-};
-
 NoiseBlob.prototype.set_cubemap = function(_cube){
     this.cubemap = _cube;
     this.shdr_mesh.uniforms.cubemap = {value: this.cubemap.get_cubemap()};
     this.shdr_mesh.defines.HAS_CUBEMAP = 'true';
+
+    this.scene.background = this.cubemap.get_cubemap();
 };
 
 NoiseBlob.prototype.set_PBR = function(_pbr){
