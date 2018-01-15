@@ -14,11 +14,14 @@ var AudioAnalyzer = function(){
             audio: true
         }, this.init.bind(this),
         function(err) {
+            alert("microphone is not detected. enable \'is_pulse\' on the ui to see the audio reactive features");
+            this.is_init = true;
             this.is_pulse = true;
             console.log('The following gUM error occured: ' + err);
         });
     } else {
         alert("microphone is not detected. enable \'is_pulse\' on the ui to see the audio reactive features");
+        this.is_init = true;
         this.is_pulse = true;
         console.log('getUserMedia not supported on your browser!');
     }
