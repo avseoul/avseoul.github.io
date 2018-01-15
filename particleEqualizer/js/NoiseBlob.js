@@ -12,6 +12,7 @@ var NoiseBlob = function(_renderer, _mouse_handler, _analyzer, _light){
     this.init_texture();
     this.init_shader();
     this.init_scene();
+    this.init_cubemap();
 };
 
 NoiseBlob.prototype.update = function(){ 
@@ -215,12 +216,22 @@ NoiseBlob.prototype.set_retina = function(){
     this.h *= .5;
 };
 
-NoiseBlob.prototype.set_cubemap = function(_cube){
-    this.cubemap = _cube;
-    this.shdr_mesh.uniforms.cubemap = {value: this.cubemap.get_cubemap()};
+NoiseBlob.prototype.init_cubemap = function(){
+    var _path = "../common/assets/";
+    var _format = '.jpg';
+    var _urls = [
+        _path + 'px_3js' + _format, _path + 'nx_3js' + _format,
+        _path + 'py_3js' + _format, _path + 'ny_3js' + _format,
+        _path + 'pz_3js' + _format, _path + 'nz_3js' + _format
+    ];
+    
+    this.cubemap = new THREE.CubeTextureLoader().load( _urls );
+    this.cubemap.format = THREE.RGBFormat;
+
+    this.shdr_mesh.uniforms.cubemap = {value: this.cubemap};
     this.shdr_mesh.defines.HAS_CUBEMAP = 'true';
 
-    this.scene.background = this.cubemap.get_cubemap();
+    this.scene.background = this.cubemap;
 };
 
 NoiseBlob.prototype.set_PBR = function(_pbr){

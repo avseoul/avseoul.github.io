@@ -10,7 +10,7 @@ uniform float u_audio_level;
 uniform float u_audio_history;
 
 vec3 norm(in vec3 _v){
-  return length(_v) > .0 ? normalize(_v) : vec3(0.);
+  return length(_v) > .0 ? normalize(_v) : vec3(.00001);
 }
 
 #if defined(IS_POINTS)
@@ -51,7 +51,7 @@ vec3 norm(in vec3 _v){
 
   vec3 Uncharted2Tonemap( vec3 x )
   {
-    return ((x*(A*x+C*B)+D*E)/(x*(A*x+B)+D*F))-E/F;
+    return ((x*(A*x+C*B)+D*E)/((x*(A*x+B)+D*F) + .00001))-E/F;
   }
 
   // https://www.unrealengine.com/blog/physically-based-shading-on-mobile
@@ -69,7 +69,7 @@ vec3 norm(in vec3 _v){
   // http://the-witness.net/news/2012/02/seamless-cube-map-filtering/
   vec3 fix_cube_lookup( vec3 v, float cube_size, float lod ) {
     float M = max(max(abs(v.x), abs(v.y)), abs(v.z));
-    float scale = 1. - exp2(lod) / cube_size;
+    float scale = 1. - exp2(lod) / (cube_size + .00001);
     if (abs(v.x) != M) v.x *= scale;
     if (abs(v.y) != M) v.y *= scale;
     if (abs(v.z) != M) v.z *= scale;
@@ -104,8 +104,8 @@ vec3 norm(in vec3 _v){
   {
     float s = 1./1024.;
 
-    vec2 unproj2D = vec2 (sc.s / sc.q,
-                          sc.t / sc.q);
+    vec2 unproj2D = vec2 (sc.s / (sc.q + .00001),
+                          sc.t / (sc.q + .00001));
     
     float shadow = 0.0;
     shadow += texture2D( u_shadow_map, unproj2D + vec2(-s,-s) ).r;
@@ -176,8 +176,8 @@ void main(){
   int numMips     = 6;
   float mip     = float(numMips) - 1. + log2( u_roughness * roughnessMask );
   vec3 lookup     = -reflect( V, N );
-  vec3 radiance   = pow( textureCube( cubemap, fix_cube_lookup( lookup, 2048., mip ) ).rgb, vec3( 2.2 ) );
-  vec3 irradiance   = pow( textureCube( cubemap, fix_cube_lookup( N, 2048., 0. ) ).rgb, vec3( 2.2 ) );
+  vec3 radiance   = pow( abs(textureCube( cubemap, fix_cube_lookup( lookup, 2048., mip ) ).rgb), vec3( 2.2 ) );
+  vec3 irradiance   = pow( abs(textureCube( cubemap, fix_cube_lookup( N, 2048., 0. ) ).rgb), vec3( 2.2 ) );
 
   // get the approximate reflectance
   float NoV     = saturate( dot( N, V ) );
@@ -215,7 +215,7 @@ void main(){
   // cal shadow 
   float m_shadow = 1.;
   vec4 m_shadow_coord = v_shadow_coord;
-  // m_shadow_coord.z += .0003; // <- bias
+  m_shadow_coord.z += .0003; // <- bias
 
   m_shadow = sample_shadow(m_shadow_coord);
   m_col *= (m_shadow + m_col*.2 + m_diffuse*.5);
@@ -230,10 +230,10 @@ void main(){
   // apply the tone-mapping
   m_col       = Uncharted2Tonemap( m_col * u_exposure );
   // white balance
-  m_col       = m_col * ( 1. / Uncharted2Tonemap( vec3( 20. ) ) );
+  m_col       = m_col * ( 1. / (Uncharted2Tonemap( vec3( 20. ) ) + .00001) );
   
   // gamma correction
-  m_col       = pow( abs(m_col), vec3( 1. / u_gamma ) );
+  m_col       = pow( abs(m_col), vec3( 1. / (u_gamma + .00001) ) );
 #endif
 
 
@@ -274,7 +274,7 @@ void main(){
 
 #if defined(IS_POP) || defined(IS_POP_OUT)
   gl_FragColor.r = gl_FragColor.g = gl_FragColor.b;
-  gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(1.2));
+  gl_FragColor.rgb = pow(abs(gl_FragColor.rgb), vec3(1.2));
   
   gl_FragColor.rgb *= 10.;
 
@@ -282,10 +282,9 @@ void main(){
     gl_FragColor.rgb = 1.-gl_FragColor.rgb;
   #endif
   #if defined(IS_WIRE)
-    gl_FragColor.rgb *= .5;
+    gl_FragColor.rgb *= .3;
 
     #if defined(IS_POP_OUT)
-      // gl_FragColor.rgb = (1.-gl_FragColor.rgb)*.1;
       gl_FragColor.rgb *= .2;
     #endif
   #endif

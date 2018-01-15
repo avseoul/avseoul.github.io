@@ -13,16 +13,10 @@ var AudioAnalyzer = function(){
         navigator.getUserMedia ({
             audio: true
         }, this.init.bind(this),
-        function(err) {
-            alert("microphone is not detected. enable \'is_pulse\' on the ui to see the audio reactive features");
-            this.is_init = true;
-            this.is_pulse = true;
-            console.log('The following gUM error occured: ' + err);
-        });
+        this.init_without_stream.bind(this));
     } else {
-        alert("microphone is not detected. enable \'is_pulse\' on the ui to see the audio reactive features");
-        this.is_init = true;
-        this.is_pulse = true;
+        alert("microphone is not detected. pulse is activated instead of mic input");
+        this.init_without_stream();
         console.log('getUserMedia not supported on your browser!');
     }
 };
@@ -60,6 +54,24 @@ AudioAnalyzer.prototype.init = function(_stream){
     console.log("audio analyzer is init");
     
     this.is_init = true;
+};
+
+AudioAnalyzer.prototype.init_without_stream = function(){
+    alert("microphone is not detected. pulse is activated instead of mic input");
+
+    this.bass = 0.;
+    this.mid = 0.;
+    this.high = 0.;
+    this.level = 0.;
+
+    this.frame = 0;
+
+    this.reset_history();
+
+    console.log("audio analyzer is init without mic");
+    
+    this.is_init = true;
+    this.is_pulse = true;
 };
 
 AudioAnalyzer.prototype.update = function(){   

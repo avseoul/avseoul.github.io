@@ -3,7 +3,6 @@ var m_renderer;
 var m_mouse;
 var m_render_queue;
 var m_blob;
-var m_cubemap;
 var m_pbr;
 var m_light;
 var m_ctrl;
@@ -27,8 +26,6 @@ var init = function(){
     m_renderer.append_renderer_to_dom(document.body);
     m_renderer.renderer.autoClear = true;
 
-    // init cubemap
-    m_cubemap = new ThreeCubeMap();
     // init pbr
     m_pbr = new ThreePBR();
     // init light
@@ -36,7 +33,6 @@ var init = function(){
 
     // init blob
     m_blob = new NoiseBlob(m_renderer, m_mouse, m_analyzer, m_light);
-    m_blob.set_cubemap(m_cubemap);
     m_blob.set_PBR(m_pbr);
     if(_is_retina) m_blob.set_retina();
     
@@ -46,7 +42,7 @@ var init = function(){
     ];
 
     // init gui
-    m_ctrl = new Ctrl(m_blob, m_light, m_pbr, m_analyzer, m_cubemap);
+    m_ctrl = new Ctrl(m_blob, m_light, m_pbr, m_analyzer);
 };
 
 
@@ -76,7 +72,7 @@ var update = function(){
 };
 
 var redirect = function(){
-    if(window.location.protocol == 'http:' && window.location.hostname != "localhost")
+    if(window.location.href == 'http://avseoul.net/particleEqulizer/')
         window.open('https://avseoul.net/particleEqualizer/','_top');
 };
 

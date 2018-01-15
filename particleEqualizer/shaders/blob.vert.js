@@ -41,40 +41,119 @@ varying float v_noise;
 #endif
 
 
+// (Keijiro) This shader was slightly modified from the original version.
+// It's recommended to use the original version for other purposes.
 
+//
+// Description : Array and textureless GLSL 2D/3D/4D simplex
+//               noise functions.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : ijm
+//     Lastmod : 20110822 (ijm)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+//
 
-float cal_noise(vec3 _uv, float _res){
-	// original code from 
-	// https://www.shadertoy.com/user/Trisomie21
+vec3 mod289(vec3 x)
+{
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
 
-	const vec3 s = vec3(1e0, 1e2, 1e4);
-	
-	_uv *= _res;
-	
-	vec3 uv0 = floor(mod(_uv, _res))*s;
-	vec3 uv1 = floor(mod(_uv+vec3(1.), _res))*s;
-	
-	vec3 f = fract(_uv); f = f*f*(3.0-2.0*f);
-	
-	vec4 v = vec4(uv0.x+uv0.y+uv0.z, uv1.x+uv0.y+uv0.z,
-		      	  uv0.x+uv1.y+uv0.z, uv1.x+uv1.y+uv0.z);
-	
-	vec4 r = fract(sin(v*1e-3)*1e5);
-	float r0 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
-	
-	r = fract(sin((v + uv1.z - uv0.z)*1e-3)*1e5);
-	float r1 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
-	
-	return mix(r0, r1, f.z);
+vec4 mod289(vec4 x) {
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x)
+{
+    return mod289((x * 34.0 + 1.0) * x);
+}
+
+vec4 taylorInvSqrt(vec4 r)
+{
+    return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+float snoise(vec3 v)
+{
+    const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+
+    // First corner
+    vec3 i  = floor(v + dot(v, C.yyy));
+    vec3 x0 = v   - i + dot(i, C.xxx);
+
+    // Other corners
+    vec3 g = step(x0.yzx, x0.xyz);
+    vec3 l = 1.0 - g;
+    vec3 i1 = min(g.xyz, l.zxy);
+    vec3 i2 = max(g.xyz, l.zxy);
+
+    // x1 = x0 - i1  + 1.0 * C.xxx;
+    // x2 = x0 - i2  + 2.0 * C.xxx;
+    // x3 = x0 - 1.0 + 3.0 * C.xxx;
+    vec3 x1 = x0 - i1 + C.xxx;
+    vec3 x2 = x0 - i2 + C.yyy;
+    vec3 x3 = x0 - 0.5;
+
+    // Permutations
+    i = mod289(i); // Avoid truncation effects in permutation
+    vec4 p =
+      permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0))
+                            + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+                            + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+
+    // Gradients: 7x7 points over a square, mapped onto an octahedron.
+    // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+    vec4 j = p - 49.0 * floor(p * (1.0 / 49.0));  // mod(p,7*7)
+
+    vec4 x_ = floor(j * (1.0 / 7.0));
+    vec4 y_ = floor(j - 7.0 * x_ );  // mod(j,N)
+
+    vec4 x = x_ * (2.0 / 7.0) + 0.5 / 7.0 - 1.0;
+    vec4 y = y_ * (2.0 / 7.0) + 0.5 / 7.0 - 1.0;
+
+    vec4 h = 1.0 - abs(x) - abs(y);
+
+    vec4 b0 = vec4(x.xy, y.xy);
+    vec4 b1 = vec4(x.zw, y.zw);
+
+    //vec4 s0 = vec4(lessThan(b0, 0.0)) * 2.0 - 1.0;
+    //vec4 s1 = vec4(lessThan(b1, 0.0)) * 2.0 - 1.0;
+    vec4 s0 = floor(b0) * 2.0 + 1.0;
+    vec4 s1 = floor(b1) * 2.0 + 1.0;
+    vec4 sh = -step(h, vec4(0.0));
+
+    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+
+    vec3 g0 = vec3(a0.xy, h.x);
+    vec3 g1 = vec3(a0.zw, h.y);
+    vec3 g2 = vec3(a1.xy, h.z);
+    vec3 g3 = vec3(a1.zw, h.w);
+
+    // Normalise gradients
+    vec4 norm = taylorInvSqrt(vec4(dot(g0, g0), dot(g1, g1), dot(g2, g2), dot(g3, g3)));
+    g0 *= norm.x;
+    g1 *= norm.y;
+    g2 *= norm.z;
+    g3 *= norm.w;
+
+    // Mix final noise value
+    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+    m = m * m;
+    m = m * m;
+
+    vec4 px = vec4(dot(x0, g0), dot(x1, g1), dot(x2, g2), dot(x3, g3));
+    return (42.0 * dot(m, px) + 1.) * .5;
 }
 
 vec3 norm(in vec3 _v){
-	return length(_v) > .0 ? normalize(_v) : vec3(0.);
+	return length(_v) > .0 ? normalize(_v) : vec3(.000001);
 }
 
 mat4 rotationMatrix(vec3 axis, float angle)
 {
-    axis = normalize(axis);
+    axis = norm(axis);
     float s = sin(angle);
     float c = cos(angle);
     float oc = 1.0 - c;
@@ -93,20 +172,20 @@ void main(){
 	float m_history = u_audio_history;
 
 	vec3 m_noise_seed = position.xyz;
-	float m_noise_complexity = 1.;
-	float m_noise_time = u_audio_history * .1;
+	float m_noise_complexity = .6;
+	float m_noise_time = u_audio_history * .3;
 	float m_noise_scale = .9 + m_bass;
     
     float m_fbm = 0.;
 
     const int m_noise_oct = 6;
     for(int i = 0; i < m_noise_oct; i++){
-    	m_fbm += cal_noise(
-    		m_noise_seed + m_noise_time * float(i),
-    		m_noise_complexity * float(i)
+    	m_fbm += snoise(
+    		m_noise_seed * m_noise_complexity * float(i) + 
+    		m_noise_time * float(i)
     	);
     }
-    m_fbm /= float(m_noise_oct);
+    m_fbm /= (float(m_noise_oct) + .00001);
 
     vec3 m_pos = position + normal * m_fbm * m_noise_scale;
 
@@ -114,18 +193,19 @@ void main(){
     float m_noise_col = pow(abs(1.-m_fbm), 3.5);
     v_noise = m_noise_col + m_noise_col * m_level * 2.2;     
 
-
-
+    // rand direction
+	// //m_pos += pow(abs(m_fbm), 8.) * normal * 8.;
+    float _dirx = snoise(m_pos.zyx * 5. + m_noise_time * .01);
+	float _diry = snoise(m_pos.yzx * 5. + m_noise_time * .01);
+	float _dirz = snoise(m_pos.zxy * 5. + m_noise_time * .01);
+	vec3 _rand_point_dir = vec3(_dirx, _diry, _dirz);
+	_rand_point_dir = 1.-2.*_rand_point_dir;
 
 #if defined(IS_WIRE) || defined(IS_POINTS)
 	// size
 	gl_PointSize = pow(abs(m_fbm), 6.) * 1500. * m_high;
-	
-	// rand direction
-	// m_pos += pow(abs(m_fbm), 8.) * normal * 8.;
-	vec3 _rand_point_dir = vec3(cal_noise(m_pos.zyx + m_noise_time, 10.), cal_noise(m_pos.yzx + m_noise_time, 10.), cal_noise(m_pos.zxy + m_noise_time, 10.));
-	_rand_point_dir = 1.-2.*_rand_point_dir;
-	m_pos += _rand_point_dir * .3 * m_level;
+
+	m_pos += (_rand_point_dir * .3 * m_level);
 #endif
 
 #if defined(IS_POP)
@@ -133,10 +213,10 @@ void main(){
 	m_pos = vec3(rotationMatrix(vec3(.2,1.,.3), .5*m_history) * vec4(m_pos, 1.));
 #endif
 #if defined(IS_POP_OUT)
-	// gl_PointSize *= 2.;
+	gl_PointSize *= .5;
 	m_pos *= 1.2;
 
-	m_pos -= _rand_point_dir*_rand_point_dir * .2 * (m_high);
+	m_pos += (_rand_point_dir*_rand_point_dir * .2 * m_high);
 	m_pos = vec3(rotationMatrix(vec3(1.,.2,.3), -.5*m_history) * vec4(m_pos, 1.));
 #endif
 
