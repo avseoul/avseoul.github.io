@@ -71,7 +71,7 @@ var update = function(){
 };
 
 var redirect = function(){
-    if(window.location.href == 'http://avseoul.net/particleEqulizer/')
+    if(window.location.protocol == 'http:' && window.location.hostname != "localhost")
         window.open('https://avseoul.net/particleEqualizer/','_top');
 };
 
