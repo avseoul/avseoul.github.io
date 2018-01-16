@@ -276,8 +276,8 @@ NoiseBlob.prototype.init_cubemap = function(){
 
 NoiseBlob.prototype.update_cubemap = function(){
     // var _cross_fader = (Math.sin(this.audio_analyzer.get_history()) + 1.) / 2.;
-    var _cross_fader = 0.;
-    // var _cross_fader = this.audio_analyzer.get_level();
+    // var _cross_fader = 0.;
+    var _cross_fader = 1.-this.audio_analyzer.get_level();
     this.shdr_mesh.uniforms.cross_fader = {value:_cross_fader};
     this.shdr_cubemap.uniforms.cross_fader = {value:_cross_fader};
 
