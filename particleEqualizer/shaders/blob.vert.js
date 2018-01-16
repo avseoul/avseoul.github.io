@@ -148,7 +148,7 @@ float snoise(vec3 v)
 }
 
 vec3 norm(in vec3 _v){
-	return length(_v) > .0 ? normalize(_v) : vec3(.000001);
+	return length(_v) > .0 ? normalize(_v) : vec3(.0);
 }
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -176,18 +176,39 @@ void main(){
 	float m_noise_time = u_audio_history * .3;
 	float m_noise_scale = 1.2 + m_level;
     
+	vec3 m_tangent_vector = .00001 * norm(cross(position, vec3(1., 0., 0.))
+							+ cross(position, vec3(0., 1., 0.)));
+	vec3 m_bitangent_vector = .00001 * norm(cross(m_tangent_vector, position));
+
     float m_fbm = 0.;
+    float m_fbm_tangent = 0.;
+    float m_fbm_bitangent = 0.;
 
     const int m_noise_oct = 5;
     for(int i = 0; i < m_noise_oct; i++){
     	m_fbm += snoise(
-    		m_noise_seed * m_noise_complexity * float(i) + 
+    		(m_noise_seed) * m_noise_complexity * float(i) + 
+    		m_noise_time * float(i)
+    	);
+    	m_fbm_tangent += snoise(
+    		(m_noise_seed + m_tangent_vector) * m_noise_complexity * float(i) + 
+    		m_noise_time * float(i)
+    	);
+    	m_fbm_bitangent += snoise(
+    		(m_noise_seed + m_bitangent_vector) * m_noise_complexity * float(i) + 
     		m_noise_time * float(i)
     	);
     }
-    m_fbm /= (float(m_noise_oct) + .00001);
+    m_fbm /= (float(m_noise_oct));
+    m_fbm_tangent /= (float(m_noise_oct));
+    m_fbm_bitangent /= (float(m_noise_oct));
 
-    vec3 m_pos = position + normal * m_fbm * m_noise_scale;
+    vec3 m_pos = position + norm(position) * m_fbm * m_noise_scale;
+    vec3 m_pos_tangent = (position + m_tangent_vector) + norm(position + m_tangent_vector) * m_fbm * m_noise_scale;
+    vec3 m_pos_bitangent = (position + m_bitangent_vector) + norm(position + m_bitangent_vector) * m_fbm * m_noise_scale;
+
+    vec3 m_normal = norm(cross( (m_pos_tangent - m_pos), (m_pos_bitangent - m_pos)));
+
 
 	// get color 
     float m_noise_col = pow(abs(1.-m_fbm), 3.5);
@@ -228,7 +249,7 @@ void main(){
 
     v_object_pos = m_pos;
     v_pos = _view_pos.xyz;
-	v_normal = normalMatrix * normal; 
+	v_normal = normalMatrix * m_normal; 
 	v_world_pos = _world_pos.xyz;
 	v_world_normal = vec3(u_view_matrix_inverse * vec4(v_normal, 0.));
 	v_eye_pos = -1. * vec3(u_view_matrix_inverse * (_view_pos - vec4(0.,0.,0.,1.)) );

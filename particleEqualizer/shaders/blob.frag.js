@@ -10,7 +10,7 @@ uniform float u_audio_level;
 uniform float u_audio_history;
 
 vec3 norm(in vec3 _v){
-  return length(_v) > .0 ? normalize(_v) : vec3(.00001);
+  return length(_v) > .0 ? normalize(_v) : vec3(.0);
 }
 
 #if defined(IS_POINTS)
@@ -157,11 +157,11 @@ void main(){
   vec3 V = norm( v_eye_pos );
 
   // fresnel 
-  float m_fresnel = 1. + dot(norm(v_world_pos - v_eye_pos), v_world_normal);
+  float m_fresnel = pow(1. + dot(norm(v_world_pos - v_eye_pos), v_world_normal), 8.);
 
 #if defined(HAS_SHADOW)
   // Light direction
-  vec3  L = norm( u_light_pos - v_pos.xyz );
+  vec3  L = norm( u_light_pos - v_world_pos.xyz );
   // Surface reflection vector
   vec3  R = norm( -reflect( L, N ) );
 #endif
@@ -171,8 +171,8 @@ void main(){
   float metallicMask  = texture2D( tex_metallic, v_uv ).r;
   
   // deduce the diffuse and specular color from the baseColor and how metallic the material is
-  vec3 m_specular_col = m_diffuse * 4.;
-  vec3 m_diffuse_col = m_diffuse;
+  vec3 m_specular_col = vec3(m_diffuse)*8.;
+  vec3 m_diffuse_col = vec3(m_diffuse)*8.;
   vec3 diffuseColor = m_diffuse_col - m_diffuse_col * u_metallic * metallicMask;
   vec3 specularColor  = mix( vec3( 0.08 * m_specular_col ), m_diffuse_col, u_metallic * metallicMask );
   
@@ -196,31 +196,28 @@ void main(){
   // combine the specular IBL and the BRDF
   vec3 diffuse  = diffuseColor * radiance;
   vec3 specular = radiance * reflectance;
-  m_col = diffuse + specular;
+  m_col = (diffuse + specular)*u_audio_level*(1.-min(m_fresnel, .99));
 
 #if defined(HAS_SHADOW)
   // from light source
-  vec3 m_light_diffuse_color = m_diffuse;
-  vec3 m_light_specular_color = m_diffuse * 4.;
-  float m_light_diffuse_intensity = 5.;
-  float m_light_specular_intensity = 4.;
-  float m_light_diffuse_pow = 14.;
-  float m_light_specular_pow = 15.;
+  vec3 m_light_diffuse_color = vec3(m_diffuse)*3.;
+  vec3 m_light_specular_color = vec3(m_diffuse)*3.;
+  float m_light_diffuse_intensity = 30.;
+  float m_light_specular_intensity = 30.;
+  float m_light_diffuse_pow = 150.;
+  float m_light_specular_pow = 120.;
   
   // Diffuse factor
   float NdotL = max( dot( N, L ), 0.0 );
   vec3  D = vec3( NdotL );
   D = pow(abs(D), vec3(m_light_diffuse_pow));
-  
   D *= m_light_diffuse_color * m_light_diffuse_intensity;
   
   // Specular factor
-  vec3  S = pow( max( dot( R, V ), 0.0 ), 50.0 ) * vec3(1.);
-  S = pow(abs(S), vec3(m_light_specular_pow));
-  
+  vec3  S = pow( max( dot( R, V ), 0.0 ), m_light_specular_pow ) * vec3(1.);
   S *= m_light_specular_color * m_light_specular_intensity;
 
-  m_col += (D + S);
+  m_col += (D + S)*u_audio_level*(1.-min(m_fresnel, .99));
 
   // cal shadow 
   float m_shadow = 1.;
@@ -232,10 +229,7 @@ void main(){
 #endif
 
   // add noise diffuse
-  m_col += pow(abs(m_diffuse), vec3(10.))*3.;
-
-  // fresnel
-   // m_col.r -= pow(abs(m_fresnel), 3.) * 2.;
+  m_col += pow(abs(m_diffuse), vec3(10.))*8.;
   
   // apply the tone-mapping
   m_col       = Uncharted2Tonemap( m_col * u_exposure );

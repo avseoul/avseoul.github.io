@@ -61,8 +61,8 @@ var update = function(){
         + 30. * m_analyzer.get_level();
 
     // update light
-    if(m_ctrl.params.light_ziggle) 
-        m_light.ziggle( m_renderer.timer );
+    // if(m_ctrl.params.light_ziggle) 
+    //     m_light.ziggle( m_renderer.timer );
 
     // update renderer
     if(m_ctrl.params.cam_ziggle) 
