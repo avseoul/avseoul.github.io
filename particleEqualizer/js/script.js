@@ -70,14 +70,12 @@ var update = function(){
     m_renderer.render(m_render_queue);
 };
 
-var redirect = function(){
-    if(window.location.protocol == 'http:' && window.location.hostname != "localhost")
-        window.open('https://avseoul.net/particleEqualizer/','_top');
-};
-
 
 document.addEventListener('DOMContentLoaded', function(){
-    redirect();
-    init();
-    update();
+    if(window.location.protocol == 'http:' && window.location.hostname != "localhost"){
+        window.open('https://avseoul.net/particleEqualizer/','_top');
+    } else {
+        init();
+        update();
+    }
 });
