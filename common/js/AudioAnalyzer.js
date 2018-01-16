@@ -15,8 +15,8 @@ var AudioAnalyzer = function(){
         }, this.init.bind(this),
         this.init_without_stream.bind(this));
     } else {
-        alert("microphone is not detected. pulse is activated instead of mic input");
-        this.init_without_stream();
+        if(window.location.protocol == 'https:')
+            this.init_without_stream();
         console.log('getUserMedia not supported on your browser!');
     }
 };
