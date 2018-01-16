@@ -23,6 +23,7 @@ var Ctrl = function(_blob, _light, _pbr, _audio){
     // _g_scene.add(this.params, 'light_ziggle');
     _g_scene.add(this.params, 'audio_gain', 0., 500.).onChange( this.update_params.bind(this) );
     _g_scene.add(this.audio, 'is_pulse');
+    _g_scene.add(this.blob, 'show_hdr').onFinishChange( this.blob.toggle_cubemap.bind(this.blob) );
 
     // _g_blob.add(this.pbr, 'normal', 0., 5.);
     // _g_blob.add(this.pbr, 'roughness', 0., 10.);

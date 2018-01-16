@@ -12,6 +12,7 @@ uniform samplerCube u_cubemap_b;
 uniform float cross_fader;
 uniform float u_exposure;
 uniform float u_gamma;
+uniform bool u_show_cubemap;
 
 varying vec3 v_direction;
 
@@ -32,6 +33,9 @@ void main( void ){
 	
 	// gamma correction
 	// color = pow( color, vec3( 1. / u_gamma ) );
+
+	color *= u_show_cubemap ? 1. : 0.;
+
 	gl_FragColor = vec4( color, 1. );
 }
 `;

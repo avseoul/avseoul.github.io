@@ -1,5 +1,6 @@
 var NoiseBlob = function(_renderer, _mouse_handler, _analyzer, _light){ 
     this.is_init = false;
+    this.show_hdr = true;
 
     this.renderer = _renderer;
     this.mouse_handler = _mouse_handler;
@@ -236,7 +237,7 @@ NoiseBlob.prototype.init_scene = function(){
 
     _geom_cube.applyMatrix(mS);
 
-    // this.scene.add(_mesh_cube);
+    this.scene.add(_mesh_cube);
 };
 
 NoiseBlob.prototype.set_retina = function(){
@@ -269,9 +270,12 @@ NoiseBlob.prototype.init_cubemap = function(){
     this.shdr_cubemap.uniforms.u_cubemap.value = this.cubemap;
     this.shdr_mesh.uniforms.cubemap_b = {value: this.cubemap_b};
     this.shdr_cubemap.uniforms.u_cubemap_b.value = this.cubemap_b;
+    this.shdr_cubemap.uniforms.u_show_cubemap = {value:this.show_hdr};
     this.shdr_mesh.defines.HAS_CUBEMAP = 'true';
+};
 
-    // this.scene.background = this.cubemap;
+NoiseBlob.prototype.toggle_cubemap = function(){
+    this.shdr_cubemap.uniforms.u_show_cubemap.value = this.show_hdr;
 };
 
 NoiseBlob.prototype.update_cubemap = function(){
