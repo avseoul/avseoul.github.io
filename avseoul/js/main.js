@@ -304,7 +304,7 @@ var init = function(){
 			'		<div class=\"ui_description\"><p>'+ s['description'] +'</p></div>'+
 			'		<div class=\"ui_url\"><p><a href=\'\'>www.avseoul.net/#'+s['id']+'</a></p></div>'+
 			'		<div class=\'ui_date\'><p>'+ s['date'] +'</p></div>'+
-			'		<div class=\'ui_detail\'><a onclick=\"open_content(\''+ i +'\')\"><&#33;--details--></a></div>'+
+			'		<p class=\'ui_detail\'><a onclick=\"open_content(\''+ i +'\')\"><&#33;--details--></a></p>'+
 			'	</div>'+
 			'</div>';
 			$('#container').append(scriptNode);
