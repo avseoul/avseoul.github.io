@@ -4,13 +4,15 @@
             "thumbnail_src":"/img/slitscan_15.jpg",
             "id":"046",
             "title":"Slit-Scan Experiment",
-            "description":"Cinder, Glsl",
+            "description":"Cinder, Glsl <br><br><i> *the thumbnail from a collaboration with <a href=\"http://coleorloff.com/\" target=\"_blank\">Cole Orloff</a></i><br><i> *the original photography of thumbnail courtesy of <a href=\"http://coleorloff.com/\" target=\"_blank\">Cole Orloff</a></i><br><br>",
             "date":"Sep,2017",
             "info":[
-                {"is":"text", "p":"n Experiments with Slit-Scan technique"}
+                {"is":"text", "p":"n Experiments with Slit-Scan technique"}                
             ],
             "process":[
                             {"is":"video", "url":"https://player.vimeo.com/video/236703159", "dummy":"", "size":{"w":"920","h":"500"}},
+                            {"is":"text", "p":"a collaborattion with <a href=\"http://coleorloff.com/\" target=\"_blank\">Cole Orloff</a>"},
+                            {"is":"text", "p":"the original photography courtesy of <a href=\"http://coleorloff.com/\" target=\"_blank\">Cole Orloff</a>"},
                             {"is":"video", "url":"https://player.vimeo.com/video/234599615", "dummy":"", "size":{"w":"920","h":"500"}},
                             {"is":"video", "url":"https://player.vimeo.com/video/234132677", "dummy":"", "size":{"w":"920","h":"500"}},
                             {"is":"video", "url":"https://player.vimeo.com/video/234105653", "dummy":"", "size":{"w":"920","h":"500"}},
