@@ -4,11 +4,33 @@ var is_mobile = function() {
 
 var insert_next = function(_tar_node, _ref_node){
 	_ref_node.parentNode.insertBefore(_tar_node, _ref_node.nextSibling);
-}
+};
 
 var set_location = function(_id){
 	window.location.hash = _id;
-}
+};
+
+var links_alive = function(){
+	var _a = [].slice.call(document.querySelectorAll("a"));
+
+	for(var i = 0; i < _a.length; i++){
+		var r = Math.floor(Math.random() * 255);
+		var g = Math.floor(Math.random() * 255);
+		var b = Math.floor(Math.random() * 255);
+		var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+
+		if(_a[i].className != "is_fucked")
+			_a[i].style["color"] = color;
+
+		r = Math.floor(Math.random() * 255);
+			g = Math.floor(Math.random() * 255);
+			b = Math.floor(Math.random() * 255);
+			color = 'rgb(' + r + ',' + g + ',' + b + ')';
+		
+		if(_a[i].className != "is_fucked")
+			_a[i].style['background-color'] = color;
+	}
+};
 
 var render_rainbow = function(){
 	var _divs = [].slice.call(document.querySelectorAll("p"));
