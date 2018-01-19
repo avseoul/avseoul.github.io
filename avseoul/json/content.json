@@ -231,38 +231,6 @@
             "category":"selected_works, creative_coding, show_all"
         },
         {
-            "thumbnail_src":"/img/g_cam_thumb.jpg",
-            "id":"039",
-            "title":"Glitch Cam",
-            "description":"Javascript, webGL, GLSL, Three.js / Audio Reactive Web App",
-            "date":"Sep,2016",
-            "info":[
-                {"is":"text", "p":"this app is built for live vjing"},
-                {"is":"text", "p":"only works on chrome, requires web cam"},
-                {"is":"text", "p":"real time demo <a href=\"https://glitchcamera-kimsehyun.rhcloud.com/\" target=\"_blank\">Link</a>"}
-            ],
-            "process":[
-                {"is":"video","url":"https://player.vimeo.com/video/185244184?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}},
-                {"is":"video","url":"https://player.vimeo.com/video/185244214?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}},
-                {"is":"video","url":"https://player.vimeo.com/video/185244329?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}},
-                {"is":"video","url":"https://player.vimeo.com/video/184634538?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}},
-                {"is":"video","url":"https://player.vimeo.com/video/184229488?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}},
-                {"is":"video","url":"https://player.vimeo.com/video/184229539?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}},
-                {"is":"video","url":"https://player.vimeo.com/video/184229566?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}},
-                {"is":"video","url":"https://player.vimeo.com/video/184229576?autoplay=0?color=ffffff","dummy":"","size":{"w":"720","h":"480"}}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project (Design/Development)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"realtime",
-                "url":"https://glitchcamera-kimsehyun.rhcloud.com/",
-                "size":{"w":"920","h":"620"}
-            },
-            "category":"selected_works, creative_coding, show_all"
-        },
-        {
             "thumbnail_src":"/img/MUFE_screen5.jpg",
             "id":"033",
             "title":"[Works@EdgeDNA] MAKE UP FOR EVER",
@@ -355,24 +323,20 @@
             "description":"Javascript, HTML/CSS, express/nodejs",
             "date":"Jan,2016",
             "info":[
-                {"is":"text", "p":"I have been working on renewing this website since December '15. Currently I am a graduate student at ITP and I have learnt Javascript from here. However, I have mostly used it to create simple components for demo in classes but never tried to build something complex like websites. So, why not? I started to renew my website with javascript since last winter break."},
-                {"is":"text", "p":"-"},
-                {"is":"text", "p":"By the way, I have set a sub-self-challenge for myself, which is that \"I must not use any libraries or frameworks for convenient\" I thought it would give me a better understanding how Javascript works. It has been torturing me to deal with tons of tiny troublesome situations, however, I would love to learn by solving problems one by one, and moreover, this is the privilege of being student, I know I could not spend this much time to just learn something if I were not a student."},
-                {"is":"text", "p":"-"},
-                {"is":"text", "p":"I have not finished this project yet, even been getting slower cause my last semester just began in last month and I am working on my thesis as well but it has definately got closer to the end."},
-                {"is":"text", "p":"-"},
-                {"is":"text", "p":"Most of features that I want for this website is almost done and working properly in Chrome. I am working on responsive-design, browser-compatibility, and mobile-compatibility now, hopefully I could finish this before I graduate. Until then, please visit my <a href=\"/old\">old website through this link</a> or you could take a look around this and give me some useful feedbacks."}
+                {"is":"text", "p":"avseoul.net design archive"}
             ],
             "process":[
-                {"is":"text", "p":""}
+                {"is":"video","url":"https://player.vimeo.com/video/251593442","dummy":"","size":{"w":"640","h":"640"}},
+                {"is":"video","url":"https://player.vimeo.com/video/230390388","dummy":"","size":{"w":"640","h":"640"}},
+                {"is":"video","url":"https://player.vimeo.com/video/169792176","dummy":"","size":{"w":"640","h":"400"}}
             ],
             "credit":[
                 {"role":"Role","credit":"Personal Project"}
             ],
             "github":"",
             "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/169792176?autoplay=0?color=ffffff",
+                "is":"",
+                "url":"",
                 "size":{"w":"920","h":"575"}
             },
             "category":"show_all"
@@ -523,57 +487,6 @@
                 "size":{"w":"920","h":"auto"}
             },
             "category":"graphic_design, show_all"
-        },
-        {
-            "thumbnail_src":"/img/DTS_W01.jpg",
-            "id":"026",
-            "title":"Mesh Generator(Working Title)",
-            "description":"CINDER/Design Tool Studio @ITP",
-            "date":"Jan,2015",
-            "info":[
-                {"is":"video","url":"https://player.vimeo.com/video/119088175?autoplay=0?color=ccc","size":{"w":"720","h":"405"}},
-                {"is":"text","p":"Mesh generator, simple tool for live projection mapping with mesh generating, lighting, and Shading"},
-                {"is":"text","p":"<font style='color:#888;>*This video is to help demonstrating how final output looks like.</font>"}
-            ],
-            "process":[
-                {"is":"text","p":"<font style='color:#ddd; background:#000; font-style:italic; font-weight:600; '>How it works?</font>"},
-                {"is":"image","url":"/img/[DTS]_W01_process.png"},
-                {"is":"text","p":"<strong>a.How the projection mapping works?</strong>"},
-                {"is":"text","p":"On the assumption that if I set the resolution same for both of projection screen and computer screen and set this projection screen as mirror display of computer screen, the image on my computer screen will reflect what projection screen looks like. It means certain position on my computer screen will point certain position on projection screen. Based of this notion, I can get all exact points, edge, vertex, and so on, of the object that I want to project on. So, if I make some virtual image based on these data, and project this image onto the object, then it I can see the image will exactly fit on the object."},
-                {"is":"text","p":"<strong>b.How this project works?</strong>"},
-                {"is":"text","p":"This project has started from the notion mentioned above. By picking multiple points of target object based on projection screen, these points are connected by line to generate mesh. More specifically, all the points are connected by lines with 2 other nearest points to generate a triangle face. Multiple triangle faces compose final polygon which exactly fits the object through projection. All the points are given different Z depth position by random so that it could shape volume. Lighting and shading by projection gives this polygon more realistic volume, just like the demonstration video."},
-                {"is":"text","p":"<font style='color:#ddd; background:#000; font-style:italic; font-weight:600; '>What I need?</font>"},
-                {"is":"text","p":"<font style='color:#888;'>*HIGH PRIORITY</font>"},
-                {"is":"text","p":"<strong>a.figuring out how I could find the position of nearest 2 other points when I picked the another point.</strong>"},
-                {"is":"text","p":"<strong>b.figuring out how I could generate a mesh from grouping points that I picked.</strong>"},
-                {"is":"text","p":"- trying to understand how to use Cinder triMesh"},
-                {"is":"text","p":"<strong>c.figuring out how I could make realtime lighting and shading without framedrop. </strong>"},
-                {"is":"text","p":"- trying to understand how to use openGL directly"},
-                {"is":"text","p":"<strong>d.figuring out how I could give the points random Z-depth position without distracting perspective. </strong>"},
-                {"is":"text","p":"- This project will be working in 3D environment. When I give the points Z-depth position then the position of points on output projection screen will appear to be altered as cameara perspective distorts the view matrix. I need to correct this distortion manually, by changing X, Y position of points based on camera focal length."},
-                {"is":"text","p":"<font style='color:#888;'>*LOW PRIORITY</font>"},
-                {"is":"text","p":"<strong>e.User Interface? </strong>"},
-                {"is":"text","p":"- If there is UI so that I could not use mirror display setting, how I could remap my UI view screen's matrix to full screen output projection screen's matrix."},
-                {"is":"text","p":"<font style='color:#ddd; background:#000; font-style:italic; font-weight:600; '>References</font>"},
-                {"is":"video","url":"https://player.vimeo.com/video/27253954?autoplay=0?color=ccc","size":{"w":"720","h":"405"}},
-                {"is":"text","p":"<font style='color:#888;'>MadMapper via <a href=\"https://www.madmapper.com/\" target=\"_blank\">MadMapper official website</a></font>"},
-                {"is":"video","url":"https://player.vimeo.com/video/31992018?autoplay=0?color=ccc","size":{"w":"720","h":"405"}},
-                
-                {"is":"text","p":"<font style='color:#888;'>DMesh via <a href=\"https://dmesh.thedofl.com/\" target=\"_blank\">www.dmesh.thedofl.com/</a></font>"},
-                {"is":"text","p":"<strong>a.What feature differentiates my project from these two references?</strong>"},
-                {"is":"text","p":"DMesh and MadMapper are great tools successfully commercialized. However, these tools are specialized to masking and warping keystone to make texture(image) fit on the target object since these are designed for general projection mapping. The limits of this is that it is hard to make realtime lighting and shading effect to make target object seemed organic polygon."},
-                {"is":"text","p":">My project will focus generate organic polygon object in realtime for giving target objects illusion that will be expanded and modified by lighting and shading. In my opinion, this illusion is the most distinguishing experience with other kind of digital contents. That is because the medium that conveys audience experience is the light which can make us have shape, color, volume, texture for every object. Moreover, projection mappings are available to experience without the typical square screen. For example, when audiences saw a digital content on typical screen, they just assumed that is not real because of the medium which is typical square screen made them realize that is not real but just digital contents. However, the shape of projection screen is just the shape of target object and the form of contents is not the pixel but light itself. So audiences will feel that it is more like special experience in real life not just watching digital contents on screen."}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"",
-                "url":"",
-                "size":{"w":"","h":""}
-            },
-            "category":"creative_coding, show_all"
         },
         {
             "thumbnail_src":"/img/cosmosonic.jpg",
@@ -1081,30 +994,6 @@
                 "size":{"w":"920","h":"521"}
             },
             "category":"selected_works, 3d_mapping, show_all"
-        },
-        {
-            "thumbnail_src":"/img/3-answer.jpg",
-            "id":"006",
-            "title":"ANSWER 'NAK UH'",
-            "description":"Music Video/3m39s/Directing&Producing",
-            "date":"May,2009",
-            "info":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Directing&Producing","credit":"Sehyun Kim(av)"},
-                {"role":"D.O.P","credit":"Jaehyung Choi(bird creative)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/11258321?autoplay=0&color=fff",
-                "size":{"w":"920","h":"518"}
-            },
-            "category":"video_works, show_all"
         },
         {
             "thumbnail_src":"/img/drpepper.jpg",
