@@ -3,7 +3,6 @@ body{
     overflow: hidden;
     margin: 0px;
     padding: 0px;
-    background: #000;
     font-family: Helvetica, arial, sans-serif;
 }   
 canvas{
@@ -28,6 +27,3 @@ canvas{
 ::-webkit-scrollbar-thumb:window-inactive {
     background: #999; 
 }
-
-
-

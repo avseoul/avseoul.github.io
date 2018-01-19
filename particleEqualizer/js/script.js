@@ -1,6 +1,6 @@
 var m_analyzer;
 var m_renderer;
-var m_mouse;
+// var m_mouse;
 var m_render_queue;
 var m_blob;
 var m_pbr;
@@ -17,8 +17,8 @@ var init = function(){
     // init audio input analyzer
     m_analyzer = new AudioAnalyzer();
     // init mouse handler
-    m_mouse = new MouseHandler();
-    m_mouse.register_dom_events(document.body);
+    // m_mouse = new MouseHandler();
+    // m_mouse.register_dom_events(document.body);
     
     // init shared renderer
     var _is_perspective = true;
@@ -32,7 +32,7 @@ var init = function(){
     m_light = new ThreePointLight();
 
     // init blob
-    m_blob = new NoiseBlob(m_renderer, m_mouse, m_analyzer, m_light);
+    m_blob = new NoiseBlob(m_renderer, m_analyzer, m_light);
     m_blob.set_PBR(m_pbr);
     if(_is_retina) m_blob.set_retina();
     

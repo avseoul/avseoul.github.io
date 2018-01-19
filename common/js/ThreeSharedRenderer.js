@@ -7,6 +7,9 @@ var ThreeSharedRenderer = function(_perspective){
         new THREE.OrthographicCamera( -.5, .5, .5, -.5, 1, 10 );
     this.matrix.position.z = 5;
 
+    this.matrix.aspect = this.w / this.h;
+    this.matrix.updateProjectionMatrix();
+
     this.timer = 0;
 
     this.init_renderer();
@@ -30,6 +33,7 @@ ThreeSharedRenderer.prototype.init_renderer = function(){
 
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( this.w, this.h );
+    
     this.renderer.autoClear = false;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.BasicShadowMap;

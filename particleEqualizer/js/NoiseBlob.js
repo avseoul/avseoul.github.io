@@ -1,9 +1,8 @@
-var NoiseBlob = function(_renderer, _mouse_handler, _analyzer, _light){ 
+var NoiseBlob = function(_renderer, _analyzer, _light){ 
     this.is_init = false;
     this.show_hdr = true;
 
     this.renderer = _renderer;
-    this.mouse_handler = _mouse_handler;
     this.audio_analyzer = _analyzer;
     this.light = _light;
 
@@ -17,11 +16,6 @@ var NoiseBlob = function(_renderer, _mouse_handler, _analyzer, _light){
 };
 
 NoiseBlob.prototype.update = function(){ 
-    this.mouse_norm_x = this.mouse_handler.get_norm_x(); 
-    this.mouse_norm_y = this.mouse_handler.get_norm_y();
-    this.mouse_delta_x = this.mouse_handler.get_delta_x();
-    this.mouse_delta_y = this.mouse_handler.get_delta_y();
-
     var _shdrs = [
         this.shdr_mesh, 
         this.shdr_wire, 
@@ -34,8 +28,6 @@ NoiseBlob.prototype.update = function(){
     ];
     var _shdrs_size = _shdrs.length;
     for(var i = 0; i < _shdrs_size; i++){
-        _shdrs[i].uniforms.u_mouse.value = new THREE.Vector2(this.mouse_norm_x, this.mouse_norm_y);
-        _shdrs[i].uniforms.u_mouse_delta = new THREE.Vector2(this.mouse_delta_x, this.mouse_delta_y);
         _shdrs[i].uniforms.u_is_init.value = this.is_init;
         _shdrs[i].uniforms.u_t.value = this.timer;
         
@@ -91,8 +83,6 @@ NoiseBlob.prototype.init_shader = function(){
                 SCREEN_RES: screen_res
             },
             uniforms: {
-                u_mouse: {value: new THREE.Vector2(this.mouse_norm_x, this.mouse_norm_y)},
-                u_mouse_delta: {value: new THREE.Vector2(this.mouse_delta_x, this.mouse_delta_y)},
                 u_t: {value: 0},
                 u_is_init: {value: false},
                 u_audio_high: {value: 0.},

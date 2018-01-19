@@ -1,6 +1,5 @@
 <!--
-    *  'particle equalizer' designed by Sehyun av Kim
-    *  for the class computer graphics 2015 @itp
+    *  'webgl glitch' designed by Sehyun av Kim
     *
     *  av.seoul@gmail.com
     *  http://avseoul.net
@@ -19,19 +18,21 @@
         <!--tools-->
         <script type="text/javascript" src="../common/js/AudioAnalyzer.js"></script>
         <script type="text/javascript" src="../common/js/ThreeSharedRenderer.js"></script>
-        <script type="text/javascript" src="../common/js/ThreePBR.js"></script>
-        <script type="text/javascript" src="../common/js/ThreePointLight.js"></script>
         <script type="text/javascript" src="../common/js/DeviceChecker.js"></script>
         <!--shaders-->
-        <script type="text/javascript" src="shaders/blob.vert.js"></script>
-        <script type="text/javascript" src="shaders/blob.frag.js"></script>
-        <script type="text/javascript" src="shaders/skybox.vert.js"></script>
-        <script type="text/javascript" src="shaders/skybox.frag.js"></script>
+        <script type="text/javascript" src="shaders/shared.vert.js"></script>
+        <script type="text/javascript" src="shaders/ratio_correct.vert.js"></script>
+        <script type="text/javascript" src="shaders/bad_signals.frag.js"></script>
+        <script type="text/javascript" src="shaders/hor_move.frag.js"></script>
+        <script type="text/javascript" src="shaders/intense.frag.js"></script>
+        <script type="text/javascript" src="shaders/master.frag.js"></script>
+        <script type="text/javascript" src="shaders/subtle.frag.js"></script>
+        <script type="text/javascript" src="shaders/vhs.frag.js"></script>
         <!--objects-->
-        <script type="text/javascript" src="js/NoiseBlob.js"></script>
+        <script type="text/javascript" src="js/Glitch.js"></script>
         <script type="text/javascript" src="js/Ctrl.js"></script>
         <!--main-->
-        <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <canvas></canvas>
