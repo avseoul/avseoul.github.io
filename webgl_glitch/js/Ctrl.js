@@ -10,11 +10,12 @@ var Ctrl = function(_tar, _analyzer){
 
 	_ctr.add(this.params, 'audio_gain', 0., 500.).onChange( this.update_params.bind(this) );
 
-    _ctr.add(_tar, 'is_hor_move')
-    _ctr.add(_tar, 'is_vhs')
-    _ctr.add(_tar, 'is_subtle')
-    _ctr.add(_tar, 'is_intense')
-    _ctr.add(_tar, 'is_bad_signals')
+    _ctr.add(_tar, 'master_ziggle').onChange( _tar.update_triggers.bind(_tar) );
+    _ctr.add(_tar, 'monochrome').onChange( _tar.update_triggers.bind(_tar) );
+    _ctr.add(_tar, 'low_wave').onChange( _tar.update_triggers.bind(_tar) );
+    _ctr.add(_tar, 'high_wave').onChange( _tar.update_triggers.bind(_tar) );
+    _ctr.add(_tar, 'bad_signals').onChange( _tar.update_triggers.bind(_tar) );
+    _ctr.add(_tar, 'VHS').onChange( _tar.update_triggers.bind(_tar) );
 };
 
 Ctrl.prototype.update_params = function(){

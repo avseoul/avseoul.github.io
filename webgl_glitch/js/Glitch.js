@@ -7,14 +7,15 @@ var Glitch = function(_renderer, _analyzer, _is_retina, _is_mobile){
     this.is_retina = _is_retina;
     this.is_mobile = _is_mobile;
 
-    this.is_hor_move = false;
-    this.is_vhs = false;
-    this.is_subtle = false;
-    this.is_intense = false;
-    this.is_bad_signals = false;
+    this.master_ziggle = true;
+    this.monochrome = true;
+    this.low_wave = true;
+    this.high_wave = true;
+    this.bad_signals = true;
+    this.VHS = true;
 
-    this.w = _is_retina ? _renderer.w * 1. : _renderer.w;
-    this.h = _is_retina ? _renderer.h * 1. : _renderer.h;
+    this.w = _renderer.w;
+    this.h = _renderer.h;
 
     this.matrix = _renderer.matrix;
 
@@ -48,39 +49,9 @@ Glitch.prototype.update = function(){
     this.shdr_pass.uniforms.u_tex_src.value = this.tex_test_pattern_original;
     this.frame ^= 1;
     this.renderer.renderer.render( this.scene_pass, _cam, this.frame_buffer[this.frame]);
-
-    if(this.is_hor_move){
-	    this.shdr_hor_move.uniforms.u_tex_src.value = this.frame_buffer[this.frame];
-	    this.frame ^= 1;
-	    this.renderer.renderer.render( this.scene_hor_move, _cam, this.frame_buffer[this.frame]);
-	}
-
-    if(this.is_vhs){
-        this.shdr_vhs.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
-        this.frame ^= 1;
-        this.renderer.renderer.render( this.scene_vhs, _cam, this.frame_buffer[this.frame]);
-    }
-
-    if(this.is_intense){
-        this.shdr_intense.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
-        this.frame ^= 1;
-        this.renderer.renderer.render( this.scene_intense, _cam, this.frame_buffer[this.frame]);
-    }
     
-    if(this.is_subtle){
-        this.shdr_subtle.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
-        this.frame ^= 1;
-        this.renderer.renderer.render( this.scene_subtle, _cam, this.frame_buffer[this.frame]);
-    }
-
-    if(this.is_bad_signals){
-    	this.shdr_bad_signals.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
-        this.frame ^= 1;
-        this.renderer.renderer.render( this.scene_bad_signals, _cam, this.frame_buffer[this.frame]);
-    }
-
-    this.shdr_master.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
-    this.renderer.renderer.render( this.scene_master, _cam);
+    this.shdr_glitch.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
+    this.renderer.renderer.render( this.scene_glitch, _cam);
 
     if(!this.is_init){ 
         this.is_init = true;
@@ -94,23 +65,8 @@ Glitch.prototype.update = function(){
 Glitch.prototype.init_scene = function(){
     var _geom = new THREE.PlaneBufferGeometry(1., 1., this.w, this.h);
 
-    this.scene_bad_signals = new THREE.Scene();
-    this.scene_bad_signals.add(new THREE.Mesh(_geom, this.shdr_bad_signals));
-
-    this.scene_hor_move = new THREE.Scene();
-    this.scene_hor_move.add(new THREE.Mesh(_geom, this.shdr_hor_move));
-
-    this.scene_intense = new THREE.Scene();
-    this.scene_intense.add(new THREE.Mesh(_geom, this.shdr_intense));
-
-    this.scene_subtle = new THREE.Scene();
-    this.scene_subtle.add(new THREE.Mesh(_geom, this.shdr_subtle));
-
-    this.scene_vhs = new THREE.Scene();
-    this.scene_vhs.add(new THREE.Mesh(_geom, this.shdr_vhs));
-
-    this.scene_master = new THREE.Scene();
-    this.scene_master.add(new THREE.Mesh(_geom, this.shdr_master));
+    this.scene_glitch = new THREE.Scene();
+    this.scene_glitch.add(new THREE.Mesh(_geom, this.shdr_glitch));
 
     this.scene_pass = new THREE.Scene();
     this.scene_pass.add(new THREE.Mesh(_geom, this.shdr_pass));
@@ -137,8 +93,8 @@ Glitch.prototype.init_buffer = function(){
 
 Glitch.prototype.init_texture = function(){
 	this.tex_test_pattern_original = new THREE.TextureLoader().load( 
-		// "../common/assets/test_pattern_original.jpg", 
-        "../common/assets/test_01.jpg", 
+		"../common/assets/test_pattern_original.jpg", 
+        // "../common/assets/test_01.jpg", 
 		_callback.bind(this),
 		undefined,
 		function ( err ) {
@@ -185,13 +141,13 @@ Glitch.prototype.init_shader = function(){
             fragmentShader: _frag
         });
     };
-
-    this.shdr_bad_signals = load(shared_vert, bad_signals_frag);
-    this.shdr_hor_move = load(shared_vert, hor_move_frag);
-    this.shdr_intense = load(shared_vert, intense_frag);
-    this.shdr_subtle = load(shared_vert, subtle_frag);
-    this.shdr_vhs = load(shared_vert, vhs_frag);
-    this.shdr_master = load(shared_vert, master_frag);
+    this.shdr_glitch = load(shared_vert, glitch_frag);
+    this.shdr_glitch.uniforms.is_master_ziggle = {value: this.master_ziggle};
+    this.shdr_glitch.uniforms.is_monochrome = {value: this.monochrome};
+    this.shdr_glitch.uniforms.is_low_wave = {value: this.low_wave};
+    this.shdr_glitch.uniforms.is_high_wave = {value: this.high_wave};
+    this.shdr_glitch.uniforms.is_bad_signals = {value: this.bad_signals};
+    this.shdr_glitch.uniforms.is_VHS = {value: this.VHS};
 
     this.shdr_pass = new THREE.ShaderMaterial( 
         { 
@@ -206,13 +162,17 @@ Glitch.prototype.init_shader = function(){
         });
 
     this.shdr_batch = [
-    	this.shdr_bad_signals, 
-    	this.shdr_hor_move,
-    	this.shdr_intense,
-    	this.shdr_subtle,
-    	this.shdr_vhs,
-    	this.shdr_master
+    	this.shdr_glitch
     ];
+};
+
+Glitch.prototype.update_triggers = function(){
+    this.shdr_glitch.uniforms.is_master_ziggle.value = this.master_ziggle;
+    this.shdr_glitch.uniforms.is_monochrome.value = this.monochrome;
+    this.shdr_glitch.uniforms.is_low_wave.value = this.low_wave;
+    this.shdr_glitch.uniforms.is_high_wave.value = this.high_wave;
+    this.shdr_glitch.uniforms.is_bad_signals.value = this.bad_signals;
+    this.shdr_glitch.uniforms.is_VHS.value = this.VHS;
 };
 
 

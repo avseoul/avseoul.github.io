@@ -83,7 +83,7 @@ AudioAnalyzer.prototype.update = function(){
             
             var _pass_size = this.buffer_length/3.;
             for(var i = 0; i < this.buffer_length; i++){
-                var _val = Math.pow(this.audio_buffer[i] / 256., 1.);
+                var _val = Math.pow(this.audio_buffer[i] / 256., 2.);
 
                 if(i < _pass_size)
                     _bass += _val;

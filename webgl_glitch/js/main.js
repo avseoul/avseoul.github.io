@@ -4,6 +4,8 @@ var m_renderer;
 var m_render_queue;
 var m_device_checker;
 var m_ctrl;
+var m_stats;
+
 
 var init = function(){
     // device_checker
@@ -30,11 +32,18 @@ var init = function(){
 
     // gui
     m_ctrl = new Ctrl(m_glitch, m_analyzer);
+
+    // stats
+    m_stats = new Stats();
+    m_stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( m_stats.dom );
 };
 
 
 var update = function(){
     requestAnimationFrame( update );
+
+    m_stats.begin();
 
     // update audio analyzer
     m_analyzer.update();
@@ -44,6 +53,8 @@ var update = function(){
 
     // update renderer
     m_renderer.render(m_render_queue);
+
+    m_stats.end();
 
 };
 
