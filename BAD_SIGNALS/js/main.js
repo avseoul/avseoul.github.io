@@ -62,7 +62,7 @@ var update = function(){
 
 document.addEventListener('DOMContentLoaded', function(){
     if(window.location.protocol == 'http:' && window.location.hostname != "localhost"){
-        window.open(window.location.hostname + window.location.pathname,'_top');
+        window.open("https://" + window.location.hostname + window.location.pathname,'_top');
     } else {
         init();
         update();
