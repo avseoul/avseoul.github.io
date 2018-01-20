@@ -7,12 +7,14 @@ var Glitch = function(_renderer, _analyzer, _is_retina, _is_mobile){
     this.is_retina = _is_retina;
     this.is_mobile = _is_mobile;
 
-    this.master_ziggle = true;
-    this.monochrome = true;
-    this.low_wave = true;
-    this.high_wave = true;
-    this.bad_signals = true;
-    this.VHS = true;
+    this.master_ziggle = false;
+    this.monochrome = false;
+    this.ntsc_roll = false;
+    this.bad_signals = false;
+    this.VHS = false;
+    this.image_fit_horizontal = false;
+    this.add_noise = false;
+    this.rgb_shifting = false;
 
     this.w = _renderer.w;
     this.h = _renderer.h;
@@ -93,8 +95,7 @@ Glitch.prototype.init_buffer = function(){
 
 Glitch.prototype.init_texture = function(){
 	this.tex_test_pattern_original = new THREE.TextureLoader().load( 
-		"../common/assets/test_pattern_original.jpg", 
-        // "../common/assets/test_01.jpg", 
+		"../common/assets/test_pattern_black.jpg", 
 		_callback.bind(this),
 		undefined,
 		function ( err ) {
@@ -116,6 +117,27 @@ Glitch.prototype.init_texture = function(){
         this.shdr_pass.uniforms.u_src_res.value = _tex_res;
 	}
 };
+
+// Glitch.prototype.init_video_texture = function(_video){
+//     if(_video){
+//         this.tex_webcam = new THREE.VideoTexture( _video );
+
+//         this.tex_webcam.wrapS = THREE.ClampToEdgeWrapping;
+//         this.tex_webcam.wrapT = THREE.ClampToEdgeWrapping;
+//         this.tex_webcam.minFilter = THREE.LinearFilter;
+//         this.tex_webcam.magFilter = THREE.LinearFilter;
+//         this.tex_webcam.format = THREE.RGBFormat;
+
+//         // update shader with the ratio 
+//         var _tex_res = new THREE.Vector2(
+//             _video.videoWidth,
+//             _video.videoHeight);
+        
+//         this.shdr_pass.uniforms.u_src_res.value = _tex_res;
+//     } else {
+//         alert("no video stream found. test pattern will be rendered instead");
+//     }
+// };
 
 Glitch.prototype.init_shader = function(){
     var _screen_res = 'vec2( ' + this.w.toFixed( 1 ) +', ' + this.h.toFixed( 1 ) + ')';
@@ -142,19 +164,24 @@ Glitch.prototype.init_shader = function(){
         });
     };
     this.shdr_glitch = load(shared_vert, glitch_frag);
+    
+    // for ctrler
+    // triggers
     this.shdr_glitch.uniforms.is_master_ziggle = {value: this.master_ziggle};
     this.shdr_glitch.uniforms.is_monochrome = {value: this.monochrome};
-    this.shdr_glitch.uniforms.is_low_wave = {value: this.low_wave};
-    this.shdr_glitch.uniforms.is_high_wave = {value: this.high_wave};
+    this.shdr_glitch.uniforms.is_ntsc_roll = {value: this.ntsc_roll};
     this.shdr_glitch.uniforms.is_bad_signals = {value: this.bad_signals};
     this.shdr_glitch.uniforms.is_VHS = {value: this.VHS};
+    this.shdr_glitch.uniforms.is_noise = {value: this.add_noise};
+    this.shdr_glitch.uniforms.is_rgb_shift = {value: this.rgb_shifting};
 
     this.shdr_pass = new THREE.ShaderMaterial( 
         { 
             uniforms: {
             	u_tex_src: {value: null},
                 u_src_res: {value: new THREE.Vector2(1.,1.)},
-                u_screen_res: {value: new THREE.Vector2(this.w, this.h)}
+                u_screen_res: {value: new THREE.Vector2(this.w, this.h)},
+                is_fit_horizontal: {value: this.image_fit_horizontal}
             },
             depthTest: {value: false},
             vertexShader:   ratio_correct_vert,
@@ -169,10 +196,13 @@ Glitch.prototype.init_shader = function(){
 Glitch.prototype.update_triggers = function(){
     this.shdr_glitch.uniforms.is_master_ziggle.value = this.master_ziggle;
     this.shdr_glitch.uniforms.is_monochrome.value = this.monochrome;
-    this.shdr_glitch.uniforms.is_low_wave.value = this.low_wave;
-    this.shdr_glitch.uniforms.is_high_wave.value = this.high_wave;
+    this.shdr_glitch.uniforms.is_ntsc_roll.value = this.ntsc_roll;
     this.shdr_glitch.uniforms.is_bad_signals.value = this.bad_signals;
     this.shdr_glitch.uniforms.is_VHS.value = this.VHS;
+    this.shdr_glitch.uniforms.is_noise.value = this.add_noise;
+    this.shdr_glitch.uniforms.is_rgb_shift.value = this.rgb_shifting;
+
+    this.shdr_pass.uniforms.is_fit_horizontal.value = this.image_fit_horizontal;
 };
 
 

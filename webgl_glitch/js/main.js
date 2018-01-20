@@ -19,7 +19,7 @@ var init = function(){
     // init shared renderer
     m_renderer = new ThreeSharedRenderer(false);
     m_renderer.append_renderer_to_dom(document.body);
-    m_renderer.renderer.setClearColor(new THREE.Color(0xeeeeee), 1.);
+    m_renderer.renderer.setClearColor(new THREE.Color(0x000000), 1.);
     m_renderer.renderer.autoClear = true;
 
     // init glitch

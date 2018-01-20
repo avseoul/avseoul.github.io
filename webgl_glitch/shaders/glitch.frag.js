@@ -14,10 +14,11 @@ uniform float u_audio_history;
 uniform bool is_master_ziggle;
 uniform bool is_monochrome;
 uniform bool is_ntsc_rolling;
-uniform bool is_low_wave;
-uniform bool is_high_wave;
+uniform bool is_ntsc_roll;
 uniform bool is_bad_signals;
 uniform bool is_VHS;
+uniform bool is_noise;
+uniform bool is_rgb_shift;
 
 uniform sampler2D u_tex_src;
 
@@ -58,6 +59,8 @@ void main(){
 
 	vec2 m_noise_seed = vec2(m_aframe*10., m_uv.y);
 
+	float m_flicker = noise(vec2(.0, m_uv.y-m_aframe*10.));
+
 	// slice vars
 	const float m_num_slice = 5.;
 	float m_slice = floor(m_uv.y * m_num_slice);
@@ -80,28 +83,28 @@ void main(){
 	}
 
 	// wave
-	{
-		// low 
-		if(is_low_wave){ 
-			m_glitch += (noise(m_noise_seed * 5.) * .1 * m_abass);
-		}
+	if(is_ntsc_roll){
+		// add wave
+		m_glitch += pow(noise(m_noise_seed * 5.), 3.) * .2 * m_abass;
+	}
 
-		// high
-		if(is_high_wave){ 
-			m_glitch += (noise(m_noise_seed * 100.) * (.01 * m_ahigh));
+	// render image 
+	{
+		float rgb_shift = is_rgb_shift ? .3 * m_ahigh * m_glitch + .008 * m_alevel : 0.;
+		if(is_monochrome){
+			c.r = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch + rgb_shift, 0.))).g;
+			c.g = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch, 0.0))).g;
+			c.b = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch - rgb_shift, 0.))).g;
+		} else {
+			c.r = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch + rgb_shift, 0.))).r;
+			c.g = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch, 0.0))).g;
+			c.b = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch - rgb_shift, 0.))).b;
 		}
 	}
 
-	// rgb shifting
-	float rgb_shift = .5 * m_ahigh * m_glitch;
-	if(is_monochrome){
-		c.r = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch + rgb_shift, 0.))).g;
-		c.g = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch, 0.0))).g;
-		c.b = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch - rgb_shift, 0.))).g;
-	} else {
-		c.r = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch + rgb_shift, 0.))).r;
-		c.g = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch, 0.0))).g;
-		c.b = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch - rgb_shift, 0.))).b;
+	// ntsc rolling flicker bar
+	if(is_ntsc_roll){	
+		c = mix(c, vec3(0.), m_flicker * 3.);
 	}
 
 	// VHS blend ziggle
@@ -113,29 +116,18 @@ void main(){
 		c /= 2.;
 	}
 
-	// ntsc rolling bar
-	{
-		c = mix(c, vec3(0.), pow(m_glitch,2.) * 30.);
-	}
-
 	// bad signal
 	if(is_bad_signals){
-		vec2 _seed = vec2(0., m_uv.y - m_aframe);
-		float _mag = 1.+m_ahigh;
-		float _invert_strength = .4;
-		float _matte = ( noise(_seed * 10. * _mag) ) * (_invert_strength * _mag);
-
-		float _noise_width = .01 * m_ahigh;
+		float _noise_width = .005 * m_ahigh;
 		vec2 _bad_uv = fract(
-			m_uv + m_glitch 
-			+ hash(m_uv.yy + u_audio_history) * _noise_width 
-			+ _matte*.01);
+			m_uv + m_glitch
+			 + hash(m_uv.yy + m_aframe) * _noise_width);
 		
-		vec3 _bad = texture2D(u_tex_src, _bad_uv).ggg;
+		vec3 _bad = texture2D(u_tex_src, _bad_uv).rgb;
 		if(is_monochrome)
 			_bad *= _bad;
 
-		c = mix(_bad, c, _matte * 10. * m_alevel);
+		c = mix(c, vec3(_bad.r+_bad.g+_bad.b)/3., pow(m_flicker, 2.) * m_alevel * 10.);
 	}
 
 	// VHS color bar burn 
@@ -161,10 +153,20 @@ void main(){
 		}
 	}
 
+	// add master noise blend
+	if(is_noise){
+		float _nr = hash(m_uv.xy + m_ahigh + u_t*.01);
+		float _ng = hash(m_uv.xy + m_amid + u_t*.01);
+		float _nb = hash(m_uv.xy + m_abass + u_t*.01);
+		vec3 _noise = vec3(_nr, _ng, _nb);
+
+		c += _noise * .4;
+	}
+
 	// VHS master blend
-	if(is_VHS){
-		m_uv.y = fract( m_uv.y + noise( vec2(m_alevel * 10., 0) )*.1 );
-		vec3 m_master = texture2D(u_tex_src, fract(m_uv + m_glitch + hash(m_uv.y*9827233., m_aframe) * .0001)).rgb;
+	if(is_VHS || is_ntsc_roll){
+		m_uv.y = fract( m_uv.y + (.5-noise( vec2(m_alevel * 10., 0) ))*.2 );
+		vec3 m_master = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch,0.) + hash(m_uv.y*9827233., m_aframe) * .0001)).rgb;
 
 		if(is_monochrome)
 			m_master.r = m_master.g = m_master.b;
