@@ -16,8 +16,8 @@ var Glitch = function(_renderer, _analyzer, _is_retina, _is_mobile){
     this.add_noise = false;
     this.rgb_shifting = false;
 
-    this.w = _renderer.w;
-    this.h = _renderer.h;
+    this.w = _renderer.w / 5.;
+    this.h = _renderer.h / 5.;
 
     this.matrix = _renderer.matrix;
 
@@ -52,6 +52,10 @@ Glitch.prototype.update = function(){
     this.frame ^= 1;
     this.renderer.renderer.render( this.scene_pass, _cam, this.frame_buffer[this.frame]);
     
+    this.shdr_VHS.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
+    this.frame ^= 1;
+    this.renderer.renderer.render( this.scene_VHS, _cam, this.frame_buffer[this.frame]);
+
     this.shdr_glitch.uniforms.u_tex_src.value = this.frame_buffer[this.frame].texture;
     this.renderer.renderer.render( this.scene_glitch, _cam);
 
@@ -69,6 +73,9 @@ Glitch.prototype.init_scene = function(){
 
     this.scene_glitch = new THREE.Scene();
     this.scene_glitch.add(new THREE.Mesh(_geom, this.shdr_glitch));
+
+    this.scene_VHS = new THREE.Scene();
+    this.scene_VHS.add(new THREE.Mesh(_geom, this.shdr_VHS));
 
     this.scene_pass = new THREE.Scene();
     this.scene_pass.add(new THREE.Mesh(_geom, this.shdr_pass));
@@ -95,7 +102,9 @@ Glitch.prototype.init_buffer = function(){
 
 Glitch.prototype.init_texture = function(){
 	this.tex_test_pattern_original = new THREE.TextureLoader().load( 
-		"../common/assets/test_pattern_black.jpg", 
+		// "../common/assets/test_pattern_black.jpg", 
+        // "../common/assets/test_01.jpg", 
+        "../common/assets/test_pattern_ntsc.png", 
 		_callback.bind(this),
 		undefined,
 		function ( err ) {
@@ -164,6 +173,7 @@ Glitch.prototype.init_shader = function(){
         });
     };
     this.shdr_glitch = load(shared_vert, glitch_frag);
+    this.shdr_VHS = load(shared_vert, VHS_frag);
     
     // for ctrler
     // triggers
@@ -175,21 +185,15 @@ Glitch.prototype.init_shader = function(){
     this.shdr_glitch.uniforms.is_noise = {value: this.add_noise};
     this.shdr_glitch.uniforms.is_rgb_shift = {value: this.rgb_shifting};
 
-    this.shdr_pass = new THREE.ShaderMaterial( 
-        { 
-            uniforms: {
-            	u_tex_src: {value: null},
-                u_src_res: {value: new THREE.Vector2(1.,1.)},
-                u_screen_res: {value: new THREE.Vector2(this.w, this.h)},
-                is_fit_horizontal: {value: this.image_fit_horizontal}
-            },
-            depthTest: {value: false},
-            vertexShader:   ratio_correct_vert,
-            fragmentShader: master_frag
-        });
+    this.shdr_pass = load(ratio_correct_vert, feed_frag);
+    this.shdr_pass.uniforms.u_src_res = {value: new THREE.Vector2(1.,1.)};
+    this.shdr_pass.uniforms.u_screen_res = {value: new THREE.Vector2(this.w, this.h)};
+    this.shdr_pass.uniforms.is_fit_horizontal = {value: this.image_fit_horizontal};
 
     this.shdr_batch = [
-    	this.shdr_glitch
+    	this.shdr_glitch,
+        this.shdr_VHS,
+        this.shdr_pass
     ];
 };
 
