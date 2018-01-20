@@ -16,8 +16,8 @@ var Glitch = function(_renderer, _analyzer, _is_retina, _is_mobile){
     this.add_noise = false;
     this.rgb_shifting = false;
 
-    this.w = _renderer.w / 5.;
-    this.h = _renderer.h / 5.;
+    this.w = _is_retina ? _renderer.w / 4. : _renderer.w / 2.;
+    this.h = _is_retina ? _renderer.h / 4. : _renderer.h / 2.;
 
     this.matrix = _renderer.matrix;
 

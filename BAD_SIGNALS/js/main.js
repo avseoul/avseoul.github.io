@@ -30,19 +30,20 @@ var init = function(){
         m_glitch.update.bind(m_glitch)
     ];
 
-    // gui
-    m_ctrl = new Ctrl(m_glitch, m_analyzer);
-
     // stats
     m_stats = new Stats();
     m_stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    m_stats.dom.id = "stats";
     document.body.appendChild( m_stats.dom );
+
+    // gui
+    m_ctrl = new Ctrl(m_glitch, m_analyzer);
 };
 
 
 var update = function(){
     requestAnimationFrame( update );
-
+    
     m_stats.begin();
 
     // update audio analyzer
