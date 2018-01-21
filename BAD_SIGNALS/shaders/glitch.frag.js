@@ -67,13 +67,6 @@ void main(){
     float m_rand = hash(m_slice/m_num_slice + .4562341, 0.);
     m_rand *= hash(m_rand/m_num_slice, m_aframe);
 
-	// master ziggle
-	if(is_master_ziggle){	
-		m_uv.y -= m_aframe * .1;
-		m_uv.y += m_abass;
-		m_uv.y -= pow((1.-2.*m_ahigh), 3.) * .12;
-	}
-
 	// VHS color bar ziggle
 	if(is_VHS){
 		// up&down ziggle
@@ -84,10 +77,17 @@ void main(){
 
 	// wave
 	if(is_ntsc_roll){
-		m_glitch += pow(noise(m_noise_seed * .2), 2.) * .5 * m_abass; // big shear 
-		m_glitch -= pow(noise(m_noise_seed * 1.), 7.) * .5 * m_amid; // low freq wav
-		m_glitch += pow(noise(m_noise_seed * 15.), 25.) * .5 * m_ahigh; // hi freq wav R
-		m_glitch -= pow(noise(m_noise_seed * 30.), 25.) * .5 * m_ahigh; // hi freq wav L
+		// big shear
+		m_glitch += pow(noise(m_noise_seed * .2), 2.) * .5 * m_abass;
+		m_glitch -= pow(noise(-m_noise_seed * .2), 2.) * .5 * m_abass; 
+
+		// low freq wav
+		m_glitch += pow(noise(m_noise_seed * 1.), 15.) * .5 * m_amid; 
+		m_glitch -= pow(noise(-m_noise_seed * 1.), 15.) * .5 * m_amid; 
+		
+		// tiny hi freq ziggle 
+		m_glitch += pow(noise(m_noise_seed * 15.), 10.) * .5 * m_ahigh; 
+		m_glitch -= pow(noise(-m_noise_seed * 30.), 10.) * .5 * m_ahigh; 
 	}
 
 	// render image 
@@ -106,7 +106,7 @@ void main(){
 
 	// ntsc rolling flicker bar
 	if(is_ntsc_roll){	
-		c = mix(c, vec3(0.), m_glitch * 50.);
+		// c = mix(c, vec3(0.), m_glitch * 50.);
 	}
 
 	// VHS blend ziggle
@@ -116,20 +116,6 @@ void main(){
 		vec3 m_blend_ziggle = texture2D(u_tex_src, fract(m_ziggle_uv)).rgb;
 		c += m_blend_ziggle;
 		c /= 2.;
-	}
-
-	// bad signal
-	if(is_bad_signals){
-		float _noise_width = .005 * m_ahigh;
-		vec2 _bad_uv = fract(
-			m_uv + m_glitch
-			 + hash(m_uv.yy + m_aframe) * _noise_width);
-		
-		vec3 _bad = texture2D(u_tex_src, _bad_uv).rgb;
-		if(is_monochrome)
-			_bad *= _bad;
-
-		c = mix(c, vec3(_bad.r+_bad.g+_bad.b)/3., pow(m_flicker, 2.) * m_alevel * 10.);
 	}
 
 	// VHS color bar burn 
@@ -154,31 +140,6 @@ void main(){
 				c.r = c.g = c.b;
 		}
 	}
-
-	// add master noise blend
-	if(is_noise){
-		float _nr = hash(m_uv.xy + m_ahigh + u_t*.01);
-		float _ng = hash(m_uv.xy + m_amid + u_t*.01);
-		float _nb = hash(m_uv.xy + m_abass + u_t*.01);
-		vec3 _noise = vec3(_nr, _ng, _nb);
-
-		c += _noise * .4;
-	}
-
-	// // VHS master blend
-	// if(is_VHS || is_ntsc_roll){
-	// 	m_uv.y = fract( m_uv.y + (.5-noise( vec2(m_alevel * 10., 0) ))*.2 );
-	// 	vec3 m_master = texture2D(u_tex_src, fract(m_uv + vec2(m_glitch,0.) + hash(m_uv.y*9827233., m_aframe) * .0001)).rgb;
-
-	// 	if(is_monochrome)
-	// 		m_master.r = m_master.g = m_master.b;
-
-	// 	c += m_master;
-	// 	c /= 2.;
-
-	// 	// contrast
-	// 	c = pow(c, vec3(2.1)) * 3.;
-	// }
 
 	gl_FragColor = vec4(c, 1.);
 }

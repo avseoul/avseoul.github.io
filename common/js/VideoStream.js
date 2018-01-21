@@ -1,6 +1,7 @@
-var VideoStream = function(_callback){
-	var constraints = { audio: false, video: {width: 1920, height:1080} }; 
+var VideoStream = function(_w, _h, _callback){
+	var constraints = { audio: false, video: {width: _w, height:_h} }; 
 	this.video = document.createElement("video");
+	// document.body.appendChild(this.video);
 
 	navigator.mediaDevices.getUserMedia(constraints)
 	.then( function(mediaStream) {

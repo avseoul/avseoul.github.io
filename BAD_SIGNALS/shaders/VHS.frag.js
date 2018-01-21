@@ -44,15 +44,44 @@ void main(){
 	float m_alevel = u_audio_level;
 	float m_aframe = u_audio_history * .1;
 
+	// slice bars
+	const float m_num_slice = 5.;
+	float m_slice = floor(m_uv.y * m_num_slice);
+    float m_rand = hash(m_slice/m_num_slice + .1 , 0.);
+    // m_rand *= hash(m_rand/m_num_slice, m_aframe);
+
 	// vertical ziggle
-	m_uv.y -= (.5 - m_ahigh) * .03 + m_aframe*m_alevel;
+	m_uv.y -= pow(m_alevel, 5.)*.1*pow(m_abass, 5.);
+
+	// wave
+	{
+		vec2 _seed_a = vec2(m_alevel, m_uv.y) + 80.*u_t;
+		vec2 _seed_b = vec2(-m_alevel, m_uv.y) - 100.*u_t;
+
+		float _low = 0., _high = 0.;
+
+		// big shear
+		_low += pow(noise(_seed_a), 10.) * .35 * m_alevel;
+		_low -= pow(noise(_seed_b), 10.) * .35 * m_alevel; 
+
+		// low freq wav
+		_high += pow(noise(_seed_a * 50.), 10.) * 10.5 * m_ahigh; 
+		_high -= pow(noise(-_seed_b * 50.), 10.) * 10.5 * m_ahigh; 
+
+		float _matte = noise(m_uv*.5 + m_aframe);
+		m_uv.x += (_low+_high)*m_rand*.1;
+	}
  	
- 	// rgb shifting
- 	float _interlace_noise = (.5-hash(m_uv.yy + m_aframe)) * .0008;
- 	float _rs_offset = .02;
- 	float _r = texture2D(u_tex_src, fract(m_uv + _interlace_noise + vec2(-(.5-m_ahigh)*_rs_offset, 0.) )).r;
- 	float _g = texture2D(u_tex_src, fract(m_uv + _interlace_noise + vec2(-(.5-m_amid )*_rs_offset, 0.) )).g;
- 	float _b = texture2D(u_tex_src, fract(m_uv + _interlace_noise + vec2(-(.5-m_abass)*_rs_offset, 0.) )).b;
+ 	// chromatic aberration rgb shifting
+ 	float _r, _g, _b;
+ 	{
+ 		vec2 _dir = normalize(vec2(.5) - m_uv);
+ 		float _dist = distance(m_uv, vec2(.5));
+	 	vec2 _offset = _dir * _dist * .04;
+	 	_r = texture2D(u_tex_src, fract(m_uv + m_ahigh*_offset )).r;
+	 	_g = texture2D(u_tex_src, fract(m_uv + m_amid*_offset )).g;
+	 	_b = texture2D(u_tex_src, fract(m_uv + m_abass*_offset )).b;
+	}
 
  	// layer
  	vec3 m_src = vec3(_r, _g, _b);
@@ -66,7 +95,7 @@ void main(){
 	 	m_src = mix(m_src, m_bad, _seed);
 	}
 
- 	// noise color burn 
+ 	// noise pattern color burn 
  	{
 	 	float _noise = (.5-noise( vec2(v_uv.x, v_uv.y - u_t*10.) * 1. )) * m_alevel;
 	 	float _seed = distance(v_uv + _noise, vec2(.5));
@@ -79,7 +108,7 @@ void main(){
 	float _nb = hash(m_uv.xy + m_abass + u_t*.01);
 	vec3 _noise = vec3(_nr, _ng, _nb);
 
-	m_src += _noise * .04 * (1.+m_ahigh);
+	m_src += _noise * .06;
  	
  	gl_FragColor = vec4(m_src, 1.);
 

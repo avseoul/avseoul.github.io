@@ -5,6 +5,7 @@ var m_render_queue;
 var m_device_checker;
 var m_ctrl;
 var m_stats;
+var m_video;
 
 
 var init = function(){
@@ -24,6 +25,9 @@ var init = function(){
 
     // init glitch
     m_glitch = new Glitch(m_renderer, m_analyzer, _is_retina, _is_mobile);
+
+    //
+    m_video = new VideoStream(320, 240, m_glitch.init_video_texture);
     
     // setup render queue
     m_render_queue = [

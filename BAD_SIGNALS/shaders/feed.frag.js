@@ -14,8 +14,14 @@ uniform float u_audio_level;
 uniform float u_audio_history;
 
 uniform sampler2D u_tex_src;
+uniform sampler2D u_tex_blend;
 
 void main(){
-    gl_FragColor = texture2D( u_tex_src, v_uv);
+	vec3 m_src = texture2D( u_tex_src, v_uv).rgb;
+	vec3 m_blend = texture2D( u_tex_blend, v_uv).rgb;
+
+	vec3 m_c = m_src - m_blend;
+
+    gl_FragColor = vec4(m_c, 1.);
 }
 `;
