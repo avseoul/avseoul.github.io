@@ -16,6 +16,8 @@ var Glitch = function(_renderer, _analyzer, _is_retina, _is_mobile){
     this.add_noise = false;
     this.rgb_shifting = false;
 
+    this.tex_blend;
+
     this.w = _is_retina ? _renderer.w / 2. : _renderer.w / 1.;
     this.h = _is_retina ? _renderer.h / 2. : _renderer.h / 1.;
 
@@ -137,17 +139,15 @@ Glitch.prototype.init_texture = function(){
 };
 
 Glitch.prototype.init_video_texture = function(_video){
-    if(_video){
-        this.tex_blend = new THREE.VideoTexture( _video );
+    this.tex_blend = new THREE.VideoTexture( _video );
 
-        this.tex_blend.wrapS = THREE.ClampToEdgeWrapping;
-        this.tex_blend.wrapT = THREE.ClampToEdgeWrapping;
-        this.tex_blend.minFilter = THREE.LinearFilter;
-        this.tex_blend.magFilter = THREE.LinearFilter;
-        this.tex_blend.format = THREE.RGBFormat;
-    } else {
-        alert("no video stream found. test pattern will be rendered instead");
-    }
+    this.tex_blend.wrapS = THREE.ClampToEdgeWrapping;
+    this.tex_blend.wrapT = THREE.ClampToEdgeWrapping;
+    this.tex_blend.minFilter = THREE.LinearFilter;
+    this.tex_blend.magFilter = THREE.LinearFilter;
+    this.tex_blend.format = THREE.RGBFormat;
+
+    
 };
 
 Glitch.prototype.init_shader = function(){

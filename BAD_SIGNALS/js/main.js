@@ -27,7 +27,7 @@ var init = function(){
     m_glitch = new Glitch(m_renderer, m_analyzer, _is_retina, _is_mobile);
 
     //
-    m_video = new VideoStream(320, 240, m_glitch.init_video_texture);
+    m_video = new VideoStream(320, 240, m_glitch.init_video_texture.bind(m_glitch));
     
     // setup render queue
     m_render_queue = [
