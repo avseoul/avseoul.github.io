@@ -14,14 +14,6 @@ var Ctrl = function(_tar, _analyzer){
 
 	_ctr.add(_tar, 'image_fit_horizontal').onFinishChange( _tar.update_triggers.bind(_tar) );
 
-    _ctr.add(_tar, 'master_ziggle').onChange( _tar.update_triggers.bind(_tar) );
-    _ctr.add(_tar, 'monochrome').onChange( _tar.update_triggers.bind(_tar) );
-    _ctr.add(_tar, 'ntsc_roll').onChange( _tar.update_triggers.bind(_tar) );
-    _ctr.add(_tar, 'bad_signals').onChange( _tar.update_triggers.bind(_tar) );
-    _ctr.add(_tar, 'VHS').onChange( _tar.update_triggers.bind(_tar) );
-    _ctr.add(_tar, 'add_noise').onChange( _tar.update_triggers.bind(_tar) );
-    _ctr.add(_tar, 'rgb_shifting').onChange( _tar.update_triggers.bind(_tar) );
-
     dat.GUI.toggleHide();
     this.update_params();
 };

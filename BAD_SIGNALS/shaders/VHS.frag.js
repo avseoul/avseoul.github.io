@@ -44,11 +44,8 @@ void main(){
 	float m_alevel = u_audio_level;
 	float m_aframe = u_audio_history * .1;
 
-	// slice bars
-	const float m_num_slice = 5.;
-	float m_slice = floor(m_uv.y * m_num_slice);
-    float m_rand = hash(m_slice/m_num_slice + .1 , 0.);
-    // m_rand *= hash(m_rand/m_num_slice, m_aframe);
+	// rolling bar
+	float m_rolling_bar = noise(m_uv.yy * 5. - m_aframe*5. + m_alevel*.8) * m_alevel; 
 
 	// vertical ziggle
 	m_uv.y -= pow(m_alevel, 5.)*.1*pow(m_abass, 5.);
@@ -58,18 +55,21 @@ void main(){
 		vec2 _seed_a = vec2(m_alevel, m_uv.y) + 80.*u_t;
 		vec2 _seed_b = vec2(-m_alevel, m_uv.y) - 100.*u_t;
 
-		float _low = 0., _high = 0.;
+		float _zig = 0., _low = 0., _high = 0.;
 
-		// big shear
-		_low += pow(noise(_seed_a), 10.) * .35 * m_alevel;
-		_low -= pow(noise(_seed_b), 10.) * .35 * m_alevel; 
+		// horizontal wavy ziggle
+		_zig += pow(noise(_seed_a * .2), 3.) * .3 * m_alevel;
+		_zig -= pow(noise(_seed_b * .2), 3.) * .3 * m_alevel; 
 
 		// low freq wav
-		_high += pow(noise(_seed_a * 50.), 10.) * 10.5 * m_ahigh; 
-		_high -= pow(noise(-_seed_b * 50.), 10.) * 10.5 * m_ahigh; 
+		_low = _zig;
 
-		float _matte = noise(m_uv*.5 + m_aframe);
-		m_uv.x += (_low+_high)*m_rand*.1;
+		// high freq wav
+		_high += pow(noise(_seed_a * 30.), 6.) * .8 * m_ahigh; 
+		_high -= pow(noise(-_seed_b * 30.), 6.) * .8 * m_ahigh; 
+		
+		m_uv.x += _zig;
+		m_uv += (_low + _high)*pow(m_rolling_bar, 3.);
 	}
  	
  	// chromatic aberration rgb shifting
@@ -102,13 +102,24 @@ void main(){
 	 	m_src = mix(m_src, m_bad.rbg, _seed);
 	}
 
- 	// add noise
- 	float _nr = hash(m_uv.xy + m_ahigh + u_t*.01);
-	float _ng = hash(m_uv.xy + m_amid + u_t*.01);
-	float _nb = hash(m_uv.xy + m_abass + u_t*.01);
-	vec3 _noise = vec3(_nr, _ng, _nb);
+	// rolling bar color burn
+	{	
+		m_src = mix(m_src, m_bad, m_rolling_bar);
+	}
 
-	m_src += _noise * .06;
+ 	// add noise
+ 	{
+		float _nr = hash(m_uv.xy + m_ahigh + u_t*.01);
+		float _ng = hash(m_uv.xy + m_amid + u_t*.01);
+		float _nb = hash(m_uv.xy + m_abass + u_t*.01);
+		vec3 _noise = vec3(_nr, _ng, _nb);
+
+ 		// rolling bar noise
+		m_src += _noise * pow(m_rolling_bar, 5.);
+
+		// canvas noise
+		m_src += _noise * .1;
+	}
  	
  	gl_FragColor = vec4(m_src, 1.);
 
