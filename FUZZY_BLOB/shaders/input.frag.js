@@ -80,7 +80,7 @@ void main(){
 	dist = max(dist, .05); // the force shall stay in sanity and have smooth brush tiptoe 
 	float max_dist = sqrt(2.);
 	float decay = pow(max_dist - dist, 40.);
-	float mag = m_mouse_delta * .001 * decay;
+	float mag = m_mouse_delta * .0005 * decay;
 
 	const int oct = 6;
     const float complexity = 18.;
