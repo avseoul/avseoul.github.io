@@ -5,7 +5,7 @@ var Ctrl = function(_analyzer){
 
 	this.params = {
 		audio_gain: 70.,
-		show_fps: false
+		show_fps: true
 	};
 
 	_ctr.add(this.params, 'audio_gain', 0., 500.).onChange( this.update_params.bind(this) );

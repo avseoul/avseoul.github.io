@@ -4,6 +4,7 @@ varying vec2 v_uv;
 
 uniform float u_t;
 uniform bool u_is_init;
+uniform vec2 u_res;
 
 uniform float u_audio_high;
 uniform float u_audio_mid;
@@ -22,7 +23,7 @@ void main(){
 	float m_mouse_delta = length(u_mouse_dir);
 
 	vec3 blur = vec3(0);
-	vec2 res = SCREEN_RES * 1000.;
+	vec2 res = u_res;
 	vec2 m_vec = u_mouse_dir * m_mouse_delta * 10.;
 	vec2 off1 = vec2(.311764705882353) * m_vec;
 	vec2 off2 = vec2(.594117647058823) * m_vec;

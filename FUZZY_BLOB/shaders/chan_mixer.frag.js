@@ -4,6 +4,7 @@ varying vec2 v_uv;
 
 uniform float u_t;
 uniform bool u_is_init;
+uniform vec2 u_res;
 
 uniform float u_audio_high;
 uniform float u_audio_mid;
@@ -28,10 +29,13 @@ void main(){
 	float c_pow = 12.;
 
 	vec2 c_uv_r = (gr*2.-1.)*c_size;
+	c_uv_r.x *= u_res.x / u_res.y;
 	float c_radial_r = pow(sqrt(c_uv_r.x*c_uv_r.x+c_uv_r.y*c_uv_r.y), c_pow);
 	vec2 c_uv_g = (gg*2.-1.)*c_size;
+	c_uv_g.x *= u_res.x / u_res.y;
 	float c_radial_g = pow(sqrt(c_uv_g.x*c_uv_g.x+c_uv_r.g*c_uv_g.y), c_pow);
 	vec2 c_uv_b = (gb*2.-1.)*c_size;
+	c_uv_b.x *= u_res.x / u_res.y;
 	float c_radial_b = pow(sqrt(c_uv_b.x*c_uv_b.x+c_uv_b.y*c_uv_b.y), c_pow);
 
 	gr.x = c_radial_r;

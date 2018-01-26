@@ -21,10 +21,14 @@ var FuzzyBlob = function(_renderer, _analyzer, _mouse, _is_retina, _is_mobile){
 };
 
 FuzzyBlob.prototype.update = function(){ 
+    this.w = this.renderer.w;
+    this.h = this.renderer.h;
+
     var _shdrs_size = this.shdr_batch.length;
     for(var i = 0; i < _shdrs_size; i++){
         this.shdr_batch[i].uniforms.u_is_init.value = this.is_init;
         this.shdr_batch[i].uniforms.u_t.value = this.timer;
+        this.shdr_batch[i].uniforms.u_res.value = new THREE.Vector2(this.w, this.h);
         
         this.shdr_batch[i].uniforms.u_audio_high.value = this.audio_analyzer.get_high();
         this.shdr_batch[i].uniforms.u_audio_mid.value = this.audio_analyzer.get_mid();
@@ -38,14 +42,11 @@ FuzzyBlob.prototype.update = function(){
 
     var _cam = this.renderer.get_camera();
 
-    this.w = this.renderer.w;
-    this.h = this.renderer.h;
-
     this.shdr_input.uniforms.u_tex_src.value = this.fbo_input[this.frame^1].texture;
     this.renderer.renderer.render( this.scene_input, _cam, this.fbo_input[this.frame]);
 
-    this.shdr_chan_rgb.uniforms.u_tex_src.value = this.fbo_chan_rgb[this.frame^1].texture;
     this.shdr_chan_rgb.uniforms.u_tex_input.value = this.fbo_input[this.frame].texture;
+    this.shdr_chan_rgb.uniforms.u_tex_src.value = this.fbo_chan_rgb[this.frame^1].texture;
     this.renderer.renderer.render( this.scene_chan_rgb, _cam, this.fbo_chan_rgb[this.frame]);
 
     this.shdr_chan_mixer.uniforms.u_tex_src.value = this.fbo_chan_rgb[this.frame].texture;
@@ -105,24 +106,20 @@ FuzzyBlob.prototype.init_buffer = function(){
 };
 
 FuzzyBlob.prototype.init_shader = function(){
-    var _screen_res = 'vec2( ' + this.w.toFixed( 1 ) +', ' + this.h.toFixed( 1 ) + ')';
-    
     function load(_vert, _frag){
         return new THREE.ShaderMaterial( 
         { 
-            defines: {
-                SCREEN_RES: _screen_res
-            },
             uniforms: {
                 u_t: {value: 0},
                 u_is_init: {value: false},
+                u_res: {value: new THREE.Vector2(this.w, this.h)},
                 u_audio_high: {value: 0.},
                 u_audio_mid: {value: 0.},
                 u_audio_bass: {value: 0.},
                 u_audio_level: {value: 0.},
                 u_audio_history: {value: 0.},
-                u_mouse: {value: null},
-                u_mouse_dir: {value: null}
+                u_mouse: {value: new THREE.Vector2( .5, .5 )},
+                u_mouse_dir: {value: new THREE.Vector2( 0., 0. )}
             },
             depthTest: {value: false},
             vertexShader:   _vert,
