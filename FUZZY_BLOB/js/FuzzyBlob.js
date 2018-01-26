@@ -17,6 +17,7 @@ var FuzzyBlob = function(_renderer, _analyzer, _mouse, _is_retina, _is_mobile){
 
     this.init_buffer();
     this.init_shader();
+    this.init_texture();
     this.init_scene();
 };
 
@@ -52,8 +53,8 @@ FuzzyBlob.prototype.update = function(){
     this.shdr_chan_mixer.uniforms.u_tex_src.value = this.fbo_chan_rgb[this.frame].texture;
     this.renderer.renderer.render( this.scene_chan_mixer, _cam, this.fbo_chan_mixer);
 
-    this.shdr_blur.uniforms.u_tex_src.value = this.fbo_chan_mixer.texture;
-    this.renderer.renderer.render( this.scene_blur, _cam);
+    this.shdr_master.uniforms.u_tex_src.value = this.fbo_chan_mixer.texture;
+    this.renderer.renderer.render( this.scene_master, _cam);
 
     this.frame ^= 1;
 
@@ -78,8 +79,8 @@ FuzzyBlob.prototype.init_scene = function(){
     this.scene_chan_mixer = new THREE.Scene();
     this.scene_chan_mixer.add(new THREE.Mesh(_geom, this.shdr_chan_mixer));
     
-    this.scene_blur = new THREE.Scene();
-    this.scene_blur.add(new THREE.Mesh(_geom, this.shdr_blur));
+    this.scene_master = new THREE.Scene();
+    this.scene_master.add(new THREE.Mesh(_geom, this.shdr_master));
 };
 
 FuzzyBlob.prototype.init_buffer = function(){
@@ -105,6 +106,23 @@ FuzzyBlob.prototype.init_buffer = function(){
     this.fbo_chan_mixer = new THREE.WebGLRenderTarget(this.w, this.h, _format);
 };
 
+FuzzyBlob.prototype.init_texture = function(){
+    this.tex_noise = new THREE.TextureLoader().load( 
+        "../common/assets/noise.jpg", 
+        function(){
+            this.shdr_input.uniforms.u_tex_noise = {value: this.tex_noise};
+        }.bind(this),
+        undefined,
+        function ( err ) {
+            console.error( 'errr texture not loaded' );
+        }
+    );
+    this.tex_noise.wrapS = THREE.ClampToEdgeWrapping;
+    this.tex_noise.wrapT = THREE.ClampToEdgeWrapping;
+    this.tex_noise.magFilter = THREE.LinearFilter;
+    this.tex_noise.minFilter = THREE.LinearFilter;
+};
+
 FuzzyBlob.prototype.init_shader = function(){
     function load(_vert, _frag){
         return new THREE.ShaderMaterial( 
@@ -127,15 +145,15 @@ FuzzyBlob.prototype.init_shader = function(){
         });
     };
     this.shdr_input = load(shared_vert, input_frag);
-    this.shdr_chan_rgb = load(shared_vert, chan_rgb_frag);
+    this.shdr_chan_rgb = load(shared_vert, shaping_frag);
     this.shdr_chan_mixer = load(shared_vert, chan_mixer_frag);
-    this.shdr_blur = load(shared_vert, blur_frag);
+    this.shdr_master = load(shared_vert, master_frag);
 
     this.shdr_batch = [
         this.shdr_input,
         this.shdr_chan_rgb,
         this.shdr_chan_mixer,
-        this.shdr_blur
+        this.shdr_master
     ];
 
     // init uniforms 
@@ -146,7 +164,7 @@ FuzzyBlob.prototype.init_shader = function(){
 
     this.shdr_chan_mixer.uniforms.u_tex_src = {value: null};
 
-    this.shdr_blur.uniforms.u_tex_src = {value: null};
+    this.shdr_master.uniforms.u_tex_src = {value: null};
 };
 
 

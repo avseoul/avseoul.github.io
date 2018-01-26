@@ -21,28 +21,31 @@ void main(){
 	vec2 m_uv = v_uv;
 	float m_mouse_delta = length(u_mouse_dir);
 
-	vec2 gr = texture2D(u_tex_src, m_uv + vec2(.001, .001)).rg;
-	vec2 gg = texture2D(u_tex_src, m_uv).rg;
-	vec2 gb = texture2D(u_tex_src, m_uv - vec2(.001, .001)).rg;
+	vec2 m_src = texture2D(u_tex_src, m_uv).rg;
 
-	float c_size = 1.3;
-	float c_pow = 12.;
+	float m_blob_size = .5;
+	float m_blob_fuzziness = 5.;
 
-	vec2 c_uv_r = (gr*2.-1.)*c_size;
-	c_uv_r.x *= u_res.x / u_res.y;
-	float c_radial_r = pow(sqrt(c_uv_r.x*c_uv_r.x+c_uv_r.y*c_uv_r.y), c_pow);
-	vec2 c_uv_g = (gg*2.-1.)*c_size;
-	c_uv_g.x *= u_res.x / u_res.y;
-	float c_radial_g = pow(sqrt(c_uv_g.x*c_uv_g.x+c_uv_r.g*c_uv_g.y), c_pow);
-	vec2 c_uv_b = (gb*2.-1.)*c_size;
-	c_uv_b.x *= u_res.x / u_res.y;
-	float c_radial_b = pow(sqrt(c_uv_b.x*c_uv_b.x+c_uv_b.y*c_uv_b.y), c_pow);
+	vec2 m_circular_uv = (m_src * 2.-1.) * m_blob_size;
+	m_circular_uv.x *= u_res.x / u_res.y;
+	float m_blob = pow( sqrt( m_circular_uv.x * m_circular_uv.x + m_circular_uv.y * m_circular_uv.y ), m_blob_fuzziness );
+	m_blob *= 15.;
 
-	gr.x = c_radial_r;
-	gg.x = c_radial_g;
-	gb.x = c_radial_b;
+	vec3 c = vec3(m_blob, 0., m_src.g);
 
-	vec3 c = vec3(gr.x+gg.x+gb.x, 0, gr.y+gg.y+gb.y)/2.;
+	float m_oscil = (sin(u_audio_history)+1.)*.5;
+	
+	// add some gradient color
+	c = mix(c, c.bgr, m_oscil);
+
+	// white lower bar
+	c.g += pow((1.-v_uv.y),3.)*.4*u_audio_level; 
+
+	// another mix 
+	c = mix(c, normalize(c), m_oscil);
+	
+	// boost brightness
+	c *= 1.5;
 
 	gl_FragColor = vec4(c,1.);
 }

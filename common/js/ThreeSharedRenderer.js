@@ -89,7 +89,7 @@ ThreeSharedRenderer.prototype.get_inversed_matrix = function(){
 };
 
 ThreeSharedRenderer.prototype.get_timer = function(){
-    return this.timer;
+    return this.timer == undefined ? 0. : this.timer;
 };
 
 ThreeSharedRenderer.prototype.get_camera = function(){

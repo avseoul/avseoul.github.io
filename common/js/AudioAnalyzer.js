@@ -131,23 +131,23 @@ AudioAnalyzer.prototype.get_gain = function(){
 };
 
 AudioAnalyzer.prototype.get_bass = function(){
-    return this.bass;
+    return this.bass == undefined ? 0. : this.bass;
 };
 
 AudioAnalyzer.prototype.get_mid = function(){
-    return this.mid;
+    return this.mid == undefined ? 0. : this.mid;
 };
 
 AudioAnalyzer.prototype.get_high = function(){
-    return this.high;
+    return this.high == undefined ? 0. : this.high;
 };
 
 AudioAnalyzer.prototype.get_level = function(){
-    return this.level;
+    return this.level == undefined ? 0. : this.level;
 };
 
 AudioAnalyzer.prototype.get_history = function(){
-    return this.history;
+    return this.history == undefined ? 0. : this.history;
 };
 
 AudioAnalyzer.prototype.trigger_pulse = function(_is_pulse){
