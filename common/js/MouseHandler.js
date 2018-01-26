@@ -17,8 +17,8 @@ MouseHandler.prototype.handler = function(_evt){
     this.norm_x = this.x / this.w;
     this.norm_y = 1. - this.y / this.h;
 
-    this.delta_x = this.norm_x - this.norm_px;
-    this.delta_y = this.norm_y - this.norm_py;
+    this.dir_x = this.norm_x - this.norm_px;
+    this.dir_y = this.norm_y - this.norm_py;
 
     this.norm_px = this.norm_x;
     this.norm_py = this.norm_y;
@@ -42,11 +42,11 @@ MouseHandler.prototype.get_norm_px = function(){
 MouseHandler.prototype.get_norm_py = function(){
 	return this.norm_py;
 };
-MouseHandler.prototype.get_delta_x = function(){
-	return this.delta_x;
+MouseHandler.prototype.get_dir_x = function(){
+	return this.dir_x;
 };
-MouseHandler.prototype.get_delta_y = function(){
-	return this.delta_y;
+MouseHandler.prototype.get_dir_y = function(){
+	return this.dir_y;
 };
 
 MouseHandler.prototype.register_dom_events = function(_target){
