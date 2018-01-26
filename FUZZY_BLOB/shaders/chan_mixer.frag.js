@@ -23,7 +23,7 @@ void main(){
 
 	vec2 m_src = texture2D(u_tex_src, m_uv).rg;
 
-	float m_blob_size = .5;
+	float m_blob_size = .6;
 	float m_blob_fuzziness = 5.;
 
 	vec2 m_circular_uv = (m_src * 2.-1.) * m_blob_size;
@@ -33,7 +33,7 @@ void main(){
 
 	vec3 c = vec3(m_blob, 0., m_src.g);
 
-	float m_oscil = (sin(u_audio_history)+1.)*.5;
+	float m_oscil = (sin(u_audio_history*.5)+1.)*.5;
 	
 	// add some gradient color
 	c = mix(c, c.bgr, m_oscil);
