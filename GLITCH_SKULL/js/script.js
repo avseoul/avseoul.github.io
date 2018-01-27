@@ -17,6 +17,7 @@ var init = function(){
     // init shared renderer
     var _is_perspective = true;
     m_renderer = new ThreeSharedRenderer(_is_perspective);
+    m_renderer.init_ortho_matrix();
     m_renderer.append_renderer_to_dom(document.body);
     m_renderer.renderer.autoClear = true;
 
@@ -40,8 +41,7 @@ var update = function(){
     m_analyzer.update();
 
     // update renderer
-    if(m_ctrl.params.cam_ziggle) 
-        m_renderer.ziggle_cam(m_analyzer.get_history());
+    m_renderer.ziggle_cam(m_analyzer.get_history());
     m_renderer.render(m_render_queue);
 };
 

@@ -7,9 +7,6 @@ var Ctrl = function(_audio){
 	
 	var _ctr = new dat.GUI();
 
-	this.blob = _blob;
-	this.light = _light;
-	this.pbr = _pbr;
 	this.audio = _audio;
 
     _ctr.add(this.params, 'audio_gain', 0., 1000.);

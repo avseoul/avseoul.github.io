@@ -10,10 +10,13 @@ var GlitchSkull = function(_renderer, _analyzer, _is_retina){
     this.w = this.is_retina ? this.renderer.w * .5 : this.renderer.w;
     this.h = this.is_retina ? this.renderer.h * .5 : this.renderer.h;
 
+    this.frame = 1;
+    
+    this.init_buffer();
     this.init_texture();
     this.init_shader();
     this.init_scene();
-    this.init_cubemap();
+    this.load_obj();
 
     window.addEventListener('resize', this.resize.bind(this), false );
 };
@@ -33,10 +36,16 @@ GlitchSkull.prototype.update = function(){
         this.shdr_batch[i].uniforms.u_audio_history.value = this.audio_analyzer.get_history();
     }
 
-    // this.update_shadow_map();
-    this.update_cubemap();
-
     var _cam = this.renderer.get_camera();
+    var _ortho = this.renderer.get_ortho();
+
+    this.renderer.renderer.render( this.scene_obj_illum, _ortho, this.fbo_obj_illum );
+    
+    this.scene.children[3].children[0].material.emissiveMap = this.fbo_obj_illum.texture;
+    this.scene.children[4].children[0].material.emissiveMap = this.fbo_obj_illum.texture;
+    this.scene.children[5].children[0].material.emissiveMap = this.fbo_obj_illum.texture;
+    this.scene.children[6].children[0].material.emissiveMap = this.fbo_obj_illum.texture;
+
     this.renderer.renderer.render( this.scene, _cam);
 
     if(!this.is_init){ 
@@ -46,6 +55,92 @@ GlitchSkull.prototype.update = function(){
     }
 
     this.timer = this.renderer.get_timer();
+};
+
+GlitchSkull.prototype.load_obj = function(){
+    var manager = new THREE.LoadingManager();
+    manager.onProgress = function ( item, loaded, total ) {
+        console.log( item, loaded, total );
+    };
+
+    var textureLoader = new THREE.TextureLoader( manager );
+    var tex_normal_up = textureLoader.load( '../common/assets/NormalmapSkull_B_up.jpg' );
+    var tex_normal_down = textureLoader.load( '../common/assets/NormalmapSkull_B_down.jpg' );
+    var tex_up = textureLoader.load( '../common/assets/DisplacementSkull_B_up.jpg' );
+    var tex_down = textureLoader.load( '../common/assets/DisplacementSkull_B_down.jpg' );
+    
+    // model
+    var onProgress = function ( xhr ) {
+        if ( xhr.lengthComputable ) {
+            var percentComplete = xhr.loaded / xhr.total * 100;
+            console.log( Math.round(percentComplete, 2) + '% downloaded' );
+        }
+    };
+
+    var _obj_callback = function ( _is_wire, object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                child.material.color = new THREE.Color(0, 0, 0);
+                child.material.bumpMap = tex_normal_up;
+                child.material.displacementMap = tex_up;
+                child.material.normalMap = tex_normal_up;
+
+                child.material.emissive = new THREE.Color(1.,1.,1.);
+                child.material.emissiveIntensity = 1.;
+                child.material.emissiveMap = this.fbo_obj_illum.texture;
+
+                child.material.relectivity = 1.;
+                child.material.shininess = 30.;
+                child.material.specular = new THREE.Color(.6, .6, .6);
+                
+                child.material.wireframe = _is_wire;
+                child.material.autoUpdate = true;
+                
+                // console.log(child.material);
+            }
+        }.bind(this) );
+        object.position.y = -1.;
+        object.position.z = 1.;
+        object.scale.x = .6;
+        object.scale.y = .6;
+        object.scale.z = .6;
+
+        // console.log(object);
+
+        this.scene.add( object );
+    }
+
+    var _custom_shader_obj_callback = function ( _scene, _is_wire, object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                child.geometry = new THREE.Geometry().fromBufferGeometry( child.geometry );  
+                child.geometry.mergeVertices(); 
+
+                child.verticesNeedUpdate = true;
+                child.normalsNeedUpdate = true;
+                child.uvsNeedUpdate = true;
+
+                child.geometry.computeVertexNormals(); 
+
+                child.material = this.mesh; // <- for custom material
+            }
+        }.bind(this) );
+        object.position.y = -1.;
+        object.position.z = 1.;
+        object.scale.x = .6;
+        object.scale.y = .6;
+        object.scale.z = .6;
+
+        // console.log(object);
+
+        _scene.add( object );
+    }
+    
+    var loader = new THREE.OBJLoader( manager );
+    loader.load( '../common/assets/Skull_B_up_low.obj', _obj_callback.bind(this, false), onProgress, undefined );   
+    loader.load( '../common/assets/Skull_B_down_low.obj', _obj_callback.bind(this, false), onProgress, undefined );   
+    loader.load( '../common/assets/Skull_B_up_low.obj', _obj_callback.bind(this, true), onProgress, undefined );   
+    loader.load( '../common/assets/Skull_B_down_low.obj', _obj_callback.bind(this, true), onProgress, undefined );   
 };
 
 
@@ -71,80 +166,66 @@ GlitchSkull.prototype.init_shader = function(){
     };
 
     // scene shdr
-    this.shdr_mesh = load(blob_vert, blob_frag);
+    this.shdr_obj_illum = load(shared_vert, obj_illum_frag);
+    this.shdr_obj_illum.uniforms.u_tex_src = {value: this.tex_noise};
 
     this.shdr_batch = [
-        this.shdr_mesh
+        this.shdr_obj_illum
     ];
 };
 
 GlitchSkull.prototype.init_texture = function(){
-    this.tex_sprite = new THREE.TextureLoader().load( "../common/assets/sprite_additive_rect.png" );
-    this.tex_sprite.wrapS = THREE.ClampToEdgeWrapping;
-    this.tex_sprite.wrapT = THREE.ClampToEdgeWrapping;
-    this.tex_sprite.magFilter = THREE.LinearFilter;
-    this.tex_sprite.minFilter = THREE.LinearFilter;
+    this.tex_noise = new THREE.TextureLoader().load( "../common/assets/noise.jpg" );
+    this.tex_noise.wrapS = THREE.ClampToEdgeWrapping;
+    this.tex_noise.wrapT = THREE.ClampToEdgeWrapping;
+    this.tex_noise.magFilter = THREE.LinearFilter;
+    this.tex_noise.minFilter = THREE.LinearFilter;
+};
+
+GlitchSkull.prototype.init_buffer = function(){
+    // frame buffers 
+    var _format = {
+        wrapS: THREE.ClampToEdgeWrapping,
+        wrapT: THREE.ClampToEdgeWrapping,
+        minFilter:THREE.LinearFilter,
+        magFilter: THREE.LinearFilter,
+        type: this.is_mobile ? THREE.HalfFloatTye : THREE.FloatType,
+        format: THREE.RGBAFormat,
+        stencilBuffer:false,
+        depthBuffer:false
+    };
+
+    this.fbo_input = [2];
+    this.fbo_feedback = [2];
+
+    for(var i = 0; i < 2; i++){
+        this.fbo_input[i] = new THREE.WebGLRenderTarget(this.w, this.h, _format);
+        this.fbo_feedback[i] = new THREE.WebGLRenderTarget(this.w, this.h, _format);
+    }
+    this.fbo_obj_illum = new THREE.WebGLRenderTarget(this.w, this.h, _format);;
 };
 
 GlitchSkull.prototype.init_scene = function(){
-    var _sphere_size = .7;
-    var _geom = new THREE.SphereBufferGeometry(_sphere_size, 128, 128);
-    var _geom_lowres = new THREE.SphereBufferGeometry(_sphere_size, 64, 64);
-
     this.scene = new THREE.Scene();
-    this.shadow_scene = new THREE.Scene();
 
-    var _mesh = new THREE.Mesh(_geom, this.shdr_mesh);
-    var _wire = new THREE.Line(_geom_lowres, this.shdr_wire);
-    var _points = new THREE.Points(_geom, this.shdr_points);
-    var _shadow_mesh = new THREE.Mesh(_geom, this.shdr_shadow);
+    var ambientLight = new THREE.AmbientLight( 0x404040 );
+    var directionalLight1 = new THREE.DirectionalLight( 0xC0C090 );
+    var directionalLight2 = new THREE.DirectionalLight( 0xC0C090 );
+    directionalLight1.position.set( -100, -50, 100 );
+    directionalLight2.position.set( 100, 50, -100 );
 
-    var _pop_points = new THREE.Points(_geom_lowres, this.shdr_pop_points);
-    var _pop_wire = new THREE.Line(_geom_lowres, this.shdr_pop_wire);
+    this.scene.add( directionalLight1 );
+    this.scene.add( directionalLight2 );
+    this.scene.add( ambientLight );
 
-    var _pop_points_out = new THREE.Points(_geom_lowres, this.shdr_pop_points_out);
-    var _pop_wire_out = new THREE.Line(_geom_lowres, this.shdr_pop_wire_out);
-    
-    this.scene.add(_mesh);
-    this.scene.add(_wire);
-    this.scene.add(_points);
+    // var helper = new THREE.GridHelper( 1200, 60, 0xFF4444, 0x404040 );
+    // this.scene.add( helper );
 
-    this.scene.add(_pop_points);
-    this.scene.add(_pop_wire);
-    this.scene.add(_pop_points_out);
-    this.scene.add(_pop_wire_out);
 
-    this.shadow_scene.add(_shadow_mesh);
+    var _geom = new THREE.PlaneBufferGeometry(1., 1., this.w, this.h);
 
-    var _geom_cube = new THREE.BoxBufferGeometry(100, 100, 100);
-    var _mesh_cube = new THREE.Mesh(_geom_cube, this.shdr_cubemap);
-
-    var mS = (new THREE.Matrix4()).identity();
-    mS.elements[0] = -1;
-    mS.elements[5] = -1;
-    mS.elements[10] = -1;
-
-    _geom_cube.applyMatrix(mS);
-
-    this.scene.add(_mesh_cube);
-};
-
-GlitchSkull.prototype.init_cubemap = function(){
-    var _path = "../common/assets/";
-    var _format = '.jpg';
-    var _urls = [
-        _path + 'px_3js' + _format, _path + 'nx_3js' + _format,
-        _path + 'py_3js' + _format, _path + 'ny_3js' + _format,
-        _path + 'pz_3js' + _format, _path + 'nz_3js' + _format
-    ];
-    
-    this.cubemap = new THREE.CubeTextureLoader().load( _urls );
-    this.cubemap.format = THREE.RGBFormat;
-
-    this.shdr_mesh.uniforms.cubemap = {value: this.cubemap};
-    this.shdr_cubemap.uniforms.u_cubemap.value = this.cubemap;
-    this.shdr_cubemap.uniforms.u_show_cubemap = {value:this.show_hdr};
-    this.shdr_mesh.defines.HAS_CUBEMAP = 'true';
+    this.scene_obj_illum = new THREE.Scene();
+    this.scene_obj_illum.add(new THREE.Mesh(_geom, this.shdr_obj_illum));
 };
 
 GlitchSkull.prototype.resize = function(){

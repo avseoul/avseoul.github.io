@@ -7,6 +7,8 @@ var ThreeSharedRenderer = function(_perspective){
         new THREE.OrthographicCamera( -.5, .5, .5, -.5, 1, 10 );
     this.matrix.position.z = 5;
 
+    this.is_ortho = false;
+
     this.matrix.aspect = this.w / this.h;
     this.matrix.updateProjectionMatrix();
 
@@ -15,6 +17,16 @@ var ThreeSharedRenderer = function(_perspective){
     this.init_renderer();
 
     window.addEventListener('resize', this.resize.bind(this), false );
+};
+
+ThreeSharedRenderer.prototype.init_ortho_matrix = function(){
+    this.ortho_matrix = new THREE.OrthographicCamera( -.5, .5, .5, -.5, 1, 10 );
+    this.ortho_matrix.position.z = 5;
+
+    this.ortho_matrix.aspect = this.w / this.h;
+    this.ortho_matrix.updateProjectionMatrix();
+
+    this.is_ortho = true;
 };
 
 ThreeSharedRenderer.prototype.resize = function(){
@@ -26,6 +38,11 @@ ThreeSharedRenderer.prototype.resize = function(){
 
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( this.w, this.h );
+
+    if(this.is_ortho){
+        this.ortho_matrix.aspect = this.w / this.h;
+        this.ortho_matrix.updateProjectionMatrix();
+    }
 }
 
 ThreeSharedRenderer.prototype.init_renderer = function(){
@@ -94,6 +111,10 @@ ThreeSharedRenderer.prototype.get_timer = function(){
 
 ThreeSharedRenderer.prototype.get_camera = function(){
     return this.matrix;
+};
+
+ThreeSharedRenderer.prototype.get_ortho = function(){
+    return this.is_ortho ? this.ortho_matrix : undefined;
 };
 
 ThreeSharedRenderer.prototype.get_matrix = function(){
