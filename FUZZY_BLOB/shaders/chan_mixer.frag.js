@@ -36,10 +36,11 @@ void main(){
 	float m_oscil = (sin(u_audio_history)+1.)*.5;
 	
 	// add some gradient color
-	c = mix(c, c.bgr, m_oscil);
+	// c = mix(c, c.bgr, m_oscil);
 
-	// white lower bar
-	c.g += pow((1.-v_uv.y),3.)*.4*u_audio_level; 
+	// white bar
+	c.g += pow((1.-v_uv.y),3.)*.8*u_audio_level; // down
+	c.b += pow((v_uv.y),3.)*1.2*u_audio_level; // up
 
 	// another mix 
 	c = mix(c, normalize(c), m_oscil);

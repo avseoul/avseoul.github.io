@@ -73,14 +73,14 @@ float cal_noise(vec2 p) {
 void main(){
 	vec2 m_uv = v_uv;
 	vec2 m_noise = texture2D(u_tex_noise, m_uv).rg;
-	vec3 m_src = advect(u_tex_src, m_uv, m_noise * 140., 1./(u_res*.2)).rgb;
+	vec3 m_src = advect(u_tex_src, m_uv, m_noise * 40., 1./(u_res*.2)).rgb;
 	float m_mouse_delta = length(u_mouse_dir);
 
 	float dist = distance(m_uv, u_mouse);
 	dist = max(dist, .05); // the force shall stay in sanity and have smooth brush tiptoe 
 	float max_dist = sqrt(2.);
 	float decay = pow(max_dist - dist, 40.);
-	float mag = m_mouse_delta * .0005 * decay;
+	float mag = m_mouse_delta * .002 * decay;
 
 	const int oct = 6;
     const float complexity = 18.;
@@ -98,7 +98,7 @@ void main(){
 	vec2 m_out = m_src.rg;
 	m_out += u_mouse_dir * mag * (.98/dist*dist*.01);
 	m_out += m_audio_f*.004*(pow(u_audio_level, 10.));
-	m_out *= .999;
+	m_out *= .96;
 
 	gl_FragColor = vec4(m_out,0,1);
 }
