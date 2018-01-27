@@ -67,4 +67,9 @@ MouseHandler.prototype.register_dom_events = function(_target){
     _target.addEventListener('touchstart', function (event) {
         event.preventDefault();
     }, {passive: false});
+
+    window.addEventListener("resize", function(){
+        this.w = document.documentElement.clientWidth;
+        this.h = document.documentElement.clientHeight;
+    }.bind(this));
 };

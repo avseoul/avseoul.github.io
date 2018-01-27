@@ -40,8 +40,8 @@ Glitch.prototype.update = function(){
 
     var _cam = this.renderer.get_camera();
 
-    this.w = this.renderer.w;
-    this.h = this.renderer.h;
+    this.w = this.is_retina ? this.renderer.w / 2. : this.renderer.w / 1.;
+    this.h = this.is_retina ? this.renderer.h / 2. : this.renderer.h / 1.;
     this.shdr_pass.uniforms.u_screen_res.value = new THREE.Vector2(this.w, this.h);
 
     this.shdr_pass.uniforms.u_tex_src.value = this.tex_src;

@@ -22,8 +22,8 @@ var FuzzyBlob = function(_renderer, _analyzer, _mouse, _is_retina, _is_mobile){
 };
 
 FuzzyBlob.prototype.update = function(){ 
-    this.w = this.renderer.w;
-    this.h = this.renderer.h;
+    this.w = this.is_retina ? this.renderer.w / 2. : this.renderer.w / 1.;
+    this.h = this.is_retina ? this.renderer.h / 2. : this.renderer.h / 1.;
 
     var _shdrs_size = this.shdr_batch.length;
     for(var i = 0; i < _shdrs_size; i++){
