@@ -5,14 +5,14 @@ var Ctrl = function(_analyzer){
 
 	this.params = {
 		audio_gain: 70.,
-		show_fps: false
+		show_fps: true
 	};
 
-	_ctr.add(this.params, 'audio_gain', 0., 500.).onChange( this.update_params.bind(this) );
+	_ctr.add(this.params, 'audio_gain', 0., 1000.).onChange( this.update_params.bind(this) );
 	_ctr.add(this.params, 'show_fps').onFinishChange( this.update_params.bind(this) );
 
 
-    dat.GUI.toggleHide();
+    // dat.GUI.toggleHide();
     this.update_params();
 };
 

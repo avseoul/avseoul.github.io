@@ -6,7 +6,7 @@ var Ctrl = function(_tar, _analyzer){
 
 	this.params = {
 		audio_gain: 70.,
-		show_fps: false
+		show_fps: true
 	};
 
 	_ctr.add(this.params, 'audio_gain', 0., 500.).onChange( this.update_params.bind(this) );
@@ -14,7 +14,7 @@ var Ctrl = function(_tar, _analyzer){
 
 	_ctr.add(_tar, 'image_fit_horizontal').onFinishChange( _tar.update_triggers.bind(_tar) );
 
-    dat.GUI.toggleHide();
+    // dat.GUI.toggleHide();
     this.update_params();
 };
 

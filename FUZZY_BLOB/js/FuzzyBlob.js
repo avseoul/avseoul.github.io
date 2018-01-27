@@ -19,12 +19,11 @@ var FuzzyBlob = function(_renderer, _analyzer, _mouse, _is_retina, _is_mobile){
     this.init_shader();
     this.init_texture();
     this.init_scene();
+
+    window.addEventListener('resize', this.resize.bind(this));
 };
 
 FuzzyBlob.prototype.update = function(){ 
-    this.w = this.is_retina ? this.renderer.w / 2. : this.renderer.w / 1.;
-    this.h = this.is_retina ? this.renderer.h / 2. : this.renderer.h / 1.;
-
     var _shdrs_size = this.shdr_batch.length;
     for(var i = 0; i < _shdrs_size; i++){
         this.shdr_batch[i].uniforms.u_is_init.value = this.is_init;
@@ -165,6 +164,11 @@ FuzzyBlob.prototype.init_shader = function(){
     this.shdr_chan_mixer.uniforms.u_tex_src = {value: null};
 
     this.shdr_master.uniforms.u_tex_src = {value: null};
+};
+
+FuzzyBlob.prototype.resize = function(){
+    this.w = this.is_retina ? this.renderer.w / 2. : this.renderer.w / 1.;
+    this.h = this.is_retina ? this.renderer.h / 2. : this.renderer.h / 1.;
 };
 
 
