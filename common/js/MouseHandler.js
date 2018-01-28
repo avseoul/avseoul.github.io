@@ -1,9 +1,14 @@
 var MouseHandler = function(){
 	this.w = document.documentElement.clientWidth;
     this.h = document.documentElement.clientHeight;
+
+    this.counter;
 };
 
 MouseHandler.prototype.handler = function(_evt){
+    clearTimeout(this.counter);
+    this.counter = setTimeout(this.reset.bind(this), 100.);
+
     if (_evt.targetTouches) {
         var touch = _evt.targetTouches[0];
 
@@ -58,6 +63,17 @@ MouseHandler.prototype.get_dir_y = function(){
     return this.dir_y;
 };
 
+MouseHandler.prototype.reset = function(){
+    this.norm_px = this.norm_x;
+    this.norm_py = this.norm_y;
+
+    this.delta_x = 0.;
+    this.delta_y = 0.;
+
+    this.dir_x = 0.;
+    this.dir_y = 0.;
+};
+
 MouseHandler.prototype.register_dom_events = function(_target){
     _target.addEventListener("mousemove", this.handler.bind(this), false);
     _target.addEventListener("touchmove", this.handler.bind(this), false);
@@ -74,16 +90,6 @@ MouseHandler.prototype.register_dom_events = function(_target){
     }.bind(this));
 
     window.addEventListener("mouseout", function(){
-        this.norm_x = 0.;
-        this.norm_y = 0.;
-
-        this.delta_x = 0.;
-        this.delta_y = 0.;
-
-        this.dir_x = 0.;
-        this.dir_y = 0.;
-
-        this.norm_px = 0.;
-        this.norm_py = 0.;
+        this.reset();
     }.bind(this));
 };
