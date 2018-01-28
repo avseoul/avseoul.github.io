@@ -72,4 +72,18 @@ MouseHandler.prototype.register_dom_events = function(_target){
         this.w = document.documentElement.clientWidth;
         this.h = document.documentElement.clientHeight;
     }.bind(this));
+
+    window.addEventListener("mouseout", function(){
+        this.norm_x = 0.;
+        this.norm_y = 0.;
+
+        this.delta_x = 0.;
+        this.delta_y = 0.;
+
+        this.dir_x = 0.;
+        this.dir_y = 0.;
+
+        this.norm_px = 0.;
+        this.norm_py = 0.;
+    }.bind(this));
 };
