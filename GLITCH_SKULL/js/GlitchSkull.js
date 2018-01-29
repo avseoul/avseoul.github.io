@@ -8,10 +8,12 @@ var GlitchSkull = function(_renderer, _mouse, _analyzer, _is_retina){
 
     this.is_retina = _is_retina;
 
-    this.w = _is_retina ? _renderer.w / 1. : _renderer.w / 1.;
-    this.h = _is_retina ? _renderer.h / 1. : _renderer.h / 1.;
+    this.w = _renderer.w;
+    this.h = _renderer.h;
 
     this.frame = 1;
+
+    this.z_target = 0.;
     
     this.init_buffer();
     this.init_texture();
@@ -42,7 +44,7 @@ GlitchSkull.prototype.update = function(){
 
     this.renderer.renderer.render( this.scene_obj_illum, _ortho, this.fbo_obj_illum );
 
-    this.shdr_feedback.uniforms.u_tex_src.value = this.fbo_feedback[this.frame^1];
+    this.shdr_feedback.uniforms.u_tex_src.value = this.fbo_feedback[this.frame^1].texture;
     this.shdr_feedback.uniforms.u_tex_input.value = this.fbo_obj_illum.texture;
     this.shdr_feedback.uniforms.u_mouse.value = new THREE.Vector2(this.mouse.get_norm_x(), this.mouse.get_norm_y());
     this.shdr_feedback.uniforms.u_mouse_dir.value = new THREE.Vector2(this.mouse.get_dir_x(), this.mouse.get_dir_y());
@@ -58,16 +60,6 @@ GlitchSkull.prototype.update = function(){
         this.scene.children[4].children[0].material.emissiveMap = this.fbo_feedback[this.frame].texture;
         this.scene.children[5].children[0].material.emissiveMap = this.fbo_feedback[this.frame].texture;
         this.scene.children[6].children[0].material.emissiveMap = this.fbo_feedback[this.frame].texture;
-
-        this.scene.children[0].rotation.x = _cam.rotation.z;
-        this.scene.children[0].rotation.y = _cam.rotation.y;
-        this.scene.children[0].rotation.z = _cam.rotation.x;
-
-        this.scene.children[1].rotation.x = _cam.rotation.y;
-        this.scene.children[1].rotation.y = _cam.rotation.x;
-        this.scene.children[1].rotation.z = _cam.rotation.z;
-
-        // console.log(this.scene.children[1]);
     }
 
     this.renderer.renderer.render( this.scene, _cam, this.fbo_master);
@@ -106,79 +98,68 @@ GlitchSkull.prototype.load_obj = function(){
         }
     };
 
-    var _obj_callback = function ( _is_wire, object ) {
+    var _obj_callback = function ( _is_wire, _normal_map, _disp_map, object ) {
         object.traverse( function ( child ) {
             if ( child instanceof THREE.Mesh ) {
                 child.material.color = _is_wire ? new THREE.Color(.3, .3, .3) : new THREE.Color(0, 0, 0);
-                child.material.bumpMap = tex_normal_up;
-                child.material.displacementMap = tex_up;
-                child.material.normalMap = tex_normal_up;
+                child.material.bumpMap = _normal_map;
+                child.material.displacementMap = _disp_map;
+                child.material.normalMap = _normal_map;
 
                 child.material.emissive = new THREE.Color(1.,1.,1.);
-                child.material.emissiveIntensity = _is_wire ? 30. : 1.;
+                child.material.emissiveIntensity = _is_wire ? 3. : .2;
                 child.material.emissiveMap = this.fbo_feedback[this.frame].texture;
 
-                child.material.relectivity = 1.;
-                child.material.shininess = _is_wire ? 300. : 50.;
-                child.material.specular = new THREE.Color(.6, .6, .6);
+                child.material.relectivity = 0.99998;
+                child.material.shininess = 3.;
+                child.material.specular = new THREE.Color(1, 1, 1);
                 
                 child.material.wireframe = _is_wire;
                 child.material.autoUpdate = true;
 
                 child.material.transparent = true;
-                child.material.premultipliedAlpha = true;
                 child.material.blending = THREE.NormalBlending;
                 
-                console.log(child.material);
+                // console.log(child.material);
             }
         }.bind(this) );
-        object.position.y = -1.7;
-        object.position.z = 1.;
-        object.scale.x = .9;
-        object.scale.y = .9;
-        object.scale.z = .9;
+        object.position.y = -1.5;
+        // object.position.z = 1.;
+        object.scale.x = .8;
+        object.scale.y = .8;
+        object.scale.z = .8;
 
         object.castShadow = true;
         object.receiveShadow = true;
+        object.children[0].castShadow = true;
+        object.children[0].receiveShadow = true;
 
-        console.log(object);
-
-        this.scene.add( object );
-    }
-
-    var _custom_shader_obj_callback = function ( _scene, _is_wire, object ) {
-        object.traverse( function ( child ) {
-            if ( child instanceof THREE.Mesh ) {
-                child.geometry = new THREE.Geometry().fromBufferGeometry( child.geometry );  
-                child.geometry.mergeVertices(); 
-
-                child.verticesNeedUpdate = true;
-                child.normalsNeedUpdate = true;
-                child.uvsNeedUpdate = true;
-
-                child.geometry.computeVertexNormals(); 
-
-                child.material = this.mesh; // <- for custom material
-            }
-        }.bind(this) );
-        object.position.y = -1.;
-        object.position.z = 3.;
-        object.scale.x = .6;
-        object.scale.y = .6;
-        object.scale.z = .6;
+        this.scene.add(object);
 
         // console.log(object);
-
-        _scene.add( object );
+        // console.log(this.scene);
     }
+
+    // var _custom_shader_obj_callback = function ( _scene, _is_wire, object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+    //             child.geometry = new THREE.Geometry().fromBufferGeometry( child.geometry );  
+    //             child.geometry.mergeVertices(); 
+    //             child.verticesNeedUpdate = true;
+    //             child.normalsNeedUpdate = true;
+    //             child.uvsNeedUpdate = true;
+    //             child.geometry.computeVertexNormals(); 
+    //             child.material = this.mesh; // <- for custom material
+    //         }
+    //     }.bind(this) );
+    // }
     
     var loader = new THREE.OBJLoader( manager );
-    loader.load( '../common/assets/Skull_B_up_low.obj', _obj_callback.bind(this, false), onProgress, undefined );   
-    loader.load( '../common/assets/Skull_B_down_low.obj', _obj_callback.bind(this, false), onProgress, undefined );   
+    loader.load( '../common/assets/Skull_B_up_low.obj', _obj_callback.bind(this, false, tex_normal_up, tex_up), onProgress, undefined );   
+    loader.load( '../common/assets/Skull_B_down_low.obj', _obj_callback.bind(this, false, tex_normal_down, tex_down), onProgress, undefined );   
 
-    loader.load( '../common/assets/Skull_B_up_low.obj', _obj_callback.bind(this, true), onProgress, undefined );   
-    loader.load( '../common/assets/Skull_B_down_low.obj', _obj_callback.bind(this, true), onProgress, undefined );   
-
+    loader.load( '../common/assets/Skull_B_up_low.obj', _obj_callback.bind(this, true, tex_normal_up, tex_up), onProgress, undefined );   
+    loader.load( '../common/assets/Skull_B_down_low.obj', _obj_callback.bind(this, true, tex_normal_down, tex_down), onProgress, undefined );   
 };
 
 
@@ -261,33 +242,6 @@ GlitchSkull.prototype.init_buffer = function(){
 };
 
 GlitchSkull.prototype.init_scene = function(){
-    this.scene = new THREE.Scene();
-
-    var ambientLight = new THREE.AmbientLight( 0x404040 );
-    var directionalLight1 = new THREE.DirectionalLight( 0xC0C0C0 );
-    var directionalLight2 = new THREE.DirectionalLight( 0xC0C0C0 );
-    directionalLight1.position.set( -100, -50, 100 );
-    directionalLight2.position.set( 100, 50, -100 );
-
-    directionalLight1.castShadow = true;
-    directionalLight1.shadow = new THREE.LightShadow( new THREE.PerspectiveCamera( 50, 1, 1200, 2500 ) );
-    directionalLight1.shadow.bias = 0.0001;
-    directionalLight1.shadow.mapSize.width = 1024.;
-    directionalLight1.shadow.mapSize.height = 1024.;
-
-    directionalLight2.castShadow = true;
-    directionalLight2.shadow = new THREE.LightShadow( new THREE.PerspectiveCamera( 50, 1, 1200, 2500 ) );
-    directionalLight2.shadow.bias = 0.0001;
-    directionalLight2.shadow.mapSize.width = 1024.;
-    directionalLight2.shadow.mapSize.height = 1024.;
-
-    this.scene.add( directionalLight1 );
-    this.scene.add( directionalLight2 );
-    this.scene.add( ambientLight );
-
-    // var helper = new THREE.GridHelper( 1200, 60, 0xFF4444, 0x404040 );
-    // this.scene.add( helper );
-
     var _geom = new THREE.PlaneBufferGeometry(1., 1., this.w, this.h);
 
     this.scene_obj_illum = new THREE.Scene();
@@ -301,9 +255,76 @@ GlitchSkull.prototype.init_scene = function(){
 
     this.scene_master = new THREE.Scene();
     this.scene_master.add(new THREE.Mesh(_geom, this.shdr_master));
+
+    this.scene = new THREE.Scene();
+
+    var ambientLight = new THREE.AmbientLight( 0x404040 );
+    var directionalLight1 = new THREE.DirectionalLight( 0xff0000 );
+    var directionalLight2 = new THREE.DirectionalLight( 0x0000ff );
+    directionalLight1.position.set( -4, -0, 4 );
+    directionalLight2.position.set( 4, 0, -4 );
+
+    directionalLight1.castShadow = true;
+    directionalLight1.shadow = new THREE.LightShadow( new THREE.PerspectiveCamera( 35, 1, .1, 20 ) );
+    directionalLight1.shadow.bias = 0.0001;
+    directionalLight1.shadow.mapSize.width = 256.;
+    directionalLight1.shadow.mapSize.height = 256.;
+
+    directionalLight2.castShadow = true;
+    directionalLight2.shadow = new THREE.LightShadow( new THREE.PerspectiveCamera( 35, 1, .1, 20 ) );
+    directionalLight2.shadow.bias = 0.0001;
+    directionalLight2.shadow.mapSize.width = 256.;
+    directionalLight2.shadow.mapSize.height = 256.;
+
+    this.scene.add( directionalLight1 );
+    this.scene.add( directionalLight2 );
+    this.scene.add( ambientLight );
+};
+
+
+GlitchSkull.prototype.ziggle_skull = function(){
+    if(this.scene.children[3] && this.scene.children[4] && this.scene.children[6] && this.scene.children[6]){
+        var _loc = this.scene.children[3].children[0].position.clone();
+        var _rot = this.scene.children[3].children[0].rotation.clone();
+
+        // update position values
+        _loc.y = Math.sin(this.audio_analyzer.get_history()*2.) * .3;
+
+        this.z_target = Math.abs(this.z_target - _loc.z) < .05 ? Math.random() * 13. - 10. : this.z_target;
+        _loc.z += (this.z_target-_loc.z)*.035;
+
+        // jaw
+        var _jaw = _loc.clone();
+        _jaw.y += Math.sin(this.audio_analyzer.get_history()*5.) * .2;
+
+        // update rotation values
+        _rot.y = Math.sin(this.audio_analyzer.get_history()*1.) * .4;
+        _rot.x = Math.sin(this.audio_analyzer.get_history()*3.) * .2;
+        
+        // update objects
+        // TODO - this is BAD BAD BAD way. objects should be allocated to variables next time
+        for(var i = 3; i < 7; i++){ 
+            if(this.scene.children[i].children[0].name.split('_')[2] == 'up'){
+                this.scene.children[i].children[0].position.copy(_loc);
+            } else {
+                this.scene.children[i].children[0].position.copy(_jaw);
+            }
+
+            this.scene.children[i].children[0].rotation.copy(_rot);
+        }
+    }
+};
+
+GlitchSkull.prototype.ziggle_light = function(){
+    if(this.scene.children[0] && this.scene.children[1]){
+        this.scene.children[0].position.y = Math.sin(this.audio_analyzer.get_history()*6.) * 15.;
+        this.scene.children[1].position.y = Math.sin(this.audio_analyzer.get_history()*6.) * -15.;
+    }
 };
 
 GlitchSkull.prototype.resize = function(){
-    this.w = this.is_retina ? this.renderer.w * 1. : this.renderer.w;
-    this.h = this.is_retina ? this.renderer.h * 1. : this.renderer.h;
+    this.w = this.renderer.w;
+    this.h = this.renderer.h;
+
+    this.init_buffer();
 };

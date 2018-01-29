@@ -82,7 +82,7 @@ void main(){
   vec3 m_c = vec3(_r, _g, _b);
 
   m_c *= m_noise_pattern;
-  m_c = pow(m_c, vec3(10.))*.04;
+  m_c = pow(m_c, vec3(10.))*.02;
 
   // hsv
   m_c = rgb2hsv(m_c);

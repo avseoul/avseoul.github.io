@@ -53,8 +53,12 @@ var update = function(){
     // update audio analyzer
     m_analyzer.update();
 
+    // update my skull anim
+    m_skull.ziggle_skull();
+    m_skull.ziggle_light();
+
     // update renderer
-    m_renderer.ziggle_cam(m_analyzer.get_history());
+    // m_renderer.ziggle_cam(m_analyzer.get_history());
     m_renderer.render(m_render_queue);
 
     m_stats.end();

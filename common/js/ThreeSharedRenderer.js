@@ -53,7 +53,7 @@ ThreeSharedRenderer.prototype.init_renderer = function(){
     
     this.renderer.autoClear = false;
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.BasicShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
 
     if (!this.renderer.extensions.get("OES_texture_float")) {
         return "No OES_texture_float support for float textures.";

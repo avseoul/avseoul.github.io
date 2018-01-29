@@ -2,8 +2,8 @@
 
 var Ctrl = function(_audio){
 	this.params = {
-		audio_gain: 1000.,
-		show_fps: false
+		audio_gain: 70.,
+		show_fps: true
 	}
 	
 	var _ctr = new dat.GUI();

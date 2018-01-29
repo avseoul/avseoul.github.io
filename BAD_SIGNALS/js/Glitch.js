@@ -12,8 +12,8 @@ var Glitch = function(_renderer, _analyzer, _is_retina, _is_mobile){
     this.is_monochrome = false;
     this.is_glitch = false;
 
-    this.w = _is_retina ? _renderer.w / 2. : _renderer.w / 1.;
-    this.h = _is_retina ? _renderer.h / 2. : _renderer.h / 1.;
+    this.w = _renderer.w / 2.;
+    this.h = _renderer.h / 2.;
 
     this.matrix = _renderer.matrix;
 
@@ -23,6 +23,8 @@ var Glitch = function(_renderer, _analyzer, _is_retina, _is_mobile){
     this.init_shader();
     this.init_texture();
     this.init_scene();
+
+    window.addEventListener('resize', this.resize.bind(this));
 };
 
 Glitch.prototype.update = function(){ 
@@ -241,6 +243,13 @@ Glitch.prototype.init_shader = function(){
 
 Glitch.prototype.update_triggers = function(){
     this.shdr_pass.uniforms.is_fit_horizontal.value = this.image_fit_horizontal;
+};
+
+Glitch.prototype.resize = function(){
+    this.w = this.renderer.w / 2.;
+    this.h = this.renderer.h / 2.;
+
+    this.init_buffer();
 };
 
 

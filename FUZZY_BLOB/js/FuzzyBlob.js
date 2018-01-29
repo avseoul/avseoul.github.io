@@ -8,8 +8,8 @@ var FuzzyBlob = function(_renderer, _analyzer, _mouse, _is_retina, _is_mobile){
     this.is_retina = _is_retina;
     this.is_mobile = _is_mobile;
 
-    this.w = _is_retina ? _renderer.w / 2. : _renderer.w / 1.;
-    this.h = _is_retina ? _renderer.h / 2. : _renderer.h / 1.;
+    this.w = _renderer.w / 2.;
+    this.h = _renderer.h / 2.;
 
     this.matrix = _renderer.matrix;
 
@@ -167,8 +167,10 @@ FuzzyBlob.prototype.init_shader = function(){
 };
 
 FuzzyBlob.prototype.resize = function(){
-    this.w = this.is_retina ? this.renderer.w / 2. : this.renderer.w / 1.;
-    this.h = this.is_retina ? this.renderer.h / 2. : this.renderer.h / 1.;
+    this.w = this.renderer.w / 2.;
+    this.h = this.renderer.h / 2.;
+
+    this.init_buffer();
 };
 
 

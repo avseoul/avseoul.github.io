@@ -46,7 +46,7 @@ void main(){
 	float m_aframe = u_audio_history;
 
 	// rgb_shift
-	float m_rgb_shift = 1.6;
+	float m_rgb_shift = .2;
 
 	float _r = texture2D(u_tex_src, m_uv + vec2(m_rgb_shift*pow(m_ahigh, 15.), 0.)).r;
 	float _g = texture2D(u_tex_src, m_uv  ).g;
@@ -60,9 +60,6 @@ void main(){
 	 	_seed = pow(_seed, 3.);
 	 	_seed *= 3.;
 	 	m_c = mix(m_c, m_c.bgr, _seed);
-
-	 	float m_rolling_bar = noise(m_uv.yy * 5. - m_aframe*5. + m_alevel*.8) * m_alevel;
-	 	m_c = mix(m_c, m_c.bgr, m_rolling_bar*1.);
 	}
 
 	{
@@ -72,7 +69,7 @@ void main(){
 		vec3 _noise = vec3(_nr, _ng, _nb);
 
 		// canvas noise
-		m_c += _noise * .2;
+		m_c *= (_noise + 1.);
 	}
 
 	gl_FragColor = vec4(m_c, 1);
