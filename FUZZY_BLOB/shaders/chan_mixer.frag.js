@@ -33,10 +33,10 @@ void main(){
 
 	vec3 c = vec3(m_blob, 0., m_src.g);
 
-	float m_oscil = (sin(u_audio_history)+1.)*.5;
+	float m_oscil = (sin(u_audio_history*.5)+1.)*.5;
 	
 	// add some gradient color
-	// c = mix(c, c.bgr, m_oscil);
+	c = mix(c, c.bgr, m_oscil);
 
 	// white bar
 	c.g += pow((1.-v_uv.y),3.)*.8*u_audio_level; // down
