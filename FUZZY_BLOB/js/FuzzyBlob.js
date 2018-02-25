@@ -61,6 +61,7 @@ FuzzyBlob.prototype.update = function(){
         this.is_init = true;
 
         console.log("FuzzyBlob : is initiated");
+        this.init_buffer();
     }
 
     this.timer = this.renderer.get_timer();
