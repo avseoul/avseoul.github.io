@@ -319,3 +319,4 @@ var init = function(){
 var m_json;
 document.addEventListener('DOMContentLoaded', init, false);
 window.addEventListener('hashchange', get_hash);
+window.resizeTo(900,900);
