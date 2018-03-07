@@ -80,7 +80,7 @@ credit{
 	/*filter: brightness(1000%);*/
 }
 #bio_title{
-	width: 400px;
+	width: 300px;
 	background: #fff;
 	color: #000;
 }
@@ -89,7 +89,7 @@ credit{
 	margin-top: 20px;
 }
 #works_title{
-	width: 400px;
+	width: 100vw;
 	background: #fff;
 	color: #000;
 }
@@ -102,8 +102,9 @@ credit{
 
 .ui_container{
 	width: 100vw;
-	height: 400px;
+	height: 300px;
 	margin-top: 20px;
+	margin-bottom: 0px;
 	padding: 0;
 }
 .ui_url{
@@ -118,8 +119,8 @@ credit{
 	padding: 0;
 }
 .ui_thumbnail{
-	width: 400px;
-	height: 400px;
+	width: 300px;
+	height: 300px;
 
 	-webkit-filter: grayscale(100%); 
 	filter: grayscale(100%);
@@ -131,10 +132,10 @@ credit{
 
 .ui_description_mask{
 	position:absolute;
-	left:400px;
+	left:300px;
 
-	width: calc(100% - 400px);
-	height: 400px;
+	width: calc(100% - 300px);
+	height: 300px;
 
 	margin: 0;
 	padding: 0;
@@ -173,7 +174,7 @@ credit{
 	/*width: calc(100% - 300px);*/
 	width: 100%;
 	/*margin-left: 300px;*/
-	margin-bottom: 20px;
+	margin-bottom: 300px;
 	padding-bottom: 20px;
 	background-color: #fff;
 }

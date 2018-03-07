@@ -84,14 +84,9 @@ void main(){
 		float _seed_a = hash(m_slice/10. + .12347, -m_aframe * 1.9);
 		float _seed_b = hash(m_slice/5. + .34562, -m_aframe * 1.7);
 		float _seed_c = hash(m_slice/2. + .78906, -m_aframe * 1.8);
-		float m_seed = (_seed_a * _seed_b * _seed_c)/3.; //<-- normalized 0-1
-		
-		// seed selector bar
-		// should be less than 1.
-		float m_noise_freq = m_ahigh * .001;
 
 		// color burn based on seed event 
-		if(m_noise_freq > m_seed){
+		if(.36 < m_ahigh){
 			m_c.r *= _seed_a * hash(m_ahigh, .23) * 16.;
 			m_c.g *= _seed_b * hash(m_ahigh, .34) * 16.;
 			m_c.b *= _seed_c * hash(m_ahigh, .45) * 16.;

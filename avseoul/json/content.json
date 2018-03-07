@@ -45,88 +45,6 @@
             "category":"selected_works, creative_coding, show_all"
         },
         {
-            "thumbnail_src":"/img/quickavsketch01.png",
-            "id":"041",
-            "title":"AVSKETCHES",
-            "description":"openFramewokrs/c++, GLSL / a make-everyday project",
-            "date":"May,2017 - present",
-            "info":[
-                {"is":"text", "p":"quick openFrameworks sketches for av performances"}
-            ],
-            "process":[
-                {"is":"video","url":"https://player.vimeo.com/video/238017289","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/237855230","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/237845796","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/235158129","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/234944259","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/234789344","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/223726290","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/223536057","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/222886692","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/222872301","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/222798471","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/222301888","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/222143862","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/222047127","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/221956220","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/221839224","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/221689621","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/221520130","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/221377024","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/221208487","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/221124874","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/220877968","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/220750624","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/220581592","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/220418304","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/220225510","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/220169573","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/220085257","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219932311","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219790919","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219625993","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219462031","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219327422","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219217460","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219175646","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/219028200","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/218866484","dummy":"","size":{"w":"920","h":"920"}}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project (Design/Development)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"",
-                "url":"",
-                "size":{"w":"","h":""}
-            },
-            "category":"selected_works, creative_coding, show_all"
-        },
-        {
-            "thumbnail_src":"/img/fakelovernd02.jpg",
-            "id":"045",
-            "title":"[Works@FakeLove] VR Prototype for an Office Demo",
-            "description":"Unity3D, HLSL / an interactive VR particle system",
-            "date":"May,2017",
-            "info":[
-                {"is":"text", "p":"n interactive VR particle system for an office demo at fakelove"}
-            ],
-            "process":[
-                {"is":"text", "p":""}    
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project (Design/Development)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/218540771",
-                "size":{"w":"920","h":"518"}
-            },
-            "category":"selected_works, creative_coding, show_all"
-        },
-        {
             "thumbnail_src":"/img/fakelovernd01.png",
             "id":"044",
             "title":"[Works@FakeLove] AR Prototype for an Office Demo",
@@ -206,31 +124,6 @@
             "category":"selected_works, creative_coding, show_all"
         },
         {
-            "thumbnail_src":"/img/glitchnl.jpg",
-            "id":"040",
-            "title":"Glitch NL",
-            "description":"openFramewokrs/c++, GLSL / a realtime audio reactive glitching app in openFramewkrs",
-            "date":"Jan,2017",
-            "info":[
-                {"is":"text", "p":"a realtime audio reactive glitching app in openFramewkrs for av performances"}
-            ],
-            "process":[
-                {"is":"video","url":"https://player.vimeo.com/video/200762494","dummy":"","size":{"w":"920","h":"518"}},
-                {"is":"video","url":"https://player.vimeo.com/video/199707576","dummy":"","size":{"w":"920","h":"920"}},
-                {"is":"video","url":"https://player.vimeo.com/video/199623387","dummy":"","size":{"w":"920","h":"518"}}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project (Design/Development)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/200937510",
-                "size":{"w":"920","h":"920"}
-            },
-            "category":"selected_works, creative_coding, show_all"
-        },
-        {
             "thumbnail_src":"/img/MUFE_screen5.jpg",
             "id":"033",
             "title":"[Works@EdgeDNA] MAKE UP FOR EVER",
@@ -266,33 +159,6 @@
             "category":"selected_works, creative_coding, show_all"
         },
         {
-            "thumbnail_src":"/img/clip_thumb.jpg",
-            "id":"038",
-            "title":"Clip (work in progress)",
-            "description":"Javascript, HTML/CSS, Sketch / Chrome Extensions",
-            "date":"June,2016",
-            "info":[
-                {"is":"text", "p":"<i>\"clip\"</i> is a simple and clean bookmark app for articles, especially for those who ‘chronically’ open 1000+ tabs in one browser."},
-                {"is":"text", "p":"available to download via <a href=\"https://chrome.google.com/webstore/detail/clip/nneimfibemiegbfgjmeblmfclkfknaml\" target=\"_blank\">Chrome Store</a>"}
-            ],
-            "process":[
-                {"is":"video","url":"https://player.vimeo.com/video/172186701?autoplay=0?color=ffffff","size":{"w":"818","h":"511"}},
-                {"is":"video","url":"https://player.vimeo.com/video/171262966?autoplay=0?color=ffffff","size":{"w":"818","h":"511"}},
-                {"is":"video","url":"https://player.vimeo.com/video/171186081?autoplay=0?color=ffffff","size":{"w":"818","h":"511"}},
-                {"is":"video","url":"https://player.vimeo.com/video/171058389?autoplay=0?color=ffffff","size":{"w":"640","h":"360"}}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project (Design/Development)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"image",
-                "url":"/img/clip_content_01.png",
-                "size":{"w":"920","h":"auto"}
-            },
-            "category":"show_all, creative_coding"
-        },
-        {
             "thumbnail_src":"/img/thesis_thumb.jpg",
             "id":"037",
             "title":"FRAGMENT AND ENTITY",
@@ -315,62 +181,6 @@
                 "size":{"w":"920","h":"518"}
             },
             "category":"selected_works, show_all, creative_coding"
-        },
-        {
-            "thumbnail_src":"/img/web_thumbnail.jpg",
-            "id":"036",
-            "title":"website renewal",
-            "description":"Javascript, HTML/CSS, express/nodejs",
-            "date":"Jan,2016",
-            "info":[
-                {"is":"text", "p":"avseoul.net design archive"}
-            ],
-            "process":[
-                {"is":"video","url":"https://player.vimeo.com/video/251593442","dummy":"","size":{"w":"640","h":"640"}},
-                {"is":"video","url":"https://player.vimeo.com/video/230390388","dummy":"","size":{"w":"640","h":"640"}},
-                {"is":"video","url":"https://player.vimeo.com/video/169792176","dummy":"","size":{"w":"640","h":"400"}}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"",
-                "url":"",
-                "size":{"w":"920","h":"575"}
-            },
-            "category":"show_all"
-        },
-        {
-            "thumbnail_src":"/img/particleEQ_thumb.jpg",
-            "id":"035",
-            "title":"Particle Equalizer #1",
-            "description":"Javascript, webGL, GLSL/Computer Graphics @CS/Nature of Code @ITP",
-            "date":"Dec,2015",
-            "info":[
-                {"is":"video","url":"https://player.vimeo.com/video/152375642?autoplay=0?color=ffffff","size":{"w":"920","h":"518"}},
-                {"is":"text", "p":"'Particle Equalizer #1' is the first experiment project of 'Particle Equalizer Series'. This application is inspired by 'Robert Hodgin (flight404)'s audiovisual generative coding works. This documentation video will show you how it works, you can also play it in realtime, please check this following link"},
-                {"is":"text", "p":"-"},
-                {"is":"text", "p":"<b><a href='https://goo.gl/QydXWw' target='_blank'>goo.gl/QydXWw</a></b>"},
-                {"is":"text", "p":"-"},
-                {"is":"text", "p":"Particle Equalizer is a realtime audio reactive application on the web browser."},
-                {"is":"text", "p":"<li>add your playlist on player by pasting the url from sound cloud.</li>"},
-                {"is":"text", "p":"<li>turn off the player and play with mic input. it will react to the sound from outside of your computer.</li>"},
-                {"is":"text", "p":"<li>press 'Cmd+Ctrl+F' to enter full-screen mode. interfaces will be hidden. a party mode.</li>"}
-            ],
-            "process":[
-                {"is":"text", "p":""}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"realtime",
-                "url":"https://avseoul.net/particleEqualizer/",
-                "size":{"w":"920","h":"620"}
-            },
-            "category":"selected_works, creative_coding, show_all"
         },
         {
             "thumbnail_src":"/img/bigscreen_thumb.jpg",
@@ -441,133 +251,6 @@
                 "size":{"w":"920","h":"518"}
             },
             "category":"creative_coding, selected_works, show_all"
-        },
-        {
-            "thumbnail_src":"/img/rainytypewriter.jpg",
-            "id":"028",
-            "title":"Rainy Typewriter",
-            "description":"Javascript, HTML, CSS, P5.JS, TONE.JS/Interactive AudioVisual Content/Interactive Music @ITP",
-            "date":"Mar,2015",
-            "info":[
-                {"is":"text","p":"<a href='https://avseoul.net/RainyTypewriter/public/index.html' target='_blank'>https://avseoul.net/RainyTypewriter/public/index.html</a>"}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"https://github.com/avseoul/avseoul.github.io/blob/master/RainyTypewriter/public/index.html",
-            "content":{
-                "is":"realtime",
-                "url":"https://avseoul.net/RainyTypewriter/public/index.html",
-                "size":{"w":"920","h":"920"}
-            },
-            "category":"creative_coding, show_all"
-        },
-        {
-            "thumbnail_src":"/img/rg_thumbnail.jpg",
-            "id":"027",
-            "title":"Logo for Ross Goodwin",
-            "description":"Identity Design",
-            "date":"Jan,2015",
-            "info":[
-                {"is":"text","p":"<a href=\"https://rossgoodwin.com/\" target=\"_blank\">Ross Goodwin</a> is a technologist, a language hacker, and currently a graduate student at NYU ITP. Before attending ITP, He was a ghostwriter in the Obama administration and the private sector, then became interested in natural language processing."}
-            ],
-            "process":[
-                {"is":"text","p":"He wanted me to reflect his characteristic which is like, emphasizing computation and writing with text + mathematical symbols with his initial characters 'RG'. I thought the way how I could put his asking into design without too specific graphic symbols like mathematical symbols or numbers. I came up with an idea that I could use the manner like blueprint for typography because this would metaphorically represent methematical manner without any sense of differences with typography."}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"image",
-                "url":"/img/RG_main.png",
-                "size":{"w":"920","h":"auto"}
-            },
-            "category":"graphic_design, show_all"
-        },
-        {
-            "thumbnail_src":"/img/cosmosonic.jpg",
-            "id":"024",
-            "title":"Cosmosonic",
-            "description":"Interactive Audio Visual Installation/Projection on Canvas",
-            "date":"Oct,2014",
-            "info":[
-                {"is":"video","url":"https://player.vimeo.com/video/112602309?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}},
-                {"is":"video","url":"https://player.vimeo.com/video/111945724?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}}
-            ],
-            "process":[
-                {"is":"text", "p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/114454591?autoplay=0?color=ffffff",
-                "size":{"w":"920","h":"518"}
-            },
-            "category":"selected_works, creative_coding, show_all"
-        },
-        {
-            "thumbnail_src":"/img/expressivetypography.jpg",
-            "id":"023",
-            "title":"Expressive Typography",
-            "description":"Expressive Typography/Graphic Design/Visual Language @ITP",
-            "date":"Sep,2014",
-            "info":[
-                {"is":"image","url":"/img/expressivetypography01.png"},
-                {"is":"text", "p":"Medicine"},
-                {"is":"image","url":"/img/expressivetypography02.png"},
-                {"is":"text", "p":"Stamina"},
-                {"is":"image","url":"/img/expressivetypography03.png"},
-                {"is":"text", "p":"Manipulate"}
-            ],
-            "process":[
-                {"is":"text", "p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"",
-                "url":"",
-                "size":{"w":"","h":""}
-            },
-            "category":"graphic_design, show_all"
-        },
-        {
-            "thumbnail_src":"/img/itplogo.jpg",
-            "id":"022",
-            "title":"ITP T-SHIRTS Design",
-            "description":"Illustrator/Graphic Desgin/Personal Work @ITP",
-            "date":"Sep,2014",
-            "info":[
-                {"is":"image","url":"/img/itp-t-shirts-appl-7.jpg"},
-                {"is":"image","url":"/img/itp-t-shirts-appl-6.jpg"},
-                {"is":"image","url":"/img/itp-t-shirts-appl-5.jpg"},
-                {"is":"image","url":"/img/itp-t-shirts-appl-4.jpg"},
-                {"is":"image","url":"/img/itp-t-shirts-appl-3.jpg"},
-                {"is":"image","url":"/img/itp-t-shirts-appl-2.jpg"},
-                {"is":"text","p":"There are three designs, first, I twisted NYU original symbol using IDEA BULB pictogram to express creativity and keep heritage of university. And others just use rectangle and typography which is official New York University typeface ‘GOTHAM FAMILY’"}
-            ],
-            "process":[
-                {"is":"text", "p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"",
-                "url":"",
-                "size":{"w":"","h":""}
-            },
-            "category":"graphic_design, show_all"
         },
         {
             "thumbnail_src":"/img/nonagon.jpg",
@@ -751,37 +434,6 @@
             "category":"video_works, selected_works, show_all"
         },
         {
-            "thumbnail_src":"/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg",
-            "id":"015",
-            "title":"Visualozik & Buzrun - Augmented Painting 001",
-            "description":"Projection Mapping/3m06s/Directing&Producing",
-            "date":"Jan,2012",
-            "info":[
-                {"is":"text","p":"BUZRUN is a snowboard brand that represent Korea. This project(Augmented Painting 001) is a result for BUZRUN phyton binding 3rd model launching. This work will installed in international snowboard show at China & Germany."},
-                {"is":"text","p":"Augmented painting project is a advance type from Art Collaboration at KT&G in 2010, it overcome some problems(such as setting and sync for different spaces) by making set free module system. We named it 'Augmented Paining', because Projection mapping makes new images from fixed thing, like making 2D canvas to 3D space or animate fixed image."},
-                {"is":"text","p":"Phyton Binding is a whole new DNA from previous one. Each characters makes phyton binding and they dominate previous binding system. A concept like a extraterrestrial intelligence story."}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Client","credit":"Buzrun Korea"},
-                {"role":"Agency","credit":"Visualozik"},
-                {"role":"Production","credit":"Visualozik"},
-                {"role":"Director","credit":"Sehyun Kim(av)"},
-                {"role":"Projection Design","credit":"Sehyun Kim(av)"},
-                {"role":"Illustration Design","credit":"Phenomenon(Buzrun)"},
-                {"role":"Sound Design","credit":"Evil Den Studio"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/35612783?autoplay=0&color=fff",
-                "size":{"w":"920","h":"518"}
-            },
-            "category":"3d_mapping, show_all"
-        },
-        {
             "thumbnail_src":"/img/visexp.jpg",
             "id":"014",
             "title":"Visualozik Experiment 3D Projection Mapping + X",
@@ -824,54 +476,6 @@
             "category":"3d_mapping, show_all, selected_works"
         },
         {
-            "thumbnail_src":"/img/hoam.jpg",
-            "id":"013",
-            "title":"Video for the centennial anniversary of hoam lee",
-            "description":"3D Animation/1m59s/Directing&Producing",
-            "date":"May,2010",
-            "info":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Director","credit":"Sehyun Kim(av)"},
-                {"role":"Editting","credit":"Sehyun Kim(av)"},
-                {"role":"Post Production Design","credit":"Sehyun Kim(av)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/58441663?autoplay=0&color=fff",
-                "size":{"w":"920","h":"207"}
-            },
-            "category":"selected_works, motion_graphic, show_all"
-        },
-        {
-            "thumbnail_src":"/img/asdf.jpg",
-            "id":"012",
-            "title":"OpticalPyramid 002",
-            "description":"Projection Mapping/4m53s/Projection on Painting/",
-            "date":"Jun,2010",
-            "info":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Role","credit":"Personal Project"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/20978671?autoplay=0&color=fff",
-                "size":{"w":"920","h":"518"}
-            },
-            "category":"selected_works, 3d_mapping, show_all"
-        },
-        {
             "thumbnail_src":"/img/artcol.jpg",
             "id":"011",
             "title":"KT&G ARTCOLLABORATION KOMBA X AV X QUANDOL",
@@ -897,31 +501,6 @@
             "category":"selected_works, 3d_mapping, show_all"
         },
         {
-            "thumbnail_src":"/img/bemyluv.jpg",
-            "id":"010",
-            "title":"THE QUIETT 'BE MY LUV'",
-            "description":"Music Video/4m01s/Directing&Producing",
-            "date":"Apr,2010",
-            "info":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Directing","credit":"Sehyun Kim(av)"},
-                {"role":"Editting&Post Production","credit":"Sehyun Kim(av)"},
-                {"role":"D.O.P","credit":"Jaehyung Choi(Bird Creative)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/11258353?autoplay=0&color=fff",
-                "size":{"w":"920","h":"518"}
-            },
-            "category":"video_works, show_all"
-        },
-        {
             "thumbnail_src":"/img/ofs_mv.jpg",
             "id":"009",
             "title":"O.F.S(Oriental Funk Stew) 'Super Sonic'",
@@ -945,31 +524,6 @@
                 "size":{"w":"920","h":"518"}
             },
             "category":"video_works, show_all"
-        },
-        {
-            "thumbnail_src":"/img/opticalpiramid.jpg",
-            "id":"008",
-            "title":"OpticalPyramid 001",
-            "description":"Projection Mapping/9m39s/Projection on Installation/Directing&Producing",
-            "date":"Nov,2009",
-            "info":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Projection Design","credit":"Sehyun Kim(av)"},
-                {"role":"Installation Design","credit":"Sehyun Kim(av)"},
-                {"role":"Sound Design","credit":"Quandol"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/21577823?autoplay=0&color=fff",
-                "size":{"w":"920","h":"521"}
-            },
-            "category":"selected_works, 3d_mapping, show_all"
         },
         {
             "thumbnail_src":"/img/10years.jpg",
