@@ -24,7 +24,16 @@ body {
 	font-variant: normal;
 	/*font-weight: 400;*/
 	line-height: 20px;
-	
+
+	/*background: #000;*/
+	/*background: linear-gradient(
+		yellow, 
+		green
+	);
+	backg*/round-blend-mode: multiply;
+
+	/*height: 100vh;*/
+
 	margin: 0;
 	padding: 0;
 }
@@ -55,10 +64,11 @@ credit{
 	background:#fff;
 }
 #container{
+	max-width: 800px;
+	padding-bottom: 300px;
 	background:#fff;
 }
 #footer{
-	padding-top: 300px;
 	background:#fff;
 }
 
@@ -102,6 +112,7 @@ credit{
 
 .ui_container{
 	width: 100vw;
+	max-width: 800px;
 	height: 300px;
 	margin-top: 20px;
 	margin-bottom: 0px;
@@ -112,6 +123,7 @@ credit{
 	background-color: #fff;
 }
 .ui_thumbnail_mask{
+	cursor:pointer;
 	position: absolute;
 	left: 0px;
 
@@ -159,7 +171,7 @@ credit{
 }
 .ui_detail{
 	position: absolute;
-	right: 0px;
+	/*right: 0px;*/
 	bottom: 0px;
 	width: fit-content;
 	color: #00f;

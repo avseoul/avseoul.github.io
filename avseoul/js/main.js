@@ -207,7 +207,7 @@ var open_content = function(_id){
 		        				var _div = document.createElement('div');
 		        				_div.style['width'] = _v_width+'px';
 		        				_div.style['height'] = _v_height+'px';
-		        				_div.style['background'] = '#888';
+		        				_div.style['background'] = '#000';
 		        				_div.innerHTML = '<iframe id="mIframe_content" src=\"'+ proj.info[index].url +'\" width=\"'+_v_width+'\" height=\"'+_v_height+'\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 		        				_r.appendChild(_div);
 		        			})(j);
@@ -239,6 +239,7 @@ var open_content = function(_id){
 		        				var _div = document.createElement('div');
 		        				_div.style['width'] = _v_width+'px';
 		        				_div.style['height'] = _v_height+'px';
+		        				_div.style['background'] = '#000';
 		        				_div.innerHTML = '<iframe id="mIframe_content" src=\"'+ proj.process[index].url +'\" width=\"'+_v_width+'\" height=\"'+_v_height+'\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 		        				_r.appendChild(_div);
 		        			})(j);

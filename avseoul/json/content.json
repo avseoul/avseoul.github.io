@@ -1,5 +1,112 @@
 {
     "projects":[
+    {
+        "thumbnail_src":"/img/thumb_49.gif",
+        "id":"049",
+        "title":"WIP - GRAIN",
+        "description":"TouchDesigner / a realtime audio reactive visual for an electronic sound \"Grain\" composed by NIM",
+        "date":"Feb,2018 - present",
+        "info":[
+            {"is":"text", "p":"a realtime audio reactive visual developed in Touch Designer"}
+        ],
+        "process":[
+            {"is":"video", "url":"https://player.vimeo.com/video/258566257", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/256517363", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/256365677", "dummy":"", "size":{"w":"640","h":"320"}}    
+        ],
+        "credit":[
+            {"role":"Role","credit":"Personal Project (Design/Development)"}
+        ],
+        "github":"",
+        "content":{
+            "is":"",
+            "url":"",
+            "size":{"w":"","h":""}
+        },
+        "category":"selected_works, creative_coding, show_all"
+    },
+    {
+        "thumbnail_src":"/img/thumb_48.jpg",
+        "id":"048",
+        "title":"WIP - an experiment with Compute Shader, Instancing, and Realtime Rendering in Touch Designer",
+        "description":"TouchDesigner",
+        "date":"Feb,2018 - present",
+        "info":[
+            {"is":"text", "p":"Experiment with Compute Shader, Instancing, and Realtime Rendering in Touch Designer"}
+        ],
+        "process":[
+            {"is":"video", "url":"https://player.vimeo.com/video/257443370", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/257219654", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/257074693", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/255847086", "dummy":"", "size":{"w":"640","h":"320"}}    
+        ],
+        "credit":[
+            {"role":"Role","credit":"Personal Project (Design/Development)"}
+        ],
+        "github":"https://github.com/avseoul/TD_simple_collision_test_with_compute_shader",
+        "content":{
+            "is":"",
+            "url":"",
+            "size":{"w":"","h":""}
+        },
+        "category":"selected_works, creative_coding, show_all"
+    },
+    {
+        "thumbnail_src":"/img/thumb_47.gif",
+        "id":"047",
+        "title":"WIP - Fluid Sim Experiment",
+        "description":"Cinder, NVIDIA FLEX / an audio reactive particle system",
+        "date":"Jan,2018 - present",
+        "info":[
+            {"is":"text", "p":"experiment with NVIDIA FLEX in Cinder"}
+        ],
+        "process":[
+            {"is":"video", "url":"https://player.vimeo.com/video/249225659", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/249049149", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/248954771", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/248830570", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/248647852", "dummy":"", "size":{"w":"640","h":"320"}}    
+        ],
+        "credit":[
+            {"role":"Role","credit":"Personal Project (Design/Development)"}
+        ],
+        "github":"",
+        "content":{
+            "is":"",
+            "url":"",
+            "size":{"w":"","h":""}
+        },
+        "category":"selected_works, creative_coding, show_all"
+    },
+    {
+            "thumbnail_src":"/img/thumb_45.jpg",
+            "id":"045",
+            "title":"Experiment with Single Line Drawing & Optical Flow Feedback & Pixel Displacement",
+            "description":"Cinder, Glsl",
+            "date":"Oct,2017",
+            "info":[
+                {"is":"text", "p":""}
+            ],
+            "process":[
+                {"is":"video", "url":"https://player.vimeo.com/video/238017289", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"video", "url":"https://player.vimeo.com/video/237855230", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"image","url":"/img/slitscan_16.jpg"},
+                {"is":"image","url":"/img/slitscan_14.jpg"},
+                {"is":"image","url":"/img/slitscan_13.jpg"},
+                {"is":"image","url":"/img/slitscan_12.jpg"},
+                {"is":"text", "p":""}    
+            ],
+            "credit":[
+                {"role":"Role","credit":"Personal Project (Design/Development)"}
+            ],
+            "github":"",
+            "content":{
+                "is":"",
+                "url":"",
+                "size":{"w":"","h":""}
+            },
+            "category":"selected_works, creative_coding, show_all"
+        },
 	 {
             "thumbnail_src":"/img/slitscan_15.jpg",
             "id":"046",
@@ -7,7 +114,7 @@
             "description":"Cinder, Glsl <br><br><i> *the thumbnail from a collaboration with <a href=\"http://coleorloff.com/\" target=\"_blank\">Cole Orloff</a></i><br><i> *the original photography of thumbnail courtesy of <a href=\"http://coleorloff.com/\" target=\"_blank\">Cole Orloff</a></i><br><br>",
             "date":"Sep,2017",
             "info":[
-                {"is":"text", "p":"n Experiments with Slit-Scan technique"}                
+                {"is":"text", "p":"an experiments with Slit-Scan technique"}                
             ],
             "process":[
                             {"is":"video", "url":"https://player.vimeo.com/video/236703159", "dummy":"", "size":{"w":"920","h":"500"}},
@@ -16,22 +123,42 @@
                             {"is":"video", "url":"https://player.vimeo.com/video/234599615", "dummy":"", "size":{"w":"920","h":"500"}},
                             {"is":"video", "url":"https://player.vimeo.com/video/234132677", "dummy":"", "size":{"w":"920","h":"500"}},
                             {"is":"video", "url":"https://player.vimeo.com/video/234105653", "dummy":"", "size":{"w":"920","h":"500"}},
-		{"is":"video", "url":"https://player.vimeo.com/video/233771474", "dummy":"", "size":{"w":"920","h":"500"}},
-                            {"is":"image","url":"/img/slitscan_17.jpg"},
-                            {"is":"image","url":"/img/slitscan_16.jpg"},
+		                      {"is":"video", "url":"https://player.vimeo.com/video/233771474", "dummy":"", "size":{"w":"920","h":"500"}},
+                            {"is":"video", "url":"https://player.vimeo.com/video/233592174", "dummy":"", "size":{"w":"920","h":"460"}},
+                            {"is":"video", "url":"https://player.vimeo.com/video/233402546", "dummy":"", "size":{"w":"920","h":"917"}},
                             {"is":"image","url":"/img/slitscan_15.jpg"},
-                            {"is":"image","url":"/img/slitscan_14.jpg"},
-                            {"is":"image","url":"/img/slitscan_13.jpg"},
-                            {"is":"image","url":"/img/slitscan_12.jpg"},
-		{"is":"image","url":"/img/slitscan_01.jpg"},
-		{"is":"image","url":"/img/slitscan_02.jpg"},
-		{"is":"image","url":"/img/slitscan_03.jpg"},
-		{"is":"image","url":"/img/slitscan_04.jpg"},
-		{"is":"image","url":"/img/slitscan_05.jpg"},
-		{"is":"image","url":"/img/slitscan_06.jpg"},
-		{"is":"image","url":"/img/slitscan_07.png"},
-                {"is":"video", "url":"https://player.vimeo.com/video/233592174", "dummy":"", "size":{"w":"920","h":"460"}},
-		{"is":"video", "url":"https://player.vimeo.com/video/233402546", "dummy":"", "size":{"w":"920","h":"917"}}
+                            {"is":"image","url":"/img/slitscan_01.jpg"},
+                            {"is":"image","url":"/img/slitscan_02.jpg"}
+            ],
+            "credit":[
+                {"role":"Role","credit":"Personal Project (Design/Development)"}
+            ],
+            "github":"",
+            "content":{
+                "is":"",
+                "url":"",
+                "size":{"w":"","h":""}
+            },
+            "category":"selected_works, creative_coding, show_all"
+        },
+        {
+            "thumbnail_src":"/img/thumb_36.jpg",
+            "id":"036",
+            "title":"Experiment with Optical Flow Feedback",
+            "description":"Cinder, Glsl",
+            "date":"Jun,2017",
+            "info":[
+                {"is":"text", "p":"a series of glsl sketches with optical flow feedback"}
+            ],
+            "process":[
+                {"is":"video", "url":"https://player.vimeo.com/video/221208487", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"video", "url":"https://player.vimeo.com/video/222143862", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"video", "url":"https://player.vimeo.com/video/222047127", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"video", "url":"https://player.vimeo.com/video/221520130", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"video", "url":"https://player.vimeo.com/video/220750624", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"video", "url":"https://player.vimeo.com/video/220581592", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"video", "url":"https://player.vimeo.com/video/220169573", "dummy":"", "size":{"w":"640","h":"320"}},
+                {"is":"text", "p":""}    
             ],
             "credit":[
                 {"role":"Role","credit":"Personal Project (Design/Development)"}
@@ -39,8 +166,8 @@
             "github":"",
             "content":{
                 "is":"video",
-                "url":"",
-                "size":{"w":"","h":""}
+                "url":"https://player.vimeo.com/video/220418304", 
+                "size":{"w":"640","h":"360"}
             },
             "category":"selected_works, creative_coding, show_all"
         },
@@ -228,16 +355,6 @@
                 {"is":"video","url":"https://player.vimeo.com/video/123573939?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}},
                 {"is":"video","url":"https://player.vimeo.com/video/121578736?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}},
                 {"is":"video","url":"https://player.vimeo.com/video/121617425?autoplay=0?color=ffffff","size":{"w":"720","h":"405"}},
-                {"is":"image","url":"/img/NOC_W05_01.jpg"},
-                {"is":"image","url":"/img/NOC_W05_02.jpg"},
-                {"is":"image","url":"/img/NOC_W05_03.jpg"},
-                {"is":"image","url":"/img/NOC_W05_04.jpg"},
-                {"is":"image","url":"/img/NOC_W05_05.jpg"},
-                {"is":"image","url":"/img/NOC_W05_06.jpg"},
-                {"is":"image","url":"/img/NOC_W05_07.jpg"},
-                {"is":"image","url":"/img/NOC_W05_08.jpg"},
-                {"is":"image","url":"/img/NOC_W05_09.jpg"},
-                {"is":"image","url":"/img/NOC_W05_10.jpg"},
                 {"is":"text", "p":""}
             ],
             "credit":[
@@ -376,34 +493,6 @@
                 "size":{"w":"920","h":"518"}
             },
             "category":"3d_mapping, show_all, selected_works"
-        },
-        {
-            "thumbnail_src":"/img/8sec2.jpg",
-            "id":"017",
-            "title":"8SECONDS X C.Y CHOI (2012 SFDF WINNER OF THIS YEAR) COLLABORATION FASHION FILM",
-            "description":"Fashion Film/1m24s/Directing&Producing",
-            "date":"Dec,2012",
-            "info":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "process":[
-                {"is":"text","p":"to be updated"}
-            ],
-            "credit":[
-                {"role":"Client","credit":"8seconds"},
-                {"role":"Agency","credit":"Swpy"},
-                {"role":"Production","credit":"Bird Creative"},
-                {"role":"Director","credit":"Sehyun Kim(av)"},
-                {"role":"Editting","credit":"Sehyun Kim(av)"},
-                {"role":"Post Production Design","credit":"Sehyun Kim(av)"}
-            ],
-            "github":"",
-            "content":{
-                "is":"video",
-                "url":"https://player.vimeo.com/video/56623219?autoplay=0&color=fff",
-                "size":{"w":"920","h":"518"}
-            },
-            "category":"video_works, show_all, selected_works"
         },
         {
             "thumbnail_src":"/img/8sec1.jpg",
