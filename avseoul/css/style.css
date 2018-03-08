@@ -24,8 +24,7 @@ body {
 	font-variant: normal;
 	/*font-weight: 400;*/
 	line-height: 20px;
-
-	/*background: #EEE;*/
+	
 	margin: 0;
 	padding: 0;
 }
@@ -53,13 +52,14 @@ credit{
 }
 
 #header{
-	
+	background:#fff;
 }
 #container{
-
+	background:#fff;
 }
 #footer{
-
+	padding-top: 300px;
+	background:#fff;
 }
 
 #render_mode{
@@ -89,7 +89,7 @@ credit{
 	margin-top: 20px;
 }
 #works_title{
-	width: 100vw;
+	width: 700px;
 	background: #fff;
 	color: #000;
 }
