@@ -7,7 +7,7 @@ var insert_next = function(_tar_node, _ref_node){
 };
 
 var set_location = function(_id){
-	window.location.hash = _id;
+	// window.location.hash = _id;
 };
 
 var links_alive = function(){

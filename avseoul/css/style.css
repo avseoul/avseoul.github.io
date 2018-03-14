@@ -30,7 +30,43 @@ body {
 		yellow, 
 		green
 	);
-	backg*/round-blend-mode: multiply;
+	background-blend-mode: multiply;*/
+
+	/*background-image: 
+	linear-gradient( 45deg, #000 25%, transparent 25%),
+	linear-gradient(135deg, #000 25%, transparent 25%),
+	linear-gradient( 45deg, transparent 75%, #000 25%),
+	linear-gradient(135deg, transparent 75%, #000 25%);
+	background-size: 10px 10px;
+	background-position: 0px 0px, 10px 0px, 10px -10px, 0px 10px;
+	background-blend-mode: multiply;*/
+
+    background-image: 
+    linear-gradient(
+    	135deg, 
+    	#333 25%, transparent 25%, 
+    	transparent 50%, #333 50%, 
+    	#333 75%, transparent 75%);
+    background-size: 16px 16px;	
+
+	/*background:
+	linear-gradient(
+		limegreen,
+		transparent
+	),
+	linear-gradient(
+		90deg,
+		skyblue,
+		transparent
+	),
+	linear-gradient(
+		-90deg,
+		coral,
+		transparent
+	);
+	background-size: 8px 8px;
+	background-position: 0px 0px, 8px 0px, 8px -8px, 0px 8px;
+	background-blend-mode: multiply;*/
 
 	/*height: 100vh;*/
 
@@ -51,6 +87,15 @@ av_title{
 	font-weight: 600;
 	line-height: 20px;
 }
+container_title{
+	color: #000;
+	/*font-family: Ubuntu;*/
+	font-size: 40px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 600;
+	line-height: 15px;	
+}
 credit{
 	color: #999;
 	/*font-family: Ubuntu;*/
@@ -61,14 +106,22 @@ credit{
 }
 
 #header{
+	max-width: 800px;
+	background:#fff;
+	margin-bottom: 30px;
+}
+#extra{
+	max-width: 800px;
+	margin-bottom: 30px;
 	background:#fff;
 }
 #container{
 	max-width: 800px;
-	padding-bottom: 300px;
+	margin-bottom: 30px;
 	background:#fff;
 }
 #footer{
+	max-width: 800px;
 	background:#fff;
 }
 
@@ -85,7 +138,7 @@ credit{
 	/*background-color: #000;*/
 }
 #logo_img{
-	width: 50px;
+	width: 100px;
 	/*-webkit-filter: brightness(100%);*/
 	/*filter: brightness(1000%);*/
 }
@@ -111,6 +164,7 @@ credit{
 }
 
 .ui_container{
+	position: relative;
 	width: 100vw;
 	max-width: 800px;
 	height: 300px;
@@ -156,11 +210,9 @@ credit{
 }
 .ui_subject{
 	background:#fff;
-	width: fit-content;
 }
 .ui_description{
 	border: none;
-	width: fit-content;
 	color: #000000;
 	background: #ffffff;
 }
@@ -171,7 +223,7 @@ credit{
 }
 .ui_detail{
 	position: absolute;
-	/*right: 0px;*/
+	right: 0px;
 	bottom: 0px;
 	width: fit-content;
 	color: #00f;

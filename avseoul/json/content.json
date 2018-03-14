@@ -10,6 +10,7 @@
             {"is":"text", "p":"a realtime audio reactive visual developed in Touch Designer"}
         ],
         "process":[
+            {"is":"video", "url":"https://player.vimeo.com/video/259600884", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/258566257", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/256517363", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/256365677", "dummy":"", "size":{"w":"640","h":"320"}}    
