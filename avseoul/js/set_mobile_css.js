@@ -1,20 +1,20 @@
 var set_mobile_css = function(){
 	console.log("avseoul->setting mobile_css");
 
-	var _about = document.getElementById("bio_title");
-	_about.style.width = "100vw";
 	var _work = document.getElementById("works_title");
 	_work.style.width = "100vw";
 
 	var _ui_containers = document.getElementsByClassName("ui_container");
 	for(var i = 0; i < _ui_containers.length; i++){
+		_ui_containers[i].style["position"] = "auto";
 		_ui_containers[i].style["height"] = "auto";
+		_ui_containers[i].style["margin-top"] = "30px";
 	}
 
 	var _ui_thumb_masks = document.getElementsByClassName("ui_thumbnail_mask");
 	for(var i = 0; i < _ui_thumb_masks.length; i++){
 		_ui_thumb_masks[i].style["position"] = "relative";
-		_ui_thumb_masks[i].style["left"] = "0px";
+		_ui_thumb_masks[i].style["left"] = " ";
 	}
 
 	var _ui_thumbs = document.getElementsByClassName("ui_thumbnail");
