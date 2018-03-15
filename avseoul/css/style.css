@@ -92,15 +92,18 @@ credit{
 	margin-bottom: 30px;
 	background:#eee;
 }
-#extra{
-	max-width: 800px;
-	margin-bottom: 30px;
-	background:#eee;
+#random_selected_works{
+	
 }
 #container{
 	max-width: 800px;
 	margin-bottom: 30px;
 	background:#eee;
+}
+.container{
+	max-width: 800px;
+	margin-bottom: 30px;
+	background:#eee;	
 }
 #footer{
 	max-width: 800px;
