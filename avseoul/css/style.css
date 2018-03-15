@@ -25,7 +25,8 @@ body {
 	/*font-weight: 400;*/
 	line-height: 20px;
 
-	/*background: #000;*/
+	/*background: #fff;*/
+	
 	/*background: linear-gradient(
 		yellow, 
 		green
@@ -41,32 +42,13 @@ body {
 	background-position: 0px 0px, 10px 0px, 10px -10px, 0px 10px;
 	background-blend-mode: multiply;*/
 
-    background-image: 
+    /*background-image: 
     linear-gradient(
     	135deg, 
     	#333 25%, transparent 25%, 
     	transparent 50%, #333 50%, 
     	#333 75%, transparent 75%);
-    background-size: 16px 16px;	
-
-	/*background:
-	linear-gradient(
-		limegreen,
-		transparent
-	),
-	linear-gradient(
-		90deg,
-		skyblue,
-		transparent
-	),
-	linear-gradient(
-		-90deg,
-		coral,
-		transparent
-	);
-	background-size: 8px 8px;
-	background-position: 0px 0px, 8px 0px, 8px -8px, 0px 8px;
-	background-blend-mode: multiply;*/
+    background-size: 16px 16px;	*/
 
 	/*height: 100vh;*/
 
@@ -107,22 +89,22 @@ credit{
 
 #header{
 	max-width: 800px;
-	background:#fff;
 	margin-bottom: 30px;
+	background:#eee;
 }
 #extra{
 	max-width: 800px;
 	margin-bottom: 30px;
-	background:#fff;
+	background:#eee;
 }
 #container{
 	max-width: 800px;
 	margin-bottom: 30px;
-	background:#fff;
+	background:#eee;
 }
 #footer{
 	max-width: 800px;
-	background:#fff;
+	background:#eee;
 }
 
 #render_mode{
@@ -144,16 +126,16 @@ credit{
 }
 #bio_title{
 	width: 300px;
-	background: #fff;
+	/*background: #fff;*/
 	color: #000;
 }
 #bio{
-	background: #fff;
+	/*background: #fff;*/
 	margin-top: 20px;
 }
 #works_title{
 	max-width: 800px;
-	background: #fff;
+	/*background: #fff;*/
 	color: #000;
 }
 #cv_link{
@@ -174,7 +156,7 @@ credit{
 }
 .ui_url{
 	width: fit-content;
-	background-color: #fff;
+	/*background-color: #fff;*/
 }
 .ui_thumbnail_mask{
 	cursor:pointer;
@@ -209,12 +191,12 @@ credit{
 	/*background: #ddd;*/
 }
 .ui_subject{
-	background:#fff;
+	/*background:#fff;*/
 }
 .ui_description{
 	border: none;
 	color: #000000;
-	background: #ffffff;
+	/*background: #ffffff;*/
 }
 .ui_date{
 	width: fit-content;
