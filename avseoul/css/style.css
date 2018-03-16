@@ -109,13 +109,7 @@ credit{
 	background:#eee;
 }
 
-#render_mode{
-	color: #00f;
-	text-decoration: underline;		
-}
-#render_mode:hover{
-	cursor: pointer;
-}
+
 #logo{
 	/*margin-top: 20px;*/
 	/*margin-bottom: 20px;*/
@@ -249,6 +243,14 @@ credit{
 	animation-name: example;
 	animation-duration: 500ms;
 	animation-iteration-count: infinite;
+}
+
+.onclick_link{
+	color: #00f;
+	text-decoration: underline;		
+}
+.onclick_link:hover{
+	cursor: pointer;
 }
 
 @-webkit-keyframes example {

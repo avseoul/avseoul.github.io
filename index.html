@@ -32,19 +32,17 @@
 <body>
 	
 		<div id="header">
-			<div id='render_mode'>
-				<div align="right">
-					<p><a class="is_fucked" onclick="render_rainbow()"><&#33;--rainbow--></a></p>
-					<p><a onclick="links_alive()"><&#33;--links alive--></a></p>
-				</div>
+			<div align="right">
+				<p><a class="is_fucked onclick_link" onclick="render_rainbow()">>rainbow</a></p>
+				<p><a class="onclick_link" onclick="links_alive()">>links alive</a></p>
 			</div>
 			<div id='logo'>
 				<img id='logo_img' src='/avseoul/assets/img/logo.png'>
 			</div>
 			<div id="others_link">
 				<div align="right">
-					<p><a href="https://github.com/avseoul" target="_blank"><&#33;--github--></a></p>
-					<p><a href="https://www.linkedin.com/in/avseoul/" target="_blank"><&#33;--linkedin--></a></p>
+					<p><a href="https://github.com/avseoul" target="_blank">>github</a></p>
+					<p><a href="https://www.linkedin.com/in/avseoul/" target="_blank">>linkedin</a></p>
 				</div>
 			</div>
 			<div id="bio">
@@ -60,7 +58,7 @@
 			</div>
 			<div id="cv_link">
 				<div align="right">
-					<p><a href="/avseoul/assets/resume/2018.03_sehyun.av.kim_resume.pdf" target="_blank"><&#33;--download resume--></a></p>
+					<p><a href="/avseoul/assets/resume/2018.03_sehyun.av.kim_resume.pdf" target="_blank">>download resume</a></p>
 				</div>
 			</div>
 		</div>
@@ -69,6 +67,9 @@
 			<div id="works_title" style="margin-bottom:20px;"><container_title>
 				Random Screening</container_title></div>
 			<div id="random_selected_works"></div>
+			<div align="right">
+				<p><a class="onclick_link" onclick="set_random_screening()">>shuffle</a></p>
+			</div>
 		</div>
 
 		<div class="container">
