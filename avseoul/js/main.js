@@ -292,6 +292,8 @@ var open_content = function(_id){
 };
 
 var init = function(){
+	set_random_screening();
+	
 	$.getJSON("/avseoul/json/content.json", function(json) {
 		m_json = json;
 		var num_pects = json['projects'].length;

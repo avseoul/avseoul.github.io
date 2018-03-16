@@ -45,10 +45,10 @@ body {
     /*background-image: 
     linear-gradient(
     	135deg, 
-    	#333 25%, transparent 25%, 
-    	transparent 50%, #333 50%, 
-    	#333 75%, transparent 75%);
-    background-size: 16px 16px;	*/
+    	#eee 25%, transparent 25%, 
+    	transparent 50%, #eee 50%, 
+    	#eee 75%, transparent 75%);
+    background-size: 8px 8px;*/	
 
 	/*height: 100vh;*/
 
@@ -57,7 +57,7 @@ body {
 }
 
 body::-webkit-scrollbar { 
-	display: none;
+	/*display: none;*/
 }
 
 av_title{
@@ -72,11 +72,10 @@ av_title{
 container_title{
 	color: #000;
 	/*font-family: Ubuntu;*/
-	font-size: 40px;
+	font-size: 64px;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 600;
-	line-height: 15px;	
 }
 credit{
 	color: #999;
@@ -89,7 +88,7 @@ credit{
 
 #header{
 	max-width: 800px;
-	margin-bottom: 30px;
+	padding-bottom: 30px;
 	background:#eee;
 }
 #random_selected_works{
@@ -97,12 +96,12 @@ credit{
 }
 #container{
 	max-width: 800px;
-	margin-bottom: 30px;
+	padding-bottom: 30px;
 	background:#eee;
 }
 .container{
 	max-width: 800px;
-	margin-bottom: 30px;
+	padding-bottom: 30px;
 	background:#eee;	
 }
 #footer{
@@ -123,7 +122,7 @@ credit{
 	/*background-color: #000;*/
 }
 #logo_img{
-	width: 100px;
+	width: 50px;
 	/*-webkit-filter: brightness(100%);*/
 	/*filter: brightness(1000%);*/
 }
