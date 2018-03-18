@@ -185,9 +185,9 @@ var open_content = function(_id){
     for(var i = 0; i < 3; i++){
     	var _title, _id;
     	switch(i){
-    		case 0: _title = '> Info_';    ;break;
-    		case 1: _title = '> Process_'; ;break;
-    		case 2: _title = '> Credit_';  ;break;
+    		case 0: _title = '> Info';    ;break;
+    		case 1: _title = '> Process'; ;break;
+    		case 2: _title = '> Credit';  ;break;
     		default:                       break;
     	}
 
@@ -281,7 +281,7 @@ var open_content = function(_id){
     if(proj.github !== ''){
     	var _source = document.createElement('div');
     	_source.className = 'content_title';
-    	_source.innerHTML = '> Source_';
+    	_source.innerHTML = '> Source';
 
         var _source_body = document.createElement('div');
         _source_body.innerHTML = '<p><a href='+proj.github+' target=\'_blank\'>github</a></p>'

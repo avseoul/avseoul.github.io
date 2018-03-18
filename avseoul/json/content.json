@@ -1,6 +1,29 @@
 {
     "projects":[
     {
+        "thumbnail_src":"/img/thumb_50.gif",
+        "id":"050",
+        "title":"Realtime Rendering Study",
+        "description":"TouchDesigner / SSR and couple screen space post processing technique",
+        "date":"Mar,2018",
+        "info":[
+            {"is":"text", "p":"Realtime Rendering Study - SSR and couple screen space post processing technique in TouchDesigner"}
+        ],
+        "process":[
+            {"is":"", "url":"", "dummy":"", "size":{"w":"","h":""}}  
+        ],
+        "credit":[
+            {"role":"Role","credit":"Personal Project (Design/Development)"}
+        ],
+        "github":"https://github.com/avseoul/TD_SSR",
+        "content":{
+            "is":"video",
+            "url":"https://player.vimeo.com/video/260673087",
+            "size":{"w":"640","h":"360"}
+        },
+        "category":"selected_works, creative_coding, show_all"
+    },
+    {
         "thumbnail_src":"/img/thumb_49.gif",
         "id":"049",
         "title":"WIP - GRAIN",
