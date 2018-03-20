@@ -10,6 +10,23 @@ p {
 	padding: 0;
 }
 
+raindow_p {
+	/*font-family: Ubuntu;*/
+	font-size: 12px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 20px;
+
+	margin: 0 5px 0 5px;
+	padding: 0;
+
+	cursor: pointer;
+	display: block;
+
+	text-decoration: underline;
+}
+
 div {
 	margin: 0;
 	padding: 0;
