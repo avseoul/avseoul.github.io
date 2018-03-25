@@ -26,9 +26,9 @@
     {
         "thumbnail_src":"/img/thumb_49.gif",
         "id":"049",
-        "title":"WIP - GRAIN",
-        "description":"TouchDesigner / a realtime audio reactive visual for an electronic sound \"Grain\" composed by NIM",
-        "date":"Feb,2018 - present",
+        "title":"Against The Grain",
+        "description":"TouchDesigner / a realtime audio reactive visual for an electronic sound \"Against The Grain\" composed by NIM",
+        "date":"Feb,2018",
         "info":[
             {"is":"text", "p":"a realtime audio reactive visual developed in Touch Designer"}
         ],
@@ -43,9 +43,9 @@
         ],
         "github":"",
         "content":{
-            "is":"",
-            "url":"",
-            "size":{"w":"","h":""}
+            "is":"video",
+            "url":"https://player.vimeo.com/video/261670096", 
+            "size":{"w":"640","h":"360"}
         },
         "category":"selected_works, creative_coding, show_all"
     },
