@@ -7,6 +7,8 @@
         "description":"Unity3D / Blob's positions are driven by compute shader",
         "date":"Apr,2018 - WIP",
         "info":[
+            {"is":"video", "url":"https://player.vimeo.com/video/271033206", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/270928052", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/270820953", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/270239022", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/270020106", "dummy":"", "size":{"w":"640","h":"320"}},
