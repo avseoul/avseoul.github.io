@@ -1,6 +1,29 @@
 {
     "projects":[
     {
+        "thumbnail_src":"/img/thumb_52.gif",
+        "id":"052",
+        "title":"Audio Reactive Shader",
+        "description":"Unity3D",
+        "date":"Mar,2018 - WIP",
+        "info":[
+            {"is":"video", "url":"https://player.vimeo.com/video/272134669", "dummy":"", "size":{"w":"640","h":"320"}}
+        ],
+        "process":[
+            {"is":"", "url":"", "dummy":"", "size":{"w":"","h":""}}  
+        ],
+        "credit":[
+            {"role":"Role","credit":"Personal Project (Design/Development)"}
+        ],
+        "github":"",
+        "content":{
+            "is":"",
+            "url":"",
+            "size":{"w":"","h":""}
+        },
+        "category":"selected_works, creative_coding, show_all"
+    },
+    {
         "thumbnail_src":"/img/thumb_51.gif",
         "id":"051",
         "title":"Raymarching Metaball",
