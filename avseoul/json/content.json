@@ -7,6 +7,7 @@
         "description":"Unity3D",
         "date":"Mar,2018 - WIP",
         "info":[
+            {"is":"video", "url":"https://player.vimeo.com/video/272286618", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/272134669", "dummy":"", "size":{"w":"640","h":"320"}}
         ],
         "process":[
@@ -15,7 +16,7 @@
         "credit":[
             {"role":"Role","credit":"Personal Project (Design/Development)"}
         ],
-        "github":"",
+        "github":"https://github.com/avseoul/Unity3D_LiquidySurfaceShader",
         "content":{
             "is":"",
             "url":"",
