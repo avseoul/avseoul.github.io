@@ -1,17 +1,40 @@
 {
     "projects":[
     {
+        "thumbnail_src":"/img/thumb_53.gif",
+        "id":"053",
+        "title":"Glitch In Boredom - Slingshot",
+        "description":"Unity3D, Oculus Rift - Glitch In Boredom is a self development project to explore possible interactions and visual effects in VR",
+        "date":"Mar,2018 - WIP",
+        "info":[
+            {"is":"text", "p":"WIP - Glitch In Boredom is a self development project to explore possible interactions and visual effects in VR"}
+        ],
+        "process":[
+            {"is":"video", "url":"https://player.vimeo.com/video/272689178", "dummy":"", "size":{"w":"640","h":"320"}}
+        ],
+        "credit":[
+            {"role":"Role","credit":"Personal Project (Design/Development)"}
+        ],
+        "github":"https://github.com/avseoul/Unity3d_GlitchInBoredom_Slingshot",
+        "content":{
+            "is":"",
+            "url":"",
+            "size":{"w":"","h":""}
+        },
+        "category":"selected_works, creative_coding, show_all"
+    },
+    {
         "thumbnail_src":"/img/thumb_52.gif",
         "id":"052",
         "title":"Audio Reactive Shader",
-        "description":"Unity3D",
+        "description":"Unity3D - a realtime audio reactive liquidy surface shader in unity3d",
         "date":"Mar,2018 - WIP",
         "info":[
-            {"is":"video", "url":"https://player.vimeo.com/video/272286618", "dummy":"", "size":{"w":"640","h":"320"}},
-            {"is":"video", "url":"https://player.vimeo.com/video/272134669", "dummy":"", "size":{"w":"640","h":"320"}}
+            {"is":"", "url":"", "dummy":"", "size":{"w":"","h":""}}
         ],
         "process":[
-            {"is":"", "url":"", "dummy":"", "size":{"w":"","h":""}}  
+            {"is":"video", "url":"https://player.vimeo.com/video/272286618", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"video", "url":"https://player.vimeo.com/video/272134669", "dummy":"", "size":{"w":"640","h":"320"}}  
         ],
         "credit":[
             {"role":"Role","credit":"Personal Project (Design/Development)"}
@@ -28,9 +51,12 @@
         "thumbnail_src":"/img/thumb_51.gif",
         "id":"051",
         "title":"Raymarching Metaball",
-        "description":"Unity3D / Blob's positions are driven by compute shader",
+        "description":"Unity3D / a realtime audio reactive metaball effects in unity3d",
         "date":"Apr,2018 - WIP",
         "info":[
+            {"is":"text", "p":"Playing with <a href=\"https://www.shadertoy.com/view/ld2GRz\" target=\"_blank\">Inigo Quilez's shadertoy sketch \"raymarching metaball\"</a> in Unity3D. Blob's positions are driven by compute shader"}
+        ],
+        "process":[
             {"is":"video", "url":"https://player.vimeo.com/video/271868942", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/271592846", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/271033206", "dummy":"", "size":{"w":"640","h":"320"}},
@@ -38,11 +64,7 @@
             {"is":"video", "url":"https://player.vimeo.com/video/270820953", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/270239022", "dummy":"", "size":{"w":"640","h":"320"}},
             {"is":"video", "url":"https://player.vimeo.com/video/270020106", "dummy":"", "size":{"w":"640","h":"320"}},
-            {"is":"video", "url":"https://player.vimeo.com/video/264375572", "dummy":"", "size":{"w":"640","h":"320"}},
-            {"is":"text", "p":"Playing with <a href=\"https://www.shadertoy.com/view/ld2GRz\" target=\"_blank\">Inigo Quilez's shadertoy sketch \"raymarching metaball\"</a> in Unity3D. Blob's positions are driven by compute shader, there's some framedrops in high res without downsampling"}
-        ],
-        "process":[
-            {"is":"", "url":"", "dummy":"", "size":{"w":"","h":""}}  
+            {"is":"video", "url":"https://player.vimeo.com/video/264375572", "dummy":"", "size":{"w":"640","h":"320"}}  
         ],
         "credit":[
             {"role":"Role","credit":"Personal Project (Design/Development)"}
