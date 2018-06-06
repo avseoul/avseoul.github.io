@@ -10,6 +10,8 @@
             {"is":"text", "p":"WIP - Glitch In Boredom is a self development project to explore possible interactions and visual effects in VR"}
         ],
         "process":[
+            {"is":"video", "url":"https://player.vimeo.com/video/273627317", "dummy":"", "size":{"w":"640","h":"320"}},
+            {"is":"text", "p":"Lessons : Using spring force is not very optimal way in polishing interactions but fun / VR looks better in VR / I don't shake hands"},
             {"is":"video", "url":"https://player.vimeo.com/video/272689178", "dummy":"", "size":{"w":"640","h":"320"}}
         ],
         "credit":[
