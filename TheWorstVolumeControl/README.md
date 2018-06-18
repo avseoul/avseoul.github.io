@@ -44,20 +44,20 @@ In order to make a coherent experience with those two interfaces, I made the ver
 Lastly, I chose to use the music [Lascia Ch'io Pianga](https://www.youtube.com/watch?v=WuSiuMuBLhM) from the movie [Farinelli](https://www.imdb.com/title/tt0109771/) which doesn't really related with this experience but I like it's english title "Let me weep" and I personally somehow feel it really goes well with the experience. 
 
 ## Experiences  
-This app contains 5 ways to control the volume, they are following : 
+This app contains 5 ways to control the volume, they are following :    
 
-<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview0.gif" width="320">
 Pull the droplets from the nose. The length of each droplet-line-to-nose is intensity of changing volume. 
+<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview0.gif" width="320">
 
-<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview1.gif" width="320">
 If the droplets are over the threshold, +-20% volume changes.  
+<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview1.gif" width="320">
 
-<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview2.gif" width="320">
 Drag the volume handler to lauch. 
+<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview2.gif" width="320">
 
-<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview3.gif" width="320">
 Change the lenth of volume bar, the proportion of the position of volume handler defines volume.
+<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview3.gif" width="320">
 
-<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview4.gif" width="320">
 Change the incline to change the volume by gravity
+<img src="https://github.com/avseoul/avseoul.github.io/blob/master/TheWorstVolumeControl/preview4.gif" width="320">
 
