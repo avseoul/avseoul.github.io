@@ -1,0 +1,51 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no" />
+	<title>The Worst Volume Controller Challenge</title>
+
+	<script type="text/javascript" src="Scripts/js/Slider.js"></script>
+	<script type="text/javascript" src="Scripts/js/MouseEventCtrl.js"></script>
+	<script type="text/javascript" src="Scripts/js/CanvasCtrl.js"></script>
+	<script type="text/javascript" src="Scripts/js/AudioCtrl.js"></script>
+	
+	<script type="text/javascript" src="Scripts/js/NoseHairJoint.js"></script>
+	<script type="text/javascript" src="Scripts/js/NoseHair.js"></script>
+	<script type="text/javascript" src="Scripts/js/MonkeyVol.js"></script>
+	
+	<link type="text/css" rel="stylesheet" href="Scripts/css/style.css">
+	<link type="text/css" rel="stylesheet" href="Scripts/css/MonkeyVol.css">
+	<link type="text/css" rel="stylesheet" href="Scripts/css/Slider.css">
+</head>
+<body>
+	<div class="bg" id="bg_tl">
+		<div id="msg">
+			There Are 5 Ways To Control Volume.
+		</div>
+		<div id="masterVolume"></div>
+	</div>
+	<div class="bg" id="bg_tr"></div>
+	<div class="bg" id="bg_b"></div>
+	<div id="PermissionPopUp">
+		<div>Browser requires user's confirmation to play audio. Please hit OK</div>
+		<div class="btn" onclick="mAudio.confirmAlert()" ontap="mAudio.confirmAlert()">OK</div>
+	</div>
+
+	<canvas id="Canvas"></canvas>
+
+	<div id="MonkeyVol">
+		<div class="MV_sprite" id="MV_gauge"></div>
+		<div class="MV_sprite" id="MV_faceTrigger"></div>
+		<div class="MV_sprite" id="MV_faceHover">
+			<div class="MV_eye" id="MV_eyeL"></div>
+			<div class="MV_eye" id="MV_eyeR"></div>
+		</div>
+		<div class="MV_sprite" id="MV_faceIdle"></div>
+		<div class="MV_sprite" id="MV_bg"></div>
+	</div>
+
+	<script type="text/javascript" src="Scripts/js/main.js"></script>
+</body>	
+</html>

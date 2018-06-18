@@ -1,0 +1,96 @@
+.slider_bg
+{
+	position : absolute;
+	top : calc(100vh / 4 * 3 - 15px);
+	left : calc(100vw / 2 - 175px);	
+
+	display : inline-block;
+	background-color : #5d5d5d;
+
+	border-radius : 15px;
+
+	transform : rotate(0deg);
+		
+	width : 350px;
+	height : 30px;
+}
+
+.slider_rail
+{
+	display : inline-block;
+	background-color : #929292;
+	border-radius : 5px;
+
+	position: absolute;
+	left : 35px;
+	top : 13px;
+
+	width : 280px;
+	height : 4px;
+}
+
+.slider_spring
+{
+	display : inline-block;
+	border-radius : inherit;
+
+	position: absolute;
+	left : 0px;
+	top : 0px;
+
+	width : inherit;
+	height : inherit;
+
+	clip-path : inset(0 0 0 0);
+	-webkit-clip-path : inset(0 0 0 0);
+
+	background-color: transparent;
+}
+
+.slider_handle
+{
+	display: inline-block;
+	background-color: #fff;
+	border-radius: 10px;
+
+	position: absolute;
+	left : 0px;
+	top : -6px;
+
+	width : 16px;
+	height : 16px;
+
+	cursor: pointer;
+
+	z-index: 998;
+}
+
+.slider_handler
+{
+	display: inline-block;
+	border-radius: 10px;
+
+	position: absolute;
+
+	width : 10px;
+	height : 10px;
+
+	cursor: pointer;
+
+	z-index: 998;
+}
+.slider_handler.L
+{
+	left : -24px;
+	top : -3px;
+
+	background-color: rgb(200, 0, 40);
+}
+
+.slider_handler.R
+{
+	right : -24px;
+	top : -3px;	
+
+	background-color: rgb(0, 150, 200);
+}

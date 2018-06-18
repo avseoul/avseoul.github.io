@@ -1,0 +1,99 @@
+#MonkeyVol
+{
+	position : absolute;
+
+	width : 260px;
+	height : 280px;
+
+	top : calc(100vh / 4 - 140px);
+	left : calc(100vw / 4 * 3 - 130px);	
+}
+
+
+.MV_sprite
+{
+	position : absolute;
+
+	width : 260px;
+	height : 240px;
+
+	top : 0;
+	left : 0;
+}
+
+#MV_faceTrigger
+{
+	background-image: url("../../Resources/img/monkeyVol_face_trigger.png");
+
+	filter: grayscale(0%);
+    -webkit-filter: grayscale(0%); 
+
+	z-index: 5;
+
+	visibility: hidden;
+}
+
+#MV_faceHover
+{
+	background-image: url("../../Resources/img/monkeyVol_face_hover.png");
+
+	filter: grayscale(0%);
+    -webkit-filter: grayscale(0%); 
+
+	z-index: 4;
+
+	visibility: hidden;
+}
+
+#MV_faceIdle
+{
+	background-image: url("../../Resources/img/monkeyVol_face_idle.png");
+
+	filter: grayscale(0%);
+    -webkit-filter: grayscale(0%); 
+
+	z-index: 3;
+}
+
+#MV_gauge
+{
+	background-image: url("../../Resources/img/monkeyVol_bg.png");
+
+	z-index: 2;
+
+	clip-path: inset(10% 0 0 0);
+	-webkit-clip-path: inset(10% 0 0 0);
+}
+
+#MV_bg
+{
+	background-image: url("../../Resources/img/monkeyVol_bg.png");
+
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%); 
+
+	z-index: 1;
+}
+
+.MV_eye
+{
+	position : absolute;
+
+	width : 18px;
+	height : 18px;
+
+	background-image: url("../../Resources/img/monkeyVol_eye.png");
+}
+
+#MV_eyeL
+{
+	top : 110px;
+	left : 70px;
+}
+
+#MV_eyeR
+{
+	top : 110px;
+	left : 162px;
+}
+
