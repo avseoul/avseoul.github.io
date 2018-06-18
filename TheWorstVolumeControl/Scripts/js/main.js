@@ -3,7 +3,7 @@ var curFrame = 0;
 
 // audio playback
 var mAudio = new AudioCtrl();
-var mAudioUrl = "https://dl-web.dropbox.com/get/host/handel-farinelli-lascia_chio_pianga.mp3?_subject_uid=10162492&duc_id=dropbox_duc_id&w=AAAxml46uBbTLtKG6dX2PH2Lohcj24zh_TW_cAc908PmXA";
+var mAudioUrl = "Resources/audio/handel-farinelli-lascia_chio_pianga.mp3";
 var mVolTarget = 1.0;
 
 // monkey 
