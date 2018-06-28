@@ -12,7 +12,7 @@ var Slider = function()
 	this.force = 0;
 	
 	this.angle = 0;
-	this.maxAngle = 80;
+	this.maxAngle = 20;
 	this.angleForce = 0;
 
 	this.centerX = 0;

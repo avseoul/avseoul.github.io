@@ -38,7 +38,7 @@ var mouseMove = function(isTouch, evt)
 
 var mouseUp = function(isTouch, evt)
 {
-	evt.preventDefault();
+	// evt.preventDefault();
 
 	var handler = isTouch ? evt.changedTouches[0] : evt;
 
@@ -64,6 +64,6 @@ document.addEventListener("mousedown", mouseDown.bind(this, false), false);
 document.addEventListener("mousemove", mouseMove.bind(this, false), false);
 document.addEventListener("mouseup", mouseUp.bind(this, false), false);
 
-window.addEventListener("touchstart", mouseDown.bind(this, true), false);
-window.addEventListener("touchmove", mouseMove.bind(this, true), false);
-window.addEventListener("touchend", mouseUp.bind(this, true), false);
+// window.addEventListener("touchstart", mouseDown.bind(this, true), false);
+// window.addEventListener("touchmove", mouseMove.bind(this, true), false);
+// window.addEventListener("touchend", mouseUp.bind(this, true), false);

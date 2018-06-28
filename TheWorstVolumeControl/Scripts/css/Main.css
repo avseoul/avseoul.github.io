@@ -1,7 +1,14 @@
+html
+{
+	overflow: hidden;
+}
+
 body 
 {
-	font-family: Helvetica, Arial, Sans-serif;
 	overflow: hidden;
+	position: fixed;
+
+	font-family: Helvetica, Arial, Sans-serif;
 
 	width : 100vw;
 	height : 100vh;
@@ -27,6 +34,7 @@ canvas
 	z-index: 999;
 
 	pointer-events : none;
+	touch-action: none;
 }
 
 .bg
@@ -37,6 +45,7 @@ canvas
 	z-index: 0;
 	
 	pointer-events: none;
+	touch-action: none;
 }
 
 #bg_tl
@@ -80,15 +89,16 @@ canvas
     display: inline;
     color: #f1f1f1;
     background: #00c8ff;
-    cursor: pointer;
+    cursor: pointer !important;
     position: absolute;
     bottom: 15px;
     right: 17px;
-    z-index: 999;
+    z-index: 9999 !important;
 }
 
 .btn:hover
 {
+	cursor: pointer;
 	color : #00c8ff;
 	background: #dedede;
 }
