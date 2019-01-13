@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+    </style>
+    <script type="text/javascript" src="../common/lib/three.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // quick and dirty 3js implementation based on Shifman's quad tree in his coding train challenge 
+        // https://github.com/CodingTrain/website/blob/master/CodingChallenges/CC_098.1_QuadTree/P5/quadtree.js
+
+        class Element {
+            constructor(x, y, obj) {
+                this.x = x;
+                this.y = y;
+
+                this.obj = obj;
+            }
+        }
+
+        class Quad {
+            constructor(x, y, width, height) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+            }
+
+            CheckContain(element) {
+                return element.x >= this.x - this.width * .5 &&
+                    element.x < this.x + this.width * .5 &&
+                    element.y >= this.y - this.height * .5 &&
+                    element.y < this.y + this.height * .5;
+            }
+
+            CheckIntersect(quad) {
+                return !(quad.x - quad.width * .5 > this.x + this.width * .5 ||
+                    quad.x + quad.width * .5 < this.x - this.width * .5 ||
+                    quad.y - quad.height * .5 > this.y + this.height * .5 ||
+                    quad.y + quad.height * .5 < this.y - this.height * .5);
+            }
+        }
+
+        class QuadTree {
+            constructor(quad) {
+                this.CAPACITY = 4;
+
+                this.quad = quad;
+
+                this.sub_ne = null;
+                this.sub_nw = null;
+                this.sub_se = null;
+                this.sub_sw = null;
+
+                this.hasSubdivision = false;
+
+                this.elements = [];
+            }
+
+            Insert(element) {
+                if (this.quad.CheckContain(element) !== true) return false;
+
+                if (this.elements.length < this.CAPACITY) {
+                    this.elements.push(element);
+
+                    return true;
+                }
+
+                if (!this.hasSubdivision) {
+                    const half_w = this.quad.width * .5;
+                    const half_h = this.quad.height * .5;
+                    const quater_w = half_w * .5;
+                    const quater_h = half_h * .5;
+
+                    this.sub_ne = new QuadTree(new Quad(this.quad.x + quater_w, this.quad.y + quater_h, half_w, half_h));
+                    this.sub_nw = new QuadTree(new Quad(this.quad.x - quater_w, this.quad.y + quater_h, half_w, half_h));
+                    this.sub_se = new QuadTree(new Quad(this.quad.x + quater_w, this.quad.y - quater_h, half_w, half_h));
+                    this.sub_sw = new QuadTree(new Quad(this.quad.x - quater_w, this.quad.y - quater_h, half_w, half_h));
+
+                    this.hasSubdivision = true;
+                }
+
+                if (this.sub_ne.Insert(element)) return true;
+                else if (this.sub_nw.Insert(element)) return true;
+                else if (this.sub_se.Insert(element)) return true;
+                else if (this.sub_sw.Insert(element)) return true;
+            }
+
+            Query(quad, elements) {
+                if (this.quad.CheckIntersect(quad) !== true) return;
+
+                for (let e of this.elements) {
+                    if (quad.CheckContain(e)) {
+                        elements.push(e);
+                    }
+                }
+
+                if (this.hasSubdivision) {
+                    this.sub_ne.Query(quad, elements);
+                    this.sub_nw.Query(quad, elements);
+                    this.sub_se.Query(quad, elements);
+                    this.sub_sw.Query(quad, elements);
+                }
+
+                return elements;
+            }
+
+            GetQuads(quads) {
+                quads.push(this.quad);
+
+                if (this.hasSubdivision) {
+                    this.sub_ne.GetQuads(quads);
+                    this.sub_nw.GetQuads(quads);
+                    this.sub_se.GetQuads(quads);
+                    this.sub_sw.GetQuads(quads);
+                }
+
+                return quads;
+            }
+        }
+
+        // init 3js
+        let scene = new THREE.Scene();
+        let camera = new THREE.OrthographicCamera(
+            window.innerWidth * -.5, window.innerWidth * .5,
+            window.innerHeight * .5, window.innerHeight * -.5,
+            1, 10);
+
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        camera.position.z = 5;
+
+        // init quad tree and 3js scene
+        let quad = new Quad(0, 0, window.innerWidth, window.innerHeight);
+        let qtree = new QuadTree(quad, 4);
+        let elements = [];
+
+        for (let i = 0; i < 1000; i++) {
+            let x = THREE.Math.randFloat(window.innerWidth * -.4, window.innerWidth * .4);
+            let y = THREE.Math.randFloat(window.innerHeight * .4, window.innerHeight * -.4);
+
+            let geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
+            let material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.FrontSide });
+            let plane = new THREE.Mesh(geometry, material);
+
+            plane.position.x = x;
+            plane.position.y = y;
+
+            let element = new Element(x, y, plane);
+
+            elements.push(element);
+            scene.add(element.obj);
+            qtree.Insert(element);
+        }
+
+        let queryQuadMesh = new THREE.Mesh(
+            new THREE.PlaneBufferGeometry(100, 100, 1, 1),
+            new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.FrontSide })
+        );
+        queryQuadMesh.position.z = -1;
+        scene.add(queryQuadMesh);
+
+        let queryQuad = new Quad(
+            queryQuadMesh.position.x, queryQuadMesh.position.y,
+            queryQuadMesh.geometry.parameters.width, queryQuadMesh.geometry.parameters.height
+        );
+
+        renderer.domElement.addEventListener("mousemove", (evt) => {
+            let x = evt.clientX - window.innerWidth * .5;
+            let y = (window.innerHeight - evt.clientY) - window.innerHeight * .5;
+
+            queryQuadMesh.position.x = x;
+            queryQuadMesh.position.y = y;
+
+            queryQuad.x = x;
+            queryQuad.y = y;
+
+        }, false);
+
+        console.log(qtree, elements, scene, queryQuad);
+
+        let lastQueryElements = [];
+
+        // let debugQuadGroup = new THREE.Group();
+        // scene.add(debugQuadGroup);
+
+        let animate = function () {
+            requestAnimationFrame(animate);
+
+            if (lastQueryElements.length > 0) {
+                for (let e of lastQueryElements) {
+                    e.obj.scale.x = 1;
+                    e.obj.scale.y = 1;
+                    e.obj.scale.z = 1;
+                }
+
+                lastQueryElements = [];
+            }
+
+            let queryElements = [];
+            qtree.Query(queryQuad, queryElements);
+
+            if (queryElements.length > 0) {
+                for (let e of queryElements) {
+                    e.obj.scale.x = 3;
+                    e.obj.scale.y = 3;
+                    e.obj.scale.z = 3;
+
+                    lastQueryElements.push(e);
+                }
+            }
+
+            // debug quads 
+            // let quads = [];
+            // qtree.GetQuads(quads);
+
+            // for (var i = debugQuadGroup.children.length - 1; i >= 0; i--) {
+            //     debugQuadGroup.remove(debugQuadGroup.children[i]);
+            // }
+
+            // for (let q of quads) {
+            //     let quadMesh = new THREE.Mesh(
+            //         new THREE.PlaneGeometry(q.width, q.height, 1, 1),
+            //         new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.FrontSide })
+            //     );
+            //     quadMesh.position.x = q.x;
+            //     quadMesh.position.y = q.y;
+
+            //     debugQuadGroup.add(quadMesh);
+            // }
+
+
+            renderer.render(scene, camera);
+        };
+
+        animate();
+    </script>
+</body>
+
+</html>

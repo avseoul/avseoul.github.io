@@ -1,0 +1,16 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    background: #ddd;
+    font-family: Helvetica, arial, sans-serif;
+}   
+canvas{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100vw; 
+    height: 100vh;
+}
+
+
+
