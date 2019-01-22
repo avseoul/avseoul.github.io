@@ -1,4 +1,12 @@
-let BUFFER_X = 64, BUFFER_Y = 64, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
+let BUFFER_X = 16, BUFFER_Y = 16, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
+
+let SHADER = {
+
+    BEHAVIOURS: {VERT: null, FRAG: null},
+    UNIFORM_GRID: {VERT: null, FRAG: null},
+    DEBUG_TEXTURE: {VERT: null, FRAG: null},
+    RENDER: {VERT: null, FRAG: null}
+}
 
 let gl;
 
@@ -14,31 +22,66 @@ let Init = function () {
 
     Redirect2HTTPS();
 
-    renderer = new Renderer();
-    gl = renderer.ctx;
+    // load resources
+    Promise.all([
 
-    camera = new THREE.PerspectiveCamera( 50, renderer.canvas.width / renderer.canvas.height, 1, 500 );
-    camera.position.z = 20;
-    camera.position.y = 20;
-    camera.position.x = 20;
-    camera.up = new THREE.Vector3( 0, 1, 0 );
-    camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+        GLHelpers.loadShader( "shaders/behaviours.vert" ), 
+        GLHelpers.loadShader( "shaders/behaviours.frag" ),
+        GLHelpers.loadShader( "shaders/uniformGrid.vert" ), 
+        GLHelpers.loadShader( "shaders/uniformGrid.frag" ),
+        GLHelpers.loadShader( "shaders/debugTexture.vert" ),
+        GLHelpers.loadShader( "shaders/debugTexture.frag" ),
+        GLHelpers.loadShader( "shaders/render.vert" ), 
+        GLHelpers.loadShader( "shaders/render.frag" )
 
-    let params = {
-        camera: camera,
-        renderer: renderer,
-        bufferWidth: BUFFER_X,
-        bufferHeight: BUFFER_Y
-    }
+    ])
+    .then(
+        (res) => {
 
-    particleRender = new ParticleRender( params );
+            SHADER.BEHAVIOURS.VERT = res[0].target.response;
+            SHADER.BEHAVIOURS.FRAG = res[1].target.response;
 
-    stats = new Stats();
-    document.body.appendChild(stats.dom);
+            SHADER.UNIFORM_GRID.VERT = res[2].target.response;
+            SHADER.UNIFORM_GRID.FRAG = res[3].target.response;
 
-    Update();
+            SHADER.DEBUG_TEXTURE.VERT = res[4].target.response;
+            SHADER.DEBUG_TEXTURE.FRAG = res[5].target.response;
 
-    isInit = true;
+            SHADER.RENDER.VERT = res[6].target.response;
+            SHADER.RENDER.FRAG = res[7].target.response;
+        }
+    ).then(
+        () => {
+
+            // init app
+            renderer = new Renderer();
+            gl = renderer.ctx;
+
+            camera = new THREE.PerspectiveCamera( 50, renderer.canvas.width / renderer.canvas.height, 1, 500 );
+            camera.position.z = 20;
+            camera.position.y = 20;
+            camera.position.x = 20;
+            camera.up = new THREE.Vector3( 0, 1, 0 );
+            camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+
+            let params = {
+
+                camera: camera,
+                renderer: renderer,
+                bufferWidth: BUFFER_X,
+                bufferHeight: BUFFER_Y
+            }
+
+            particleRender = new ParticleRender( params );
+
+            stats = new Stats();
+            document.body.appendChild(stats.dom);
+
+            Update();
+
+            isInit = true;
+        }
+    );
 }
 
 let Update = function () {
@@ -47,6 +90,7 @@ let Update = function () {
     // particleRender.updateMatrixUniforms()
     particleRender.update();
     particleRender.render();
+    particleRender.debug();
 
     stats.update();
 

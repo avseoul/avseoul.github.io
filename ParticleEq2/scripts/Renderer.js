@@ -11,7 +11,7 @@ class Renderer {
         
         this.ctx = this.canvas.getContext('webgl2', { 
 
-            antialias: true 
+            stencil: true 
         });
 
         if (!!!this.ctx) {
@@ -20,10 +20,8 @@ class Renderer {
     
             return;
         }
-    
-        const ext = this.ctx.getExtension("EXT_color_buffer_float");
         
-        if (!ext) {
+        if (!this.ctx.getExtension("EXT_color_buffer_float")) {
     
             alert("need EXT_color_buffer_float");
     

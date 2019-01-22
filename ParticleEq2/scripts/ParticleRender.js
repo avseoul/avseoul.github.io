@@ -14,14 +14,12 @@ class ParticleRender {
 
         this.numInstance = this.bufferWidth * this.bufferHeight;
 
-        this.isInit = false;
-
+        this.particleSystem = new ParticleSystem(params);
         this.particleBehaviours = new ParticleBehaviours(params);
-        this.particleSystem = new ParticleSystem(params, () => {
-            
-            this.isInit = true;
-            this.updateMatrixUniforms();
-        });
+        this.particleUniformGrid = new ParticleUniformGrid(params);
+        this.particleDebug = new ParticleDebug(params.renderer.ctx);
+
+        this.updateMatrixUniforms();
         
         this.ctx.enable( gl.DEPTH_TEST );
         this.ctx.depthFunc( gl.LEQUAL );
@@ -30,7 +28,10 @@ class ParticleRender {
     update () {
 
         this.particleBehaviours.update();
-        // this.particleBehaviours.debug();
+
+        this.particleUniformGrid.update(
+            this.particleBehaviours.positionBuffer,
+            this.particleSystem.buffers.instanceIndices);
         
         this.updateTextureUniforms( 
             this.particleBehaviours.positionBuffer,
@@ -39,8 +40,6 @@ class ParticleRender {
     }
 
     render() {
-
-        if(!this.isInit) return;
 
         let gl = this.ctx;
 
@@ -90,8 +89,6 @@ class ParticleRender {
 
     updateMatrixUniforms() {
 
-        if(!this.isInit) return;
-
         let gl = this.ctx;
 
         gl.useProgram( this.particleSystem.program );
@@ -135,9 +132,23 @@ class ParticleRender {
         gl.uniform1i( this.particleSystem.uniforms.uInstanceVelocity, 1 );
     }
 
+    debug() {
+
+        const THUMBNAIL_SIZE = 100;
+
+        this.particleDebug.debugTexture(
+            this.particleBehaviours.positionBuffer, 0, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+        this.particleDebug.debugTexture(
+            this.particleBehaviours.velocityBuffer, THUMBNAIL_SIZE, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+
+        this.particleDebug.debugTexture(
+            this.particleUniformGrid.gridTexture, THUMBNAIL_SIZE * 2, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+    }
+
     destroy() {
 
         this.particleBehaviours.destroy();
+        this.particleUniformGrid.destroy();
         this.particleSystem.destroy();
     }
 }

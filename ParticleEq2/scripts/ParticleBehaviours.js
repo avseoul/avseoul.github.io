@@ -9,52 +9,30 @@ class ParticleBehaviours {
 
         this.bufferWidth = params.bufferWidth;
         this.bufferHeight = params.bufferHeight;
-
-        this.rttFrameBuffer;
         
         this.posTextures = [2], this.velTextures = [2];
 
         this.uIsInit, this.uTime, this.uPosBuffer, this.uVelBuffer;
 
-        this.debugProgram;
-
         this.uDebugTex;
 
         this.bufIndex = 0;
 
-        this.isInit = false;
+        // behaviour 
+        let vs = SHADER.BEHAVIOURS.VERT;
+        let fs = SHADER.BEHAVIOURS.FRAG;
 
-        Promise.all([ 
-            GLHelpers.loadShader( "shaders/behaviours.vert.glsl" ), 
-            GLHelpers.loadShader( "shaders/behaviours.frag.glsl" ),
-            GLHelpers.loadShader( "shaders/debugTexture.vert.glsl" ),
-            GLHelpers.loadShader( "shaders/debugTexture.frag.glsl" ) ]).then( (res) => { 
+        let fragSplit = fs.split('#version 300 es');
+        let fragJoin = fragSplit.join(
+            "#version 300 es\n\n#define BUFFER_X " + this.bufferWidth + 
+            "\n#define BUFFER_Y " + this.bufferHeight);
 
-            // behaviour 
-            let vs = res[0].target.response;
-            let fs = res[1].target.response;
+        const vert = GLHelpers.compileShader(gl, vs, gl.VERTEX_SHADER);
+        const frag = GLHelpers.compileShader(gl, fragJoin, gl.FRAGMENT_SHADER); 
 
-            let fragSplit = fs.split('#version 300 es');
-            let fragJoin = fragSplit.join(
-                "#version 300 es\n\n#define BUFFER_X " + this.bufferWidth + 
-                "\n#define BUFFER_Y " + this.bufferHeight);
+        this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
 
-            let vert = GLHelpers.compileShader(gl, vs, gl.VERTEX_SHADER);
-            let frag = GLHelpers.compileShader(gl, fragJoin, gl.FRAGMENT_SHADER); 
-
-            this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
-
-            // debug
-            vs = res[2].target.response;
-            fs = res[3].target.response;
-
-            vert = GLHelpers.compileShader(gl, vs, gl.VERTEX_SHADER);
-            frag = GLHelpers.compileShader(gl, fs, gl.FRAGMENT_SHADER); 
-
-            this.debugProgram = GLHelpers.linkProgram(gl, vert, frag);
-
-            this._init();
-        });
+        this._init();
     }
 
     get positionBuffer() {
@@ -69,7 +47,7 @@ class ParticleBehaviours {
 
     _init() {
 
-        let gl = this.ctx;
+        const gl = this.ctx;
 
         // create fbo
         this.rttFrameBuffer = gl.createFramebuffer();
@@ -115,23 +93,11 @@ class ParticleBehaviours {
             this.uPosBuffer = gl.getUniformLocation(this.rttProgram, "uPosBuffer");
             this.uVelBuffer = gl.getUniformLocation(this.rttProgram, "uVelBuffer");
         }
-
-        // init debug shader
-        {
-            // upload uniform
-            gl.useProgram(this.debugProgram);
-
-            this.uDebugTex = gl.getUniformLocation(this.debugProgram, "uTex");
-        }
-
-        this.isInit = true;
     }
 
     update() {
         
-        if(!this.isInit) return;
-
-        let gl = this.ctx;
+        const gl = this.ctx;
 
         gl.viewport(0, 0, this.bufferWidth, this.bufferHeight);
 
@@ -166,7 +132,7 @@ class ParticleBehaviours {
 
         UnitQuad.render();
 
-        let uniform0Val = gl.getUniform(this.rttProgram, this.uIsInit);
+        const uniform0Val = gl.getUniform(this.rttProgram, this.uIsInit);
         if (uniform0Val === 0) {
             
             gl.uniform1f(this.uIsInit, 1);
@@ -177,34 +143,9 @@ class ParticleBehaviours {
         this.bufIndex ^= 1;
     }
 
-    debug() {
-
-        if(!this.isInit) return;
-
-        const THUMBNAIL_SIZE = 100;
-
-        this._debugTexture(this.posTextures[0], 0, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
-        this._debugTexture(this.velTextures[0], THUMBNAIL_SIZE, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
-    }
-
-    _debugTexture(tex, x, y, w, h) {
-        
-        let gl = this.ctx;
-
-        gl.viewport(x, y, w, h);
-
-        gl.useProgram(this.debugProgram);
-
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, tex);
-        gl.uniform1i(this.uDebugTex, 0);
-
-        UnitQuad.render();
-    }
-
     destroy() {
 
-        let gl = this.ctx;
+        const gl = this.ctx;
         
         gl.deleteFramebuffer(this.rttFrameBuffer);
         

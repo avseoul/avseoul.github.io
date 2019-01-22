@@ -1,8 +1,6 @@
 class ParticleSystem {
     
-    constructor(params, onInitCallback) {
-
-        this.onInitCallback = onInitCallback;
+    constructor(params) {
 
         this.ctx = params.renderer.ctx;
 
@@ -14,7 +12,7 @@ class ParticleSystem {
 
         this.particle = {}
 
-        this._buildUnitSphere(16);
+        this._buildUnitSphere(24);
         // this._buildQuad();
 
         this.buffers = {}
@@ -176,16 +174,19 @@ class ParticleSystem {
         // instancing 
         let bufSize = this.bufferWidth * this.bufferHeight;
         
+        let instanceIndices = [bufSize];
         let instanceTexcoords = [bufSize * 2];
         let instanceColors = [bufSize * 3];
 
-        let ii = 0, ci = 0;
+        let ii = 0, ti = 0, ci = 0;
         for (let x = 0; x < this.bufferWidth; x++) {
             
             for (let y = 0; y < this.bufferHeight; y++) {
+
+                instanceIndices[ii] = ii++;
             
-                instanceTexcoords[ii++] = x / (this.bufferWidth - 1);
-                instanceTexcoords[ii++] = y / (this.bufferHeight - 1);
+                instanceTexcoords[ti++] = x / (this.bufferWidth - 1);
+                instanceTexcoords[ti++] = y / (this.bufferHeight - 1);
 
                 instanceColors[ci++] = Math.random();
                 instanceColors[ci++] = Math.random();
@@ -193,6 +194,7 @@ class ParticleSystem {
             }
         }
 
+        this.buffers.instanceIndices = GLHelpers.createArrayBuffer( gl, new Float32Array( instanceIndices ) )
         this.buffers.instanceTexcoords = GLHelpers.createArrayBuffer( gl, new Float32Array( instanceTexcoords ) );
         this.buffers.instanceColors = GLHelpers.createArrayBuffer( gl, new Float32Array( instanceColors ) );
     }
@@ -201,41 +203,30 @@ class ParticleSystem {
 
         let gl = this.ctx;
 
-        Promise.all([ 
+        let vert = GLHelpers.compileShader(gl, SHADER.RENDER.VERT, gl.VERTEX_SHADER);
+        let frag = GLHelpers.compileShader(gl, SHADER.RENDER.FRAG, gl.FRAGMENT_SHADER); 
 
-            GLHelpers.loadShader( "shaders/render.vert.glsl" ), 
-            GLHelpers.loadShader( "shaders/render.frag.glsl" ) ]).then( (res) => { 
+        this.program = GLHelpers.linkProgram(gl, vert, frag);
 
-            let vs = res[0].target.response;
-            let fs = res[1].target.response;
+        this.attributes = {
 
-            let vert = GLHelpers.compileShader(gl, vs, gl.VERTEX_SHADER);
-            let frag = GLHelpers.compileShader(gl, fs, gl.FRAGMENT_SHADER); 
+            position: gl.getAttribLocation( this.program, "position"),
+            normal: gl.getAttribLocation( this.program, "normal"),
+            uv: gl.getAttribLocation( this.program, "uv"),
+            instanceColors: gl.getAttribLocation( this.program, "instanceColors"),
+            instanceTexcoords: gl.getAttribLocation( this.program, "instanceTexcoords")
+        }
 
-            this.program = GLHelpers.linkProgram(gl, vert, frag);
+        this.uniforms = {
 
-            this.attributes = {
-
-                position: gl.getAttribLocation( this.program, "position"),
-                normal: gl.getAttribLocation( this.program, "normal"),
-                uv: gl.getAttribLocation( this.program, "uv"),
-                instanceColors: gl.getAttribLocation( this.program, "instanceColors"),
-                instanceTexcoords: gl.getAttribLocation( this.program, "instanceTexcoords")
-            }
-    
-            this.uniforms = {
-    
-                modelMatrix: gl.getUniformLocation( this.program, "modelMatrix" ),
-                viewMatrix: gl.getUniformLocation( this.program, "viewMatrix" ),
-                projectionMatrix: gl.getUniformLocation( this.program, "projectionMatrix" ),
-                normalMatrix: gl.getUniformLocation( this.program, "normalMatrix" ),
-                cameraPosition: gl.getUniformLocation( this.program, "uWorldcCamPos" ),
-                uInstancePosition: gl.getUniformLocation( this.program, "uInstancePositions" ),
-                uInstanceVelocity: gl.getUniformLocation( this.program, "uInstanceVelocities" )
-            }
-
-            this.onInitCallback();
-        });
+            modelMatrix: gl.getUniformLocation( this.program, "modelMatrix" ),
+            viewMatrix: gl.getUniformLocation( this.program, "viewMatrix" ),
+            projectionMatrix: gl.getUniformLocation( this.program, "projectionMatrix" ),
+            normalMatrix: gl.getUniformLocation( this.program, "normalMatrix" ),
+            cameraPosition: gl.getUniformLocation( this.program, "uWorldcCamPos" ),
+            uInstancePosition: gl.getUniformLocation( this.program, "uInstancePositions" ),
+            uInstanceVelocity: gl.getUniformLocation( this.program, "uInstanceVelocities" )
+        }
     }
 
     destroy() {
@@ -245,6 +236,7 @@ class ParticleSystem {
         gl.deleteBuffer(this.buffers.vertices);
         gl.deleteBuffer(this.buffers.texcoords);
         gl.deleteBuffer(this.buffers.normals);
+        gl.deleteBuffer(this.buffers.instanceIndices);
         gl.deleteBuffer(this.buffers.instanceTexcoords);
         gl.deleteBuffer(this.buffers.instanceColors);
 
