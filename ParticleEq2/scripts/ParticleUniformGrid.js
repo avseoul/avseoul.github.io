@@ -77,7 +77,7 @@ class ParticleUniformGrid {
                 gl.COLOR_ATTACHMENT0
             ]);
 
-            gl.clearColor(.5, .5, .5, .5);
+            gl.clearColor(0, 0, 0, 0);
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
@@ -121,10 +121,15 @@ class ParticleUniformGrid {
 
         const gl = this.ctx;
 
+        gl.enable(gl.DEPTH_TEST);
+        gl.disable(gl.BLEND);
+
         gl.viewport(0, 0, this.gridTexSize, this.gridTexSize);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.rttFrameBuffer);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        gl.clearColor(0, 0, 0, 0);
 
         gl.useProgram(this.program);
 
@@ -136,16 +141,15 @@ class ParticleUniformGrid {
         gl.enableVertexAttribArray(this.aId);
         gl.vertexAttribPointer(this.aId, 1, gl.FLOAT, gl.FALSE, 0, 0);
 
-        gl.enable(gl.STENCIL_TEST); 
-        // gl.enable(gl.DEPTH_TEST);
-        // gl.disable(gl.BLEND);
-        {
-            gl.colorMask(true, false, false, false);
-            gl.depthFunc(gl.LESS);
-            gl.drawArrays(gl.POINTS, 0, this.numParticles);
+        gl.colorMask(true, false, false, false);
+        gl.depthFunc(gl.LESS);
+        gl.drawArrays(gl.POINTS, 0, this.numParticles);
 
+        gl.enable(gl.STENCIL_TEST); 
+        {
             gl.depthFunc(gl.GREATER);
             gl.stencilFunc(gl.EQUAL, 0, 0xFF); 
+            // gl.stencilFunc(gl.GREATER, 0, 0xFF); 
             gl.stencilOp(gl.KEEP, gl.KEEP, gl.INCR);
 
             gl.colorMask(false, true, false, false);
@@ -161,12 +165,15 @@ class ParticleUniformGrid {
             gl.drawArrays(gl.POINTS, 0, this.numParticles);
         }
         gl.disable(gl.STENCIL_TEST);
-        // gl.disable(gl.DEPTH_TEST);
-        // gl.enable(gl.BLEND);
         
         // reset
         gl.depthFunc(gl.LESS);
         gl.colorMask(true, true, true, true);
+
+        gl.disable(gl.DEPTH_TEST);
+        gl.enable(gl.BLEND);
+
+        gl.clearColor(0, 0, 0, 1);
         
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);    
     }

@@ -1,6 +1,6 @@
 #version 300 es
 
-#define SPHERE_R 8.
+#define SPHERE_R 4.
 #define GRAVITY .28
 #define TIME_DELTA .05
 #define MAX_VEL 8.
