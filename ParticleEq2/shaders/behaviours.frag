@@ -1,6 +1,6 @@
 #version 300 es
 
-#define SPHERE_R 4.
+#define SPHERE_R 8.
 #define GRAVITY .28
 #define TIME_DELTA .05
 #define MAX_VEL 8.
@@ -53,47 +53,47 @@ void main() {
     }
     // {
     //     vec3 gravity = normalize(-pos.xyz);
-    //     force.xyz += gravity / mass;
+    //     force.xyz += - .2 * gravity / mass;
     // }
 
     // sphere collision 
     // https://stackoverflow.com/a/19195972
-    {
-        for(int i = 0; i < BUFFER_X; i++) {
+    // {
+    //     for(int i = 0; i < BUFFER_X; i++) {
 
-            for(int j = 0; j < BUFFER_Y; j++) {
+    //         for(int j = 0; j < BUFFER_Y; j++) {
 
-                vec2 coord = vec2(float(i) / float(BUFFER_X + 1), float(j) / float(BUFFER_Y + 1));
-                vec4 elmPos = texture(uPosBuffer, coord);
+    //             vec2 coord = vec2(float(i) / float(BUFFER_X + 1), float(j) / float(BUFFER_Y + 1));
+    //             vec4 elmPos = texture(uPosBuffer, coord);
 
-                float dist = distance(pos.xyz, elmPos.xyz);
+    //             float dist = distance(pos.xyz, elmPos.xyz);
 
-                if(dist < (pos.w + elmPos.w) * .5) {
+    //             if(dist < (pos.w + elmPos.w) * .5) {
 
-                    vec4 elmVel = texture(uVelBuffer, coord);
+    //                 vec4 elmVel = texture(uVelBuffer, coord);
 
-                    vec3 collisionNormal = normalize(pos.xyz - elmPos.xyz);
-                    vec3 collisionDirection = vec3(-collisionNormal.y, collisionNormal.x, 0);
+    //                 vec3 collisionNormal = normalize(pos.xyz - elmPos.xyz);
+    //                 vec3 collisionDirection = vec3(-collisionNormal.y, collisionNormal.x, 0);
                     
-                    if (dot(collisionNormal, vel.xyz) > 0. || dot(collisionNormal, elmVel.xyz) < 0.) {
+    //                 if (dot(collisionNormal, vel.xyz) > 0. || dot(collisionNormal, elmVel.xyz) < 0.) {
 
-                        vec3 v1Parallel = dot(collisionNormal, vel.xyz) * collisionNormal;
-                        vec3 v1Ortho    = dot(collisionDirection, vel.xyz) * collisionDirection;
-                        vec3 v2Parallel = dot(collisionNormal, elmVel.xyz) * collisionNormal;
-                        vec3 v2Ortho    = dot(collisionDirection, elmVel.xyz) * collisionDirection;
+    //                     vec3 v1Parallel = dot(collisionNormal, vel.xyz) * collisionNormal;
+    //                     vec3 v1Ortho    = dot(collisionDirection, vel.xyz) * collisionDirection;
+    //                     vec3 v2Parallel = dot(collisionNormal, elmVel.xyz) * collisionNormal;
+    //                     vec3 v2Ortho    = dot(collisionDirection, elmVel.xyz) * collisionDirection;
 
-                        float totalMass = pos.w + elmPos.w;
-                        v1Parallel = (v1Parallel * (pos.w - elmPos.w) + 2. * elmPos.w * v2Parallel) / totalMass;
-                        // v2Parallel = (v2Parallel * (elmPos.w - pos.w) + 2. * pos.w * v1Parallel) / totalMass;
+    //                     float totalMass = pos.w + elmPos.w;
+    //                     v1Parallel = (v1Parallel * (pos.w - elmPos.w) + 2. * elmPos.w * v2Parallel) / totalMass;
+    //                     // v2Parallel = (v2Parallel * (elmPos.w - pos.w) + 2. * pos.w * v1Parallel) / totalMass;
                         
-                        // force.xyz *= .1;
-                        // vel.xyz *= .1;
-                        // force.xyz += ((v1Parallel + v1Ortho) - vel.xyz);
-                    }
-                }
-            }
-        }
-    }
+    //                     // force.xyz *= .1;
+    //                     // vel.xyz *= 2.;
+    //                     // force.xyz += ((v1Parallel + v1Ortho) - vel.xyz) * .01;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     // keep in sphere
     {
@@ -111,19 +111,23 @@ void main() {
 
     vel.xyz += force.xyz;
 
-    // clamping vel
+    // // clamping vel
     if(length(vel.xyz) > MAX_VEL) {
 
         vel.xyz = normalize(vel.xyz) * MAX_VEL;
     }
 
-    // damping
+    // // damping
     vel.xyz *= .96;
 
-    // temp vel.w
+    // // temp vel.w
     vel.w = 1.;
 
     pos.xyz += vel.xyz * TIME_DELTA;
+
+    // pos.y += sin(uTime * .001) * .01;
+    // pos.x += cos(uTime * .01) * .03;
+    // pos.z += sin(uTime * -.01) * .5;
 
     // init position
     if(uIsInit < .5) {
@@ -137,6 +141,7 @@ void main() {
         float scale = 1.;//abs(n2) * .6 + .4;
 
         pos = vec4(dir * n1 * SPHERE_R * .9, scale);
+        // pos = vec4(vUv * 16., 0., 1.);
     }
 
     oPosBuffer = pos;

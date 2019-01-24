@@ -99,6 +99,8 @@ class ParticleBehaviours {
         
         const gl = this.ctx;
 
+        gl.enable(gl.DEPTH_TEST);
+
         gl.viewport(0, 0, this.bufferWidth, this.bufferHeight);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.rttFrameBuffer);
@@ -139,6 +141,8 @@ class ParticleBehaviours {
         }
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        
+        gl.disable(gl.DEPTH_TEST);
 
         this.bufIndex ^= 1;
     }

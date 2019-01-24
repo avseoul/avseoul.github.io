@@ -10,7 +10,7 @@ layout(location = 0) out vec4 oOut;
 
 void main() {
 
-    if(vOutOfGrid > .5) discard;
+    // if(vOutOfGrid > .5) discard;
 
     float id = vId;
     if (id == 0.) id = .5;
