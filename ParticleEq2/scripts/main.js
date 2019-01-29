@@ -1,4 +1,4 @@
-let BUFFER_X = 64, BUFFER_Y = 64, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
+let BUFFER_X = 128, BUFFER_Y = 128, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
 
 let SHADER = {
 
@@ -64,12 +64,23 @@ let Init = function () {
             camera.up = new THREE.Vector3( 0, 1, 0 );
             camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
+            const gridTexSize = 64;
+            const gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
+            const gridHalfWidth = gridWidth / 2;
+            const numGridSliceInGridTexWidth = gridTexSize / gridWidth;
+
+            console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
+
             let params = {
 
                 camera: camera,
                 renderer: renderer,
                 bufferWidth: BUFFER_X,
-                bufferHeight: BUFFER_Y
+                bufferHeight: BUFFER_Y,
+                gridTexSize: gridTexSize,
+                gridWidth: gridWidth,
+                gridHalfWidth: gridHalfWidth,
+                numGridSliceInGridTexWidth: numGridSliceInGridTexWidth
             }
 
             particleRender = new ParticleRender( params );
@@ -90,7 +101,7 @@ let Update = function () {
     // particleRender.updateMatrixUniforms()
     particleRender.update();
     particleRender.render();
-    particleRender.debug();
+    // particleRender.debug();
 
     stats.update();
 

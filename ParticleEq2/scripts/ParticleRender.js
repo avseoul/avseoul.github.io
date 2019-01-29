@@ -15,14 +15,12 @@ class ParticleRender {
         this.numInstance = this.bufferWidth * this.bufferHeight;
 
         this.particleSystem = new ParticleSystem(params);
-        this.particleBehaviours = new ParticleBehaviours(params);
         this.particleUniformGrid = new ParticleUniformGrid(params);
+        this.particleBehaviours = new ParticleBehaviours(params);
+        this.particleBehaviours.linkGridTexture(this.particleUniformGrid.uniformGridTexture);
         this.particleDebug = new ParticleDebug(params.renderer.ctx);
 
         this.updateMatrixUniforms();
-        
-        this.ctx.enable( gl.DEPTH_TEST );
-        this.ctx.depthFunc( gl.LEQUAL );
     }
 
     update () {
@@ -31,7 +29,9 @@ class ParticleRender {
 
         this.particleUniformGrid.update(
             this.particleBehaviours.positionBuffer,
-            this.particleSystem.buffers.instanceIndices);
+            this.particleSystem.buffers.instanceIndices,
+            this.particleSystem.buffers.instanceTexcoords
+            );
         
         this.updateTextureUniforms( 
             this.particleBehaviours.positionBuffer,
@@ -41,7 +41,10 @@ class ParticleRender {
 
     render() {
 
-        let gl = this.ctx;
+        const gl = this.ctx;
+
+        gl.enable( gl.DEPTH_TEST );
+        gl.depthFunc( gl.LEQUAL );
 
         gl.viewport( 0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight );
 
@@ -55,6 +58,8 @@ class ParticleRender {
         gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, this.particleSystem.particle.vertCount, this.numInstance);
 
         gl.bindVertexArray( null );
+
+        gl.disable( gl.DEPTH_TEST );
     }
 
     updateAttributes() {
@@ -74,6 +79,12 @@ class ParticleRender {
         gl.enableVertexAttribArray( this.particleSystem.attributes.uv );
         gl.bindBuffer( gl.ARRAY_BUFFER, null );
 
+        gl.bindBuffer( gl.ARRAY_BUFFER, this.particleSystem.buffers.instanceIndices );
+        gl.vertexAttribPointer( this.particleSystem.attributes.instanceIndices, 1, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribDivisor( this.particleSystem.attributes.instanceIndices, 1);
+        gl.enableVertexAttribArray( this.particleSystem.attributes.instanceIndices );
+        gl.bindBuffer( gl.ARRAY_BUFFER, null );
+
         gl.bindBuffer( gl.ARRAY_BUFFER, this.particleSystem.buffers.instanceColors );
         gl.vertexAttribPointer( this.particleSystem.attributes.instanceColors, 3, gl.FLOAT, false, 0, 0);
         gl.vertexAttribDivisor( this.particleSystem.attributes.instanceColors, 1);
@@ -89,7 +100,7 @@ class ParticleRender {
 
     updateMatrixUniforms() {
 
-        let gl = this.ctx;
+        const gl = this.ctx;
 
         gl.useProgram( this.particleSystem.program );
 
@@ -119,7 +130,7 @@ class ParticleRender {
 
         if(!this.isInit) return;
 
-        let gl = this.ctx;
+        const gl = this.ctx;
 
         gl.useProgram( this.particleSystem.program ); 
 
@@ -134,7 +145,7 @@ class ParticleRender {
 
     debug() {
 
-        const THUMBNAIL_SIZE = 200;
+        const THUMBNAIL_SIZE = 100;
 
         this.particleDebug.debugTexture(
             this.particleBehaviours.positionBuffer, 0, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);

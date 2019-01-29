@@ -12,12 +12,10 @@ class ParticleUniformGrid {
 
         this.numParticles = this.bufferWidth * this.bufferHeight;
 
-        this.gridTexSize = 64;
-        this.gridWidth = Math.cbrt(Math.pow(this.gridTexSize, 2)) ;
-        this.gridHalfWidth = this.gridWidth / 2;
-        this.numGridSliceInGridTexWidth = this.gridTexSize / this.gridWidth;
-        
-        console.log(this.gridTexSize, this.gridWidth, this.gridHalfWidth, this.numGridSliceInGridTexWidth);
+        this.gridTexSize = params.gridTexSize;
+        this.gridWidth = params.gridWidth;
+        this.gridHalfWidth = params.gridHalfWidth;
+        this.numGridSliceInGridTexWidth = params.numGridSliceInGridTexWidth;
 
         this.rttFrameBuffer;
 
@@ -30,6 +28,7 @@ class ParticleUniformGrid {
 
         this.uPosTex;
         this.aId;
+        this.aTexCoords;
 
         this._init();        
     }
@@ -91,6 +90,7 @@ class ParticleUniformGrid {
             gl.useProgram(this.program);
 
             this.aId = gl.getAttribLocation(this.program, "aId");
+            this.aTexCoords = gl.getAttribLocation(this.program, "aTexCoords");
     
             this.uPosTex = gl.getUniformLocation(this.program, "uPosTex");
 
@@ -117,7 +117,7 @@ class ParticleUniformGrid {
         }
     }
 
-    update(posTex, indicesBuffer) {
+    update(posTex, indicesBuffer, texCoordsBuffer) {
 
         const gl = this.ctx;
 
@@ -140,6 +140,10 @@ class ParticleUniformGrid {
         gl.bindBuffer(gl.ARRAY_BUFFER, indicesBuffer);
         gl.enableVertexAttribArray(this.aId);
         gl.vertexAttribPointer(this.aId, 1, gl.FLOAT, gl.FALSE, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordsBuffer);
+        gl.enableVertexAttribArray(this.aTexCoords);
+        gl.vertexAttribPointer(this.aTexCoords, 2, gl.FLOAT, gl.FALSE, 0, 0);
 
         gl.colorMask(true, false, false, false);
         gl.depthFunc(gl.LESS);

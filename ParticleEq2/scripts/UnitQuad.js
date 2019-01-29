@@ -1,8 +1,8 @@
-let UnitQuad = (function() {
+const UnitQuad = (function() {
     
     let _render = null;
 
-    let vertices = new Float32Array([
+    const vertices = new Float32Array([
             
         -1.0, -1.0,
         1.0, -1.0,
@@ -12,7 +12,7 @@ let UnitQuad = (function() {
         -1.0, -1.0
     ]);
 
-    let texcoords = new Float32Array([
+    const texcoords = new Float32Array([
         
         0.0, 0.0,
         1.0, 0.0,

@@ -10,6 +10,8 @@ class ParticleSystem {
         this.bufferWidth = params.bufferWidth;
         this.bufferHeight = params.bufferHeight;
 
+        this.numParticles = this.bufferWidth * this.bufferHeight;
+
         this.particle = {}
 
         this._buildUnitSphere(24);
@@ -165,33 +167,33 @@ class ParticleSystem {
 
     _initBuffers() {
 
-        let gl = this.ctx;
+        const gl = this.ctx;
 
         this.buffers.vertices = GLHelpers.createArrayBuffer( gl, new Float32Array( this.particle.vertices ) );
         this.buffers.texcoords = GLHelpers.createArrayBuffer( gl, new Float32Array( this.particle.texcoords ) );
         this.buffers.normals = GLHelpers.createArrayBuffer( gl, new Float32Array( this.particle.normals ) );
 
-        // instancing 
-        let bufSize = this.bufferWidth * this.bufferHeight;
-        
-        let instanceIndices = [bufSize];
-        let instanceTexcoords = [bufSize * 2];
-        let instanceColors = [bufSize * 3];
+        // instancing         
+        let instanceIndices = [this.numParticle];
+        let instanceTexcoords = [this.numParticle * 2];
+        let instanceColors = [this.numParticle * 3];
 
         let ii = 0, ti = 0, ci = 0;
-        for (let x = 0; x < this.bufferWidth; x++) {
-            
-            for (let y = 0; y < this.bufferHeight; y++) {
+        for(let i = 0; i < this.numParticles; i++) {
 
-                instanceIndices[ii] = ii++;
-            
-                instanceTexcoords[ti++] = x / (this.bufferWidth - 1);
-                instanceTexcoords[ti++] = y / (this.bufferHeight - 1);
+            instanceIndices[ii] = ii;
 
-                instanceColors[ci++] = Math.random();
-                instanceColors[ci++] = Math.random();
-                instanceColors[ci++] = Math.random();
-            }
+            const v = Math.floor(instanceIndices[ii] / this.bufferWidth);
+            const u = instanceIndices[ii] - this.bufferWidth * v;
+
+            ii++;
+
+            instanceTexcoords[ti++] = u / (this.bufferWidth - 1);
+            instanceTexcoords[ti++] = v / (this.bufferWidth - 1);
+
+            instanceColors[ci++] = Math.random();
+            instanceColors[ci++] = Math.random();
+            instanceColors[ci++] = Math.random();
         }
 
         this.buffers.instanceIndices = GLHelpers.createArrayBuffer( gl, new Float32Array( instanceIndices ) )
@@ -201,10 +203,10 @@ class ParticleSystem {
 
     _initProgram() {
 
-        let gl = this.ctx;
+        const gl = this.ctx;
 
-        let vert = GLHelpers.compileShader(gl, SHADER.RENDER.VERT, gl.VERTEX_SHADER);
-        let frag = GLHelpers.compileShader(gl, SHADER.RENDER.FRAG, gl.FRAGMENT_SHADER); 
+        const vert = GLHelpers.compileShader(gl, SHADER.RENDER.VERT, gl.VERTEX_SHADER);
+        const frag = GLHelpers.compileShader(gl, SHADER.RENDER.FRAG, gl.FRAGMENT_SHADER); 
 
         this.program = GLHelpers.linkProgram(gl, vert, frag);
 
@@ -213,6 +215,7 @@ class ParticleSystem {
             position: gl.getAttribLocation( this.program, "position"),
             normal: gl.getAttribLocation( this.program, "normal"),
             uv: gl.getAttribLocation( this.program, "uv"),
+            instanceIndices: gl.getAttribLocation( this.program, "instanceIndices"),
             instanceColors: gl.getAttribLocation( this.program, "instanceColors"),
             instanceTexcoords: gl.getAttribLocation( this.program, "instanceTexcoords")
         }
@@ -231,7 +234,7 @@ class ParticleSystem {
 
     destroy() {
 
-        let gl = this.ctx;
+        const gl = this.ctx;
 
         gl.deleteBuffer(this.buffers.vertices);
         gl.deleteBuffer(this.buffers.texcoords);

@@ -3,21 +3,49 @@
 #define SPHERE_R 8.
 #define GRAVITY .28
 #define TIME_DELTA .05
-#define MAX_VEL 8.
+#define MAX_VEL 3.
 
 precision highp float;
 precision highp int;
 
 uniform sampler2D uPosBuffer;
 uniform sampler2D uVelBuffer;
+uniform sampler2D uGridBuffer;
 
 uniform float uIsInit;
 uniform float uTime;
+uniform float uNumParticleSqrt;
 
+uniform float uGridTexWidth;
+uniform float uNumGridSliceInGridTexWidth;
+uniform float uGridSliceWidth;
+uniform float uHalfGridSliceWidth;
+
+in vec2 instanceTexcoords;
 in vec2 vUv;
 
 layout(location = 0) out vec4 oPosBuffer;
 layout(location = 1) out vec4 oVelBuffer;
+
+vec2 idToUv(in float id) {
+
+    float v = floor(id / uNumParticleSqrt);
+    float u = id - uNumParticleSqrt * v;
+
+    return vec2(u, v) / (uNumParticleSqrt - 1.);
+}
+
+vec2 voxelToTexel(in vec3 voxel) {
+
+    float vOffset = floor(voxel.z / uNumGridSliceInGridTexWidth);
+    float uOffset = voxel.z - uNumGridSliceInGridTexWidth * vOffset;
+
+    vec2 coords = vec2(
+        voxel.x + uOffset * uGridSliceWidth, 
+        voxel.y + vOffset * uGridSliceWidth) / (uGridTexWidth - 1.);
+
+    return coords;
+}
 
 vec2 hash( vec2 p ) {
 
@@ -41,9 +69,12 @@ float noise( in vec2 p ) {
 
 void main() {
 
-    vec4 pos = texture(uPosBuffer, vUv);
+    float pId = floor(vUv.x * uNumParticleSqrt) + floor(vUv.y * uNumParticleSqrt) * uNumParticleSqrt;
+    vec2 uv = idToUv(pId);
+
+    vec4 pos = texture(uPosBuffer, uv);
     float mass = pos.w;
-    vec4 vel = texture(uVelBuffer, vUv);
+    vec4 vel = texture(uVelBuffer, uv);
     
     vec4 force = vec4(0., 0., 0., 1.);
 
@@ -51,49 +82,77 @@ void main() {
     {
         force.y -= GRAVITY * mass;
     }
-    // {
-    //     vec3 gravity = normalize(-pos.xyz);
-    //     force.xyz += - .2 * gravity / mass;
-    // }
+    {
+        vec3 gravity = normalize(-pos.xyz);
+        force.xyz += -.7 * gravity / mass;
+    }
 
-    // sphere collision 
-    // https://stackoverflow.com/a/19195972
-    // {
-    //     for(int i = 0; i < BUFFER_X; i++) {
+    
+    // uniform grid
+    vec3 voxel = floor(pos.xyz) + vec3(uHalfGridSliceWidth);
 
-    //         for(int j = 0; j < BUFFER_Y; j++) {
+    for (int i = -1; i < 2; i++) {
 
-    //             vec2 coord = vec2(float(i) / float(BUFFER_X + 1), float(j) / float(BUFFER_Y + 1));
-    //             vec4 elmPos = texture(uPosBuffer, coord);
+        for (int j = -1; j < 2; j++) {
 
-    //             float dist = distance(pos.xyz, elmPos.xyz);
+            for (int k = -1; k < 2; k++) {
 
-    //             if(dist < (pos.w + elmPos.w) * .5) {
+                vec3 neighborVoxel = voxel + vec3(i, j, k);
+                
+                if (neighborVoxel.x < 0. || 
+                    neighborVoxel.y < 0. || 
+                    neighborVoxel.z < 0. ||
+                    neighborVoxel.x >= float(uGridSliceWidth) || 
+                    neighborVoxel.y >= float(uGridSliceWidth) ||
+                    neighborVoxel.z >= float(uGridSliceWidth)) {
 
-    //                 vec4 elmVel = texture(uVelBuffer, coord);
+                    continue;
+                }
 
-    //                 vec3 collisionNormal = normalize(pos.xyz - elmPos.xyz);
-    //                 vec3 collisionDirection = vec3(-collisionNormal.y, collisionNormal.x, 0);
-                    
-    //                 if (dot(collisionNormal, vel.xyz) > 0. || dot(collisionNormal, elmVel.xyz) < 0.) {
+                vec2 neighborUv = voxelToTexel(neighborVoxel);
+                vec4 neighborPId = texture(uGridBuffer, neighborUv);
 
-    //                     vec3 v1Parallel = dot(collisionNormal, vel.xyz) * collisionNormal;
-    //                     vec3 v1Ortho    = dot(collisionDirection, vel.xyz) * collisionDirection;
-    //                     vec3 v2Parallel = dot(collisionNormal, elmVel.xyz) * collisionNormal;
-    //                     vec3 v2Ortho    = dot(collisionDirection, elmVel.xyz) * collisionDirection;
+                for (int ch = 0; ch < 4; ch++) {
 
-    //                     float totalMass = pos.w + elmPos.w;
-    //                     v1Parallel = (v1Parallel * (pos.w - elmPos.w) + 2. * elmPos.w * v2Parallel) / totalMass;
-    //                     // v2Parallel = (v2Parallel * (elmPos.w - pos.w) + 2. * pos.w * v1Parallel) / totalMass;
+                    if (neighborPId[ch] < 0.) {
+
+                        continue;
+                    }
+
+                    vec2 coord = idToUv(neighborPId[ch]);
+                    vec4 elmPos = texture(uPosBuffer, coord);
+
+                    float dist = distance(pos.xyz, elmPos.xyz);
+
+                    // sphere collision 
+                    // https://stackoverflow.com/a/19195972
+                    if(dist < (pos.w + elmPos.w) * .5) {
+
+                        vec4 elmVel = texture(uVelBuffer, coord);
+
+                        vec3 collisionNormal = normalize(pos.xyz - elmPos.xyz);
+                        vec3 collisionDirection = vec3(-collisionNormal.y, collisionNormal.x, 0);
                         
-    //                     // force.xyz *= .1;
-    //                     // vel.xyz *= 2.;
-    //                     // force.xyz += ((v1Parallel + v1Ortho) - vel.xyz) * .01;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+                        if (dot(collisionNormal, vel.xyz) > 0. || dot(collisionNormal, elmVel.xyz) < 0.) {
+
+                            vec3 v1Parallel = dot(collisionNormal, vel.xyz) * collisionNormal;
+                            vec3 v1Ortho    = dot(collisionDirection, vel.xyz) * collisionDirection;
+                            vec3 v2Parallel = dot(collisionNormal, elmVel.xyz) * collisionNormal;
+                            vec3 v2Ortho    = dot(collisionDirection, elmVel.xyz) * collisionDirection;
+
+                            float totalMass = pos.w + elmPos.w;
+                            v1Parallel = (v1Parallel * (pos.w - elmPos.w) + 2. * elmPos.w * v2Parallel) / totalMass;
+                            // v2Parallel = (v2Parallel * (elmPos.w - pos.w) + 2. * pos.w * v1Parallel) / totalMass;
+                            
+                            force.xyz *= .1;
+                            vel.xyz *= 2.;
+                            force.xyz += ((v1Parallel + v1Ortho) - vel.xyz);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     // keep in sphere
     {
@@ -124,10 +183,6 @@ void main() {
     vel.w = 1.;
 
     pos.xyz += vel.xyz * TIME_DELTA;
-
-    // pos.y += sin(uTime * .001) * .01;
-    // pos.x += cos(uTime * .01) * .03;
-    // pos.z += sin(uTime * -.01) * .5;
 
     // init position
     if(uIsInit < .5) {

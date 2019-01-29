@@ -9,6 +9,11 @@ class ParticleBehaviours {
 
         this.bufferWidth = params.bufferWidth;
         this.bufferHeight = params.bufferHeight;
+
+        this.gridTexSize = params.gridTexSize;
+        this.gridWidth = params.gridWidth;
+        this.gridHalfWidth = params.gridHalfWidth;
+        this.numGridSliceInGridTexWidth = params.numGridSliceInGridTexWidth;
         
         this.posTextures = [2], this.velTextures = [2];
 
@@ -89,10 +94,39 @@ class ParticleBehaviours {
     
             this.uTime = gl.getUniformLocation(this.rttProgram, 'uTime');
             gl.uniform1f(this.uTime, performance.now());
-    
+
+            const uNumParticleSqrt = gl.getUniformLocation(this.rttProgram, 'uNumParticleSqrt');
+            gl.uniform1f(uNumParticleSqrt, this.bufferWidth);
+
+            const uPosTexWidth = gl.getUniformLocation(this.rttProgram, 'uPosTexWidth');
+            gl.uniform1f(uPosTexWidth, this.bufferWidth);
+
+            const uGridTexWidth = gl.getUniformLocation(this.rttProgram, 'uGridTexWidth');
+            gl.uniform1f(uGridTexWidth, this.gridTexSize);
+
+            const uNumGridSliceInGridTexWidth = gl.getUniformLocation(this.rttProgram, 'uNumGridSliceInGridTexWidth');
+            gl.uniform1f(uNumGridSliceInGridTexWidth, this.numGridSliceInGridTexWidth);
+
+            const uGridSliceWidth = gl.getUniformLocation(this.rttProgram, 'uGridSliceWidth');
+            gl.uniform1f(uGridSliceWidth, this.gridWidth);
+
+            const uHalfGridSliceWidth = gl.getUniformLocation(this.rttProgram, 'uHalfGridSliceWidth');
+            gl.uniform1f(uHalfGridSliceWidth, this.gridHalfWidth);
+
             this.uPosBuffer = gl.getUniformLocation(this.rttProgram, "uPosBuffer");
             this.uVelBuffer = gl.getUniformLocation(this.rttProgram, "uVelBuffer");
         }
+    }
+
+    linkGridTexture(gridTex) {
+
+        gl.useProgram(this.rttProgram);
+
+        const uGridBuffer = gl.getUniformLocation(this.rttProgram, "uGridBuffer");
+
+        gl.activeTexture(gl.TEXTURE2);
+        gl.bindTexture(gl.TEXTURE_2D, gridTex);
+        gl.uniform1i(uGridBuffer, 2);
     }
 
     update() {
