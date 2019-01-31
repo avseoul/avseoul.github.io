@@ -27,7 +27,7 @@ vec3 voxelToTexel(in vec3 voxel) {
         voxel.y + vOffset * uGridSliceWidth) / (uGridTexWidth - 1.);
 
     // to ndc
-    coords = coords * 2. - 1.;
+    coords = (coords * 2.) - 1.;
 
     return vec3(coords, voxel.z / uGridSliceWidth);
 }
@@ -42,13 +42,14 @@ void main() {
         abs(pos.x) > uHalfGridSliceWidth || 
         abs(pos.y) > uHalfGridSliceWidth || 
         abs(pos.z) > uHalfGridSliceWidth) ? 1. : 0.;
+    // vOutOfGrid = 0.;
 
     vec3 voxelCoord = vec3(0);
     vec3 texelCoord = vec3(0);
 
     if(vOutOfGrid < .5) {
 
-        voxelCoord = floor(pos) + vec3(uHalfGridSliceWidth); 
+        voxelCoord = floor(pos) + uHalfGridSliceWidth; 
         texelCoord = voxelToTexel(voxelCoord);
     } 
 

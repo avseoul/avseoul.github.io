@@ -64,9 +64,6 @@ class ParticleUniformGrid {
         // init textures
         {
             gl.viewport(0, 0, this.gridTexSize, this.gridTexSize);
-
-            gl.enable(gl.DEPTH_TEST);
-            gl.disable(gl.BLEND);
             
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.rttFrameBuffer);
 
@@ -80,9 +77,6 @@ class ParticleUniformGrid {
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-
-            gl.disable(gl.DEPTH_TEST);
-            gl.enable(gl.BLEND);
         }
 
         // init rtt shader

@@ -24,16 +24,11 @@ class ParticleBehaviours {
         this.bufIndex = 0;
 
         // behaviour 
-        let vs = SHADER.BEHAVIOURS.VERT;
-        let fs = SHADER.BEHAVIOURS.FRAG;
-
-        let fragSplit = fs.split('#version 300 es');
-        let fragJoin = fragSplit.join(
-            "#version 300 es\n\n#define BUFFER_X " + this.bufferWidth + 
-            "\n#define BUFFER_Y " + this.bufferHeight);
+        const vs = SHADER.BEHAVIOURS.VERT;
+        const fs = SHADER.BEHAVIOURS.FRAG;
 
         const vert = GLHelpers.compileShader(gl, vs, gl.VERTEX_SHADER);
-        const frag = GLHelpers.compileShader(gl, fragJoin, gl.FRAGMENT_SHADER); 
+        const frag = GLHelpers.compileShader(gl, fs, gl.FRAGMENT_SHADER); 
 
         this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
 
@@ -77,7 +72,7 @@ class ParticleBehaviours {
                     gl.COLOR_ATTACHMENT1
                 ]);
     
-                gl.clearColor(0., 0., 0., 0.);
+                gl.clearColor(0, 0, 0, 0);
                 gl.clear(gl.COLOR_BUFFER_BIT);
     
                 gl.bindFramebuffer(gl.FRAMEBUFFER, null);

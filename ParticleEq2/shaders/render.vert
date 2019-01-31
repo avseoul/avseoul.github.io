@@ -5,7 +5,7 @@ precision highp int;
 
 #define LIGHT_A vec3(10., 10., 10.)
 #define DIFFUSE_INTENSITY .42
-#define SPECULAR_INTENSITY .3   
+#define SPECULAR_INTENSITY .2   
 #define AMBIENT_INTENSITY .001
 
 in vec3 position;
@@ -28,6 +28,7 @@ uniform sampler2D uInstanceVelocities;
 
 out vec2 vUv;
 out vec3 vColor;
+out vec3 vInstanceColors;
 out float vInstanceIndices;
 
 vec3 calcPhong(in vec3 lightPos, in vec3 pos, in vec3 norm, in vec3 diffuseCol, in vec3 specularCol) {
@@ -47,11 +48,11 @@ void main() {
     vec4 instancePositions = texture(uInstancePositions, instanceTexcoords);
     vec4 instanceVelocities = texture(uInstanceVelocities, instanceTexcoords);
 
-    vec4 worldPos = modelMatrix * vec4(position * (instancePositions.w * .2) + instancePositions.xyz, 1.);
+    vec4 worldPos = modelMatrix * vec4(position * (instancePositions.w * 1.) + instancePositions.xyz, 1.);
     vec3 worldNormal = normalMatrix * normal;
     vec3 worldViewDir = uWorldcCamPos - worldPos.xyz;
 
-    vec3 diffCol = vec3(.01) + pow(length(instanceVelocities.xyz), 2.) * .003;
+    vec3 diffCol = vec3(.01) + pow(length(instanceVelocities.xyz), 2.) * .001;
     vec3 specCol = vec3(1.) * pow(length(instanceVelocities.xyz), 2.) * .001;
 
     vec3 brdf = vec3(0.);
@@ -59,6 +60,7 @@ void main() {
 
     vColor = brdf;
     vInstanceIndices = instanceIndices;
+    vInstanceColors = instanceColors;
     vUv = uv;
 
     gl_Position = projectionMatrix * viewMatrix * worldPos;

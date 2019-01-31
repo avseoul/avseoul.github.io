@@ -15,9 +15,12 @@ class ParticleRender {
         this.numInstance = this.bufferWidth * this.bufferHeight;
 
         this.particleSystem = new ParticleSystem(params);
+
         this.particleUniformGrid = new ParticleUniformGrid(params);
+
         this.particleBehaviours = new ParticleBehaviours(params);
         this.particleBehaviours.linkGridTexture(this.particleUniformGrid.uniformGridTexture);
+
         this.particleDebug = new ParticleDebug(params.renderer.ctx);
 
         this.updateMatrixUniforms();
@@ -126,7 +129,7 @@ class ParticleRender {
         gl.uniform3f( this.particleSystem.uniforms.cameraPosition, this.camera.position.x, this.camera.position.y, this.camera.position.z );
     }
 
-    updateTextureUniforms( positionTex ) {
+    updateTextureUniforms( positionTex, velocityTex ) {
 
         if(!this.isInit) return;
 
@@ -139,7 +142,7 @@ class ParticleRender {
         gl.uniform1i( this.particleSystem.uniforms.uInstancePosition, 0 );
 
         gl.activeTexture( gl.TEXTURE1 );
-        gl.bindTexture( gl.TEXTURE_2D, positionTex );
+        gl.bindTexture( gl.TEXTURE_2D, velocityTex );
         gl.uniform1i( this.particleSystem.uniforms.uInstanceVelocity, 1 );
     }
 

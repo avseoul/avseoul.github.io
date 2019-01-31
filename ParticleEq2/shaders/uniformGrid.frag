@@ -12,10 +12,7 @@ void main() {
 
     if(vOutOfGrid > .5) discard;
 
-    float id = vId;
-    if (id == 0.) id = -.5;
-
-    oOut = vec4(id, id, id, id);
+    oOut = vec4(vId, vId, vId, vId);
 }
 
 

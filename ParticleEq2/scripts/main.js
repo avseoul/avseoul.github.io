@@ -1,4 +1,4 @@
-let BUFFER_X = 128, BUFFER_Y = 128, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
+let BUFFER_X = 64, BUFFER_Y = BUFFER_X, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
 
 let SHADER = {
 
@@ -57,19 +57,19 @@ let Init = function () {
             renderer = new Renderer();
             gl = renderer.ctx;
 
-            camera = new THREE.PerspectiveCamera( 50, renderer.canvas.width / renderer.canvas.height, 1, 500 );
-            camera.position.z = 20;
-            camera.position.y = 20;
-            camera.position.x = 20;
-            camera.up = new THREE.Vector3( 0, 1, 0 );
-            camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
-
             const gridTexSize = 64;
             const gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
             const gridHalfWidth = gridWidth / 2;
             const numGridSliceInGridTexWidth = gridTexSize / gridWidth;
 
             console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
+
+            camera = new THREE.PerspectiveCamera( 50, renderer.canvas.width / renderer.canvas.height, 1, 500 );
+            // camera.position.x = gridWidth;
+            // camera.position.y = gridWidth;
+            camera.position.z = gridWidth * 2.;
+            camera.up = new THREE.Vector3( 0, 1, 0 );
+            camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
             let params = {
 
@@ -101,7 +101,7 @@ let Update = function () {
     // particleRender.updateMatrixUniforms()
     particleRender.update();
     particleRender.render();
-    // particleRender.debug();
+    particleRender.debug();
 
     stats.update();
 

@@ -1,9 +1,9 @@
 #version 300 es
 
-#define SPHERE_R 8.
-#define GRAVITY .28
-#define TIME_DELTA .05
-#define MAX_VEL 3.
+#define SPHERE_R 16.
+#define GRAVITY .58
+#define TIME_DELTA .04
+#define MAX_VEL 6.
 
 precision highp float;
 precision highp int;
@@ -27,6 +27,98 @@ in vec2 vUv;
 layout(location = 0) out vec4 oPosBuffer;
 layout(location = 1) out vec4 oVelBuffer;
 
+vec3 mod289(vec3 x)
+{
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 mod289(vec4 x) {
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x)
+{
+    return mod289((x * 34.0 + 1.0) * x);
+}
+
+vec4 taylorInvSqrt(vec4 r)
+{
+    return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+float snoise(vec3 v)
+{
+    const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+
+    // First corner
+    vec3 i  = floor(v + dot(v, C.yyy));
+    vec3 x0 = v   - i + dot(i, C.xxx);
+
+    // Other corners
+    vec3 g = step(x0.yzx, x0.xyz);
+    vec3 l = 1.0 - g;
+    vec3 i1 = min(g.xyz, l.zxy);
+    vec3 i2 = max(g.xyz, l.zxy);
+
+    // x1 = x0 - i1  + 1.0 * C.xxx;
+    // x2 = x0 - i2  + 2.0 * C.xxx;
+    // x3 = x0 - 1.0 + 3.0 * C.xxx;
+    vec3 x1 = x0 - i1 + C.xxx;
+    vec3 x2 = x0 - i2 + C.yyy;
+    vec3 x3 = x0 - 0.5;
+
+    // Permutations
+    i = mod289(i); // Avoid truncation effects in permutation
+    vec4 p =
+      permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0))
+                            + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+                            + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+
+    // Gradients: 7x7 points over a square, mapped onto an octahedron.
+    // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+    vec4 j = p - 49.0 * floor(p * (1.0 / 49.0));  // mod(p,7*7)
+
+    vec4 x_ = floor(j * (1.0 / 7.0));
+    vec4 y_ = floor(j - 7.0 * x_ );  // mod(j,N)
+
+    vec4 x = x_ * (2.0 / 7.0) + 0.5 / 7.0 - 1.0;
+    vec4 y = y_ * (2.0 / 7.0) + 0.5 / 7.0 - 1.0;
+
+    vec4 h = 1.0 - abs(x) - abs(y);
+
+    vec4 b0 = vec4(x.xy, y.xy);
+    vec4 b1 = vec4(x.zw, y.zw);
+
+    //vec4 s0 = vec4(lessThan(b0, 0.0)) * 2.0 - 1.0;
+    //vec4 s1 = vec4(lessThan(b1, 0.0)) * 2.0 - 1.0;
+    vec4 s0 = floor(b0) * 2.0 + 1.0;
+    vec4 s1 = floor(b1) * 2.0 + 1.0;
+    vec4 sh = -step(h, vec4(0.0));
+
+    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+
+    vec3 g0 = vec3(a0.xy, h.x);
+    vec3 g1 = vec3(a0.zw, h.y);
+    vec3 g2 = vec3(a1.xy, h.z);
+    vec3 g3 = vec3(a1.zw, h.w);
+
+    // Normalise gradients
+    vec4 norm = taylorInvSqrt(vec4(dot(g0, g0), dot(g1, g1), dot(g2, g2), dot(g3, g3)));
+    g0 *= norm.x;
+    g1 *= norm.y;
+    g2 *= norm.z;
+    g3 *= norm.w;
+
+    // Mix final noise value
+    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+    m = m * m;
+    m = m * m;
+
+    vec4 px = vec4(dot(x0, g0), dot(x1, g1), dot(x2, g2), dot(x3, g3));
+    return (42.0 * dot(m, px) + 1.) * .5;
+}
+
 vec2 idToUv(in float id) {
 
     float v = floor(id / uNumParticleSqrt);
@@ -47,26 +139,6 @@ vec2 voxelToTexel(in vec3 voxel) {
     return coords;
 }
 
-vec2 hash( vec2 p ) {
-
-    p = vec2(dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3)));
-    return -1.0 + 2.0*fract(sin(p)*43758.5453123);
-}
-
-float noise( in vec2 p ) {
-
-    const float K1 = 0.366025404; // (sqrt(3)-1)/2;
-    const float K2 = 0.211324865; // (3-sqrt(3))/6;
-    vec2 i = floor(p + (p.x+p.y)*K1);	
-    vec2 a = p - i + (i.x+i.y)*K2;
-    vec2 o = (a.x>a.y) ? vec2(1.0,0.0) : vec2(0.0,1.0); //vec2 of = 0.5 + 0.5*vec2(sign(a.x-a.y), sign(a.y-a.x));
-    vec2 b = a - o + K2;
-    vec2 c = a - 1.0 + 2.0*K2;
-    vec3 h = max(0.5-vec3(dot(a,a), dot(b,b), dot(c,c) ), 0.0 );
-    vec3 n = h*h*h*h*vec3( dot(a,hash(i+0.0)), dot(b,hash(i+o)), dot(c,hash(i+1.0)));
-    return dot(n, vec3(70.0));	
-}
-
 void main() {
 
     float pId = floor(vUv.x * uNumParticleSqrt) + floor(vUv.y * uNumParticleSqrt) * uNumParticleSqrt;
@@ -77,16 +149,6 @@ void main() {
     vec4 vel = texture(uVelBuffer, uv);
     
     vec4 force = vec4(0., 0., 0., 1.);
-
-    // gravity
-    {
-        force.y -= GRAVITY * mass;
-    }
-    {
-        vec3 gravity = normalize(-pos.xyz);
-        force.xyz += -.7 * gravity / mass;
-    }
-
     
     // uniform grid
     vec3 voxel = floor(pos.xyz) + vec3(uHalfGridSliceWidth);
@@ -114,7 +176,7 @@ void main() {
 
                 for (int ch = 0; ch < 4; ch++) {
 
-                    if (neighborPId[ch] < 0.) {
+                    if (neighborPId[ch] == pId) {
 
                         continue;
                     }
@@ -125,61 +187,65 @@ void main() {
                     float dist = distance(pos.xyz, elmPos.xyz);
 
                     // sphere collision 
-                    // https://stackoverflow.com/a/19195972
+                    // https://stackoverflow.com/questions/345838/ball-to-ball-collision-detection-and-handling
+                    if(dist == 0. && uIsInit > .5) {
+
+                        continue;
+                    }
+
                     if(dist < (pos.w + elmPos.w) * .5) {
 
                         vec4 elmVel = texture(uVelBuffer, coord);
 
                         vec3 collisionNormal = normalize(pos.xyz - elmPos.xyz);
-                        vec3 collisionDirection = vec3(-collisionNormal.y, collisionNormal.x, 0);
-                        
-                        if (dot(collisionNormal, vel.xyz) > 0. || dot(collisionNormal, elmVel.xyz) < 0.) {
+                        float aci = dot(vel.xyz, collisionNormal);
+                        float bci = dot(elmVel.xyz, collisionNormal);
 
-                            vec3 v1Parallel = dot(collisionNormal, vel.xyz) * collisionNormal;
-                            vec3 v1Ortho    = dot(collisionDirection, vel.xyz) * collisionDirection;
-                            vec3 v2Parallel = dot(collisionNormal, elmVel.xyz) * collisionNormal;
-                            vec3 v2Ortho    = dot(collisionDirection, elmVel.xyz) * collisionDirection;
+                        float acf = bci;
+                        float bcf = aci;
 
-                            float totalMass = pos.w + elmPos.w;
-                            v1Parallel = (v1Parallel * (pos.w - elmPos.w) + 2. * elmPos.w * v2Parallel) / totalMass;
-                            // v2Parallel = (v2Parallel * (elmPos.w - pos.w) + 2. * pos.w * v1Parallel) / totalMass;
-                            
-                            force.xyz *= .1;
-                            vel.xyz *= 2.;
-                            force.xyz += ((v1Parallel + v1Ortho) - vel.xyz);
-                        }
+                        force.xyz += (acf - aci) * collisionNormal * 1.;
+                        // force.xyz += (bcf - bci) * collisionNormal * 1.;
                     }
                 }
             }
         }
     }
 
+    // gravity
+    {
+        // force.y -= GRAVITY * mass;
+    }
+    {
+        // vec3 gravity = normalize(-pos.xyz);
+        // force.xyz += -.7 * gravity / mass;
+    }
+
     // keep in sphere
     {
-        float dist = length(pos.xyz);
+        // float dist = length(pos.xyz);
 
-        if(dist > SPHERE_R - pos.w * .5) {
+        // if(dist > SPHERE_R - pos.w * .5) {
 
-            vec3 dir = reflect(normalize(vel.xyz), normalize(-pos.xyz));
+        //     vec3 dir = reflect(normalize(vel.xyz), normalize(-pos.xyz));
             
-            force.xyz *= .65;
-            force.xyz += dir * length(vel.xyz) * .1;    
-            force.xyz += normalize(-pos.xyz) * (dist - SPHERE_R - pos.w * .5);
-        }
+        //     force.xyz *= .03;
+        //     force.xyz += dir * length(vel.xyz);    
+        // }
     }
 
     vel.xyz += force.xyz;
 
-    // // clamping vel
+    // clamping vel
     if(length(vel.xyz) > MAX_VEL) {
 
         vel.xyz = normalize(vel.xyz) * MAX_VEL;
     }
 
-    // // damping
+    // damping
     vel.xyz *= .96;
 
-    // // temp vel.w
+    // temp vel.w
     vel.w = 1.;
 
     pos.xyz += vel.xyz * TIME_DELTA;
@@ -187,16 +253,16 @@ void main() {
     // init position
     if(uIsInit < .5) {
 
-        float n1 = noise(vec2(vUv.x * -123.456, vUv.y * 789.012));
-        float n2 = noise(vec2(vUv.x * 345.678, vUv.y * -901.234));
-        float n3 = noise(vec2(vUv.x * -567.890, vUv.y * 123.456));
+        float n0 = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678)) * 2. - 1.;
+        float n1 = snoise(vec3(vUv.y * 901.234, vUv.x * 567.890, vUv.y * 123.456)) * 2. - 1.;
+        float n2 = snoise(vec3(vUv.x * 789.012, vUv.y * 345.678, vUv.x * 901.234)) * 2. - 1.;
 
-        vec3 dir = normalize( vec3(n1, n2, n3) );
+        vec3 dir = normalize( vec3(n0, n1, n2) );
+        float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
 
-        float scale = 1.;//abs(n2) * .6 + .4;
+        float scale = 1.;
 
-        pos = vec4(dir * n1 * SPHERE_R * .9, scale);
-        // pos = vec4(vUv * 16., 0., 1.);
+        pos = vec4(dir * SPHERE_R * distRand, scale);
     }
 
     oPosBuffer = pos;
