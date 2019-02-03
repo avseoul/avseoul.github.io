@@ -17,7 +17,7 @@ layout(location = 1) in vec2 aTexCoords;
 out float vId;
 out float vOutOfGrid;
 
-vec3 voxelToTexel(in vec3 voxel) {
+vec2 voxelToTexel(in vec3 voxel) {
 
     float vOffset = floor(voxel.z / uNumGridSliceInGridTexWidth);
     float uOffset = voxel.z - uNumGridSliceInGridTexWidth * vOffset;
@@ -29,7 +29,7 @@ vec3 voxelToTexel(in vec3 voxel) {
     // to ndc
     coords = (coords * 2.) - 1.;
 
-    return vec3(coords, voxel.z / uGridSliceWidth);
+    return coords;
 }
 
 void main() {
@@ -42,18 +42,17 @@ void main() {
         abs(pos.x) > uHalfGridSliceWidth || 
         abs(pos.y) > uHalfGridSliceWidth || 
         abs(pos.z) > uHalfGridSliceWidth) ? 1. : 0.;
-    // vOutOfGrid = 0.;
 
-    vec3 voxelCoord = vec3(0);
-    vec3 texelCoord = vec3(0);
+    vec3 voxelCoord = vec3(0.);
+    vec2 texelCoord = vec2(0.);
 
     if(vOutOfGrid < .5) {
 
-        voxelCoord = floor(pos) + uHalfGridSliceWidth; 
+        voxelCoord = round(pos) + uHalfGridSliceWidth; 
         texelCoord = voxelToTexel(voxelCoord);
     } 
 
-    gl_Position = vec4(texelCoord, 1.);
+    gl_Position = vec4(texelCoord, pos.z / uGridSliceWidth, 1.);
     gl_PointSize = 1.;
 }
     

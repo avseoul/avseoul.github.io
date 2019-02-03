@@ -128,8 +128,6 @@ class ParticleBehaviours {
         
         const gl = this.ctx;
 
-        gl.enable(gl.DEPTH_TEST);
-
         gl.viewport(0, 0, this.bufferWidth, this.bufferHeight);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.rttFrameBuffer);
@@ -140,7 +138,7 @@ class ParticleBehaviours {
         gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.posTextures[this.bufIndex], 0);
         gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, this.velTextures[this.bufIndex], 0);
 
-        gl.drawBuffers([ gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1 ]);
+        gl.drawBuffers([ gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]);
 
         let status = gl.checkFramebufferStatus(gl.DRAW_FRAMEBUFFER);
         if (status != gl.FRAMEBUFFER_COMPLETE) {
@@ -170,8 +168,6 @@ class ParticleBehaviours {
         }
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-        
-        gl.disable(gl.DEPTH_TEST);
 
         this.bufIndex ^= 1;
     }

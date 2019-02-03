@@ -115,15 +115,9 @@ class ParticleUniformGrid {
 
         const gl = this.ctx;
 
-        gl.enable(gl.DEPTH_TEST);
-        gl.disable(gl.BLEND);
-
         gl.viewport(0, 0, this.gridTexSize, this.gridTexSize);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.rttFrameBuffer);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-        gl.clearColor(0, 0, 0, 0);
 
         gl.useProgram(this.program);
 
@@ -139,39 +133,42 @@ class ParticleUniformGrid {
         gl.enableVertexAttribArray(this.aTexCoords);
         gl.vertexAttribPointer(this.aTexCoords, 2, gl.FLOAT, gl.FALSE, 0, 0);
 
-        gl.colorMask(true, false, false, false);
-        gl.depthFunc(gl.LESS);
-        gl.drawArrays(gl.POINTS, 0, this.numParticles);
-
-        gl.enable(gl.STENCIL_TEST); 
+        gl.enable(gl.DEPTH_TEST);
+        gl.disable(gl.BLEND);
         {
-            gl.depthFunc(gl.GREATER);
-            gl.stencilFunc(gl.EQUAL, 0, 0xFF); 
-            // gl.stencilFunc(gl.GREATER, 0, 0xFF); 
-            gl.stencilOp(gl.KEEP, gl.KEEP, gl.INCR);
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+            gl.clearColor(0, 0, 0, .1);
 
-            gl.colorMask(false, true, false, false);
-            gl.clear(gl.STENCIL_BUFFER_BIT);
+            gl.colorMask(true, false, false, false);
+            gl.depthFunc(gl.LESS);
             gl.drawArrays(gl.POINTS, 0, this.numParticles);
-
-            gl.colorMask(false, false, true, false);
-            gl.clear(gl.STENCIL_BUFFER_BIT);
-            gl.drawArrays(gl.POINTS, 0, this.numParticles);
-            
-            gl.colorMask(false, false, false, true);
-            gl.clear(gl.STENCIL_BUFFER_BIT);
-            gl.drawArrays(gl.POINTS, 0, this.numParticles);
-        }
-        gl.disable(gl.STENCIL_TEST);
         
-        // reset
-        gl.depthFunc(gl.LESS);
-        gl.colorMask(true, true, true, true);
+            gl.enable(gl.STENCIL_TEST); 
+            {
+                gl.depthFunc(gl.GREATER);
+                gl.stencilFunc(gl.EQUAL, 0, 0xFF); 
+                gl.stencilOp(gl.KEEP, gl.KEEP, gl.INCR);
 
+                gl.colorMask(false, true, false, false);
+                gl.clear(gl.STENCIL_BUFFER_BIT);
+                gl.drawArrays(gl.POINTS, 0, this.numParticles);
+
+                gl.colorMask(false, false, true, false);
+                gl.clear(gl.STENCIL_BUFFER_BIT);
+                gl.drawArrays(gl.POINTS, 0, this.numParticles);
+                
+                gl.colorMask(false, false, false, true);
+                gl.clear(gl.STENCIL_BUFFER_BIT);
+                gl.drawArrays(gl.POINTS, 0, this.numParticles);
+
+                // reset
+                gl.depthFunc(gl.LESS);
+                gl.colorMask(true, true, true, true);
+            }
+            gl.disable(gl.STENCIL_TEST);
+        }
         gl.disable(gl.DEPTH_TEST);
         gl.enable(gl.BLEND);
-
-        gl.clearColor(0, 0, 0, 1);
         
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);    
     }

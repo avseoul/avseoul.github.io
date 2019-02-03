@@ -1,9 +1,8 @@
 #version 300 es
 
-#define SPHERE_R 16.
-#define GRAVITY .58
-#define TIME_DELTA .04
-#define MAX_VEL 6.
+#define SPHERE_R 64.
+#define TIME_DELTA .3
+#define MAX_VEL 5.
 
 precision highp float;
 precision highp int;
@@ -26,6 +25,7 @@ in vec2 vUv;
 
 layout(location = 0) out vec4 oPosBuffer;
 layout(location = 1) out vec4 oVelBuffer;
+layout(location = 2) out vec4 oForceBuffer;
 
 vec3 mod289(vec3 x)
 {
@@ -145,13 +145,11 @@ void main() {
     vec2 uv = idToUv(pId);
 
     vec4 pos = texture(uPosBuffer, uv);
-    float mass = pos.w;
     vec4 vel = texture(uVelBuffer, uv);
-    
     vec4 force = vec4(0., 0., 0., 1.);
     
     // uniform grid
-    vec3 voxel = floor(pos.xyz) + vec3(uHalfGridSliceWidth);
+    vec3 voxel = round(pos.xyz) + vec3(uHalfGridSliceWidth);
 
     for (int i = -1; i < 2; i++) {
 
@@ -164,9 +162,9 @@ void main() {
                 if (neighborVoxel.x < 0. || 
                     neighborVoxel.y < 0. || 
                     neighborVoxel.z < 0. ||
-                    neighborVoxel.x >= float(uGridSliceWidth) || 
-                    neighborVoxel.y >= float(uGridSliceWidth) ||
-                    neighborVoxel.z >= float(uGridSliceWidth)) {
+                    neighborVoxel.x > float(uGridSliceWidth) || 
+                    neighborVoxel.y > float(uGridSliceWidth) ||
+                    neighborVoxel.z > float(uGridSliceWidth)) {
 
                     continue;
                 }
@@ -176,36 +174,22 @@ void main() {
 
                 for (int ch = 0; ch < 4; ch++) {
 
-                    if (neighborPId[ch] == pId) {
-
-                        continue;
-                    }
-
                     vec2 coord = idToUv(neighborPId[ch]);
                     vec4 elmPos = texture(uPosBuffer, coord);
 
                     float dist = distance(pos.xyz, elmPos.xyz);
+                    
+                    float MIN_DIST = (pos.w + elmPos.w) * .5;
 
-                    // sphere collision 
-                    // https://stackoverflow.com/questions/345838/ball-to-ball-collision-detection-and-handling
-                    if(dist == 0. && uIsInit > .5) {
-
-                        continue;
-                    }
-
-                    if(dist < (pos.w + elmPos.w) * .5) {
+                    if(dist < MIN_DIST) {
 
                         vec4 elmVel = texture(uVelBuffer, coord);
 
-                        vec3 collisionNormal = normalize(pos.xyz - elmPos.xyz);
-                        float aci = dot(vel.xyz, collisionNormal);
-                        float bci = dot(elmVel.xyz, collisionNormal);
+                        float K = -.9;
+                        float N = .1;
 
-                        float acf = bci;
-                        float bcf = aci;
-
-                        force.xyz += (acf - aci) * collisionNormal * 1.;
-                        // force.xyz += (bcf - bci) * collisionNormal * 1.;
+                        force.xyz += K * (MIN_DIST - dist) * normalize(elmPos.xyz - pos.xyz);
+                        force.xyz += N * (elmVel.xyz - vel.xyz);
                     }
                 }
             }
@@ -214,27 +198,11 @@ void main() {
 
     // gravity
     {
-        // force.y -= GRAVITY * mass;
-    }
-    {
-        // vec3 gravity = normalize(-pos.xyz);
-        // force.xyz += -.7 * gravity / mass;
+        vec3 gravity = normalize(-pos.xyz);
+        force.xyz += .1 * gravity / pos.w;
     }
 
-    // keep in sphere
-    {
-        // float dist = length(pos.xyz);
-
-        // if(dist > SPHERE_R - pos.w * .5) {
-
-        //     vec3 dir = reflect(normalize(vel.xyz), normalize(-pos.xyz));
-            
-        //     force.xyz *= .03;
-        //     force.xyz += dir * length(vel.xyz);    
-        // }
-    }
-
-    vel.xyz += force.xyz;
+    vel.xyz += force.xyz / pos.w;
 
     // clamping vel
     if(length(vel.xyz) > MAX_VEL) {
@@ -260,9 +228,7 @@ void main() {
         vec3 dir = normalize( vec3(n0, n1, n2) );
         float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
 
-        float scale = 1.;
-
-        pos = vec4(dir * SPHERE_R * distRand, scale);
+        pos = vec4(dir * SPHERE_R * distRand * 1.5, 1.);
     }
 
     oPosBuffer = pos;

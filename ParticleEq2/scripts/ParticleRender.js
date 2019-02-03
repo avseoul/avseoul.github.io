@@ -148,7 +148,7 @@ class ParticleRender {
 
     debug() {
 
-        const THUMBNAIL_SIZE = 100;
+        const THUMBNAIL_SIZE = 50;
 
         this.particleDebug.debugTexture(
             this.particleBehaviours.positionBuffer, 0, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);

@@ -1,4 +1,5 @@
 let BUFFER_X = 64, BUFFER_Y = BUFFER_X, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
+let gridTexSize = 64;
 
 let SHADER = {
 
@@ -57,7 +58,6 @@ let Init = function () {
             renderer = new Renderer();
             gl = renderer.ctx;
 
-            const gridTexSize = 64;
             const gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
             const gridHalfWidth = gridWidth / 2;
             const numGridSliceInGridTexWidth = gridTexSize / gridWidth;

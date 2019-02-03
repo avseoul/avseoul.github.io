@@ -3,10 +3,10 @@
 precision highp float;
 precision highp int;
 
-#define LIGHT_A vec3(10., 10., 10.)
-#define DIFFUSE_INTENSITY .42
-#define SPECULAR_INTENSITY .2   
-#define AMBIENT_INTENSITY .001
+#define LIGHT_A vec3(100., 100., 100.)
+#define DIFFUSE_INTENSITY .82
+#define SPECULAR_INTENSITY .01   
+#define AMBIENT_INTENSITY .002
 
 in vec3 position;
 in vec3 normal;
@@ -38,7 +38,7 @@ vec3 calcPhong(in vec3 lightPos, in vec3 pos, in vec3 norm, in vec3 diffuseCol, 
     vec3 viewDir = normalize(-pos); 
 
     float lambertian = max(dot(lightDir, norm), 0.);
-    float specular = pow(max(dot(reflectDir, viewDir), 0.), 14.);
+    float specular = pow(max(dot(reflectDir, viewDir), 0.), 4.);
 
     return DIFFUSE_INTENSITY * diffuseCol * lambertian + SPECULAR_INTENSITY * specularCol * specular;
 }
@@ -48,15 +48,16 @@ void main() {
     vec4 instancePositions = texture(uInstancePositions, instanceTexcoords);
     vec4 instanceVelocities = texture(uInstanceVelocities, instanceTexcoords);
 
-    vec4 worldPos = modelMatrix * vec4(position * (instancePositions.w * 1.) + instancePositions.xyz, 1.);
+    vec4 worldPos = modelMatrix * vec4(position * (instancePositions.w * .5) + instancePositions.xyz, 1.);
     vec3 worldNormal = normalMatrix * normal;
     vec3 worldViewDir = uWorldcCamPos - worldPos.xyz;
 
-    vec3 diffCol = vec3(.01) + pow(length(instanceVelocities.xyz), 2.) * .001;
-    vec3 specCol = vec3(1.) * pow(length(instanceVelocities.xyz), 2.) * .001;
+    vec3 diffCol = .02 * instanceColors;
+    vec3 specCol = vec3(1.);
 
     vec3 brdf = vec3(0.);
     brdf += calcPhong(LIGHT_A, worldPos.xyz, worldNormal, diffCol, specCol);
+    brdf += normalize(instanceVelocities.xyz) * length(normalize(instanceVelocities.xyz)) * .08;
 
     vColor = brdf;
     vInstanceIndices = instanceIndices;
