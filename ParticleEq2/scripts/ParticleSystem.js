@@ -37,7 +37,7 @@ class ParticleSystem {
         this.particle.texcoords = [];
         this.particle.vertCount = 0;
 
-        let vi = 0, ni = 0, ti = 0;
+        let vi = 0, ni = 0, ui = 0;
 
         {
             this.particle.vertices[vi++] = 0;
@@ -48,8 +48,8 @@ class ParticleSystem {
             this.particle.normals[ni++] = 0;
             this.particle.normals[ni++] = 1;
 
-            this.particle.texcoords[ti++] = 0;
-            this.particle.texcoords[ti++] = 1;
+            this.particle.texcoords[ui++] = 0;
+            this.particle.texcoords[ui++] = 1;
 
             this.particle.vertCount++;
         }
@@ -63,8 +63,8 @@ class ParticleSystem {
             this.particle.normals[ni++] = 0;
             this.particle.normals[ni++] = 1;
 
-            this.particle.texcoords[ti++] = 0;
-            this.particle.texcoords[ti++] = 0;
+            this.particle.texcoords[ui++] = 0;
+            this.particle.texcoords[ui++] = 0;
 
             this.particle.vertCount++;
         }
@@ -78,8 +78,8 @@ class ParticleSystem {
             this.particle.normals[ni++] = 0;
             this.particle.normals[ni++] = 1;
 
-            this.particle.texcoords[ti++] = 1;
-            this.particle.texcoords[ti++] = 1;
+            this.particle.texcoords[ui++] = 1;
+            this.particle.texcoords[ui++] = 1;
 
             this.particle.vertCount++;
         }
@@ -93,8 +93,8 @@ class ParticleSystem {
             this.particle.normals[ni++] = 0;
             this.particle.normals[ni++] = 1;
 
-            this.particle.texcoords[ti++] = 1;
-            this.particle.texcoords[ti++] = 0;
+            this.particle.texcoords[ui++] = 1;
+            this.particle.texcoords[ui++] = 0;
 
             this.particle.vertCount++;
         }
@@ -126,8 +126,8 @@ class ParticleSystem {
                 let y = Math.sin(theta2);
                 let z = Math.cos(theta2) * Math.sin(theta3);
                 
-                let u  = -j / DETAIL;
-                let v  = -2 * ( i + 1 ) / DETAIL;
+                let u  = j / DETAIL;
+                let v  = 2 * ( i + 1) / DETAIL;
 
                 this.particle.vertices[vi++] = x;
                 this.particle.vertices[vi++] = y;
@@ -146,8 +146,8 @@ class ParticleSystem {
                 y = Math.sin(theta1);
                 z = Math.cos(theta1) * Math.sin(theta3);
                 
-                u  = -j / DETAIL;
-                v  = -2 * i / DETAIL;
+                u  = j / DETAIL;
+                v  = 2 * (i) / DETAIL;
 
                 this.particle.vertices[vi++] = x;
                 this.particle.vertices[vi++] = y;
@@ -168,6 +168,9 @@ class ParticleSystem {
     _initBuffers() {
 
         const gl = this.ctx;
+
+        // TODO : investigate UV 
+        console.log(this.particle.texcoords);
 
         this.buffers.vertices = GLHelpers.createArrayBuffer( gl, new Float32Array( this.particle.vertices ) );
         this.buffers.texcoords = GLHelpers.createArrayBuffer( gl, new Float32Array( this.particle.texcoords ) );
@@ -230,6 +233,16 @@ class ParticleSystem {
             uInstancePosition: gl.getUniformLocation( this.program, "uInstancePositions" ),
             uInstanceVelocity: gl.getUniformLocation( this.program, "uInstanceVelocities" )
         }
+
+        // link normal map 
+
+        // const uNormalMap = gl.getUniformLocation( this.program, "uNormalMap" );
+
+        // gl.useProgram(this.program);
+
+        // gl.activeTexture(gl.TEXTURE2);
+        // gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
+        // gl.uniform1i(uNormalMap, 2);
     }
 
     destroy() {

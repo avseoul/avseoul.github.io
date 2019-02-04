@@ -1,5 +1,9 @@
-let BUFFER_X = 64, BUFFER_Y = BUFFER_X, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
-let gridTexSize = 64;
+const BUFFER_X = 64, BUFFER_Y = BUFFER_X, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
+
+const gridTexSize = 64;
+const gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
+const gridHalfWidth = gridWidth / 2;
+const numGridSliceInGridTexWidth = gridTexSize / gridWidth;
 
 let SHADER = {
 
@@ -7,6 +11,10 @@ let SHADER = {
     UNIFORM_GRID: {VERT: null, FRAG: null},
     DEBUG_TEXTURE: {VERT: null, FRAG: null},
     RENDER: {VERT: null, FRAG: null}
+}
+
+let TEXTURE = {
+    NORMAL_MAP: {IMAGE: null, TEXTURE: null}
 }
 
 let gl;
@@ -18,6 +26,8 @@ let particleBehaviours;
 let particleRender;
 
 let stats;
+
+let frame = 0;
 
 let Init = function () {
 
@@ -33,7 +43,8 @@ let Init = function () {
         GLHelpers.loadShader( "shaders/debugTexture.vert" ),
         GLHelpers.loadShader( "shaders/debugTexture.frag" ),
         GLHelpers.loadShader( "shaders/render.vert" ), 
-        GLHelpers.loadShader( "shaders/render.frag" )
+        GLHelpers.loadShader( "shaders/render.frag" ),
+        GLHelpers.loadTexture( "../common/assets/normal_map_rough_surface.jpg" )
 
     ])
     .then(
@@ -50,6 +61,8 @@ let Init = function () {
 
             SHADER.RENDER.VERT = res[6].target.response;
             SHADER.RENDER.FRAG = res[7].target.response;
+
+            TEXTURE.NORMAL_MAP.IMAGE = res[8].target;
         }
     ).then(
         () => {
@@ -58,9 +71,8 @@ let Init = function () {
             renderer = new Renderer();
             gl = renderer.ctx;
 
-            const gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
-            const gridHalfWidth = gridWidth / 2;
-            const numGridSliceInGridTexWidth = gridTexSize / gridWidth;
+            // create textures
+            TEXTURE.NORMAL_MAP.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.NORMAL_MAP.IMAGE);
 
             console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
@@ -97,13 +109,32 @@ let Init = function () {
 
 let Update = function () {
 
-    // if there's any changes on the threejs camera then call
-    // particleRender.updateMatrixUniforms()
+    // update camera 
+    // const camSpeed = frame * .002;
+
+    // var n_loc = new THREE.Vector3(
+    //     Math.sin(camSpeed), Math.cos(camSpeed * .9) * Math.sin(camSpeed * .7), Math.cos(camSpeed))
+    //     .normalize()
+    //     .multiplyScalar( gridWidth + gridWidth * 2. * Math.sin(2. * camSpeed) );
+
+    // var n_center = new THREE.Vector3(
+    //     Math.sin(.6 * camSpeed), 0., Math.cos(.4 * camSpeed))
+    //     .normalize()
+    //     .multiplyScalar(0);
+    
+    // camera.position.copy(n_loc);
+    // camera.lookAt( n_center, new THREE.Vector3(0, 1, 0) );  
+    // camera.updateProjectionMatrix();
+    // // if there's any changes on the threejs camera then call
+    // particleRender.updateMatrixUniforms();
+
     particleRender.update();
     particleRender.render();
     particleRender.debug();
 
     stats.update();
+
+    frame++;
 
     requestAnimationFrame(Update);
 }

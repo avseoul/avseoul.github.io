@@ -35,7 +35,7 @@ class ParticleRender {
             this.particleSystem.buffers.instanceIndices,
             this.particleSystem.buffers.instanceTexcoords
             );
-        
+
         this.updateTextureUniforms( 
             this.particleBehaviours.positionBuffer,
             this.particleBehaviours.velocityBuffer  
@@ -131,8 +131,6 @@ class ParticleRender {
 
     updateTextureUniforms( positionTex, velocityTex ) {
 
-        if(!this.isInit) return;
-
         const gl = this.ctx;
 
         gl.useProgram( this.particleSystem.program ); 
@@ -144,6 +142,16 @@ class ParticleRender {
         gl.activeTexture( gl.TEXTURE1 );
         gl.bindTexture( gl.TEXTURE_2D, velocityTex );
         gl.uniform1i( this.particleSystem.uniforms.uInstanceVelocity, 1 );
+        
+
+        // TODO : move this upload to init
+        {
+            const uNormalMap = gl.getUniformLocation( this.particleSystem.program, "uNormalMap" );
+
+            gl.activeTexture(gl.TEXTURE6);
+            gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
+            gl.uniform1i(uNormalMap, 6);
+        }
     }
 
     debug() {
@@ -157,6 +165,9 @@ class ParticleRender {
 
         this.particleDebug.debugTexture(
             this.particleUniformGrid.gridTexture, THUMBNAIL_SIZE * 2, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+
+        this.particleDebug.debugTexture(
+            TEXTURE.NORMAL_MAP.TEXTURE, THUMBNAIL_SIZE * 3, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
     }
 
     destroy() {

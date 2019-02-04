@@ -137,7 +137,7 @@ class ParticleUniformGrid {
         gl.disable(gl.BLEND);
         {
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-            gl.clearColor(0, 0, 0, .1);
+            gl.clearColor(0, 0, 0, 1);
 
             gl.colorMask(true, false, false, false);
             gl.depthFunc(gl.LESS);

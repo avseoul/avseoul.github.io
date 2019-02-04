@@ -29,7 +29,7 @@ class GLHelpers {
             
         return new Promise( (resolve, reject) => {
 
-            var req = new XMLHttpRequest();
+            let req = new XMLHttpRequest();
 
             req.open("GET", url, true);
             
@@ -64,7 +64,7 @@ class GLHelpers {
 
         'use strict';
 
-        var prog = gl.createProgram();
+        let prog = gl.createProgram();
         
         gl.attachShader(prog, vs);
         gl.attachShader(prog, fs);
@@ -124,5 +124,35 @@ class GLHelpers {
         gl.bufferData( gl.ARRAY_BUFFER, data, gl.STATIC_DRAW );
         
         return buffer;
+    }
+
+    static loadTexture(url) {
+
+        'use strict';
+            
+        return new Promise( (resolve, reject) => {
+
+            var image = new Image();
+            image.src = url;
+            
+            image.onload = resolve;
+            image.onerror = reject;
+        } );
+    }   
+
+    static createImageTexture(gl, image) {
+
+        let texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        return texture;
     }
 }
