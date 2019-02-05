@@ -235,14 +235,13 @@ class ParticleSystem {
         }
 
         // link normal map 
+        const uNormalMap = gl.getUniformLocation( this.program, "uNormalMap" );
 
-        // const uNormalMap = gl.getUniformLocation( this.program, "uNormalMap" );
+        gl.useProgram(this.program);
 
-        // gl.useProgram(this.program);
-
-        // gl.activeTexture(gl.TEXTURE2);
-        // gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
-        // gl.uniform1i(uNormalMap, 2);
+        gl.activeTexture(gl.TEXTURE2);
+        gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
+        gl.uniform1i(uNormalMap, 2);
     }
 
     destroy() {

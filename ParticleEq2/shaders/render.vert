@@ -22,6 +22,7 @@ uniform sampler2D uInstancePositions;
 out vec2 vUv;
 out vec3 vInstanceColors;
 out float vInstanceIndices;
+out vec4 vInstancePositions;
 out vec4 vInstanceVelocities;
 out vec3 vWorldPos;
 out vec3 vWorldNormal;
@@ -37,6 +38,7 @@ void main() {
 
     vInstanceIndices = instanceIndices;
     vInstanceColors = instanceColors;
+    vInstancePositions = instancePositions;
     vInstanceVelocities = instanceVelocities;
 
     vUv = uv;

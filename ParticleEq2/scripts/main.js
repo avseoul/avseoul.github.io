@@ -1,6 +1,6 @@
 const BUFFER_X = 64, BUFFER_Y = BUFFER_X, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
 
-const gridTexSize = 64;
+const gridTexSize = 512;
 const gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
 const gridHalfWidth = gridWidth / 2;
 const numGridSliceInGridTexWidth = gridTexSize / gridWidth;
@@ -77,9 +77,9 @@ let Init = function () {
             console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
             camera = new THREE.PerspectiveCamera( 50, renderer.canvas.width / renderer.canvas.height, 1, 500 );
-            // camera.position.x = gridWidth;
-            // camera.position.y = gridWidth;
-            camera.position.z = gridWidth * 2.;
+            camera.position.x = gridHalfWidth;
+            camera.position.y = gridHalfWidth;
+            camera.position.z = gridHalfWidth;
             camera.up = new THREE.Vector3( 0, 1, 0 );
             camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
@@ -110,27 +110,23 @@ let Init = function () {
 let Update = function () {
 
     // update camera 
-    // const camSpeed = frame * .002;
-
+    // const camSpeed = frame * .006;
+// 
     // var n_loc = new THREE.Vector3(
     //     Math.sin(camSpeed), Math.cos(camSpeed * .9) * Math.sin(camSpeed * .7), Math.cos(camSpeed))
     //     .normalize()
     //     .multiplyScalar( gridWidth + gridWidth * 2. * Math.sin(2. * camSpeed) );
-
-    // var n_center = new THREE.Vector3(
-    //     Math.sin(.6 * camSpeed), 0., Math.cos(.4 * camSpeed))
-    //     .normalize()
-    //     .multiplyScalar(0);
     
     // camera.position.copy(n_loc);
-    // camera.lookAt( n_center, new THREE.Vector3(0, 1, 0) );  
+    // camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
     // camera.updateProjectionMatrix();
-    // // if there's any changes on the threejs camera then call
+    // camera.updateMatrixWorld(true);
+    // if there's any changes on the threejs camera then call
     // particleRender.updateMatrixUniforms();
 
     particleRender.update();
     particleRender.render();
-    particleRender.debug();
+    // particleRender.debug();
 
     stats.update();
 

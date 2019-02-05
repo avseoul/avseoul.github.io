@@ -1,8 +1,8 @@
 #version 300 es
 
-#define SPHERE_R 64.
-#define TIME_DELTA .3
-#define MAX_VEL 5.
+#define SPHERE_R 18.
+#define TIME_DELTA .1
+#define MAX_VEL 3.
 
 precision highp float;
 precision highp int;
@@ -186,7 +186,7 @@ void main() {
                         vec4 elmVel = texture(uVelBuffer, coord);
 
                         float K = -.9;
-                        float N = .1;
+                        float N = .2;
 
                         force.xyz += K * (MIN_DIST - dist) * normalize(elmPos.xyz - pos.xyz);
                         force.xyz += N * (elmVel.xyz - vel.xyz);
@@ -196,11 +196,53 @@ void main() {
         }
     }
 
+    float dice = snoise(vec3(uTime, uTime, uTime));
+
     // gravity
     {
-        vec3 gravity = normalize(-pos.xyz);
-        force.xyz += .1 * gravity / pos.w;
+        vec3 dir = normalize(-pos.xyz);
+        force.xyz += .12 * dir / pos.w;
+        force.y -= .08 * pos.w;
     }
+    // orbit
+    {
+        vec3 dir = reflect(normalize(vel.xyz), normalize(-pos.xyz));
+        force.xyz += dir * length(vel.xyz) * .08 * pos.w;    
+    }
+    // random
+    {
+        float n0 = snoise(vec3(vUv.xyx * .2) + uTime * .0001) * 2. - 1.;
+        float n1 = snoise(vec3(vUv.yxy * .2) + uTime * .0001) * 2. - 1.;
+        float n2 = snoise(vec3(vUv.xxy * .2) + uTime * .0001) * 2. - 1.;
+        
+        force.xyz += vec3(n0, n1, n2) * .1;
+    }
+    // keep it in the sphere 
+    {
+        // float dist = length(pos.xyz);
+
+        // if(dist > SPHERE_R - pos.w * .5) {
+
+        //     pos.xyz = normalize(pos.xyz) * SPHERE_R;    
+        // }
+    }
+    // size random
+    if(abs(dice) < .01) {
+
+        float n = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678) + uTime) * 2. - 1.;
+        
+        pos.w += pow(abs(n), 3.);
+    } 
+
+    if(pos.w >= 1.) {
+
+        pos.w *= .993;
+
+    } else {
+
+        pos.w = 1.;
+    }
+
 
     vel.xyz += force.xyz / pos.w;
 
@@ -218,6 +260,9 @@ void main() {
 
     pos.xyz += vel.xyz * TIME_DELTA;
 
+    // reset scale
+    if(pos.w > 6.) pos.w = 1.;
+
     // init position
     if(uIsInit < .5) {
 
@@ -228,7 +273,7 @@ void main() {
         vec3 dir = normalize( vec3(n0, n1, n2) );
         float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
 
-        pos = vec4(dir * SPHERE_R * distRand * 1.5, 1.);
+        pos = vec4(dir * SPHERE_R * distRand * 1.5, 1. + abs(n0 + n1 + n2) );
     }
 
     oPosBuffer = pos;
