@@ -135,8 +135,8 @@ class ParticleBehaviours {
         // gl.clearColor(0., 0., 0., 1.);
         // gl.clear(gl.COLOR_BUFFER_BIT); 
 
-        gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.posTextures[this.bufIndex], 0);
-        gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, this.velTextures[this.bufIndex], 0);
+        gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.posTextures[this.bufIndex ^ 1], 0);
+        gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, this.velTextures[this.bufIndex ^ 1], 0);
 
         gl.drawBuffers([ gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]);
 
@@ -150,11 +150,11 @@ class ParticleBehaviours {
         gl.useProgram(this.rttProgram);
 
         gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this.posTextures[this.bufIndex ^ 1]);
+        gl.bindTexture(gl.TEXTURE_2D, this.posTextures[this.bufIndex]);
         gl.uniform1i(this.uPosBuffer, 0);
 
         gl.activeTexture(gl.TEXTURE1);
-        gl.bindTexture(gl.TEXTURE_2D, this.velTextures[this.bufIndex ^ 1]);
+        gl.bindTexture(gl.TEXTURE_2D, this.velTextures[this.bufIndex]);
         gl.uniform1i(this.uVelBuffer, 1);
 
         gl.uniform1f(this.uTime, performance.now());

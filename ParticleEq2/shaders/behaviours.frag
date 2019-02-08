@@ -25,7 +25,6 @@ in vec2 vUv;
 
 layout(location = 0) out vec4 oPosBuffer;
 layout(location = 1) out vec4 oVelBuffer;
-layout(location = 2) out vec4 oForceBuffer;
 
 vec3 mod289(vec3 x)
 {
@@ -119,6 +118,16 @@ float snoise(vec3 v)
     return (42.0 * dot(m, px) + 1.) * .5;
 }
 
+vec2 norm(in vec2 v) {
+
+    return length(v) == 0. ? vec2(0.) : normalize(v);
+}
+
+vec3 norm(in vec3 v) {
+
+    return length(v) == 0. ? vec3(0.) : normalize(v);
+}
+
 vec2 idToUv(in float id) {
 
     float v = floor(id / uNumParticleSqrt);
@@ -147,6 +156,24 @@ void main() {
     vec4 pos = texture(uPosBuffer, uv);
     vec4 vel = texture(uVelBuffer, uv);
     vec4 force = vec4(0., 0., 0., 1.);
+
+    // init position
+    if(uIsInit < .5) {
+
+        float n0 = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678)) * 2. - 1.;
+        float n1 = snoise(vec3(vUv.y * 901.234, vUv.x * 567.890, vUv.y * 123.456)) * 2. - 1.;
+        float n2 = snoise(vec3(vUv.x * 789.012, vUv.y * 345.678, vUv.x * 901.234)) * 2. - 1.;
+
+        vec3 dir = norm( vec3(n0, n1, n2) );
+        float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
+
+        pos = vec4(dir * SPHERE_R * distRand * 1.5, 1. + abs(n0 + n1 + n2) );
+
+        oPosBuffer = pos;
+        oVelBuffer = vel;
+
+        return;
+    }
     
     // uniform grid
     vec3 voxel = round(pos.xyz) + vec3(uHalfGridSliceWidth);
@@ -188,7 +215,7 @@ void main() {
                         float K = -.9;
                         float N = .2;
 
-                        force.xyz += K * (MIN_DIST - dist) * normalize(elmPos.xyz - pos.xyz);
+                        force.xyz += K * (MIN_DIST - dist) * norm(elmPos.xyz - pos.xyz);
                         force.xyz += N * (elmVel.xyz - vel.xyz);
                     }
                 }
@@ -200,13 +227,13 @@ void main() {
 
     // gravity
     {
-        vec3 dir = normalize(-pos.xyz);
+        vec3 dir = norm(-pos.xyz);
         force.xyz += .12 * dir / pos.w;
         force.y -= .08 * pos.w;
     }
     // orbit
     {
-        vec3 dir = reflect(normalize(vel.xyz), normalize(-pos.xyz));
+        vec3 dir = reflect(norm(vel.xyz), norm(-pos.xyz));
         force.xyz += dir * length(vel.xyz) * .08 * pos.w;    
     }
     // random
@@ -219,12 +246,12 @@ void main() {
     }
     // keep it in the sphere 
     {
-        // float dist = length(pos.xyz);
+        float dist = length(pos.xyz);
 
-        // if(dist > SPHERE_R - pos.w * .5) {
+        if(dist > SPHERE_R - pos.w * .5) {
 
-        //     pos.xyz = normalize(pos.xyz) * SPHERE_R;    
-        // }
+            pos.xyz = norm(pos.xyz) * SPHERE_R;    
+        }
     }
     // size random
     if(abs(dice) < .01) {
@@ -249,7 +276,7 @@ void main() {
     // clamping vel
     if(length(vel.xyz) > MAX_VEL) {
 
-        vel.xyz = normalize(vel.xyz) * MAX_VEL;
+        vel.xyz = norm(vel.xyz) * MAX_VEL;
     }
 
     // damping
@@ -262,19 +289,6 @@ void main() {
 
     // reset scale
     if(pos.w > 6.) pos.w = 1.;
-
-    // init position
-    if(uIsInit < .5) {
-
-        float n0 = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678)) * 2. - 1.;
-        float n1 = snoise(vec3(vUv.y * 901.234, vUv.x * 567.890, vUv.y * 123.456)) * 2. - 1.;
-        float n2 = snoise(vec3(vUv.x * 789.012, vUv.y * 345.678, vUv.x * 901.234)) * 2. - 1.;
-
-        vec3 dir = normalize( vec3(n0, n1, n2) );
-        float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
-
-        pos = vec4(dir * SPHERE_R * distRand * 1.5, 1. + abs(n0 + n1 + n2) );
-    }
 
     oPosBuffer = pos;
     oVelBuffer = vel;
