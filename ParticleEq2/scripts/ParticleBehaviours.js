@@ -172,6 +172,14 @@ class ParticleBehaviours {
         this.bufIndex ^= 1;
     }
 
+    reset(params) {
+
+        this.bufferWidth = params.bufferWidth;
+        this.bufferHeight = params.bufferHeight;
+
+        this._init();
+    }
+
     destroy() {
 
         const gl = this.ctx;

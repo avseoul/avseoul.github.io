@@ -160,14 +160,14 @@ void main() {
     // init position
     if(uIsInit < .5) {
 
-        float n0 = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678)) * 2. - 1.;
-        float n1 = snoise(vec3(vUv.y * 901.234, vUv.x * 567.890, vUv.y * 123.456)) * 2. - 1.;
-        float n2 = snoise(vec3(vUv.x * 789.012, vUv.y * 345.678, vUv.x * 901.234)) * 2. - 1.;
+        float n0 = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678) + uTime) * 2. - 1.;
+        float n1 = snoise(vec3(vUv.y * 901.234, vUv.x * 567.890, vUv.y * 123.456) + uTime) * 2. - 1.;
+        float n2 = snoise(vec3(vUv.x * 789.012, vUv.y * 345.678, vUv.x * 901.234) + uTime) * 2. - 1.;
 
         vec3 dir = norm( vec3(n0, n1, n2) );
         float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
 
-        pos = vec4(dir * SPHERE_R * distRand * 1.5, 1. + abs(n0 + n1 + n2) );
+        pos = vec4(dir * SPHERE_R * distRand * 2.5, 1. + abs(n0 + n1 + n2) );
 
         oPosBuffer = pos;
         oVelBuffer = vel;
@@ -238,20 +238,20 @@ void main() {
     }
     // random
     {
-        float n0 = snoise(vec3(vUv.xyx * .2) + uTime * .0001) * 2. - 1.;
-        float n1 = snoise(vec3(vUv.yxy * .2) + uTime * .0001) * 2. - 1.;
-        float n2 = snoise(vec3(vUv.xxy * .2) + uTime * .0001) * 2. - 1.;
+        float n0 = snoise(vec3(vUv.xyx * .02) + uTime * .0001) * 2. - 1.;
+        float n1 = snoise(vec3(vUv.yxy * .02) + uTime * .0001) * 2. - 1.;
+        float n2 = snoise(vec3(vUv.xxy * .02) + uTime * .0001) * 2. - 1.;
         
         force.xyz += vec3(n0, n1, n2) * .1;
     }
     // keep it in the sphere 
     {
-        float dist = length(pos.xyz);
+        // float dist = length(pos.xyz);
 
-        if(dist > SPHERE_R - pos.w * .5) {
+        // if(dist > SPHERE_R - pos.w * .5) {
 
-            pos.xyz = norm(pos.xyz) * SPHERE_R;    
-        }
+        //     pos.xyz = norm(pos.xyz) * SPHERE_R;    
+        // }
     }
     // size random
     if(abs(dice) < .01) {

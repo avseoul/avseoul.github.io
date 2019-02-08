@@ -1,9 +1,9 @@
-const BUFFER_X = 64, BUFFER_Y = BUFFER_X, BUFFER_SIZE = BUFFER_X * BUFFER_Y;
+let bufferWidth , bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
 
-const gridTexSize = 512;
-const gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
-const gridHalfWidth = gridWidth / 2;
-const numGridSliceInGridTexWidth = gridTexSize / gridWidth;
+let gridTexSize = 512;
+let gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
+let gridHalfWidth = gridWidth / 2;
+let numGridSliceInGridTexWidth = gridTexSize / gridWidth;
 
 let SHADER = {
 
@@ -26,6 +26,8 @@ let particleBehaviours;
 let particleRender;
 
 let stats;
+let ctrl;
+let ctrlParams;
 
 let frame = 0;
 
@@ -67,6 +69,8 @@ let Init = function () {
     ).then(
         () => {
 
+            SetBufferSize(64);
+
             // init app
             renderer = new Renderer();
             gl = renderer.ctx;
@@ -77,9 +81,9 @@ let Init = function () {
             console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
             camera = new THREE.PerspectiveCamera( 50, renderer.canvas.width / renderer.canvas.height, 1, 500 );
-            camera.position.x = gridHalfWidth;
-            camera.position.y = gridHalfWidth;
-            camera.position.z = gridHalfWidth;
+            camera.position.x = gridWidth;
+            camera.position.y = gridWidth;
+            camera.position.z = gridWidth;
             camera.up = new THREE.Vector3( 0, 1, 0 );
             camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
@@ -87,8 +91,8 @@ let Init = function () {
 
                 camera: camera,
                 renderer: renderer,
-                bufferWidth: BUFFER_X,
-                bufferHeight: BUFFER_Y,
+                bufferWidth: bufferWidth,
+                bufferHeight: bufferHeight,
                 gridTexSize: gridTexSize,
                 gridWidth: gridWidth,
                 gridHalfWidth: gridHalfWidth,
@@ -97,8 +101,52 @@ let Init = function () {
 
             particleRender = new ParticleRender( params );
 
+            // stat
             stats = new Stats();
             document.body.appendChild(stats.dom);
+
+            // dat gui
+            {
+                ctrl = new dat.GUI();
+
+                ctrlParams = {
+
+                    // debug
+                    ShowStats: true,
+                    ShowDebug: false,
+                    DebugThumbnailSize: 50,
+
+                    // particle
+                    numParticlesFactor: 64 
+                }
+
+                ctrl.add(ctrlParams, 'ShowStats').onFinishChange(
+                    
+                    (val) => {
+                        
+                        stats.dom.style.display = val ? 'block' : 'none' 
+                    }
+                );
+
+                ctrl.add(ctrlParams, 'ShowDebug').onFinishChange(
+                    
+                    (val) => ctrlParams.showDebug = val
+                );
+
+                ctrl.add(ctrlParams, 'DebugThumbnailSize', 50, 200).onChange(
+
+                    (val) => particleRender.thumbnailSize = val
+                );
+
+                ctrl.add(ctrlParams, 'numParticlesFactor', [16, 32, 64, 128, 256, 512, 1024]).onChange(
+
+                    (val) => {
+                        
+                        SetBufferSize(val);
+                        Reset();
+                    }
+                );
+            }
 
             Update();
 
@@ -126,13 +174,31 @@ let Update = function () {
 
     particleRender.update();
     particleRender.render();
-    // particleRender.debug();
+    
+    if(ctrlParams.showDebug) particleRender.debug();
 
     stats.update();
 
     frame++;
 
     requestAnimationFrame(Update);
+}
+
+let SetBufferSize = function(val) {
+
+    bufferWidth = val, bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
+}
+
+let Reset = function() {
+
+    const params = {
+
+        bufferWidth: bufferWidth,
+        bufferHeight: bufferHeight,
+        bufferSize: bufferSize
+    }
+
+    particleRender.reset(params);
 }
 
 let OnWindowResize = function () {

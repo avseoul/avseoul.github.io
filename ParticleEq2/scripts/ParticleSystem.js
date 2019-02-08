@@ -14,7 +14,7 @@ class ParticleSystem {
 
         this.particle = {}
 
-        this._buildUnitSphere(24);
+        this._buildUnitSphere(12);
         // this._buildQuad();
 
         this.buffers = {}
@@ -170,7 +170,7 @@ class ParticleSystem {
         const gl = this.ctx;
 
         // TODO : investigate UV 
-        console.log(this.particle.texcoords);
+        // console.log(this.particle.texcoords);
 
         this.buffers.vertices = GLHelpers.createArrayBuffer( gl, new Float32Array( this.particle.vertices ) );
         this.buffers.texcoords = GLHelpers.createArrayBuffer( gl, new Float32Array( this.particle.texcoords ) );
@@ -242,6 +242,17 @@ class ParticleSystem {
         gl.activeTexture(gl.TEXTURE2);
         gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
         gl.uniform1i(uNormalMap, 2);
+    }
+
+    reset(params) {
+
+        this.bufferWidth = params.bufferWidth;
+        this.bufferHeight = params.bufferHeight;
+
+        this.numParticles = this.bufferWidth * this.bufferHeight;
+
+        this._initBuffers();
+        this._initProgram();
     }
 
     destroy() {

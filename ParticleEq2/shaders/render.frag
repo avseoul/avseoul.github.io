@@ -5,7 +5,7 @@ precision highp int;
 
 #define LIGHT_A vec3(100., 100., 100.)
 
-#define DIFFUSE_INTENSITY .003
+#define DIFFUSE_INTENSITY .6
 #define SPECULAR_INTENSITY .02   
 #define AMBIENT_INTENSITY .0001
 
@@ -56,7 +56,7 @@ vec3 calcPhong(in vec3 lightDir, in vec3 viewDir, in vec3 norm, in vec3 diffuseC
 
 void main() {
 
-    vec3 diffCol = vec3(1.);//* vInstanceColors;
+    vec3 diffCol = pow(length(vInstanceVelocities.xyz), 5.) * .001 * normalize(vInstanceVelocities.xyz);//* vInstanceColors;
     vec3 specCol = vec3(1.);
 
     vec3 normal = vWorldNormal;
@@ -75,8 +75,7 @@ void main() {
 
     vec3 brdf = vec3(0.);
     brdf += AMBIENT_INTENSITY 
-        + pow((vInstancePositions.w - 1.), 2.) * .18 
-        + pow(length(vInstanceVelocities.xyz), 5.) * .001 * normalize(vInstanceVelocities.xyz);
+        + pow((vInstancePositions.w - 1.), 2.) * .23;
     brdf += calcPhong(lightDir, viewDir, normal, diffCol, specCol);
     
     vec3 col = brdf;

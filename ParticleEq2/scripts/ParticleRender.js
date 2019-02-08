@@ -23,6 +23,8 @@ class ParticleRender {
 
         this.particleDebug = new ParticleDebug(params.renderer.ctx);
 
+        this.thumbnailSize = 50;
+
         this.updateMatrixUniforms();
     }
 
@@ -146,28 +148,43 @@ class ParticleRender {
 
         // TODO : move this upload to init
         {
-            const uNormalMap = gl.getUniformLocation( this.particleSystem.program, "uNormalMap" );
+            // const uNormalMap = gl.getUniformLocation( this.particleSystem.program, "uNormalMap" );
 
-            gl.activeTexture(gl.TEXTURE6);
-            gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
-            gl.uniform1i(uNormalMap, 6);
+            // gl.activeTexture(gl.TEXTURE6);
+            // gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
+            // gl.uniform1i(uNormalMap, 6);
         }
     }
 
     debug() {
 
-        const THUMBNAIL_SIZE = 50;
+        this.particleDebug.debugTexture(
+            this.particleBehaviours.positionBuffer, 0, 0, this.thumbnailSize, this.thumbnailSize);
+        this.particleDebug.debugTexture(
+            this.particleBehaviours.velocityBuffer, this.thumbnailSize, 0, this.thumbnailSize, this.thumbnailSize);
 
         this.particleDebug.debugTexture(
-            this.particleBehaviours.positionBuffer, 0, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
-        this.particleDebug.debugTexture(
-            this.particleBehaviours.velocityBuffer, THUMBNAIL_SIZE, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+            this.particleUniformGrid.gridTexture, this.thumbnailSize * 2, 0, this.thumbnailSize, this.thumbnailSize);
 
         this.particleDebug.debugTexture(
-            this.particleUniformGrid.gridTexture, THUMBNAIL_SIZE * 2, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+            TEXTURE.NORMAL_MAP.TEXTURE, this.thumbnailSize * 3, 0, this.thumbnailSize, this.thumbnailSize);
+    }
 
-        this.particleDebug.debugTexture(
-            TEXTURE.NORMAL_MAP.TEXTURE, THUMBNAIL_SIZE * 3, 0, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+    reset(params) {
+
+        this.bufferWidth = params.bufferWidth;
+        this.bufferHeight = params.bufferHeight;
+
+        this.numInstance = this.bufferWidth * this.bufferHeight;
+
+        this.particleSystem.reset(params);
+
+        this.particleUniformGrid.reset(params);
+
+        this.particleBehaviours.reset(params);
+        this.particleBehaviours.linkGridTexture(this.particleUniformGrid.uniformGridTexture);
+
+        this.updateMatrixUniforms();
     }
 
     destroy() {

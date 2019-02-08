@@ -39,6 +39,7 @@ class ParticleUniformGrid {
     }
 
     _init() {
+
         const gl = this.ctx;
 
         // create fbo
@@ -171,6 +172,16 @@ class ParticleUniformGrid {
         gl.enable(gl.BLEND);
         
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);    
+    }
+
+    reset(params) {
+
+        this.bufferWidth = params.bufferWidth;
+        this.bufferHeight = params.bufferHeight;
+
+        this.numParticles = this.bufferWidth * this.bufferHeight;
+
+        this._init();
     }
 
     destroy() {
