@@ -1,4 +1,4 @@
-let bufferWidth , bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
+let bufferWidth, bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
 
 let gridTexSize = 512;
 let gridWidth = Math.cbrt(Math.pow(gridTexSize, 2));
@@ -7,14 +7,14 @@ let numGridSliceInGridTexWidth = gridTexSize / gridWidth;
 
 let SHADER = {
 
-    BEHAVIOURS: {VERT: null, FRAG: null},
-    UNIFORM_GRID: {VERT: null, FRAG: null},
-    DEBUG_TEXTURE: {VERT: null, FRAG: null},
-    RENDER: {VERT: null, FRAG: null}
+    BEHAVIOURS: { VERT: null, FRAG: null },
+    UNIFORM_GRID: { VERT: null, FRAG: null },
+    DEBUG_TEXTURE: { VERT: null, FRAG: null },
+    RENDER: { VERT: null, FRAG: null }
 }
 
 let TEXTURE = {
-    NORMAL_MAP: {IMAGE: null, TEXTURE: null}
+    NORMAL_MAP: { IMAGE: null, TEXTURE: null }
 }
 
 let gl;
@@ -22,12 +22,47 @@ let gl;
 let renderer;
 let camera;
 
-let particleBehaviours; 
 let particleRender;
+let mainLight;
 
 let stats;
 let ctrl;
-let ctrlParams;
+let ctrlParams = {
+
+    // debug
+    ShowStats: true,
+    ShowDebug: true,
+    DebugThumbnailSize: 100,
+
+    // particle
+    ParticleDensity: 64,
+    SphereResolution: 8,
+
+    // force
+    GlobalGravity: .08,
+    LocalGravity: .22,
+    OrbitAcc: .08,
+    RandomAcc: .1,
+    
+    RandomScalePop: 5.,
+    
+    KeepInSphere: false,
+    SphereRadius: 18,
+    
+    ScaleDamping: .99,
+    
+    TimeDelta: .1,
+    MaxVel: 5,
+
+    ParticleScaleFactor: 1.,
+    Ambient: .3,
+    Diffuse: .5,
+    Fill: .1, 
+    Back: .1, 
+    Fresnel: .5,
+    Gamma: .45,
+    isBW: false
+}
 
 let frame = 0;
 
@@ -38,144 +73,324 @@ let Init = function () {
     // load resources
     Promise.all([
 
-        GLHelpers.loadShader( "shaders/behaviours.vert" ), 
-        GLHelpers.loadShader( "shaders/behaviours.frag" ),
-        GLHelpers.loadShader( "shaders/uniformGrid.vert" ), 
-        GLHelpers.loadShader( "shaders/uniformGrid.frag" ),
-        GLHelpers.loadShader( "shaders/debugTexture.vert" ),
-        GLHelpers.loadShader( "shaders/debugTexture.frag" ),
-        GLHelpers.loadShader( "shaders/render.vert" ), 
-        GLHelpers.loadShader( "shaders/render.frag" ),
-        GLHelpers.loadTexture( "../common/assets/normal_map_rough_surface.jpg" )
+        GLHelpers.loadShader("shaders/behaviours.vert"),
+        GLHelpers.loadShader("shaders/behaviours.frag"),
+        GLHelpers.loadShader("shaders/uniformGrid.vert"),
+        GLHelpers.loadShader("shaders/uniformGrid.frag"),
+        GLHelpers.loadShader("shaders/debugTexture.vert"),
+        GLHelpers.loadShader("shaders/debugTexture.frag"),
+        GLHelpers.loadShader("shaders/render.vert"),
+        GLHelpers.loadShader("shaders/render.frag"),
+        GLHelpers.loadTexture("../common/assets/normal_map_rough_surface.jpg")
 
     ])
-    .then(
-        (res) => {
+        .then(
+            (res) => {
 
-            SHADER.BEHAVIOURS.VERT = res[0].target.response;
-            SHADER.BEHAVIOURS.FRAG = res[1].target.response;
+                SHADER.BEHAVIOURS.VERT = res[0].target.response;
+                SHADER.BEHAVIOURS.FRAG = res[1].target.response;
 
-            SHADER.UNIFORM_GRID.VERT = res[2].target.response;
-            SHADER.UNIFORM_GRID.FRAG = res[3].target.response;
+                SHADER.UNIFORM_GRID.VERT = res[2].target.response;
+                SHADER.UNIFORM_GRID.FRAG = res[3].target.response;
 
-            SHADER.DEBUG_TEXTURE.VERT = res[4].target.response;
-            SHADER.DEBUG_TEXTURE.FRAG = res[5].target.response;
+                SHADER.DEBUG_TEXTURE.VERT = res[4].target.response;
+                SHADER.DEBUG_TEXTURE.FRAG = res[5].target.response;
 
-            SHADER.RENDER.VERT = res[6].target.response;
-            SHADER.RENDER.FRAG = res[7].target.response;
+                SHADER.RENDER.VERT = res[6].target.response;
+                SHADER.RENDER.FRAG = res[7].target.response;
 
-            TEXTURE.NORMAL_MAP.IMAGE = res[8].target;
-        }
-    ).then(
-        () => {
-
-            SetBufferSize(64);
-
-            // init app
-            renderer = new Renderer();
-            gl = renderer.ctx;
-
-            // create textures
-            TEXTURE.NORMAL_MAP.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.NORMAL_MAP.IMAGE);
-
-            console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
-
-            camera = new THREE.PerspectiveCamera( 50, renderer.canvas.width / renderer.canvas.height, 1, 500 );
-            camera.position.x = gridWidth;
-            camera.position.y = gridWidth;
-            camera.position.z = gridWidth;
-            camera.up = new THREE.Vector3( 0, 1, 0 );
-            camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
-
-            let params = {
-
-                camera: camera,
-                renderer: renderer,
-                bufferWidth: bufferWidth,
-                bufferHeight: bufferHeight,
-                gridTexSize: gridTexSize,
-                gridWidth: gridWidth,
-                gridHalfWidth: gridHalfWidth,
-                numGridSliceInGridTexWidth: numGridSliceInGridTexWidth
+                TEXTURE.NORMAL_MAP.IMAGE = res[8].target;
             }
+        ).then(
+            () => {
 
-            particleRender = new ParticleRender( params );
+                SetBufferSize(64);
 
-            // stat
-            stats = new Stats();
-            document.body.appendChild(stats.dom);
+                // init app
+                renderer = new Renderer();
+                gl = renderer.ctx;
 
-            // dat gui
-            {
-                ctrl = new dat.GUI();
+                // create textures
+                TEXTURE.NORMAL_MAP.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.NORMAL_MAP.IMAGE);
 
-                ctrlParams = {
+                console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
-                    // debug
-                    ShowStats: true,
-                    ShowDebug: false,
-                    DebugThumbnailSize: 50,
+                camera = new THREE.PerspectiveCamera(50, renderer.canvas.width / renderer.canvas.height, 1, 500);
+                camera.position.x = gridWidth;
+                camera.position.y = gridWidth;
+                camera.position.z = gridWidth;
+                camera.up = new THREE.Vector3(0, 1, 0);
+                camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-                    // particle
-                    numParticlesFactor: 64 
+                mainLight = new MainLight({
+
+                    renderer: renderer,
+                    shadowMapSize: 1024,
+                    near: 5,
+                    far: 500
+                });
+                mainLight.position.x = 90;
+                mainLight.position.y = 80;
+                mainLight.position.z = 70;
+                mainLight.up = new THREE.Vector3(0, 1, 0);
+                mainLight.lookAt(new THREE.Vector3(0, 0, 0));
+
+                let params = {
+
+                    camera: camera,
+                    light: mainLight,
+                    renderer: renderer,
+                    bufferWidth: bufferWidth,
+                    bufferHeight: bufferHeight,
+                    gridTexSize: gridTexSize,
+                    gridWidth: gridWidth,
+                    gridHalfWidth: gridHalfWidth,
+                    numGridSliceInGridTexWidth: numGridSliceInGridTexWidth
                 }
 
-                ctrl.add(ctrlParams, 'ShowStats').onFinishChange(
-                    
-                    (val) => {
-                        
-                        stats.dom.style.display = val ? 'block' : 'none' 
-                    }
-                );
+                particleRender = new ParticleRender(params);
 
-                ctrl.add(ctrlParams, 'ShowDebug').onFinishChange(
-                    
-                    (val) => ctrlParams.showDebug = val
-                );
+                // stat
+                stats = new Stats();
+                document.body.appendChild(stats.dom);
 
-                ctrl.add(ctrlParams, 'DebugThumbnailSize', 50, 200).onChange(
+                // dat gui
+                {
+                    ctrl = new dat.GUI();
 
-                    (val) => particleRender.thumbnailSize = val
-                );
+                    let ctrlDebug = ctrl.addFolder('Debug');
 
-                ctrl.add(ctrlParams, 'numParticlesFactor', [16, 32, 64, 128, 256, 512, 1024]).onChange(
+                    ctrlDebug.add(ctrlParams, 'ShowStats').onFinishChange(
 
-                    (val) => {
-                        
-                        SetBufferSize(val);
-                        Reset();
-                    }
-                );
+                        (val) => {
+
+                            stats.dom.style.display = val ? 'block' : 'none'
+                        }
+                    );
+
+                    ctrlDebug.add(ctrlParams, 'ShowDebug').onFinishChange(
+
+                        (val) => ctrlParams.ShowDebug = val
+                    );
+
+                    ctrlDebug.add(ctrlParams, 'DebugThumbnailSize', 50, 200).onChange(
+
+                        (val) => particleRender.thumbnailSize = val
+                    );
+
+                    let ctrlGlobal = ctrl.addFolder('Particle Global');
+
+                    ctrlGlobal.add(ctrlParams, 'ParticleDensity', [16, 32, 64, 128, 256, 512, 1024]).onChange(
+
+                        (val) => {
+
+                            SetBufferSize(val);
+                            Reset();
+                        }
+                    );
+
+                    ctrlGlobal.add(ctrlParams, 'SphereResolution', [4, 8, 16, 24, 32]).onChange(
+
+                        (val) => {
+
+                            particleRender.particleSystem._buildUnitSphere(val);
+                            Reset();
+                        }
+                    );
+
+                    ctrlGlobal.add(ctrlParams, 'ParticleScaleFactor', .1, 2).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.particleScaleFactor = val;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+
+                    let ctrlForce = ctrl.addFolder('Particle Forces');
+
+                    ctrlForce.add(ctrlParams, 'GlobalGravity', 0, .5).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.globalGravity = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'LocalGravity', 0, .5).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.localGravity = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'OrbitAcc', 0, .5).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.orbitAcc = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'RandomAcc', 0, .5).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.randomAcc = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'RandomScalePop', 0., 10.).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.randomScalePop = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'KeepInSphere').onFinishChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.keepInSphere = val ? 1 : 0;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'SphereRadius', 0., 64.).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.sphereRadius = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'ScaleDamping', .9, 1.).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.scaleDamping = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'TimeDelta', 0., .1).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.timeDelta = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlForce.add(ctrlParams, 'MaxVel', 0., 10).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleBehaviours.maxVel = val;
+                            particleRender.particleBehaviours.updateCtrlParams();
+                        }
+                    );
+
+                    let ctrlLighting = ctrl.addFolder('Particle Shading and Lighting');
+
+                    ctrlLighting.add(ctrlParams, 'Ambient', .0, 2).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.ambient = val;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlLighting.add(ctrlParams, 'Diffuse', 0, 2).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.diffuse = val;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlLighting.add(ctrlParams, 'Fill', 0, 2).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.fill = val;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlLighting.add(ctrlParams, 'Back', 0, 2).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.back = val;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlLighting.add(ctrlParams, 'Fresnel', 0, 2).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.fresnel = val;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlLighting.add(ctrlParams, 'Gamma', .45, 4.22).onChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.gamma = val;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+
+                    ctrlLighting.add(ctrlParams, 'isBW').onFinishChange(
+
+                        (val) => {
+                            
+                            particleRender.particleSystem.isBW = val ? 1 : 0;
+                            particleRender.particleSystem.updateCtrlParams();
+                        }
+                    );
+                } 
+
+                Update();
+
+                isInit = true;
             }
-
-            Update();
-
-            isInit = true;
-        }
-    );
+        );
 }
 
 let Update = function () {
 
     // update camera 
     // const camSpeed = frame * .006;
-// 
+    // 
     // var n_loc = new THREE.Vector3(
     //     Math.sin(camSpeed), Math.cos(camSpeed * .9) * Math.sin(camSpeed * .7), Math.cos(camSpeed))
     //     .normalize()
     //     .multiplyScalar( gridWidth + gridWidth * 2. * Math.sin(2. * camSpeed) );
-    
+
     // camera.position.copy(n_loc);
     // camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
     // camera.updateProjectionMatrix();
     // camera.updateMatrixWorld(true);
-    // if there's any changes on the threejs camera then call
-    // particleRender.updateMatrixUniforms();
 
     particleRender.update();
     particleRender.render();
-    
-    if(ctrlParams.showDebug) particleRender.debug();
+
+    if (ctrlParams.ShowDebug) particleRender.debug();
 
     stats.update();
 
@@ -184,12 +399,12 @@ let Update = function () {
     requestAnimationFrame(Update);
 }
 
-let SetBufferSize = function(val) {
+let SetBufferSize = function (val) {
 
     bufferWidth = val, bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
 }
 
-let Reset = function() {
+let Reset = function () {
 
     const params = {
 

@@ -17,7 +17,10 @@ class ParticleBehaviours {
         
         this.posTextures = [2], this.velTextures = [2];
 
-        this.uIsInit, this.uTime, this.uPosBuffer, this.uVelBuffer;
+        this.uIsInit, this.uTime, this.uPosBuffer, this.uVelBuffer, 
+        this.uGlobalGravity, this.uLocalGravity, this.uOrbitAcc, this.uRandomAcc, 
+        this.uRandomScalePop, this.uKeepInSphere, this.uSphereRadius, this.uScaleDamping, 
+        this.uTimeDelta, this.uMaxVel;
 
         this.uDebugTex;
 
@@ -31,6 +34,17 @@ class ParticleBehaviours {
         const frag = GLHelpers.compileShader(gl, fs, gl.FRAGMENT_SHADER); 
 
         this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
+
+        this.globalGravity = .08;
+        this.localGravity = .22;
+        this.orbitAcc = .08;
+        this.randomAcc = .1;
+        this.randomScalePop = 5;
+        this.keepInSphere = 0;
+        this.sphereRadius = 18;
+        this.scaleDamping = .995;
+        this.timeDelta = .1;
+        this.maxVel = 5.;
 
         this._init();
     }
@@ -110,7 +124,20 @@ class ParticleBehaviours {
 
             this.uPosBuffer = gl.getUniformLocation(this.rttProgram, "uPosBuffer");
             this.uVelBuffer = gl.getUniformLocation(this.rttProgram, "uVelBuffer");
+
+            this.uGlobalGravity = gl.getUniformLocation(this.rttProgram, "uGlobalGravity");
+            this.uLocalGravity = gl.getUniformLocation(this.rttProgram, "uLocalGravity");
+            this.uOrbitAcc = gl.getUniformLocation(this.rttProgram, "uOrbitAcc");
+            this.uRandomAcc = gl.getUniformLocation(this.rttProgram, "uRandomAcc");
+            this.uRandomScalePop = gl.getUniformLocation(this.rttProgram, "uRandomScalePop");
+            this.uKeepInSphere = gl.getUniformLocation(this.rttProgram, "uKeepInSphere");
+            this.uSphereRadius = gl.getUniformLocation(this.rttProgram, "uSphereRadius");            
+            this.uScaleDamping = gl.getUniformLocation(this.rttProgram, "uScaleDamping");
+            this.uTimeDelta = gl.getUniformLocation(this.rttProgram, "uTimeDelta");
+            this.uMaxVel = gl.getUniformLocation(this.rttProgram, "uMaxVel");
         }
+
+        this.updateCtrlParams();
     }
 
     linkGridTexture(gridTex) {
@@ -170,6 +197,22 @@ class ParticleBehaviours {
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
         this.bufIndex ^= 1;
+    }
+
+    updateCtrlParams() {
+
+        gl.useProgram(this.rttProgram);
+
+        gl.uniform1f(this.uGlobalGravity, this.globalGravity);
+        gl.uniform1f(this.uLocalGravity, this.localGravity);
+        gl.uniform1f(this.uOrbitAcc, this.orbitAcc);
+        gl.uniform1f(this.uRandomAcc, this.randomAcc);
+        gl.uniform1f(this.uRandomScalePop, this.randomScalePop);
+        gl.uniform1f(this.uKeepInSphere, this.keepInSphere);
+        gl.uniform1f(this.uSphereRadius, this.sphereRadius);
+        gl.uniform1f(this.uScaleDamping, this.scaleDamping);
+        gl.uniform1f(this.uTimeDelta, this.timeDelta);
+        gl.uniform1f(this.uMaxVel, this.maxVel);
     }
 
     reset(params) {

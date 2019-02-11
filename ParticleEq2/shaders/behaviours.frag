@@ -1,9 +1,5 @@
 #version 300 es
 
-#define SPHERE_R 18.
-#define TIME_DELTA .1
-#define MAX_VEL 3.
-
 precision highp float;
 precision highp int;
 
@@ -19,6 +15,17 @@ uniform float uGridTexWidth;
 uniform float uNumGridSliceInGridTexWidth;
 uniform float uGridSliceWidth;
 uniform float uHalfGridSliceWidth;
+
+uniform float uGlobalGravity;
+uniform float uLocalGravity;
+uniform float uOrbitAcc;
+uniform float uRandomAcc;
+uniform float uRandomScalePop;
+uniform float uKeepInSphere;
+uniform float uSphereRadius;
+uniform float uScaleDamping;
+uniform float uTimeDelta;
+uniform float uMaxVel;
 
 in vec2 instanceTexcoords;
 in vec2 vUv;
@@ -167,7 +174,7 @@ void main() {
         vec3 dir = norm( vec3(n0, n1, n2) );
         float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
 
-        pos = vec4(dir * SPHERE_R * distRand * 2.5, 1. + abs(n0 + n1 + n2) );
+        pos = vec4(dir * uSphereRadius * distRand * 2.5, 1. + abs(n0 + n1 + n2) );
 
         oPosBuffer = pos;
         oVelBuffer = vel;
@@ -228,42 +235,48 @@ void main() {
     // gravity
     {
         vec3 dir = norm(-pos.xyz);
-        force.xyz += .12 * dir / pos.w;
-        force.y -= .08 * pos.w;
+        force.xyz += uLocalGravity * dir / pos.w;
+        force.y -= uGlobalGravity * pos.w;
     }
+    
     // orbit
     {
         vec3 dir = reflect(norm(vel.xyz), norm(-pos.xyz));
-        force.xyz += dir * length(vel.xyz) * .08 * pos.w;    
+        force.xyz += dir * length(vel.xyz) * uOrbitAcc * pos.w;    
     }
+    
     // random
     {
         float n0 = snoise(vec3(vUv.xyx * .02) + uTime * .0001) * 2. - 1.;
         float n1 = snoise(vec3(vUv.yxy * .02) + uTime * .0001) * 2. - 1.;
         float n2 = snoise(vec3(vUv.xxy * .02) + uTime * .0001) * 2. - 1.;
         
-        force.xyz += vec3(n0, n1, n2) * .1;
+        force.xyz += vec3(n0, n1, n2) * uRandomAcc;
     }
+    
     // keep it in the sphere 
+    
+    if(uKeepInSphere > .5)
     {
-        // float dist = length(pos.xyz);
+        float dist = length(pos.xyz);
 
-        // if(dist > SPHERE_R - pos.w * .5) {
+        if(dist > uSphereRadius - pos.w * .5) {
 
-        //     pos.xyz = norm(pos.xyz) * SPHERE_R;    
-        // }
+            pos.xyz = norm(pos.xyz) * uSphereRadius;    
+        }
     }
+
     // size random
     if(abs(dice) < .01) {
 
         float n = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678) + uTime) * 2. - 1.;
         
-        pos.w += pow(abs(n), 3.);
+        pos.w += pow(abs(n), 10.) * uRandomScalePop;
     } 
 
     if(pos.w >= 1.) {
 
-        pos.w *= .993;
+        pos.w *= uScaleDamping;
 
     } else {
 
@@ -274,9 +287,9 @@ void main() {
     vel.xyz += force.xyz / pos.w;
 
     // clamping vel
-    if(length(vel.xyz) > MAX_VEL) {
+    if(length(vel.xyz) > uMaxVel) {
 
-        vel.xyz = norm(vel.xyz) * MAX_VEL;
+        vel.xyz = norm(vel.xyz) * uMaxVel;
     }
 
     // damping
@@ -285,10 +298,10 @@ void main() {
     // temp vel.w
     vel.w = 1.;
 
-    pos.xyz += vel.xyz * TIME_DELTA;
+    pos.xyz += vel.xyz * uTimeDelta;
 
     // reset scale
-    if(pos.w > 6.) pos.w = 1.;
+    // if(pos.w > 12.) pos.w = 1.;
 
     oPosBuffer = pos;
     oVelBuffer = vel;

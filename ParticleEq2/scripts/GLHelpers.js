@@ -156,4 +156,21 @@ class GLHelpers {
 
         return texture;
     }
+
+    static calcViewMatrix(threejsCamera) {
+
+        // *must update threejs camera inverse matrix
+        threejsCamera.matrixWorldInverse.getInverse(threejsCamera.matrixWorld);
+
+        let worldInversMatrix = threejsCamera.matrixWorldInverse;
+
+        let rotInverseMatrix = new THREE.Matrix4().identity();
+        rotInverseMatrix.makeRotationFromQuaternion(threejsCamera.quaternion);
+        rotInverseMatrix.getInverse(rotInverseMatrix, true);
+
+        let viewMatrix = new THREE.Matrix4().identity();
+        viewMatrix.multiplyMatrices(rotInverseMatrix, worldInversMatrix);
+
+        return viewMatrix;
+    }
 }

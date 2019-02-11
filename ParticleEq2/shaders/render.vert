@@ -13,11 +13,14 @@ in vec2 instanceTexcoords;
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
-
+uniform mat4 shadowMatrix;
 uniform mat3 normalMatrix;
 
 uniform sampler2D uInstanceVelocities;
 uniform sampler2D uInstancePositions;
+
+uniform float uIsShadowPass;
+uniform float uParticleScaleFactor;
 
 out vec2 vUv;
 out vec3 vInstanceColors;
@@ -26,13 +29,25 @@ out vec4 vInstancePositions;
 out vec4 vInstanceVelocities;
 out vec3 vWorldPos;
 out vec3 vWorldNormal;
+out vec4 vShadowCoord;
 
 void main() {
 
     vec4 instancePositions = texture(uInstancePositions, instanceTexcoords);
     vec4 instanceVelocities = texture(uInstanceVelocities, instanceTexcoords);
 
-    vec4 worldPos = modelMatrix * vec4(position * (instancePositions.w * .5) + instancePositions.xyz, 1.);
+    vec3 pos = position * (instancePositions.w * .5 * uParticleScaleFactor) + instancePositions.xyz;
+
+    if(uIsShadowPass > .5) {
+
+        vShadowCoord = vec4(0.);
+
+        gl_Position = shadowMatrix * vec4(pos, 1.);
+
+        return;
+    }
+    
+    vec4 worldPos = vec4(pos, 1.);//modelMatrix * vec4(pos, 1.); currently the particle is the top root
     vec4 viewPos = viewMatrix * worldPos;
     vec3 worldNormal = normalMatrix * normal;
 
@@ -45,5 +60,6 @@ void main() {
     vWorldPos = worldPos.xyz;
     vWorldNormal = worldNormal;
 
+    vShadowCoord = shadowMatrix * vec4(pos, 1.);
     gl_Position = projectionMatrix * viewPos;
 }
