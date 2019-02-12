@@ -136,7 +136,11 @@ class GLHelpers {
             image.crossOrigin = "anonymous";
             image.src = url;
             
-            image.onload = resolve;
+            image.onload = (img) => {
+                
+                console.log("loaded", img.path[0].src);
+                resolve(img);
+            }
             image.onerror = reject;
         } );
     }   
@@ -151,11 +155,59 @@ class GLHelpers {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
         gl.generateMipmap(gl.TEXTURE_2D);
 
         return texture;
     }
+
+    static createCubemapTexture(gl, images) {
+
+        let texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+
+        for(let i = 0; i < 6; i++) {
+
+            let target, image;
+
+            switch(i) {
+
+                case 0 : 
+                    target = gl.TEXTURE_CUBE_MAP_POSITIVE_X;
+                    image = images.PX;
+                    break;
+                case 1 : 
+                    target = gl.TEXTURE_CUBE_MAP_NEGATIVE_X;
+                    image = images.NX;
+                    break;
+                case 2 : 
+                    target = gl.TEXTURE_CUBE_MAP_POSITIVE_Y;
+                    image = images.PY;
+                    break;
+                case 3 : 
+                    target = gl.TEXTURE_CUBE_MAP_NEGATIVE_Y;
+                    image = images.NY;
+                    break;
+                case 4 : 
+                    target = gl.TEXTURE_CUBE_MAP_POSITIVE_Z;
+                    image = images.PZ;
+                    break;
+                case 5 :
+                    target = gl.TEXTURE_CUBE_MAP_NEGATIVE_Z;
+                    image = images.NZ;
+                    break;
+                default:
+                    break;
+            }
+
+            gl.texImage2D(target, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);            
+        }
+
+        gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+
+        return texture;
+    } 
 
     static calcViewMatrix(threejsCamera) {
 
