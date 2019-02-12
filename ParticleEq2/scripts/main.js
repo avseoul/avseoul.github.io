@@ -36,8 +36,8 @@ let ctrlParams = {
     DebugThumbnailSize: 100,
 
     // particle
-    ParticleDensity: 64,
-    SphereResolution: 32,
+    ParticleDensity: 32,
+    SphereResolution: 24,
 
     // force
     GlobalGravity: .057,
@@ -117,7 +117,7 @@ let Init = function () {
         ).then(
             () => {
 
-                SetBufferSize(64);
+                SetBufferSize(ctrlParams.ParticleDensity);
 
                 // init app
                 renderer = new Renderer();

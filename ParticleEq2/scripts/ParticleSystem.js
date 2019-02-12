@@ -14,7 +14,7 @@ class ParticleSystem {
 
         this.particle = {}
 
-        this._buildUnitSphere(32);
+        this._buildUnitSphere(ctrlParams.SphereResolution);
         //this._buildQuad();
 
         this.buffers = {}
