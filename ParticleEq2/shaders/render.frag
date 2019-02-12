@@ -31,6 +31,8 @@ uniform vec3 uWorldMainLightPos;
 uniform sampler2D uNormalMap;
 uniform sampler2D uShadowMap;
 
+uniform samplerCube uCubeMap;
+
 out vec4 oColor;
 
 float hash(vec4 seed) {
@@ -137,6 +139,10 @@ void main() {
 
     // illum effect
     brdf += (vInstancePositions.w - 1.) * .2 * (shadow * .5 + .5);
+
+    // cubemap reflection
+    vec3 refl = texture(uCubeMap, reflect(viewDir, normal)).rgb;
+    brdf *= refl;
 
     float alpha = (1. - clamp(fresnel, 0., 1.)) * .999 + .001;
 

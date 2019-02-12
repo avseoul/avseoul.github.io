@@ -14,7 +14,8 @@ let SHADER = {
 }
 
 let TEXTURE = {
-    NORMAL_MAP: { IMAGE: null, TEXTURE: null }
+    NORMAL_MAP: { IMAGE: null, TEXTURE: null },
+    CUBEMAP: { IMAGES: { PX: null, NX: null, PY: null, NY: null, PZ: null, NZ: null }, TEXTURE: null }
 }
 
 let gl;
@@ -81,8 +82,13 @@ let Init = function () {
         GLHelpers.loadShader("shaders/debugTexture.frag"),
         GLHelpers.loadShader("shaders/render.vert"),
         GLHelpers.loadShader("shaders/render.frag"),
-        GLHelpers.loadTexture("../common/assets/normal_map_rough_surface.jpg")
-
+        GLHelpers.loadTexture("../common/assets/normal.jpg"),
+        GLHelpers.loadTexture("../common/assets/xn.png"),
+        GLHelpers.loadTexture("../common/assets/xp.png"),
+        GLHelpers.loadTexture("../common/assets/yn.png"),
+        GLHelpers.loadTexture("../common/assets/yp.png"),
+        GLHelpers.loadTexture("../common/assets/zn.png"),
+        GLHelpers.loadTexture("../common/assets/zp.png")
     ])
         .then(
             (res) => {
@@ -99,7 +105,14 @@ let Init = function () {
                 SHADER.RENDER.VERT = res[6].target.response;
                 SHADER.RENDER.FRAG = res[7].target.response;
 
-                TEXTURE.NORMAL_MAP.IMAGE = res[8].target;
+                TEXTURE.NORMAL_MAP.IMAGE = res[8].path[0];
+
+                TEXTURE.CUBEMAP.IMAGES.PX = res[9].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NX = res[10].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PY = res[11].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NY = res[12].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PZ = res[13].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NZ = res[14].path[0];
             }
         ).then(
             () => {
@@ -112,6 +125,9 @@ let Init = function () {
 
                 // create textures
                 TEXTURE.NORMAL_MAP.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.NORMAL_MAP.IMAGE);
+
+                // create cubemap
+                TEXTURE.CUBEMAP.TEXTURE = GLHelpers.createCubemapTexture(gl, TEXTURE.CUBEMAP.IMAGES);
 
                 console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 

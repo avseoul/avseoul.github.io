@@ -247,6 +247,7 @@ class ParticleSystem {
             uInstanceVelocity: gl.getUniformLocation(this.program, "uInstanceVelocities"),
             uNormalMap: gl.getUniformLocation(this.program, "uNormalMap"),
             uShadowMap: gl.getUniformLocation(this.program, "uShadowMap"),
+            uCubeMap: gl.getUniformLocation(this.program, "uCubeMap"),
             uParticleScaleFactor: gl.getUniformLocation(this.program, "uParticleScaleFactor"),
             uAmbient: gl.getUniformLocation(this.program, "uAmbient"),
             uDiffuse: gl.getUniformLocation(this.program, "uDiffuse"),
@@ -264,6 +265,11 @@ class ParticleSystem {
         gl.activeTexture(gl.TEXTURE2);
         gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
         gl.uniform1i(this.uniforms.uNormalMap, 2);
+
+        // link cubemap
+        gl.activeTexture(gl.TEXTURE4);
+        gl.bindTexture(gl.TEXTURE_CUBE_MAP, TEXTURE.CUBEMAP.TEXTURE);
+        gl.uniform1i(this.uniforms.uCubeMap, 4);
 
         gl.uniform1f(this.uniforms.uParticleScaleFactor, 1.);
         gl.uniform1f(this.uniforms.uAmbient, .3);

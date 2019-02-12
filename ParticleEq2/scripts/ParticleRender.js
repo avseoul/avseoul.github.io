@@ -57,6 +57,8 @@ class ParticleRender {
         gl.bindTexture(gl.TEXTURE_2D, this.particleBehaviours.velocityBuffer);
         gl.uniform1i(this.particleSystem.uniforms.uInstanceVelocity, 1);
 
+        gl.uniform1i(this.particleSystem.uniforms.uNormalMap, 2);
+
         gl.bindVertexArray(this.particleSystem.VAO);
 
         this.updateAttributes();
@@ -90,6 +92,8 @@ class ParticleRender {
         gl.activeTexture(gl.TEXTURE3);
         gl.bindTexture(gl.TEXTURE_2D, this.light.shadowMap);
         gl.uniform1i(this.particleSystem.uniforms.uShadowMap, 3);
+
+        gl.uniform1i(this.particleSystem.uniforms.uCubeMap, 4);
 
         gl.uniform1f(this.particleSystem.uniforms.uIsShadowPass, 0);
 
