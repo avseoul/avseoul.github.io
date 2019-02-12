@@ -174,7 +174,10 @@ void main() {
         vec3 dir = norm( vec3(n0, n1, n2) );
         float distRand = (abs(n0) + abs(n1) + abs(n2)) / 3.;
 
-        pos = vec4(dir * uSphereRadius * distRand * 2.5, 1. + abs(n0 + n1 + n2) );
+        float scale = 1. + pow(abs(n0 + n1 + n2) / 3., 3.) * 3.;
+
+        pos = vec4(dir * uSphereRadius * distRand * 2.5, scale );
+        vel.w = 1.;
 
         oPosBuffer = pos;
         oVelBuffer = vel;
@@ -235,7 +238,7 @@ void main() {
     // gravity
     {
         vec3 dir = norm(-pos.xyz);
-        force.xyz += uLocalGravity * dir / pos.w;
+        force.xyz += uLocalGravity * dir * pos.w;
         force.y -= uGlobalGravity * pos.w;
     }
     
@@ -267,20 +270,20 @@ void main() {
     }
 
     // size random
-    if(abs(dice) < .01) {
+    if(abs(dice) < .04) {
 
         float n = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678) + uTime) * 2. - 1.;
         
         pos.w += pow(abs(n), 10.) * uRandomScalePop;
     } 
 
-    if(pos.w >= 1.) {
+    if(pos.w >= vel.w) {
 
         pos.w *= uScaleDamping;
 
     } else {
 
-        pos.w = 1.;
+        pos.w = vel.w;
     }
 
 
@@ -294,9 +297,6 @@ void main() {
 
     // damping
     vel.xyz *= .96;
-
-    // temp vel.w
-    vel.w = 1.;
 
     pos.xyz += vel.xyz * uTimeDelta;
 

@@ -125,15 +125,15 @@ void main() {
     float occ = 1.; // temp
     float shadow = calcShadow();
 
-    vec3 col = vec3(1.);
+    vec3 col = vInstanceColors;
 
     vec3 brdf = vec3(0.);
 
-    brdf += uAmbient * ambient * (uisBW > .5 ? col : normalize(vInstanceVelocities.xyz)) * occ * shadow;
+    brdf += uAmbient * ambient * (uisBW > .5 ? col : col * normalize(vInstanceVelocities.xyz)) * occ * shadow;
     brdf += uDiffuse * diffuse * col * occ * shadow;
     brdf += uFill * fill * col * occ * shadow;
     brdf += uBack * back * col * occ * shadow;
-    brdf += uFresnel * fresnel * (uisBW > .5 ? col : normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;// * length(vInstanceVelocities.xyz);
+    brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;// * length(vInstanceVelocities.xyz);
 
     // illum effect
     brdf += (vInstancePositions.w - 1.) * .2 * (shadow * .5 + .5);

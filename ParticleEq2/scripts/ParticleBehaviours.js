@@ -35,16 +35,16 @@ class ParticleBehaviours {
 
         this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
 
-        this.globalGravity = .08;
-        this.localGravity = .22;
-        this.orbitAcc = .08;
-        this.randomAcc = .1;
-        this.randomScalePop = 5;
+        this.globalGravity = .057;
+        this.localGravity = .16;
+        this.orbitAcc = .068;
+        this.randomAcc = .16;
+        this.randomScalePop = 1;
         this.keepInSphere = 0;
         this.sphereRadius = 18;
         this.scaleDamping = .995;
-        this.timeDelta = .1;
-        this.maxVel = 5.;
+        this.timeDelta = .032;
+        this.maxVel = 6.1;
 
         this._init();
     }

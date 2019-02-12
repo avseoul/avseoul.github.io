@@ -36,32 +36,32 @@ let ctrlParams = {
 
     // particle
     ParticleDensity: 64,
-    SphereResolution: 8,
+    SphereResolution: 32,
 
     // force
-    GlobalGravity: .08,
-    LocalGravity: .22,
-    OrbitAcc: .08,
-    RandomAcc: .1,
+    GlobalGravity: .057,
+    LocalGravity: .16,
+    OrbitAcc: .068,
+    RandomAcc: .16,
     
-    RandomScalePop: 5.,
+    RandomScalePop: 1.,
     
     KeepInSphere: false,
     SphereRadius: 18,
     
     ScaleDamping: .99,
     
-    TimeDelta: .1,
-    MaxVel: 5,
+    TimeDelta: .032,
+    MaxVel: 6.1,
 
     ParticleScaleFactor: 1.,
-    Ambient: .3,
-    Diffuse: .5,
-    Fill: .1, 
-    Back: .1, 
-    Fresnel: .5,
-    Gamma: .45,
-    isBW: false
+    Ambient: .0,
+    Diffuse: 1.5,
+    Fill: .21, 
+    Back: 1.7, 
+    Fresnel: 2.,
+    Gamma: 2.,
+    isBW: true
 }
 
 let frame = 0;
@@ -116,22 +116,22 @@ let Init = function () {
                 console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
                 camera = new THREE.PerspectiveCamera(50, renderer.canvas.width / renderer.canvas.height, 1, 500);
-                camera.position.x = gridWidth;
-                camera.position.y = gridWidth;
-                camera.position.z = gridWidth;
+                camera.position.x = 18;
+                camera.position.y = 18;
+                camera.position.z = 18;
                 camera.up = new THREE.Vector3(0, 1, 0);
                 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
                 mainLight = new MainLight({
 
                     renderer: renderer,
-                    shadowMapSize: 1024,
+                    shadowMapSize: 2048,
                     near: 5,
                     far: 500
                 });
-                mainLight.position.x = 90;
-                mainLight.position.y = 80;
-                mainLight.position.z = 70;
+                mainLight.position.x = 40;
+                mainLight.position.y = 30;
+                mainLight.position.z = 50;
                 mainLight.up = new THREE.Vector3(0, 1, 0);
                 mainLight.lookAt(new THREE.Vector3(0, 0, 0));
 

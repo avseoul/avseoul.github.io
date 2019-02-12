@@ -14,7 +14,7 @@ class ParticleSystem {
 
         this.particle = {}
 
-        this._buildUnitSphere(4);
+        this._buildUnitSphere(32);
         //this._buildQuad();
 
         this.buffers = {}
@@ -30,13 +30,13 @@ class ParticleSystem {
         this.VAO = this.ctx.createVertexArray();
 
         this.particleScaleFactor = 1.;
-        this.ambient = .3;
-        this.diffuse = .5;
-        this.fill = .1;
-        this.back = .1;
-        this.fresnel = .5;
-        this.gamma = .45;
-        this.isBW = .0;
+        this.ambient = .0;
+        this.diffuse = 1.5;
+        this.fill = .21;
+        this.back = 1.7;
+        this.fresnel = 2.;
+        this.gamma = 2.;
+        this.isBW = 1.;
 
         this.updateCtrlParams();
     }
@@ -205,9 +205,10 @@ class ParticleSystem {
             instanceTexcoords[ti++] = u / (this.bufferWidth - 1);
             instanceTexcoords[ti++] = v / (this.bufferWidth - 1);
 
-            instanceColors[ci++] = Math.random();
-            instanceColors[ci++] = Math.random();
-            instanceColors[ci++] = Math.random();
+            const dice = i % 16;
+            instanceColors[ci++] = dice == 0 ? .1 : 1;
+            instanceColors[ci++] = dice == 0 ? .1 : 1;
+            instanceColors[ci++] = dice == 0 ? .1 : 1;
         }
 
         this.buffers.instanceIndices = GLHelpers.createArrayBuffer(gl, new Float32Array(instanceIndices))
