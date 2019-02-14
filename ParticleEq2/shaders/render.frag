@@ -123,7 +123,7 @@ void main() {
     float diffuse = max(dot(normal, mainLightDir), 0.);
     float fill = max(dot(normal, lightDir_FILL), 0.);
     float back = max(dot(-normal, lightDir_BACK), 0.);
-    float fresnel = pow(clamp(1. + dot(normal, viewDir), 0., 1.), 2.);
+    float fresnel = pow(clamp(1. + dot(normal, viewDir), 0., 1.), 1.);
     float occ = 1.; // temp
     float shadow = calcShadow();
 
@@ -141,10 +141,10 @@ void main() {
     brdf += (vInstancePositions.w - 1.) * .2 * (shadow * .5 + .5);
 
     // cubemap reflection
-    vec3 refl = texture(uCubeMap, reflect(viewDir, normal)).rgb;
+    vec3 refl = texture(uCubeMap, reflect(viewDir, normal)).rgb * (pow(fresnel, .45) * .7 + .3);
     brdf *= refl;
 
-    float alpha = (1. - clamp(fresnel, 0., 1.)) * .999 + .001;
+    float alpha = 1.;//(1. - clamp(fresnel, 0., 1.)) * .999 + .001;
 
     brdf = pow(brdf, vec3(uGamma));
     // col.rgb = normal;
