@@ -7,6 +7,7 @@ let numGridSliceInGridTexWidth = gridTexSize / gridWidth;
 
 let SHADER = {
 
+    OPTICAL_FLOW: { VERT: null, FRAG: null },
     BEHAVIOURS: { VERT: null, FRAG: null },
     UNIFORM_GRID: { VERT: null, FRAG: null },
     DEBUG_TEXTURE: { VERT: null, FRAG: null },
@@ -24,6 +25,7 @@ let renderer;
 let camera;
 
 let particleRender;
+let opticalFlow;
 let mainLight;
 
 let stats;
@@ -82,6 +84,8 @@ let Init = function () {
         GLHelpers.loadShader("shaders/debugTexture.frag"),
         GLHelpers.loadShader("shaders/render.vert"),
         GLHelpers.loadShader("shaders/render.frag"),
+        GLHelpers.loadShader("shaders/opticalFlow.vert"),
+        GLHelpers.loadShader("shaders/opticalFlow.frag"),
         GLHelpers.loadTexture("../common/assets/normal.jpg"),
         GLHelpers.loadTexture("../common/assets/xn.png"),
         GLHelpers.loadTexture("../common/assets/xp.png"),
@@ -106,6 +110,8 @@ let Init = function () {
                 SHADER.RENDER.FRAG = res[7].target.response;
 
                 TEXTURE.NORMAL_MAP.IMAGE = res[8].path[0];
+                SHADER.OPTICAL_FLOW.VERT = res[8].target.response;
+                SHADER.OPTICAL_FLOW.FRAG = res[9].target.response;
 
                 TEXTURE.CUBEMAP.IMAGES.PX = res[9].path[0];
                 TEXTURE.CUBEMAP.IMAGES.NX = res[10].path[0];
@@ -164,6 +170,13 @@ let Init = function () {
                     numGridSliceInGridTexWidth: numGridSliceInGridTexWidth
                 }
 
+                opticlaFlow = new OpticalFlow({
+
+                    renderer: renderer,
+                    bufferWidth: bufferWidth,
+                    bufferHeight: bufferHeight,
+                    webcamTexture: TEXTURE.WEBCAM.TEXTURE
+                });
                 particleRender = new ParticleRender(params);
 
                 // stat
