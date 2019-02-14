@@ -158,6 +158,8 @@ class GLHelpers {
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
         gl.generateMipmap(gl.TEXTURE_2D);
 
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
         return texture;
     }
 
@@ -206,8 +208,30 @@ class GLHelpers {
         gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
         gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
         return texture;
     } 
+
+    static initWebcam() {
+
+        'use strict';
+            
+        return new Promise( (resolve, reject) => {
+
+            let video = document.createElement('video');
+        
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then((stream) => {
+
+                    video.srcObject = stream;
+                    video.play();
+
+                    resolve(video);
+
+                }).catch((err) => reject(err));
+        } );
+    }
 
     static calcViewMatrix(threejsCamera) {
 

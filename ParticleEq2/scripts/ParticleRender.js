@@ -180,6 +180,9 @@ class ParticleRender {
 
         this.particleDebug.debugTexture(
             this.light.shadowMap, this.thumbnailSize * 4, 0, this.thumbnailSize, this.thumbnailSize);
+
+        this.particleDebug.debugTexture(
+            TEXTURE.WEBCAM.TEXTURE, this.thumbnailSize * 5, 0, this.thumbnailSize, this.thumbnailSize);
     }
 
     reset(params) {

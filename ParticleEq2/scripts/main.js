@@ -16,6 +16,7 @@ let SHADER = {
 
 let TEXTURE = {
     NORMAL_MAP: { IMAGE: null, TEXTURE: null },
+    WEBCAM: { IMAGE: null, TEXTURE: null },
     CUBEMAP: { IMAGES: { PX: null, NX: null, PY: null, NY: null, PZ: null, NZ: null }, TEXTURE: null }
 }
 
@@ -92,7 +93,8 @@ let Init = function () {
         GLHelpers.loadTexture("../common/assets/yn.png"),
         GLHelpers.loadTexture("../common/assets/yp.png"),
         GLHelpers.loadTexture("../common/assets/zn.png"),
-        GLHelpers.loadTexture("../common/assets/zp.png")
+        GLHelpers.loadTexture("../common/assets/zp.png"),
+        GLHelpers.initWebcam()
     ])
         .then(
             (res) => {
@@ -109,16 +111,19 @@ let Init = function () {
                 SHADER.RENDER.VERT = res[6].target.response;
                 SHADER.RENDER.FRAG = res[7].target.response;
 
-                TEXTURE.NORMAL_MAP.IMAGE = res[8].path[0];
                 SHADER.OPTICAL_FLOW.VERT = res[8].target.response;
                 SHADER.OPTICAL_FLOW.FRAG = res[9].target.response;
 
-                TEXTURE.CUBEMAP.IMAGES.PX = res[9].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NX = res[10].path[0];
-                TEXTURE.CUBEMAP.IMAGES.PY = res[11].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NY = res[12].path[0];
-                TEXTURE.CUBEMAP.IMAGES.PZ = res[13].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NZ = res[14].path[0];
+                TEXTURE.NORMAL_MAP.IMAGE = res[10].path[0];
+
+                TEXTURE.CUBEMAP.IMAGES.PX = res[11].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NX = res[12].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PY = res[13].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NY = res[14].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PZ = res[15].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NZ = res[16].path[0];
+
+                TEXTURE.WEBCAM.IMAGE = res[17];
             }
         ).then(
             () => {
@@ -128,14 +133,6 @@ let Init = function () {
                 // init app
                 renderer = new Renderer();
                 gl = renderer.ctx;
-
-                // create textures
-                TEXTURE.NORMAL_MAP.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.NORMAL_MAP.IMAGE);
-
-                // create cubemap
-                TEXTURE.CUBEMAP.TEXTURE = GLHelpers.createCubemapTexture(gl, TEXTURE.CUBEMAP.IMAGES);
-
-                console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
                 camera = new THREE.PerspectiveCamera(50, renderer.canvas.width / renderer.canvas.height, 1, 500);
                 camera.position.x = 18;
@@ -156,6 +153,17 @@ let Init = function () {
                 mainLight.position.z = 50;
                 mainLight.up = new THREE.Vector3(0, 1, 0);
                 mainLight.lookAt(new THREE.Vector3(0, 0, 0));
+
+                // create textures
+                TEXTURE.NORMAL_MAP.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.NORMAL_MAP.IMAGE);
+
+                // create cubemap
+                TEXTURE.CUBEMAP.TEXTURE = GLHelpers.createCubemapTexture(gl, TEXTURE.CUBEMAP.IMAGES);
+
+                // webcam
+                TEXTURE.WEBCAM.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
+
+                console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
                 let params = {
 
@@ -419,6 +427,8 @@ let Update = function () {
     particleRender.update();
     particleRender.render();
 
+    UpdateWebcamTexture();
+
     if (ctrlParams.ShowDebug) particleRender.debug();
 
     stats.update();
@@ -431,6 +441,14 @@ let Update = function () {
 let SetBufferSize = function (val) {
 
     bufferWidth = val, bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
+}
+
+let UpdateWebcamTexture = function() {
+
+    gl.bindTexture(gl.TEXTURE_2D, TEXTURE.WEBCAM.TEXTURE);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, TEXTURE.WEBCAM.IMAGE);
 }
 
 let Reset = function () {
