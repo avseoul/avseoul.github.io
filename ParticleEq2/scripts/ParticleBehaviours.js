@@ -35,16 +35,16 @@ class ParticleBehaviours {
 
         this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
 
-        this.globalGravity = .057;
-        this.localGravity = .16;
-        this.orbitAcc = .068;
-        this.randomAcc = .16;
-        this.randomScalePop = 1;
-        this.keepInSphere = 0;
-        this.sphereRadius = 18;
-        this.scaleDamping = .995;
-        this.timeDelta = .032;
-        this.maxVel = 6.1;
+        this.globalGravity = ctrlParams.GlobalGravity;
+        this.localGravity = ctrlParams.LocalGravity;
+        this.orbitAcc = ctrlParams.OrbitAcc;
+        this.randomAcc = ctrlParams.RandomAcc;
+        this.randomScalePop = ctrlParams.RandomScalePop;
+        this.keepInSphere = ctrlParams.KeepInSphere ? 1 : 0;
+        this.sphereRadius = ctrlParams.SphereRadius;
+        this.scaleDamping = ctrlParams.ScaleDamping;
+        this.timeDelta = ctrlParams.TimeDelta;
+        this.maxVel = ctrlParams.MaxVel;
 
         this._init();
     }
@@ -123,6 +123,7 @@ class ParticleBehaviours {
 
             this.uPosBuffer = gl.getUniformLocation(this.rttProgram, "uPosBuffer");
             this.uVelBuffer = gl.getUniformLocation(this.rttProgram, "uVelBuffer");
+            this.uGridBuffer = gl.getUniformLocation(this.rttProgram, "uGridBuffer");
 
             this.uGlobalGravity = gl.getUniformLocation(this.rttProgram, "uGlobalGravity");
             this.uLocalGravity = gl.getUniformLocation(this.rttProgram, "uLocalGravity");
@@ -139,18 +140,7 @@ class ParticleBehaviours {
         this.updateCtrlParams();
     }
 
-    linkGridTexture(gridTex) {
-
-        gl.useProgram(this.rttProgram);
-
-        const uGridBuffer = gl.getUniformLocation(this.rttProgram, "uGridBuffer");
-
-        gl.activeTexture(gl.TEXTURE2);
-        gl.bindTexture(gl.TEXTURE_2D, gridTex);
-        gl.uniform1i(uGridBuffer, 2);
-    }
-
-    update() {
+    update(gridTex) {
         
         const gl = this.ctx;
 
@@ -164,7 +154,7 @@ class ParticleBehaviours {
         gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.posTextures[this.bufIndex ^ 1], 0);
         gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, this.velTextures[this.bufIndex ^ 1], 0);
 
-        gl.drawBuffers([ gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]);
+        gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]);
 
         let status = gl.checkFramebufferStatus(gl.DRAW_FRAMEBUFFER);
         if (status != gl.FRAMEBUFFER_COMPLETE) {
@@ -175,13 +165,17 @@ class ParticleBehaviours {
 
         gl.useProgram(this.rttProgram);
 
+        gl.uniform1i(this.uGridBuffer, 0);
         gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this.posTextures[this.bufIndex]);
-        gl.uniform1i(this.uPosBuffer, 0);
+        gl.bindTexture(gl.TEXTURE_2D, gridTex);
 
+        gl.uniform1i(this.uPosBuffer, 1);
         gl.activeTexture(gl.TEXTURE1);
+        gl.bindTexture(gl.TEXTURE_2D, this.posTextures[this.bufIndex]);
+
+        gl.uniform1i(this.uVelBuffer, 2);
+        gl.activeTexture(gl.TEXTURE2);
         gl.bindTexture(gl.TEXTURE_2D, this.velTextures[this.bufIndex]);
-        gl.uniform1i(this.uVelBuffer, 1);
 
         gl.uniform1f(this.uTime, performance.now());
 

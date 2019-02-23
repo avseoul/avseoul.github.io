@@ -16,7 +16,7 @@ let SHADER = {
 
 let TEXTURE = {
     NORMAL_MAP: { IMAGE: null, TEXTURE: null },
-    WEBCAM: { IMAGE: null, TEXTURE: null },
+    WEBCAM: { IMAGE: null, TEXTURE: null, PREV_TEXTURE: null },
     CUBEMAP: { IMAGES: { PX: null, NX: null, PY: null, NY: null, PZ: null, NZ: null }, TEXTURE: null }
 }
 
@@ -48,23 +48,23 @@ let ctrlParams = {
     OrbitAcc: .068,
     RandomAcc: .16,
     
-    RandomScalePop: 1.,
+    RandomScalePop: 0.,
     
     KeepInSphere: false,
     SphereRadius: 18,
     
     ScaleDamping: .99,
     
-    TimeDelta: .032,
+    TimeDelta: .024,
     MaxVel: 6.1,
 
     ParticleScaleFactor: 1.,
-    Ambient: .0,
-    Diffuse: 1.5,
-    Fill: .21, 
-    Back: 1.7, 
-    Fresnel: 2.,
-    Gamma: 2.,
+    Ambient: .43,
+    Diffuse: .3,
+    Fill: 0., 
+    Back: .21, 
+    Fresnel: .3,
+    Gamma: 2.8,
     isBW: true
 }
 
@@ -162,6 +162,7 @@ let Init = function () {
 
                 // webcam
                 TEXTURE.WEBCAM.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
+                TEXTURE.WEBCAM.PREV_TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
 
                 console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
@@ -178,14 +179,20 @@ let Init = function () {
                     numGridSliceInGridTexWidth: numGridSliceInGridTexWidth
                 }
 
-                opticlaFlow = new OpticalFlow({
+                opticalFlow = new OpticalFlow({
 
                     renderer: renderer,
+                    camWidth: TEXTURE.WEBCAM.IMAGE.videoWidth,
+                    camHeight: TEXTURE.WEBCAM.IMAGE.videoHeight,
                     bufferWidth: bufferWidth,
                     bufferHeight: bufferHeight,
-                    webcamTexture: TEXTURE.WEBCAM.TEXTURE
+                    webcamTexture: TEXTURE.WEBCAM.TEXTURE,
+                    prevWebcamTexture: TEXTURE.WEBCAM.PREV_TEXTURE
                 });
+
                 particleRender = new ParticleRender(params);
+                particleRender.webcamTexture = TEXTURE.WEBCAM.TEXTURE;
+                particleRender.opticalFlowTexture = opticalFlow.texture;
 
                 // stat
                 stats = new Stats();
@@ -424,10 +431,12 @@ let Update = function () {
     // camera.updateProjectionMatrix();
     // camera.updateMatrixWorld(true);
 
+    GLHelpers.updateWebCamTexture(gl, TEXTURE.WEBCAM.IMAGE, TEXTURE.WEBCAM.TEXTURE);
+    opticalFlow.update();
+    GLHelpers.updateWebCamTexture(gl, TEXTURE.WEBCAM.IMAGE, TEXTURE.WEBCAM.PREV_TEXTURE);
+
     particleRender.update();
     particleRender.render();
-
-    UpdateWebcamTexture();
 
     if (ctrlParams.ShowDebug) particleRender.debug();
 
@@ -441,14 +450,6 @@ let Update = function () {
 let SetBufferSize = function (val) {
 
     bufferWidth = val, bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
-}
-
-let UpdateWebcamTexture = function() {
-
-    gl.bindTexture(gl.TEXTURE_2D, TEXTURE.WEBCAM.TEXTURE);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, TEXTURE.WEBCAM.IMAGE);
 }
 
 let Reset = function () {

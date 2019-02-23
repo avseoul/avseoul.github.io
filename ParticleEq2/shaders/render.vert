@@ -23,6 +23,7 @@ uniform float uIsShadowPass;
 uniform float uParticleScaleFactor;
 
 out vec2 vUv;
+out vec2 vInstanceTexCoords;
 out vec3 vInstanceColors;
 out float vInstanceIndices;
 out vec4 vInstancePositions;
@@ -51,6 +52,7 @@ void main() {
     vec4 viewPos = viewMatrix * worldPos;
     vec3 worldNormal = normalMatrix * normal;
 
+    vInstanceTexCoords = instanceTexcoords;
     vInstanceIndices = instanceIndices;
     vInstanceColors = instanceColors;
     vInstancePositions = instancePositions;

@@ -1,15 +1,15 @@
 #version 300 es
 
-precision lowp float;
-precision lowp int;
+precision highp float;
+precision highp int;
+
+in vec2 vUv;
 
 uniform sampler2D uPrevVideo;
 uniform sampler2D uCurrVideo;
 
 uniform float uThreshold;
-uniform float uBlurRadius;
-
-in vec2 vUv;
+uniform vec2 uBlurRadius;
 
 out vec4 oColor;
 
@@ -19,11 +19,13 @@ void main() {
 
     vec3 sdiff = texture(uCurrVideo, uv).rgb - texture(uPrevVideo, uv).rgb;
          
-    float off = uBlurRadius;
+    float off = uBlurRadius.x;
     
     vec3 gradx = texture(uPrevVideo, uv + vec2(off, 0.)).rgb - texture(uPrevVideo, uv - vec2(off, 0.)).rgb;
     gradx += texture(uCurrVideo, uv + vec2(off, 0.)).rgb - texture(uCurrVideo, uv - vec2(off, 0.)).rgb;
     
+    off = uBlurRadius.y;
+
     vec3 grady = texture(uPrevVideo, uv + vec2(0., off)).rgb - texture(uPrevVideo, uv - vec2(0., off)).rgb;
     grady += texture(uCurrVideo, uv + vec2(0., off)).rgb - texture(uCurrVideo, uv - vec2(0., off)).rgb;
 

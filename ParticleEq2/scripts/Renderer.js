@@ -11,7 +11,8 @@ class Renderer {
         
         this.ctx = this.canvas.getContext('webgl2', { 
 
-            stencil: true 
+            stencil: true,
+            antialias: true 
         });
 
         if (!!!this.ctx) {

@@ -8,6 +8,7 @@ precision highp int;
 
 in vec2 vUv;
 in vec3 vInstanceColors;
+in vec2 vInstanceTexCoords;
 in float vInstanceIndices;
 in vec4 vInstancePositions;
 in vec4 vInstanceVelocities;
@@ -30,6 +31,8 @@ uniform vec3 uWorldMainLightPos;
 
 uniform sampler2D uNormalMap;
 uniform sampler2D uShadowMap;
+uniform sampler2D uWebcamTexture;
+uniform sampler2D uOpticalFlowTexture;
 
 uniform samplerCube uCubeMap;
 
@@ -85,7 +88,7 @@ float calcShadow() {
 
         if ( texture( uShadowMap, shadowCoord.xy + poissonDisk[index] / 700. ).r  <  shadowCoord.z - bias ){
 
-            shadow -=  .2;
+            shadow -=  .1;
         }
     }
 
@@ -98,6 +101,9 @@ void main() {
 
         return;
     }
+
+    vec3 webcam = texture(uWebcamTexture, vInstanceTexCoords).rgb;
+    vec3 opticalFlow = texture(uOpticalFlowTexture, vInstanceTexCoords).rgb;
 
     vec3 normal = vWorldNormal;
     vec3 mainLightDir = normalize(uWorldMainLightPos - vWorldPos);
@@ -127,22 +133,22 @@ void main() {
     float occ = 1.; // temp
     float shadow = calcShadow();
 
-    vec3 col = vInstanceColors;
+    vec3 col = vInstanceColors * webcam; 
 
     vec3 brdf = vec3(0.);
+
+    // cubemap reflection
+    vec3 refl = texture(uCubeMap, reflect(viewDir, normal)).rgb * (pow(fresnel, .45) * .7 + .3);
+    brdf += refl;
 
     brdf += uAmbient * ambient * (uisBW > .5 ? col : col * normalize(vInstanceVelocities.xyz)) * occ * shadow;
     brdf += uDiffuse * diffuse * col * occ * shadow;
     brdf += uFill * fill * col * occ * shadow;
     brdf += uBack * back * col * occ * shadow;
-    brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;// * length(vInstanceVelocities.xyz);
+    brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;
 
     // illum effect
-    brdf += (vInstancePositions.w - 1.) * .2 * (shadow * .5 + .5);
-
-    // cubemap reflection
-    vec3 refl = texture(uCubeMap, reflect(viewDir, normal)).rgb * (pow(fresnel, .45) * .7 + .3);
-    brdf *= refl;
+    brdf += (vInstancePositions.w - 1.) * .2 * (shadow * .5 + .5) + length(vInstanceVelocities.xyz) * .06 * occ * shadow;// + length(opticalFlow) * 100.;
 
     float alpha = 1.;//(1. - clamp(fresnel, 0., 1.)) * .999 + .001;
 

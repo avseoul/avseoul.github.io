@@ -29,14 +29,14 @@ class ParticleSystem {
 
         this.VAO = this.ctx.createVertexArray();
 
-        this.particleScaleFactor = 1.;
-        this.ambient = .0;
-        this.diffuse = 1.5;
-        this.fill = .21;
-        this.back = 1.7;
-        this.fresnel = 2.;
-        this.gamma = 2.;
-        this.isBW = 1.;
+        this.particleScaleFactor = ctrlParams.ParticleScaleFactor;
+        this.ambient = ctrlParams.Ambient;
+        this.diffuse = ctrlParams.Diffuse;
+        this.fill = ctrlParams.Fill;
+        this.back = ctrlParams.Back;
+        this.fresnel = ctrlParams.Fresnel;
+        this.gamma = ctrlParams.Gamma;
+        this.isBW = ctrlParams.isBW ? 1 : 0;
 
         this.updateCtrlParams();
     }
@@ -245,6 +245,8 @@ class ParticleSystem {
             cameraPosition: gl.getUniformLocation(this.program, "uWorldcCamPos"),
             uInstancePosition: gl.getUniformLocation(this.program, "uInstancePositions"),
             uInstanceVelocity: gl.getUniformLocation(this.program, "uInstanceVelocities"),
+            uWebcamTexture: gl.getUniformLocation(this.program, "uWebcamTexture"),
+            uOpticalFlowTexture: gl.getUniformLocation(this.program, "uOpticalFlowTexture"),
             uNormalMap: gl.getUniformLocation(this.program, "uNormalMap"),
             uShadowMap: gl.getUniformLocation(this.program, "uShadowMap"),
             uCubeMap: gl.getUniformLocation(this.program, "uCubeMap"),

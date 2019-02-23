@@ -122,9 +122,9 @@ class ParticleUniformGrid {
 
         gl.useProgram(this.program);
 
+        gl.uniform1i(this.uPosTex, 0);
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, posTex);
-        gl.uniform1i(this.uPosTex, 0);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, indicesBuffer);
         gl.enableVertexAttribArray(this.aId);

@@ -15,12 +15,14 @@ class ParticleRender {
 
         this.numInstance = this.bufferWidth * this.bufferHeight;
 
+        this.webcamTexture;
+        this.opticalFlowTexture;
+
         this.particleSystem = new ParticleSystem(params);
 
         this.particleUniformGrid = new ParticleUniformGrid(params);
 
         this.particleBehaviours = new ParticleBehaviours(params);
-        this.particleBehaviours.linkGridTexture(this.particleUniformGrid.uniformGridTexture);
 
         this.particleDebug = new ParticleDebug(params.renderer.ctx);
 
@@ -31,7 +33,7 @@ class ParticleRender {
 
     update() {
 
-        this.particleBehaviours.update();
+        this.particleBehaviours.update(this.particleUniformGrid.uniformGridTexture);
 
         this.particleUniformGrid.update(
             this.particleBehaviours.positionBuffer,
@@ -49,15 +51,23 @@ class ParticleRender {
 
         gl.useProgram(this.particleSystem.program);
 
+        gl.uniform1i(this.particleSystem.uniforms.uInstancePosition, 0);
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.particleBehaviours.positionBuffer);
-        gl.uniform1i(this.particleSystem.uniforms.uInstancePosition, 0);
 
+        gl.uniform1i(this.particleSystem.uniforms.uInstanceVelocity, 1);
         gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, this.particleBehaviours.velocityBuffer);
-        gl.uniform1i(this.particleSystem.uniforms.uInstanceVelocity, 1);
 
         gl.uniform1i(this.particleSystem.uniforms.uNormalMap, 2);
+
+        gl.uniform1i(this.particleSystem.uniforms.uWebcamTexture, 5);
+        gl.activeTexture(gl.TEXTURE5);
+        gl.bindTexture(gl.TEXTURE_2D, this.webcamTexture);
+
+        gl.uniform1i(this.particleSystem.uniforms.uOpticalFlowTexture, 6);
+        gl.activeTexture(gl.TEXTURE6);
+        gl.bindTexture(gl.TEXTURE_2D, this.opticalFlowTexture);
 
         gl.bindVertexArray(this.particleSystem.VAO);
 
@@ -89,9 +99,9 @@ class ParticleRender {
 
         gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
+        gl.uniform1i(this.particleSystem.uniforms.uShadowMap, 3);
         gl.activeTexture(gl.TEXTURE3);
         gl.bindTexture(gl.TEXTURE_2D, this.light.shadowMap);
-        gl.uniform1i(this.particleSystem.uniforms.uShadowMap, 3);
 
         gl.uniform1i(this.particleSystem.uniforms.uCubeMap, 4);
 
@@ -182,7 +192,10 @@ class ParticleRender {
             this.light.shadowMap, this.thumbnailSize * 4, 0, this.thumbnailSize, this.thumbnailSize);
 
         this.particleDebug.debugTexture(
-            TEXTURE.WEBCAM.TEXTURE, this.thumbnailSize * 5, 0, this.thumbnailSize, this.thumbnailSize);
+            this.webcamTexture, this.thumbnailSize * 5, 0, this.thumbnailSize, this.thumbnailSize);
+
+        this.particleDebug.debugTexture(
+            this.opticalFlowTexture, this.thumbnailSize * 6, 0, this.thumbnailSize, this.thumbnailSize);
     }
 
     reset(params) {
