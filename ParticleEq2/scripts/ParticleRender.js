@@ -18,6 +18,8 @@ class ParticleRender {
         this.webcamTexture;
         this.opticalFlowTexture;
 
+        this.audioAnalyzer = params.audioAnalyzer;
+
         this.particleSystem = new ParticleSystem(params);
 
         this.particleUniformGrid = new ParticleUniformGrid(params);
@@ -68,6 +70,12 @@ class ParticleRender {
         gl.uniform1i(this.particleSystem.uniforms.uOpticalFlowTexture, 6);
         gl.activeTexture(gl.TEXTURE6);
         gl.bindTexture(gl.TEXTURE_2D, this.opticalFlowTexture);
+
+        gl.uniform1f(this.particleSystem.uniforms.uAudioVolume, this.audioAnalyzer.get_level());
+        gl.uniform1f(this.particleSystem.uniforms.uAudioHigh, this.audioAnalyzer.get_high());
+        gl.uniform1f(this.particleSystem.uniforms.uAudioMiddle, this.audioAnalyzer.get_mid());
+        gl.uniform1f(this.particleSystem.uniforms.uAudioLow, this.audioAnalyzer.get_bass());
+        gl.uniform1f(this.particleSystem.uniforms.uAudioHistory, this.audioAnalyzer.get_history());
 
         gl.bindVertexArray(this.particleSystem.VAO);
 

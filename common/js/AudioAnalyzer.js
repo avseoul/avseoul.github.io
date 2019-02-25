@@ -32,7 +32,7 @@ AudioAnalyzer.prototype.init = function(_stream){
 
     // https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
     this.analyzer = _ctx.createAnalyser();
-    this.analyzer.fftSize = 128;
+    this.analyzer.fftSize = 512;
 
     this.gain = _ctx.createGain();
     _source.connect(this.gain);
@@ -75,28 +75,32 @@ AudioAnalyzer.prototype.init_without_stream = function(){
 };
 
 AudioAnalyzer.prototype.update = function(){   
+    
     if(this.is_init){
+        
         var _bass = 0., _mid = 0., _high = 0.;
 
         if(!this.is_pulse){
+
             this.analyzer.getByteFrequencyData(this.audio_buffer);
             
-            var _pass_size = this.buffer_length/3.;
-            for(var i = 0; i < this.buffer_length; i++){
-                var _val = Math.pow(this.audio_buffer[i] / 256., 2.);
+            var _pass_size = this.buffer_length / 3.;
 
-                if(i < _pass_size)
-                    _bass += _val;
-                else if(i >= _pass_size && i < _pass_size*2)
-                    _mid += _val;
-                else if(i >= _pass_size*2)
-                    _high += _val;  
+            for(var i = 0; i < this.buffer_length; i++){
+
+                var _val = Math.pow(this.audio_buffer[i] / 256, 2.);
+
+                if(i < _pass_size) _bass += _val;
+                else if(i >= _pass_size && i < _pass_size * 2) _mid += _val;
+                else if(i >= _pass_size * 2) _high += _val;  
             }
 
             _bass /= _pass_size;
             _mid /= _pass_size;
             _high /= _pass_size;
+
         } else {
+
             if(this.frame % 40 == (Math.floor(Math.random()*40.))){
                 _bass = Math.random();
                 _mid = Math.random();
@@ -107,6 +111,10 @@ AudioAnalyzer.prototype.update = function(){
         this.bass = this.bass > _bass ? this.bass * .96 : _bass;
         this.mid = this.mid > _mid ? this.mid * .96 : _mid;
         this.high = this.high > _high ? this.high * .96 : _high;
+
+        this.bass = Math.max(Math.min(this.bass, 1.), 0.);
+        this.mid = Math.max(Math.min(this.mid, 1.), 0.);
+        this.high = Math.max(Math.min(this.high, 1.), 0.);
 
         this.level = (this.bass + this.mid + this.high)/3.;
 
@@ -155,6 +163,7 @@ AudioAnalyzer.prototype.trigger_pulse = function(_is_pulse){
 };
 
 AudioAnalyzer.prototype.debug = function(_canvas){
+    
     var _ctx = _canvas.getContext("2d");
 
     _ctx.fillStyle = 'rgb(0, 0, 0)';

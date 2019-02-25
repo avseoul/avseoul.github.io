@@ -27,6 +27,12 @@ uniform float uScaleDamping;
 uniform float uTimeDelta;
 uniform float uMaxVel;
 
+uniform float uAudioVolume;
+uniform float uAudioHigh;
+uniform float uAudioMiddle;
+uniform float uAudioLow;
+uniform float uAudioHistory;
+
 in vec2 instanceTexcoords;
 in vec2 vUv;
 
@@ -238,23 +244,21 @@ void main() {
     // gravity
     {
         vec3 dir = norm(-pos.xyz);
-        force.xyz += uLocalGravity * dir * pos.w;
+        force.xyz += uLocalGravity * dir * pos.w * (uAudioLow + uAudioVolume);
         force.y -= uGlobalGravity * pos.w;
     }
     
     // orbit
     {
         vec3 dir = reflect(norm(vel.xyz), norm(-pos.xyz));
-        force.xyz += dir * length(vel.xyz) * uOrbitAcc * pos.w;    
+        force.xyz += dir * length(vel.xyz) * uOrbitAcc * pos.w * uAudioVolume;    
     }
     
-    // random
+    // random expanding
     {
-        float n0 = snoise(vec3(vUv.xyx * .02) + uTime * .0001) * 2. - 1.;
-        float n1 = snoise(vec3(vUv.yxy * .02) + uTime * .0001) * 2. - 1.;
-        float n2 = snoise(vec3(vUv.xxy * .02) + uTime * .0001) * 2. - 1.;
-        
-        force.xyz += vec3(n0, n1, n2) * uRandomAcc;
+        float n = snoise(pos.xyz * 10. + uTime * .01) * 2. - 1.;
+        force.xyz += vec3(n) * .6 * uRandomAcc * uAudioVolume;
+        force.w += n * uRandomScalePop;
     }
     
     // keep it in the sphere 
@@ -270,12 +274,15 @@ void main() {
     }
 
     // size random
-    if(abs(dice) < .04) {
+    if(uAudioHigh > .2) {
 
         float n = snoise(vec3(vUv.x * 123.456, vUv.y * 789.012, vUv.x * 345.678) + uTime) * 2. - 1.;
         
         pos.w += pow(abs(n), 10.) * uRandomScalePop;
     } 
+
+    // noise size 
+    pos.w += pow(abs(snoise(pos.xyz * .1 + uTime * .002)), 2.) * .5 * uAudioVolume;
 
     if(pos.w >= vel.w) {
 
@@ -290,9 +297,10 @@ void main() {
     vel.xyz += force.xyz / pos.w;
 
     // clamping vel
-    if(length(vel.xyz) > uMaxVel) {
+    float maxVel = uMaxVel * pow(uAudioVolume + uAudioLow * .5, 2.);
+    if(length(vel.xyz) > maxVel) {
 
-        vel.xyz = norm(vel.xyz) * uMaxVel;
+        vel.xyz = norm(vel.xyz) * maxVel;
     }
 
     // damping

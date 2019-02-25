@@ -205,10 +205,10 @@ class ParticleSystem {
             instanceTexcoords[ti++] = u / (this.bufferWidth - 1);
             instanceTexcoords[ti++] = v / (this.bufferWidth - 1);
 
-            const dice = i % 16;
-            instanceColors[ci++] = dice == 0 ? .1 : 1;
-            instanceColors[ci++] = dice == 0 ? .1 : 1;
-            instanceColors[ci++] = dice == 0 ? .1 : 1;
+            //const dice = i % 16;
+            instanceColors[ci++] = 0;//dice == 0 ? .1 : 1;
+            instanceColors[ci++] = 0;//dice == 0 ? .1 : 1;
+            instanceColors[ci++] = 0;//dice == 0 ? .1 : 1;
         }
 
         this.buffers.instanceIndices = GLHelpers.createArrayBuffer(gl, new Float32Array(instanceIndices))
@@ -259,6 +259,11 @@ class ParticleSystem {
             uGamma: gl.getUniformLocation(this.program, "uGamma"),
             uisBW: gl.getUniformLocation(this.program, "uisBW"),
             uIsShadowPass: gl.getUniformLocation(this.program, "uIsShadowPass"),
+            uAudioVolume: gl.getUniformLocation(this.program, "uAudioVolume"),
+            uAudioHigh: gl.getUniformLocation(this.program, "uAudioHigh"),
+            uAudioMiddle: gl.getUniformLocation(this.program, "uAudioMiddle"),
+            uAudioLow: gl.getUniformLocation(this.program, "uAudioLow"),
+            uAudioHistory: gl.getUniformLocation(this.program, "uAudioHistory")
         }
 
         // link normal map 

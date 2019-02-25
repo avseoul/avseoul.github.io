@@ -29,6 +29,8 @@ let particleRender;
 let opticalFlow;
 let mainLight;
 
+let audioAnalyzer;
+
 let stats;
 let ctrl;
 let ctrlParams = {
@@ -36,35 +38,36 @@ let ctrlParams = {
     // debug
     ShowStats: true,
     ShowDebug: true,
-    DebugThumbnailSize: 100,
+    DebugThumbnailSize: 50,
 
     // particle
     ParticleDensity: 32,
     SphereResolution: 24,
 
     // force
+    AudioGain: 7000,
     GlobalGravity: .057,
-    LocalGravity: .16,
-    OrbitAcc: .068,
-    RandomAcc: .16,
+    LocalGravity: .45,
+    OrbitAcc: .47,
+    RandomAcc: 7.,
     
-    RandomScalePop: 0.,
+    RandomScalePop: 0.6,
     
     KeepInSphere: false,
     SphereRadius: 18,
     
-    ScaleDamping: .99,
+    ScaleDamping: .93,
     
-    TimeDelta: .024,
-    MaxVel: 6.1,
+    TimeDelta: .016,
+    MaxVel: 12.,
 
     ParticleScaleFactor: 1.,
-    Ambient: .43,
-    Diffuse: .3,
+    Ambient: .0,
+    Diffuse: .23,
     Fill: 0., 
-    Back: .21, 
-    Fresnel: .3,
-    Gamma: 2.8,
+    Back: .1, 
+    Fresnel: .2,
+    Gamma: 4.2,
     isBW: true
 }
 
@@ -164,6 +167,9 @@ let Init = function () {
                 TEXTURE.WEBCAM.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
                 TEXTURE.WEBCAM.PREV_TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
 
+                // audio input
+                audioAnalyzer = new AudioAnalyzer();
+
                 console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
                 let params = {
@@ -176,7 +182,8 @@ let Init = function () {
                     gridTexSize: gridTexSize,
                     gridWidth: gridWidth,
                     gridHalfWidth: gridHalfWidth,
-                    numGridSliceInGridTexWidth: numGridSliceInGridTexWidth
+                    numGridSliceInGridTexWidth: numGridSliceInGridTexWidth,
+                    audioAnalyzer: audioAnalyzer
                 }
 
                 opticalFlow = new OpticalFlow({
@@ -253,6 +260,14 @@ let Init = function () {
 
                     let ctrlForce = ctrl.addFolder('Particle Forces');
 
+                    ctrlForce.add(ctrlParams, 'AudioGain', 0, 10000).onChange(
+
+                        (val) => {
+                            
+                            audioAnalyzer.set_gain(val);
+                        }
+                    );
+
                     ctrlForce.add(ctrlParams, 'GlobalGravity', 0, .5).onChange(
 
                         (val) => {
@@ -262,7 +277,7 @@ let Init = function () {
                         }
                     );
 
-                    ctrlForce.add(ctrlParams, 'LocalGravity', 0, .5).onChange(
+                    ctrlForce.add(ctrlParams, 'LocalGravity', 0, 1).onChange(
 
                         (val) => {
                             
@@ -271,7 +286,7 @@ let Init = function () {
                         }
                     );
 
-                    ctrlForce.add(ctrlParams, 'OrbitAcc', 0, .5).onChange(
+                    ctrlForce.add(ctrlParams, 'OrbitAcc', 0, 1).onChange(
 
                         (val) => {
                             
@@ -280,7 +295,7 @@ let Init = function () {
                         }
                     );
 
-                    ctrlForce.add(ctrlParams, 'RandomAcc', 0, .5).onChange(
+                    ctrlForce.add(ctrlParams, 'RandomAcc', 0, 10).onChange(
 
                         (val) => {
                             
@@ -334,7 +349,7 @@ let Init = function () {
                         }
                     );
 
-                    ctrlForce.add(ctrlParams, 'MaxVel', 0., 10).onChange(
+                    ctrlForce.add(ctrlParams, 'MaxVel', 0., 50).onChange(
 
                         (val) => {
                             
@@ -417,6 +432,9 @@ let Init = function () {
 }
 
 let Update = function () {
+
+    audioAnalyzer.update();
+    // console.log(audioAnalyzer.get_level(), audioAnalyzer.get_high(), audioAnalyzer.get_mid(), audioAnalyzer.get_bass());
 
     // update camera 
     // const camSpeed = frame * .006;

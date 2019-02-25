@@ -35,6 +35,8 @@ class ParticleBehaviours {
 
         this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
 
+        this.audioAnalyzer = params.audioAnalyzer;
+
         this.globalGravity = ctrlParams.GlobalGravity;
         this.localGravity = ctrlParams.LocalGravity;
         this.orbitAcc = ctrlParams.OrbitAcc;
@@ -135,6 +137,12 @@ class ParticleBehaviours {
             this.uScaleDamping = gl.getUniformLocation(this.rttProgram, "uScaleDamping");
             this.uTimeDelta = gl.getUniformLocation(this.rttProgram, "uTimeDelta");
             this.uMaxVel = gl.getUniformLocation(this.rttProgram, "uMaxVel");
+
+            this.uAudioVolume = gl.getUniformLocation(this.rttProgram, "uAudioVolume");
+            this.uAudioHigh = gl.getUniformLocation(this.rttProgram, "uAudioHigh");
+            this.uAudioMiddle = gl.getUniformLocation(this.rttProgram, "uAudioMiddle");
+            this.uAudioLow = gl.getUniformLocation(this.rttProgram, "uAudioLow");
+            this.uAudioHistory = gl.getUniformLocation(this.rttProgram, "uAudioHistory");
         }
 
         this.updateCtrlParams();
@@ -164,6 +172,12 @@ class ParticleBehaviours {
         }
 
         gl.useProgram(this.rttProgram);
+
+        gl.uniform1f(this.uAudioVolume, this.audioAnalyzer.get_level());
+        gl.uniform1f(this.uAudioHigh, this.audioAnalyzer.get_high());
+        gl.uniform1f(this.uAudioMiddle, this.audioAnalyzer.get_mid());
+        gl.uniform1f(this.uAudioLow, this.audioAnalyzer.get_bass());
+        gl.uniform1f(this.uAudioHistory, this.audioAnalyzer.get_history());
 
         gl.uniform1i(this.uGridBuffer, 0);
         gl.activeTexture(gl.TEXTURE0);

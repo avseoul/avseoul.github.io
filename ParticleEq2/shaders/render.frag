@@ -26,6 +26,12 @@ uniform float uFresnel;
 uniform float uGamma;
 uniform float uisBW;
 
+uniform float uAudioVolume;
+uniform float uAudioHigh;
+uniform float uAudioMiddle;
+uniform float uAudioLow;
+uniform float uAudioHistory;
+
 uniform vec3 uWorldcCamPos;
 uniform vec3 uWorldMainLightPos;
 
@@ -88,7 +94,7 @@ float calcShadow() {
 
         if ( texture( uShadowMap, shadowCoord.xy + poissonDisk[index] / 700. ).r  <  shadowCoord.z - bias ){
 
-            shadow -=  .1;
+            shadow -=  .05;
         }
     }
 
@@ -133,13 +139,16 @@ void main() {
     float occ = 1.; // temp
     float shadow = calcShadow();
 
-    vec3 col = vInstanceColors * webcam; 
+    vec3 col = vInstanceColors;// + uAudioVolume;// * webcam; 
+
+    float noiseIllum = pow(vInstancePositions.w, 2.);
+    col += noiseIllum * .3;
 
     vec3 brdf = vec3(0.);
 
     // cubemap reflection
     vec3 refl = texture(uCubeMap, reflect(viewDir, normal)).rgb * (pow(fresnel, .45) * .7 + .3);
-    brdf += refl;
+    brdf += refl * occ * shadow;
 
     brdf += uAmbient * ambient * (uisBW > .5 ? col : col * normalize(vInstanceVelocities.xyz)) * occ * shadow;
     brdf += uDiffuse * diffuse * col * occ * shadow;
@@ -148,7 +157,7 @@ void main() {
     brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;
 
     // illum effect
-    brdf += (vInstancePositions.w - 1.) * .2 * (shadow * .5 + .5) + length(vInstanceVelocities.xyz) * .06 * occ * shadow;// + length(opticalFlow) * 100.;
+    brdf += (.02 * noiseIllum * length(vInstanceVelocities.xyz)) * occ * shadow;// + length(opticalFlow) * 100.;
 
     float alpha = 1.;//(1. - clamp(fresnel, 0., 1.)) * .999 + .001;
 
