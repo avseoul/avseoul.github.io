@@ -1,4 +1,4 @@
-var AudioAnalyzer = function(){
+var AudioAnalyzer = function(gain){
     this.is_init = false;
     this.is_pulse = false;
 
@@ -12,7 +12,7 @@ var AudioAnalyzer = function(){
         console.log('getUserMedia supported.');
         navigator.getUserMedia ({
             audio: true
-        }, this.init.bind(this),
+        }, this.init.bind(this, gain),
         this.init_without_stream.bind(this));
     } else {
         if(window.location.protocol == 'https:')
@@ -21,7 +21,7 @@ var AudioAnalyzer = function(){
     }
 };
 
-AudioAnalyzer.prototype.init = function(_stream){
+AudioAnalyzer.prototype.init = function(gain, _stream){
     var _ctx = new (
         window.AudioContext || 
         window.webkitAudioContext || 
@@ -37,7 +37,7 @@ AudioAnalyzer.prototype.init = function(_stream){
     this.gain = _ctx.createGain();
     _source.connect(this.gain);
     this.gain.connect(this.analyzer);
-    this.gain.gain.value = 70.;
+    this.gain.gain.value = gain || 70.;
 
     this.bass = 0.;
     this.mid = 0.;

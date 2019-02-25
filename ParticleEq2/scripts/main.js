@@ -168,7 +168,7 @@ let Init = function () {
                 TEXTURE.WEBCAM.PREV_TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
 
                 // audio input
-                audioAnalyzer = new AudioAnalyzer();
+                audioAnalyzer = new AudioAnalyzer(ctrlParams.AudioGain);
 
                 console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
 
@@ -208,6 +208,14 @@ let Init = function () {
                 // dat gui
                 {
                     ctrl = new dat.GUI();
+
+                    ctrl.add(ctrlParams, 'AudioGain', 0, 10000).onChange(
+
+                        (val) => {
+                            
+                            audioAnalyzer.set_gain(val);
+                        }
+                    );
 
                     let ctrlDebug = ctrl.addFolder('Debug');
 
@@ -259,14 +267,6 @@ let Init = function () {
                     );
 
                     let ctrlForce = ctrl.addFolder('Particle Forces');
-
-                    ctrlForce.add(ctrlParams, 'AudioGain', 0, 10000).onChange(
-
-                        (val) => {
-                            
-                            audioAnalyzer.set_gain(val);
-                        }
-                    );
 
                     ctrlForce.add(ctrlParams, 'GlobalGravity', 0, .5).onChange(
 
