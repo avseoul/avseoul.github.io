@@ -31,6 +31,33 @@ class ParticleRender {
         this.thumbnailSize = 100;
 
         this.updateMatrixUniforms(this.camera, this.light.camera);
+
+        const gl = this.ctx;
+        
+        this.renderTexture = gl.createTexture();
+        
+        gl.bindTexture(gl.TEXTURE_2D, this.renderTexture);
+        
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, gl.drawingBufferWidth, gl.drawingBufferHeight, 0, gl.RGBA, gl.FLOAT, null);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        this.frameBuffer = gl.createFramebuffer();
+
+        {
+            gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+
+            gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.renderTexture, 0);
+            gl.drawBuffers([gl.COLOR_ATTACHMENT0]);
+
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        }
+        
     }
 
     update() {
@@ -107,6 +134,9 @@ class ParticleRender {
 
         gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
         gl.uniform1i(this.particleSystem.uniforms.uShadowMap, 3);
         gl.activeTexture(gl.TEXTURE3);
         gl.bindTexture(gl.TEXTURE_2D, this.light.shadowMap);
@@ -121,7 +151,9 @@ class ParticleRender {
 
         gl.disable(gl.DEPTH_TEST);
 
-        gl.disable(gl.BLEND)
+        gl.disable(gl.BLEND);
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     }
 
     updateAttributes() {
@@ -204,6 +236,9 @@ class ParticleRender {
 
         this.particleDebug.debugTexture(
             this.opticalFlowTexture, this.thumbnailSize * 6, 0, this.thumbnailSize, this.thumbnailSize);
+
+        this.particleDebug.debugTexture(
+            this.renderTexture, this.thumbnailSize * 7, 0, this.thumbnailSize, this.thumbnailSize);
     }
 
     reset(params) {

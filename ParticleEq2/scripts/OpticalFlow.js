@@ -14,7 +14,7 @@ class OpticalFlow {
         this.prevWebcamTexture = params.prevWebcamTexture;
 
         this.opticalFlowFrameBuffer;
-        this.texture;
+        this.renderTexture;
 
         this.program;      
         
@@ -60,13 +60,13 @@ class OpticalFlow {
 
         {
             this.opticalFlowFrameBuffer = gl.createFramebuffer();
-            this.texture = GLHelpers.createRttTexture(gl, this.bufferWidth, this.bufferHeight);
+            this.renderTexture = GLHelpers.createRttTexture(gl, this.bufferWidth, this.bufferHeight);
 
             gl.viewport(0, 0, this.bufferWidth, this.bufferHeight);
                     
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.opticalFlowFrameBuffer);
 
-            gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.texture, 0);
+            gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.renderTexture, 0);
 
             gl.drawBuffers([gl.COLOR_ATTACHMENT0]);
 

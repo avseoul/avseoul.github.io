@@ -11,7 +11,8 @@ let SHADER = {
     BEHAVIOURS: { VERT: null, FRAG: null },
     UNIFORM_GRID: { VERT: null, FRAG: null },
     DEBUG_TEXTURE: { VERT: null, FRAG: null },
-    RENDER: { VERT: null, FRAG: null }
+    RENDER: { VERT: null, FRAG: null },
+    BLUR_PASS: { VERT: null, FRAG: null }
 }
 
 let TEXTURE = {
@@ -27,6 +28,7 @@ let camera;
 
 let particleRender;
 let opticalFlow;
+let blurPass;
 let mainLight;
 
 let audioAnalyzer;
@@ -80,24 +82,24 @@ let Init = function () {
     // load resources
     Promise.all([
 
-        GLHelpers.loadShader("shaders/behaviours.vert"),
-        GLHelpers.loadShader("shaders/behaviours.frag"),
-        GLHelpers.loadShader("shaders/uniformGrid.vert"),
-        GLHelpers.loadShader("shaders/uniformGrid.frag"),
-        GLHelpers.loadShader("shaders/debugTexture.vert"),
-        GLHelpers.loadShader("shaders/debugTexture.frag"),
-        GLHelpers.loadShader("shaders/render.vert"),
-        GLHelpers.loadShader("shaders/render.frag"),
-        GLHelpers.loadShader("shaders/opticalFlow.vert"),
-        GLHelpers.loadShader("shaders/opticalFlow.frag"),
-        GLHelpers.loadTexture("../common/assets/normal.jpg"),
-        GLHelpers.loadTexture("../common/assets/xn.png"),
-        GLHelpers.loadTexture("../common/assets/xp.png"),
-        GLHelpers.loadTexture("../common/assets/yn.png"),
-        GLHelpers.loadTexture("../common/assets/yp.png"),
-        GLHelpers.loadTexture("../common/assets/zn.png"),
-        GLHelpers.loadTexture("../common/assets/zp.png"),
-        GLHelpers.initWebcam()
+        GLHelpers.loadShader("shaders/behaviours.vert"), // 0 
+        GLHelpers.loadShader("shaders/behaviours.frag"), // 1
+        GLHelpers.loadShader("shaders/uniformGrid.vert"), // 2
+        GLHelpers.loadShader("shaders/uniformGrid.frag"), // 3
+        GLHelpers.loadShader("shaders/unitQuadPass.vert"), // 4
+        GLHelpers.loadShader("shaders/debugTexture.frag"), // 5
+        GLHelpers.loadShader("shaders/opticalFlow.frag"), // 6
+        GLHelpers.loadShader("shaders/frostyBlur.frag"), // 7
+        GLHelpers.loadShader("shaders/render.vert"), // 8
+        GLHelpers.loadShader("shaders/render.frag"), // 9
+        GLHelpers.loadTexture("../common/assets/normal.jpg"), // 10
+        GLHelpers.loadTexture("../common/assets/xn.png"), // 11
+        GLHelpers.loadTexture("../common/assets/xp.png"), // 12
+        GLHelpers.loadTexture("../common/assets/yn.png"), // 13
+        GLHelpers.loadTexture("../common/assets/yp.png"), // 14
+        GLHelpers.loadTexture("../common/assets/zn.png"), // 15
+        GLHelpers.loadTexture("../common/assets/zp.png"), // 16
+        GLHelpers.initWebcam() // 17
     ])
         .then(
             (res) => {
@@ -111,11 +113,14 @@ let Init = function () {
                 SHADER.DEBUG_TEXTURE.VERT = res[4].target.response;
                 SHADER.DEBUG_TEXTURE.FRAG = res[5].target.response;
 
-                SHADER.RENDER.VERT = res[6].target.response;
-                SHADER.RENDER.FRAG = res[7].target.response;
+                SHADER.OPTICAL_FLOW.VERT = res[4].target.response;
+                SHADER.OPTICAL_FLOW.FRAG = res[6].target.response;
 
-                SHADER.OPTICAL_FLOW.VERT = res[8].target.response;
-                SHADER.OPTICAL_FLOW.FRAG = res[9].target.response;
+                SHADER.BLUR_PASS.VERT = res[4].target.response;
+                SHADER.BLUR_PASS.FRAG = res[7].target.response;
+
+                SHADER.RENDER.VERT = res[8].target.response;
+                SHADER.RENDER.FRAG = res[9].target.response;
 
                 TEXTURE.NORMAL_MAP.IMAGE = res[10].path[0];
 
@@ -199,7 +204,15 @@ let Init = function () {
 
                 particleRender = new ParticleRender(params);
                 particleRender.webcamTexture = TEXTURE.WEBCAM.TEXTURE;
-                particleRender.opticalFlowTexture = opticalFlow.texture;
+                particleRender.opticalFlowTexture = opticalFlow.renderTexture;
+
+                blurPass = new BlurPassRender({
+
+                    renderer: renderer,
+                    particleRenderTexture: particleRender.renderTexture,
+                    webcamTexture: TEXTURE.WEBCAM.TEXTURE,
+                    opticalFlowTexture: opticalFlow.renderTexture
+                });
 
                 // stat
                 stats = new Stats();
@@ -457,6 +470,8 @@ let Update = function () {
     particleRender.render();
 
     if (ctrlParams.ShowDebug) particleRender.debug();
+
+    blurPass.render();
 
     stats.update();
 
