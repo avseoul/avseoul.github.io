@@ -306,7 +306,7 @@ void main() {
     // damping
     vel.xyz *= .96;
 
-    pos.xyz += vel.xyz * uTimeDelta;
+    pos.xyz += vel.xyz * uTimeDelta * (uAudioVolume + uAudioLow);
 
     // reset scale
     // if(pos.w > 12.) pos.w = 1.;

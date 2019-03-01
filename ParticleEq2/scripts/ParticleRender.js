@@ -13,6 +13,11 @@ class ParticleRender {
         this.bufferWidth = params.bufferWidth;
         this.bufferHeight = params.bufferHeight;
 
+        const ratio = this.ctx.drawingBufferHeight / this.ctx.drawingBufferWidth;
+
+        this.w = this.ctx.drawingBufferWidth > 1920 ? 1920 : this.ctx.drawingBufferWidth;
+        this.h = this.ctx.drawingBufferWidth > 1920 ? 1920 * ratio : this.ctx.drawingBufferHeight;
+
         this.numInstance = this.bufferWidth * this.bufferHeight;
 
         this.webcamTexture;
@@ -25,10 +30,6 @@ class ParticleRender {
         this.particleUniformGrid = new ParticleUniformGrid(params);
 
         this.particleBehaviours = new ParticleBehaviours(params);
-
-        this.particleDebug = new ParticleDebug(params.renderer.ctx);
-
-        this.thumbnailSize = 100;
 
         this.updateMatrixUniforms(this.camera, this.light.camera);
 
@@ -43,12 +44,11 @@ class ParticleRender {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, gl.drawingBufferWidth, gl.drawingBufferHeight, 0, gl.RGBA, gl.FLOAT, null);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, this.w, this.h, 0, gl.RGBA, gl.FLOAT, null);
 
         gl.bindTexture(gl.TEXTURE_2D, null);
 
         this.frameBuffer = gl.createFramebuffer();
-
         {
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
 
@@ -89,6 +89,8 @@ class ParticleRender {
         gl.bindTexture(gl.TEXTURE_2D, this.particleBehaviours.velocityBuffer);
 
         gl.uniform1i(this.particleSystem.uniforms.uNormalMap, 2);
+        gl.activeTexture(gl.TEXTURE2);
+        gl.bindTexture(gl.TEXTURE_2D, TEXTURE.NORMAL_MAP.TEXTURE);
 
         gl.uniform1i(this.particleSystem.uniforms.uWebcamTexture, 5);
         gl.activeTexture(gl.TEXTURE5);
@@ -132,7 +134,7 @@ class ParticleRender {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-        gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+        gl.viewport(0, 0, this.w, this.h);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
         gl.clear(gl.COLOR_BUFFER_BIT);
@@ -142,6 +144,8 @@ class ParticleRender {
         gl.bindTexture(gl.TEXTURE_2D, this.light.shadowMap);
 
         gl.uniform1i(this.particleSystem.uniforms.uCubeMap, 4);
+        gl.activeTexture(gl.TEXTURE4);
+        gl.bindTexture(gl.TEXTURE_CUBE_MAP, TEXTURE.CUBEMAP.TEXTURE);
 
         gl.uniform1f(this.particleSystem.uniforms.uIsShadowPass, 0);
 
@@ -213,32 +217,6 @@ class ParticleRender {
         gl.uniformMatrix4fv(this.particleSystem.uniforms.shadowMatrix, false, lightMVP.elements);
         gl.uniformMatrix3fv(this.particleSystem.uniforms.normalMatrix, false, _tempNormal.elements);
         gl.uniform3f(this.particleSystem.uniforms.cameraPosition, camera.position.x, camera.position.y, camera.position.z);
-    }
-
-    debug() {
-
-        this.particleDebug.debugTexture(
-            this.particleBehaviours.positionBuffer, 0, 0, this.thumbnailSize, this.thumbnailSize);
-        this.particleDebug.debugTexture(
-            this.particleBehaviours.velocityBuffer, this.thumbnailSize, 0, this.thumbnailSize, this.thumbnailSize);
-
-        this.particleDebug.debugTexture(
-            this.particleUniformGrid.gridTexture, this.thumbnailSize * 2, 0, this.thumbnailSize, this.thumbnailSize);
-
-        this.particleDebug.debugTexture(
-            TEXTURE.NORMAL_MAP.TEXTURE, this.thumbnailSize * 3, 0, this.thumbnailSize, this.thumbnailSize);
-
-        this.particleDebug.debugTexture(
-            this.light.shadowMap, this.thumbnailSize * 4, 0, this.thumbnailSize, this.thumbnailSize);
-
-        this.particleDebug.debugTexture(
-            this.webcamTexture, this.thumbnailSize * 5, 0, this.thumbnailSize, this.thumbnailSize);
-
-        this.particleDebug.debugTexture(
-            this.opticalFlowTexture, this.thumbnailSize * 6, 0, this.thumbnailSize, this.thumbnailSize);
-
-        this.particleDebug.debugTexture(
-            this.renderTexture, this.thumbnailSize * 7, 0, this.thumbnailSize, this.thumbnailSize);
     }
 
     reset(params) {

@@ -29,6 +29,7 @@ let camera;
 let particleRender;
 let opticalFlow;
 let blurPass;
+let particleDebug;
 let mainLight;
 
 let audioAnalyzer;
@@ -49,7 +50,7 @@ let ctrlParams = {
     // force
     AudioGain: 7000,
     GlobalGravity: .057,
-    LocalGravity: .45,
+    LocalGravity: .19,
     OrbitAcc: .47,
     RandomAcc: 7.,
     
@@ -60,7 +61,7 @@ let ctrlParams = {
     
     ScaleDamping: .93,
     
-    TimeDelta: .016,
+    TimeDelta: .010,
     MaxVel: 12.,
 
     ParticleScaleFactor: 1.,
@@ -211,8 +212,11 @@ let Init = function () {
                     renderer: renderer,
                     particleRenderTexture: particleRender.renderTexture,
                     webcamTexture: TEXTURE.WEBCAM.TEXTURE,
-                    opticalFlowTexture: opticalFlow.renderTexture
+                    opticalFlowTexture: opticalFlow.renderTexture,
+                    audioAnalyzer: audioAnalyzer
                 });
+
+                particleDebug = new ParticleDebug(renderer.ctx);
 
                 // stat
                 stats = new Stats();
@@ -245,10 +249,7 @@ let Init = function () {
                         (val) => ctrlParams.ShowDebug = val
                     );
 
-                    ctrlDebug.add(ctrlParams, 'DebugThumbnailSize', 50, 200).onChange(
-
-                        (val) => particleRender.thumbnailSize = val
-                    );
+                    ctrlDebug.add(ctrlParams, 'DebugThumbnailSize', 50, 200);
 
                     let ctrlGlobal = ctrl.addFolder('Particle Global');
 
@@ -469,9 +470,9 @@ let Update = function () {
     particleRender.update();
     particleRender.render();
 
-    if (ctrlParams.ShowDebug) particleRender.debug();
-
     blurPass.render();
+
+    if (ctrlParams.ShowDebug) Debug();
 
     stats.update();
 
@@ -483,6 +484,32 @@ let Update = function () {
 let SetBufferSize = function (val) {
 
     bufferWidth = val, bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
+}
+
+let Debug = function() 
+{
+    particleDebug.debugTexture(
+        particleRender.particleBehaviours.positionBuffer, 0, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+    particleDebug.debugTexture(
+        particleRender.particleBehaviours.velocityBuffer, ctrlParams.DebugThumbnailSize, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+
+    particleDebug.debugTexture(
+        particleRender.particleUniformGrid.gridTexture, ctrlParams.DebugThumbnailSize * 2, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+
+    particleDebug.debugTexture(
+        TEXTURE.NORMAL_MAP.TEXTURE, ctrlParams.DebugThumbnailSize * 3, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+
+    particleDebug.debugTexture(
+        particleRender.light.shadowMap, ctrlParams.DebugThumbnailSize * 4, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+
+    particleDebug.debugTexture(
+        TEXTURE.WEBCAM.TEXTURE, ctrlParams.DebugThumbnailSize * 5, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+
+    particleDebug.debugTexture(
+        opticalFlow.renderTexture, ctrlParams.DebugThumbnailSize * 6, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+
+    particleDebug.debugTexture(
+        particleRender.renderTexture, ctrlParams.DebugThumbnailSize * 7, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
 }
 
 let Reset = function () {

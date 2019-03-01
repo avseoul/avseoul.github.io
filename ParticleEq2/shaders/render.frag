@@ -143,6 +143,7 @@ void main() {
 
     float noiseIllum = pow(vInstancePositions.w, 2.);
     col += noiseIllum * .3;
+    noiseIllum = min(noiseIllum * length(vInstanceVelocities.xyz), 20.); 
 
     vec3 brdf = vec3(0.);
 
@@ -157,11 +158,12 @@ void main() {
     brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;
 
     // illum effect
-    brdf += (.02 * noiseIllum * length(vInstanceVelocities.xyz)) * occ * shadow;// + length(opticalFlow) * 100.;
+    brdf += (.02 * noiseIllum) * occ * shadow;// + length(opticalFlow) * 100.;
 
     float alpha = 1.;//(1. - clamp(fresnel, 0., 1.)) * .999 + .001;
 
     brdf = pow(brdf, vec3(uGamma));
+    //brdf = clamp(brdf, -2., 2.);
     // col.rgb = normal;
 
     oColor = vec4(brdf, alpha);

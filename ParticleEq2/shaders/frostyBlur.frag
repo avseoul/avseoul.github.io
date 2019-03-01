@@ -12,13 +12,19 @@ uniform sampler2D uOpticalFlowTexture;
 uniform float uWidth;
 uniform float uHeight;
 
+uniform float uAudioVolume;
+uniform float uAudioHigh;
+uniform float uAudioMiddle;
+uniform float uAudioLow;
+uniform float uAudioHistory;
+
 uniform float uTime;
 
 out vec4 oColor;
 
-#define NOISE_ROT_MAT mat2(1.60,  1.80, -1.80,  1.60)
+#define NOISE_ROT_MAT mat2(2.60,  2.80, -2.80,  2.60)
 #define FBM_COMPLEXITY 6.
-#define SAMPLES 60.
+#define SAMPLES 120.
 #define TWO_PI 6.28318530718
 
 vec3 mod289(vec3 x)
@@ -140,8 +146,8 @@ float fbm(vec2 n, float t)
 
 	for (float i = 0.; i < FBM_COMPLEXITY; i++) 
     {
-		total += snoise(vec3(n, i)) * amplitude;
-		n = NOISE_ROT_MAT * (n - t);
+		total += snoise(vec3(n, i) + t) * amplitude;
+		n = NOISE_ROT_MAT * (n * 4. * amplitude);
 		amplitude *= .4;
 	}
 
@@ -155,7 +161,7 @@ void main()
     vec3 opticalFlow = texture(uOpticalFlowTexture, vUv).rgb;
 		
     // hash blur - https://www.shadertoy.com/view/4lXXWn
-    float strength = .06;
+    float strength = .04;
 
     vec3 blur = vec3(0.);
 
@@ -169,14 +175,14 @@ void main()
     }
     blur /= SAMPLES * 2.;
 
-    float t = uTime * .4;
-	float noise = fbm(2.8 * (vUv.xy + vec2(fbm(vUv.xy, t), fbm(vUv.yx, -t))), t);
-    //noise = pow(noise, 2.);
-    noise = clamp(noise, 0., 1.);
+    float t = uTime * 1.2 + uAudioHistory * .2;
+    vec2 p = vUv * 1.6 + vec2(0., t * .1);
+	float noise = fbm(p.xy + vec2(fbm(p.xy, t), fbm(p.yx, t)), t);
+    noise = clamp(pow(noise, 3. * uAudioLow) * (3. * uAudioLow), 0., 1.);
 
-    vec3 col = mix(particleRender, blur, noise);
-    vec3 frosty = col * 3.5 + .06;
-    col = mix(col, frosty, noise);
+    vec3 col = mix(blur, particleRender, noise);
+    vec3 frosty = col * 1.5 + .16;
+    col = mix(frosty, col + .06, noise);
         
     oColor = vec4(col, 1.);
 }
