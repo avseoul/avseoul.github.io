@@ -7,8 +7,6 @@ in vec2 vUv;
 
 uniform sampler2D uBlurTexture;
 uniform sampler2D uParticleRenderTexture;
-uniform sampler2D uWebcamTexture;
-uniform sampler2D uOpticalFlowTexture;
 
 uniform float uWidth;
 uniform float uHeight;
@@ -74,11 +72,7 @@ float fbm(vec2 n, float t)
 
 void main()
 {
-    vec3 particleRender = texture(uParticleRenderTexture, vUv).rgb;
-
-    vec3 blur = texture(uBlurTexture, vUv).rgb;
-
-    float t = uTime * .1 + uAudioHistory * .3;
+    float t = uTime * .1 + uAudioHistory * .8;
     vec2 p = vUv * vec2(1., uHeight/uWidth) + vec2(0., t * .1);
     float na = fbm(p.xy, t);
     float nb = fbm(p.yx, t);
@@ -86,7 +80,20 @@ void main()
     float osc = sin(t) * .35 + .65;
     float frostyMask = clamp(pow(noise * na * nb, 4. * osc * uAudioLow) * (64. * uAudioLow), 0., 1.);
 
-    vec3 frosty = blur * 1.2 + .16;
+    vec2 texel = vec2(1. / uWidth, 1. / uHeight);
+
+    // random rgb scatter
+    vec2 scatterStrength =  texel * (1. + 50. * uAudioVolume);
+    vec3 blur = vec3(
+
+        texture(uBlurTexture, vUv + (noise - .5) * scatterStrength).r,
+        texture(uBlurTexture, vUv + (na - .5) * scatterStrength).g,
+        texture(uBlurTexture, vUv + (nb - .5) * scatterStrength).b
+    );
+
+    vec3 particleRender = texture(uParticleRenderTexture, vUv).rgb ;
+
+    vec3 frosty = blur * 2.2 + .06;
     vec3 col = mix(frosty, particleRender, frostyMask);
 
     oColor = vec4(col, 1.);

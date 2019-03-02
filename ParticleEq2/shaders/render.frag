@@ -37,8 +37,6 @@ uniform vec3 uWorldMainLightPos;
 
 uniform sampler2D uNormalMap;
 uniform sampler2D uShadowMap;
-uniform sampler2D uWebcamTexture;
-uniform sampler2D uOpticalFlowTexture;
 
 uniform samplerCube uCubeMap;
 
@@ -108,9 +106,6 @@ void main() {
         return;
     }
 
-    vec3 webcam = texture(uWebcamTexture, vInstanceTexCoords).rgb;
-    vec3 opticalFlow = texture(uOpticalFlowTexture, vInstanceTexCoords).rgb;
-
     vec3 normal = vWorldNormal;
     vec3 mainLightDir = normalize(uWorldMainLightPos - vWorldPos);
     vec3 lightDir_FILL = normalize(LIGHT_FILL - vWorldPos);
@@ -158,13 +153,11 @@ void main() {
     brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;
 
     // illum effect
-    brdf += (.02 * noiseIllum) * occ * shadow;// + length(opticalFlow) * 100.;
+    brdf += (.02 * noiseIllum) * occ * shadow;
 
-    float alpha = 1.;//(1. - clamp(fresnel, 0., 1.)) * .999 + .001;
+    float alpha = 1.;
 
     brdf = pow(brdf, vec3(uGamma));
-    //brdf = clamp(brdf, -2., 2.);
-    // col.rgb = normal;
 
     oColor = vec4(brdf, alpha);
 }

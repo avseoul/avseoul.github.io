@@ -9,8 +9,6 @@ class FrostyLayerPassRender
 
         this.blurTexture = params.blurTexture;
         this.particleRenderTexture = params.particleRenderTexture;
-        this.webcamTexture = params.webcamTexture;
-        this.opticalFlowTexture = params.opticalFlowTexture;
 
         this.audioAnalyzer = params.audioAnalyzer;
 
@@ -21,8 +19,6 @@ class FrostyLayerPassRender
 
         this.uBlurTexture = gl.getUniformLocation(this.program, "uBlurTexture");
         this.uParticleRenderTexture = gl.getUniformLocation(this.program, "uParticleRenderTexture");
-        this.uWebcamTexture = gl.getUniformLocation(this.program, "uWebcamTexture");
-        this.uOpticalFlowTexture = gl.getUniformLocation(this.program, "uOpticalFlowTexture");
         
         gl.useProgram(this.program);
 
@@ -33,14 +29,6 @@ class FrostyLayerPassRender
         gl.uniform1i(this.uParticleRenderTexture, 1);
         gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, this.particleRenderTexture);
-
-        gl.uniform1i(this.uWebcamTexture, 2);
-        gl.activeTexture(gl.TEXTURE2);
-        gl.bindTexture(gl.TEXTURE_2D, this.webcamTexture);
-
-        gl.uniform1i(this.uOpticalFlowTexture, 3);
-        gl.activeTexture(gl.TEXTURE3);
-        gl.bindTexture(gl.TEXTURE_2D, this.opticalFlowTexture);
 
         const uWidth = gl.getUniformLocation(this.program, "uWidth");
         const uHeight = gl.getUniformLocation(this.program, "uHeight");
@@ -74,14 +62,6 @@ class FrostyLayerPassRender
         gl.uniform1i(this.uParticleRenderTexture, 1);
         gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, this.particleRenderTexture);
-
-        gl.uniform1i(this.uWebcamTexture, 2);
-        gl.activeTexture(gl.TEXTURE2);
-        gl.bindTexture(gl.TEXTURE_2D, this.webcamTexture);
-
-        gl.uniform1i(this.uOpticalFlowTexture, 3);
-        gl.activeTexture(gl.TEXTURE3);
-        gl.bindTexture(gl.TEXTURE_2D, this.opticalFlowTexture);
 
         gl.uniform1f(this.uAudioVolume, this.audioAnalyzer.get_level());
         gl.uniform1f(this.uAudioHigh, this.audioAnalyzer.get_high());

@@ -14,7 +14,7 @@ class ParticleSystem {
 
         this.particle = {}
 
-        this._buildUnitSphere(ctrlParams.SphereResolution);
+        this._buildUnitSphere(params.parameters.SphereResolution);
         //this._buildQuad();
 
         this.buffers = {}
@@ -29,14 +29,14 @@ class ParticleSystem {
 
         this.VAO = this.ctx.createVertexArray();
 
-        this.particleScaleFactor = ctrlParams.ParticleScaleFactor;
-        this.ambient = ctrlParams.Ambient;
-        this.diffuse = ctrlParams.Diffuse;
-        this.fill = ctrlParams.Fill;
-        this.back = ctrlParams.Back;
-        this.fresnel = ctrlParams.Fresnel;
-        this.gamma = ctrlParams.Gamma;
-        this.isBW = ctrlParams.isBW ? 1 : 0;
+        this.particleScaleFactor = params.parameters.ParticleScaleFactor;
+        this.ambient = params.parameters.Ambient;
+        this.diffuse = params.parameters.Diffuse;
+        this.fill = params.parameters.Fill;
+        this.back = params.parameters.Back;
+        this.fresnel = params.parameters.Fresnel;
+        this.gamma = params.parameters.Gamma;
+        this.isBW = params.parameters.isBW ? 1 : 0;
 
         this.updateCtrlParams();
     }

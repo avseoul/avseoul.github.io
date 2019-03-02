@@ -37,73 +37,34 @@ let mainLight;
 let audioAnalyzer;
 
 let stats;
-let ctrl;
-let ctrlParams = {
 
-    // debug
-    ShowStats: true,
-    ShowDebug: true,
-    DebugThumbnailSize: 50,
-
-    // particle
-    ParticleDensity: 32,
-    SphereResolution: 24,
-
-    // force
-    AudioGain: 7000,
-    GlobalGravity: .057,
-    LocalGravity: .29,
-    OrbitAcc: .77,
-    RandomAcc: 7.,
-    
-    RandomScalePop: 0.6,
-    
-    KeepInSphere: false,
-    SphereRadius: 18,
-    
-    ScaleDamping: .93,
-    
-    TimeDelta: .010,
-    MaxVel: 6.,
-
-    ParticleScaleFactor: 1.,
-    Ambient: .0,
-    Diffuse: .23,
-    Fill: 0., 
-    Back: .1, 
-    Fresnel: .2,
-    Gamma: 4.2,
-    isBW: true
-}
+let parameters;
 
 let frame = 0;
 
-let Init = function () {
-
+let Init = function () 
+{
     Redirect2HTTPS();
 
     // load resources
     Promise.all([
 
-        GLHelpers.loadShader("shaders/behaviours.vert"), // 0 
+        GLHelpers.loadShader("shaders/unitQuadPass.vert"), // 0 
         GLHelpers.loadShader("shaders/behaviours.frag"), // 1
         GLHelpers.loadShader("shaders/uniformGrid.vert"), // 2
         GLHelpers.loadShader("shaders/uniformGrid.frag"), // 3
-        GLHelpers.loadShader("shaders/unitQuadPass.vert"), // 4
-        GLHelpers.loadShader("shaders/debugTexture.frag"), // 5
-        GLHelpers.loadShader("shaders/opticalFlow.frag"), // 6
-        GLHelpers.loadShader("shaders/frostyBlur.frag"), // 7
-        GLHelpers.loadShader("shaders/gaussianBlur.frag"), // 8
-        GLHelpers.loadShader("shaders/render.vert"), // 9
-        GLHelpers.loadShader("shaders/render.frag"), // 10
-        GLHelpers.loadTexture("../common/assets/normal.jpg"), // 11
-        GLHelpers.loadTexture("../common/assets/xn.png"), // 12
-        GLHelpers.loadTexture("../common/assets/xp.png"), // 13
-        GLHelpers.loadTexture("../common/assets/yn.png"), // 14
-        GLHelpers.loadTexture("../common/assets/yp.png"), // 15
-        GLHelpers.loadTexture("../common/assets/zn.png"), // 16
-        GLHelpers.loadTexture("../common/assets/zp.png"), // 17
-        GLHelpers.initWebcam() // 18
+        GLHelpers.loadShader("shaders/debugTexture.frag"), // 4
+        GLHelpers.loadShader("shaders/frostyBlur.frag"), // 5
+        GLHelpers.loadShader("shaders/gaussianBlur.frag"), // 6
+        GLHelpers.loadShader("shaders/render.vert"), // 7
+        GLHelpers.loadShader("shaders/render.frag"), // 8
+        GLHelpers.loadTexture("../common/assets/normal.jpg"), // 9
+        GLHelpers.loadTexture("../common/assets/xn.png"), // 10
+        GLHelpers.loadTexture("../common/assets/xp.png"), // 11
+        GLHelpers.loadTexture("../common/assets/yn.png"), // 12
+        GLHelpers.loadTexture("../common/assets/yp.png"), // 13
+        GLHelpers.loadTexture("../common/assets/zn.png"), // 14
+        GLHelpers.loadTexture("../common/assets/zp.png"), // 15
     ])
         .then(
             (res) => {
@@ -114,36 +75,38 @@ let Init = function () {
                 SHADER.UNIFORM_GRID.VERT = res[2].target.response;
                 SHADER.UNIFORM_GRID.FRAG = res[3].target.response;
 
-                SHADER.DEBUG_TEXTURE.VERT = res[4].target.response;
-                SHADER.DEBUG_TEXTURE.FRAG = res[5].target.response;
+                SHADER.DEBUG_TEXTURE.VERT = res[0].target.response;
+                SHADER.DEBUG_TEXTURE.FRAG = res[4].target.response;
 
-                SHADER.OPTICAL_FLOW.VERT = res[4].target.response;
-                SHADER.OPTICAL_FLOW.FRAG = res[6].target.response;
+                SHADER.OPTICAL_FLOW.VERT = res[0].target.response;
+                SHADER.OPTICAL_FLOW.FRAG = res[5].target.response;
 
-                SHADER.FROSTY_PASS.VERT = res[4].target.response;
-                SHADER.FROSTY_PASS.FRAG = res[7].target.response;
+                SHADER.FROSTY_PASS.VERT = res[0].target.response;
+                SHADER.FROSTY_PASS.FRAG = res[5].target.response;
 
-                SHADER.BLUR_PASS.VERT = res[4].target.response;
-                SHADER.BLUR_PASS.FRAG = res[8].target.response;
+                SHADER.BLUR_PASS.VERT = res[0].target.response;
+                SHADER.BLUR_PASS.FRAG = res[6].target.response;
 
-                SHADER.RENDER.VERT = res[9].target.response;
-                SHADER.RENDER.FRAG = res[10].target.response;
+                SHADER.RENDER.VERT = res[7].target.response;
+                SHADER.RENDER.FRAG = res[8].target.response;
 
-                TEXTURE.NORMAL_MAP.IMAGE = res[11].path[0];
+                TEXTURE.NORMAL_MAP.IMAGE = res[9].path[0];
 
-                TEXTURE.CUBEMAP.IMAGES.PX = res[12].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NX = res[13].path[0];
-                TEXTURE.CUBEMAP.IMAGES.PY = res[14].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NY = res[15].path[0];
-                TEXTURE.CUBEMAP.IMAGES.PZ = res[16].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NZ = res[17].path[0];
-
-                TEXTURE.WEBCAM.IMAGE = res[18];
+                TEXTURE.CUBEMAP.IMAGES.PX = res[10].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NX = res[11].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PY = res[12].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NY = res[13].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PZ = res[14].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NZ = res[15].path[0];
             }
         ).then(
             () => {
 
-                SetBufferSize(ctrlParams.ParticleDensity);
+                // parameters
+                parameters = new Parameters();
+                console.log(parameters);
+
+                SetBufferSize(parameters.ctrlParams.ParticleDensity);
 
                 // init app
                 renderer = new Renderer();
@@ -175,14 +138,8 @@ let Init = function () {
                 // create cubemap
                 TEXTURE.CUBEMAP.TEXTURE = GLHelpers.createCubemapTexture(gl, TEXTURE.CUBEMAP.IMAGES);
 
-                // webcam
-                TEXTURE.WEBCAM.TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
-                TEXTURE.WEBCAM.PREV_TEXTURE = GLHelpers.createImageTexture(gl, TEXTURE.WEBCAM.IMAGE);
-
                 // audio input
-                audioAnalyzer = new AudioAnalyzer(ctrlParams.AudioGain);
-
-                console.log(gridTexSize, gridWidth, gridHalfWidth, numGridSliceInGridTexWidth);
+                audioAnalyzer = new AudioAnalyzer(parameters.ctrlParams.AudioGain);
 
                 let params = {
 
@@ -195,23 +152,11 @@ let Init = function () {
                     gridWidth: gridWidth,
                     gridHalfWidth: gridHalfWidth,
                     numGridSliceInGridTexWidth: numGridSliceInGridTexWidth,
-                    audioAnalyzer: audioAnalyzer
+                    audioAnalyzer: audioAnalyzer,
+                    parameters: parameters.ctrlParams
                 }
 
-                opticalFlow = new OpticalFlow({
-
-                    renderer: renderer,
-                    camWidth: TEXTURE.WEBCAM.IMAGE.videoWidth,
-                    camHeight: TEXTURE.WEBCAM.IMAGE.videoHeight,
-                    bufferWidth: bufferWidth,
-                    bufferHeight: bufferHeight,
-                    webcamTexture: TEXTURE.WEBCAM.TEXTURE,
-                    prevWebcamTexture: TEXTURE.WEBCAM.PREV_TEXTURE
-                });
-
                 particleRender = new ParticleRender(params);
-                particleRender.webcamTexture = TEXTURE.WEBCAM.TEXTURE;
-                particleRender.opticalFlowTexture = opticalFlow.renderTexture;
 
                 blurPass = new GaussianBlurPassRender({
 
@@ -224,8 +169,6 @@ let Init = function () {
                     renderer: renderer,
                     blurTexture: blurPass.renderTexture,
                     particleRenderTexture: particleRender.renderTexture,
-                    webcamTexture: TEXTURE.WEBCAM.TEXTURE,
-                    opticalFlowTexture: opticalFlow.renderTexture,
                     audioAnalyzer: audioAnalyzer
                 });
 
@@ -234,223 +177,7 @@ let Init = function () {
                 // stat
                 stats = new Stats();
                 document.body.appendChild(stats.dom);
-
-                // dat gui
-                {
-                    ctrl = new dat.GUI();
-
-                    ctrl.add(ctrlParams, 'AudioGain', 0, 10000).onChange(
-
-                        (val) => {
-                            
-                            audioAnalyzer.set_gain(val);
-                        }
-                    );
-
-                    let ctrlDebug = ctrl.addFolder('Debug');
-
-                    ctrlDebug.add(ctrlParams, 'ShowStats').onFinishChange(
-
-                        (val) => {
-
-                            stats.dom.style.display = val ? 'block' : 'none'
-                        }
-                    );
-
-                    ctrlDebug.add(ctrlParams, 'ShowDebug').onFinishChange(
-
-                        (val) => ctrlParams.ShowDebug = val
-                    );
-
-                    ctrlDebug.add(ctrlParams, 'DebugThumbnailSize', 50, 200);
-
-                    let ctrlGlobal = ctrl.addFolder('Particle Global');
-
-                    ctrlGlobal.add(ctrlParams, 'ParticleDensity', [16, 32, 64, 128, 256, 512, 1024]).onChange(
-
-                        (val) => {
-
-                            SetBufferSize(val);
-                            Reset();
-                        }
-                    );
-
-                    ctrlGlobal.add(ctrlParams, 'SphereResolution', [4, 8, 16, 24, 32]).onChange(
-
-                        (val) => {
-
-                            particleRender.particleSystem._buildUnitSphere(val);
-                            Reset();
-                        }
-                    );
-
-                    ctrlGlobal.add(ctrlParams, 'ParticleScaleFactor', .1, 2).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.particleScaleFactor = val;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-
-                    let ctrlForce = ctrl.addFolder('Particle Forces');
-
-                    ctrlForce.add(ctrlParams, 'GlobalGravity', 0, .5).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.globalGravity = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'LocalGravity', 0, 1).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.localGravity = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'OrbitAcc', 0, 1).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.orbitAcc = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'RandomAcc', 0, 10).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.randomAcc = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'RandomScalePop', 0., 10.).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.randomScalePop = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'KeepInSphere').onFinishChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.keepInSphere = val ? 1 : 0;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'SphereRadius', 0., 64.).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.sphereRadius = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'ScaleDamping', .9, 1.).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.scaleDamping = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'TimeDelta', 0., .1).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.timeDelta = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlForce.add(ctrlParams, 'MaxVel', 0., 50).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleBehaviours.maxVel = val;
-                            particleRender.particleBehaviours.updateCtrlParams();
-                        }
-                    );
-
-                    let ctrlLighting = ctrl.addFolder('Particle Shading and Lighting');
-
-                    ctrlLighting.add(ctrlParams, 'Ambient', .0, 2).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.ambient = val;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlLighting.add(ctrlParams, 'Diffuse', 0, 2).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.diffuse = val;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlLighting.add(ctrlParams, 'Fill', 0, 2).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.fill = val;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlLighting.add(ctrlParams, 'Back', 0, 2).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.back = val;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlLighting.add(ctrlParams, 'Fresnel', 0, 2).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.fresnel = val;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlLighting.add(ctrlParams, 'Gamma', .45, 4.22).onChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.gamma = val;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-
-                    ctrlLighting.add(ctrlParams, 'isBW').onFinishChange(
-
-                        (val) => {
-                            
-                            particleRender.particleSystem.isBW = val ? 1 : 0;
-                            particleRender.particleSystem.updateCtrlParams();
-                        }
-                    );
-                } 
-
+                
                 Update();
 
                 isInit = true;
@@ -476,10 +203,6 @@ let Update = function () {
     // camera.updateProjectionMatrix();
     // camera.updateMatrixWorld(true);
 
-    GLHelpers.updateWebCamTexture(gl, TEXTURE.WEBCAM.IMAGE, TEXTURE.WEBCAM.TEXTURE);
-    opticalFlow.update();
-    GLHelpers.updateWebCamTexture(gl, TEXTURE.WEBCAM.IMAGE, TEXTURE.WEBCAM.PREV_TEXTURE);
-
     particleRender.update();
     particleRender.render();
 
@@ -487,7 +210,20 @@ let Update = function () {
 
     frostyPass.render();
 
-    if (ctrlParams.ShowDebug) Debug();
+    if (parameters.ctrlParams.ShowDebug)
+    {
+        particleDebug.debugTextures([
+
+            particleRender.particleBehaviours.positionBuffer,
+            particleRender.particleBehaviours.velocityBuffer,
+            particleRender.particleUniformGrid.gridTexture,
+            TEXTURE.NORMAL_MAP.TEXTURE,
+            particleRender.light.shadowMap,
+            particleRender.renderTexture,
+            blurPass.renderTexture
+
+        ], parameters.ctrlParams.DebugThumbnailSize);
+    } 
 
     stats.update();
 
@@ -499,35 +235,6 @@ let Update = function () {
 let SetBufferSize = function (val) {
 
     bufferWidth = val, bufferHeight = bufferWidth, bufferSize = bufferWidth * bufferHeight;
-}
-
-let Debug = function() 
-{
-    particleDebug.debugTexture(
-        particleRender.particleBehaviours.positionBuffer, 0, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-    particleDebug.debugTexture(
-        particleRender.particleBehaviours.velocityBuffer, ctrlParams.DebugThumbnailSize, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-
-    particleDebug.debugTexture(
-        particleRender.particleUniformGrid.gridTexture, ctrlParams.DebugThumbnailSize * 2, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-
-    particleDebug.debugTexture(
-        TEXTURE.NORMAL_MAP.TEXTURE, ctrlParams.DebugThumbnailSize * 3, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-
-    particleDebug.debugTexture(
-        particleRender.light.shadowMap, ctrlParams.DebugThumbnailSize * 4, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-
-    particleDebug.debugTexture(
-        TEXTURE.WEBCAM.TEXTURE, ctrlParams.DebugThumbnailSize * 5, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-
-    particleDebug.debugTexture(
-        opticalFlow.renderTexture, ctrlParams.DebugThumbnailSize * 6, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-
-    particleDebug.debugTexture(
-        particleRender.renderTexture, ctrlParams.DebugThumbnailSize * 7, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
-
-        particleDebug.debugTexture(
-            blurPass.renderTexture, ctrlParams.DebugThumbnailSize * 8, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
 }
 
 let Reset = function () {
@@ -550,23 +257,24 @@ let OnWindowResize = function () {
     camera.updateProjectionMatrix();
 }
 
-let OnKeyDown = function (evt) {
-
-    if (evt.code === 'Space') {
-
+let OnKeyDown = function (evt) 
+{
+    if (evt.code === 'h') 
+    {
+        parameters.toggleVisible();
     }
 }
 
-let Redirect2HTTPS = function () {
-
-    if (window.location.protocol == 'http:' && window.location.hostname != "localhost") {
-
+let Redirect2HTTPS = function () 
+{
+    if (window.location.protocol == 'http:' && window.location.hostname != "localhost") 
+    {
         window.open("https://" + window.location.hostname + window.location.pathname, '_top');
     }
 }
 
-let OnDestroy = function () {
-
+let OnDestroy = function () 
+{
     particleRender.destroy();
 }
 

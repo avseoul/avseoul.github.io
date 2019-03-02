@@ -1,7 +1,7 @@
-class ParticleDebug {
-
-    constructor(ctx) {
-
+class ParticleDebug 
+{
+    constructor(ctx) 
+    {
         this.ctx = ctx;
 
         const vert = GLHelpers.compileShader(gl, SHADER.DEBUG_TEXTURE.VERT, gl.VERTEX_SHADER);
@@ -13,8 +13,16 @@ class ParticleDebug {
         this.uDebugTex = gl.getUniformLocation(this.debugProgram, "uTex");
     }
 
-    debugTexture(tex, x, y, w, h) {
+    debugTextures(textureArray, size)
+    {
+        for(let i = 0; i < textureArray.length; i++)
+        {
+            this.debugTexture(textureArray[i], size * i, 0, size, size);
+        }
+    }
 
+    debugTexture(tex, x, y, w, h) 
+    {
         const gl = this.ctx;
 
         gl.viewport(x, y, w, h);
@@ -28,8 +36,8 @@ class ParticleDebug {
         UnitQuad.render();
     }
 
-    destroy() {
-
+    destroy() 
+    {
         const gl = this.ctx;
         
         gl.deleteProgram(this.debugProgram);

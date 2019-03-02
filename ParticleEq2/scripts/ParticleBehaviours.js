@@ -17,6 +17,8 @@ class ParticleBehaviours {
         
         this.posTextures = [2], this.velTextures = [2];
 
+        this.ctrlParams = params.parameters;
+
         this.uIsInit, this.uTime, this.uPosBuffer, this.uVelBuffer, 
         this.uGlobalGravity, this.uLocalGravity, this.uOrbitAcc, this.uRandomAcc, 
         this.uRandomScalePop, this.uKeepInSphere, this.uSphereRadius, this.uScaleDamping, 
@@ -27,26 +29,23 @@ class ParticleBehaviours {
         this.bufIndex = 0;
 
         // behaviour 
-        const vs = SHADER.BEHAVIOURS.VERT;
-        const fs = SHADER.BEHAVIOURS.FRAG;
-
-        const vert = GLHelpers.compileShader(gl, vs, gl.VERTEX_SHADER);
-        const frag = GLHelpers.compileShader(gl, fs, gl.FRAGMENT_SHADER); 
+        const vert = GLHelpers.compileShader(gl, SHADER.BEHAVIOURS.VERT, gl.VERTEX_SHADER);
+        const frag = GLHelpers.compileShader(gl, SHADER.BEHAVIOURS.FRAG, gl.FRAGMENT_SHADER); 
 
         this.rttProgram = GLHelpers.linkProgram(gl, vert, frag);
 
         this.audioAnalyzer = params.audioAnalyzer;
 
-        this.globalGravity = ctrlParams.GlobalGravity;
-        this.localGravity = ctrlParams.LocalGravity;
-        this.orbitAcc = ctrlParams.OrbitAcc;
-        this.randomAcc = ctrlParams.RandomAcc;
-        this.randomScalePop = ctrlParams.RandomScalePop;
-        this.keepInSphere = ctrlParams.KeepInSphere ? 1 : 0;
-        this.sphereRadius = ctrlParams.SphereRadius;
-        this.scaleDamping = ctrlParams.ScaleDamping;
-        this.timeDelta = ctrlParams.TimeDelta;
-        this.maxVel = ctrlParams.MaxVel;
+        this.globalGravity = this.ctrlParams.GlobalGravity;
+        this.localGravity = this.ctrlParams.LocalGravity;
+        this.orbitAcc = this.ctrlParams.OrbitAcc;
+        this.randomAcc = this.ctrlParams.RandomAcc;
+        this.randomScalePop = this.ctrlParams.RandomScalePop;
+        this.keepInSphere = this.ctrlParams.KeepInSphere ? 1 : 0;
+        this.sphereRadius = this.ctrlParams.SphereRadius;
+        this.scaleDamping = this.ctrlParams.ScaleDamping;
+        this.timeDelta = this.ctrlParams.TimeDelta;
+        this.maxVel = this.ctrlParams.MaxVel;
 
         this._init();
     }
