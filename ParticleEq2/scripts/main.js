@@ -12,7 +12,8 @@ let SHADER = {
     UNIFORM_GRID: { VERT: null, FRAG: null },
     DEBUG_TEXTURE: { VERT: null, FRAG: null },
     RENDER: { VERT: null, FRAG: null },
-    BLUR_PASS: { VERT: null, FRAG: null }
+    BLUR_PASS: { VERT: null, FRAG: null },
+    FROSTY_PASS: { VERT: null, FRAG: null }
 }
 
 let TEXTURE = {
@@ -29,6 +30,7 @@ let camera;
 let particleRender;
 let opticalFlow;
 let blurPass;
+let frostyPass;
 let particleDebug;
 let mainLight;
 
@@ -50,8 +52,8 @@ let ctrlParams = {
     // force
     AudioGain: 7000,
     GlobalGravity: .057,
-    LocalGravity: .19,
-    OrbitAcc: .47,
+    LocalGravity: .29,
+    OrbitAcc: .77,
     RandomAcc: 7.,
     
     RandomScalePop: 0.6,
@@ -62,7 +64,7 @@ let ctrlParams = {
     ScaleDamping: .93,
     
     TimeDelta: .010,
-    MaxVel: 12.,
+    MaxVel: 6.,
 
     ParticleScaleFactor: 1.,
     Ambient: .0,
@@ -91,16 +93,17 @@ let Init = function () {
         GLHelpers.loadShader("shaders/debugTexture.frag"), // 5
         GLHelpers.loadShader("shaders/opticalFlow.frag"), // 6
         GLHelpers.loadShader("shaders/frostyBlur.frag"), // 7
-        GLHelpers.loadShader("shaders/render.vert"), // 8
-        GLHelpers.loadShader("shaders/render.frag"), // 9
-        GLHelpers.loadTexture("../common/assets/normal.jpg"), // 10
-        GLHelpers.loadTexture("../common/assets/xn.png"), // 11
-        GLHelpers.loadTexture("../common/assets/xp.png"), // 12
-        GLHelpers.loadTexture("../common/assets/yn.png"), // 13
-        GLHelpers.loadTexture("../common/assets/yp.png"), // 14
-        GLHelpers.loadTexture("../common/assets/zn.png"), // 15
-        GLHelpers.loadTexture("../common/assets/zp.png"), // 16
-        GLHelpers.initWebcam() // 17
+        GLHelpers.loadShader("shaders/gaussianBlur.frag"), // 8
+        GLHelpers.loadShader("shaders/render.vert"), // 9
+        GLHelpers.loadShader("shaders/render.frag"), // 10
+        GLHelpers.loadTexture("../common/assets/normal.jpg"), // 11
+        GLHelpers.loadTexture("../common/assets/xn.png"), // 12
+        GLHelpers.loadTexture("../common/assets/xp.png"), // 13
+        GLHelpers.loadTexture("../common/assets/yn.png"), // 14
+        GLHelpers.loadTexture("../common/assets/yp.png"), // 15
+        GLHelpers.loadTexture("../common/assets/zn.png"), // 16
+        GLHelpers.loadTexture("../common/assets/zp.png"), // 17
+        GLHelpers.initWebcam() // 18
     ])
         .then(
             (res) => {
@@ -117,22 +120,25 @@ let Init = function () {
                 SHADER.OPTICAL_FLOW.VERT = res[4].target.response;
                 SHADER.OPTICAL_FLOW.FRAG = res[6].target.response;
 
+                SHADER.FROSTY_PASS.VERT = res[4].target.response;
+                SHADER.FROSTY_PASS.FRAG = res[7].target.response;
+
                 SHADER.BLUR_PASS.VERT = res[4].target.response;
-                SHADER.BLUR_PASS.FRAG = res[7].target.response;
+                SHADER.BLUR_PASS.FRAG = res[8].target.response;
 
-                SHADER.RENDER.VERT = res[8].target.response;
-                SHADER.RENDER.FRAG = res[9].target.response;
+                SHADER.RENDER.VERT = res[9].target.response;
+                SHADER.RENDER.FRAG = res[10].target.response;
 
-                TEXTURE.NORMAL_MAP.IMAGE = res[10].path[0];
+                TEXTURE.NORMAL_MAP.IMAGE = res[11].path[0];
 
-                TEXTURE.CUBEMAP.IMAGES.PX = res[11].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NX = res[12].path[0];
-                TEXTURE.CUBEMAP.IMAGES.PY = res[13].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NY = res[14].path[0];
-                TEXTURE.CUBEMAP.IMAGES.PZ = res[15].path[0];
-                TEXTURE.CUBEMAP.IMAGES.NZ = res[16].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PX = res[12].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NX = res[13].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PY = res[14].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NY = res[15].path[0];
+                TEXTURE.CUBEMAP.IMAGES.PZ = res[16].path[0];
+                TEXTURE.CUBEMAP.IMAGES.NZ = res[17].path[0];
 
-                TEXTURE.WEBCAM.IMAGE = res[17];
+                TEXTURE.WEBCAM.IMAGE = res[18];
             }
         ).then(
             () => {
@@ -207,9 +213,16 @@ let Init = function () {
                 particleRender.webcamTexture = TEXTURE.WEBCAM.TEXTURE;
                 particleRender.opticalFlowTexture = opticalFlow.renderTexture;
 
-                blurPass = new BlurPassRender({
+                blurPass = new GaussianBlurPassRender({
 
                     renderer: renderer,
+                    particleRenderTexture: particleRender.renderTexture,
+                });
+
+                frostyPass = new FrostyLayerPassRender({
+
+                    renderer: renderer,
+                    blurTexture: blurPass.renderTexture,
                     particleRenderTexture: particleRender.renderTexture,
                     webcamTexture: TEXTURE.WEBCAM.TEXTURE,
                     opticalFlowTexture: opticalFlow.renderTexture,
@@ -472,6 +485,8 @@ let Update = function () {
 
     blurPass.render();
 
+    frostyPass.render();
+
     if (ctrlParams.ShowDebug) Debug();
 
     stats.update();
@@ -510,6 +525,9 @@ let Debug = function()
 
     particleDebug.debugTexture(
         particleRender.renderTexture, ctrlParams.DebugThumbnailSize * 7, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
+
+        particleDebug.debugTexture(
+            blurPass.renderTexture, ctrlParams.DebugThumbnailSize * 8, 0, ctrlParams.DebugThumbnailSize, ctrlParams.DebugThumbnailSize);
 }
 
 let Reset = function () {

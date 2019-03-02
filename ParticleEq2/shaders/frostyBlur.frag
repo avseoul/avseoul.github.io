@@ -5,6 +5,7 @@ precision highp int;
 
 in vec2 vUv;
 
+uniform sampler2D uBlurTexture;
 uniform sampler2D uParticleRenderTexture;
 uniform sampler2D uWebcamTexture;
 uniform sampler2D uOpticalFlowTexture;
@@ -71,50 +72,22 @@ float fbm(vec2 n, float t)
 	return f;
 }
 
-float fbm(vec2 n, float t) 
-{
-	float total = 0.0;
-	float amplitude = .8;
-
-	for (float i = 0.; i < FBM_COMPLEXITY; i++) 
-    {
-		total += snoise(vec3(n, i) + t) * amplitude;
-		n = NOISE_ROT_MAT * (n * 4. * amplitude);
-		amplitude *= .4;
-	}
-
-	return max(total, 0.);
-}
-
-void main() 
+void main()
 {
     vec3 particleRender = texture(uParticleRenderTexture, vUv).rgb;
-    vec3 webcam = texture(uWebcamTexture, vUv).rgb;
-    vec3 opticalFlow = texture(uOpticalFlowTexture, vUv).rgb;
-		
-    // hash blur - https://www.shadertoy.com/view/4lXXWn
-    float strength = .04;
 
-    vec3 blur = vec3(0.);
+    vec3 blur = texture(uBlurTexture, vUv).rgb;
 
-    for (float i = 0.; i < SAMPLES; i++) 
-    { 
-        vec2 q = vec2(cos(i / SAMPLES * TWO_PI), sin(i / SAMPLES * TWO_PI)) *  rand(vec2(i + uTime, vUv.x + vUv.y)); 
-        blur += texture(uParticleRenderTexture, vUv + (q * strength)).rgb;
+    float t = uTime * .1 + uAudioHistory * .3;
+    vec2 p = vUv * vec2(1., uHeight/uWidth) + vec2(0., t * .1);
+    float na = fbm(p.xy, t);
+    float nb = fbm(p.yx, t);
+	float noise = fbm(p.xy + vec2(na, nb), t);
+    float osc = sin(t) * .35 + .65;
+    float frostyMask = clamp(pow(noise * na * nb, 4. * osc * uAudioLow) * (64. * uAudioLow), 0., 1.);
 
-        q = vec2(sin(i / SAMPLES * TWO_PI), cos(i / SAMPLES * TWO_PI)) *  rand(vec2(vUv.x + vUv.y, i + uTime)); 
-        blur += texture(uParticleRenderTexture, vUv + (q * strength)).rgb;
-    }
-    blur /= SAMPLES * 2.;
+    vec3 frosty = blur * 1.2 + .16;
+    vec3 col = mix(frosty, particleRender, frostyMask);
 
-    float t = uTime * 1.2 + uAudioHistory * .2;
-    vec2 p = vUv * 1.6 + vec2(0., t * .1);
-	float noise = fbm(p.xy + vec2(fbm(p.xy, t), fbm(p.yx, t)), t);
-    noise = clamp(pow(noise, 3. * uAudioLow) * (3. * uAudioLow), 0., 1.);
-
-    vec3 col = mix(blur, particleRender, noise);
-    vec3 frosty = col * 1.5 + .16;
-    col = mix(frosty, col + .06, noise);
-        
     oColor = vec4(col, 1.);
 }

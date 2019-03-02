@@ -13,10 +13,8 @@ class ParticleRender {
         this.bufferWidth = params.bufferWidth;
         this.bufferHeight = params.bufferHeight;
 
-        const ratio = this.ctx.drawingBufferHeight / this.ctx.drawingBufferWidth;
-
-        this.w = this.ctx.drawingBufferWidth > 1920 ? 1920 : this.ctx.drawingBufferWidth;
-        this.h = this.ctx.drawingBufferWidth > 1920 ? 1920 * ratio : this.ctx.drawingBufferHeight;
+        this.w = this.ctx.drawingBufferWidth;
+        this.h = this.ctx.drawingBufferHeight;
 
         this.numInstance = this.bufferWidth * this.bufferHeight;
 
