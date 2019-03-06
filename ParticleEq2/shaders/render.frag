@@ -150,7 +150,7 @@ void main() {
     brdf += uDiffuse * diffuse * col * occ * shadow;
     brdf += uFill * fill * col * occ * shadow;
     brdf += uBack * back * col * occ * shadow;
-    brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.xyz)) * occ * shadow;
+    brdf += uFresnel * fresnel * (uisBW > .5 ? col : col * normalize(1.-vInstanceVelocities.zxy)) * occ * shadow;
 
     // illum effect
     brdf += (.02 * noiseIllum) * occ * shadow;
@@ -159,5 +159,5 @@ void main() {
 
     brdf = pow(brdf, vec3(uGamma));
 
-    oColor = vec4(brdf, alpha);
+    oColor = vec4(clamp(brdf, 0., 1.), alpha);
 }

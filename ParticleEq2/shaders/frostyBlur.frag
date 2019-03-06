@@ -59,7 +59,7 @@ vec3 norm(in vec3 v) {
 
 float fbm(vec2 n, float t)
 {
-    vec3 q = 24. * vec3(n, 0.) - t;
+    vec3 q = 4. * vec3(n, 0.) - t;
     float f = 0.;
 
     f += .5000 * snoise(q); q = NOISE_ROT_MAT * q * 4.01;
@@ -86,15 +86,17 @@ void main()
     vec2 scatterStrength =  texel * (1. + 50. * uAudioVolume);
     vec3 blur = vec3(
 
-        texture(uBlurTexture, vUv + (noise - .5) * scatterStrength).r,
+        texture(uBlurTexture, vUv + (noise - .5) * scatterStrength).b,
         texture(uBlurTexture, vUv + (na - .5) * scatterStrength).g,
-        texture(uBlurTexture, vUv + (nb - .5) * scatterStrength).b
+        texture(uBlurTexture, vUv + (nb - .5) * scatterStrength).r
     );
 
     vec3 particleRender = texture(uParticleRenderTexture, vUv).rgb ;
 
     vec3 frosty = blur * 2.2 + .06;
     vec3 col = mix(frosty, particleRender, frostyMask);
+
+    col = clamp(col, 0., 1.);
 
     oColor = vec4(col, 1.);
 }

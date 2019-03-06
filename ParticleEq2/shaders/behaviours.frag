@@ -229,7 +229,7 @@ void main() {
     vel.xyz += force.xyz / pos.w;
 
     // clamping vel
-    float maxVel = uMaxVel * pow(uAudioVolume + uAudioLow * .5, 2.);
+    float maxVel = uMaxVel * (1. + uAudioVolume + uAudioLow);
     if(length(vel.xyz) > maxVel) {
 
         vel.xyz = norm(vel.xyz) * maxVel;
@@ -238,7 +238,7 @@ void main() {
     // damping
     vel.xyz *= .96;
 
-    pos.xyz += vel.xyz * uTimeDelta * (uAudioVolume + uAudioLow);
+    pos.xyz += vel.xyz * uTimeDelta * (1. + uAudioVolume + uAudioLow);
 
     // reset scale
     // if(pos.w > 12.) pos.w = 1.;

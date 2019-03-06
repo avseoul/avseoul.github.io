@@ -36,11 +36,11 @@ class Parameters
             MaxVel: 6.,
 
             ParticleScaleFactor: 1.,
-            Ambient: .0,
-            Diffuse: .23,
+            Ambient: .1,
+            Diffuse: .33,
             Fill: 0., 
-            Back: .1, 
-            Fresnel: .2,
+            Back: .39, 
+            Fresnel: .3,
             Gamma: 4.2,
             isBW: true
         }

@@ -188,6 +188,7 @@ let Init = function ()
 let Update = function () {
 
     audioAnalyzer.update();
+    audioAnalyzer.debug();
     // console.log(audioAnalyzer.get_level(), audioAnalyzer.get_high(), audioAnalyzer.get_mid(), audioAnalyzer.get_bass());
 
     // update camera 
