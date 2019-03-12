@@ -5,6 +5,15 @@ let AudioAnalyzer = function(gain)
 
     this.debugCanvas = null;
 
+    this.bass = 0.;
+    this.mid = 0.;
+    this.high = 0.;
+    this.level = 0.;
+
+    this.cutout = .5;
+
+    this.frame = 0;
+
     navigator.getUserMedia = (
 
         navigator.getUserMedia ||
@@ -55,13 +64,6 @@ AudioAnalyzer.prototype.init = function(gain, _stream)
     this.gain.connect(this.analyzer);
     this.gain.gain.value = gain || 70.;
 
-    this.bass = 0.;
-    this.mid = 0.;
-    this.high = 0.;
-    this.level = 0.;
-
-    this.frame = 0;
-
     this.reset_history();
     
     this.buffer_length = this.analyzer.frequencyBinCount;
@@ -75,13 +77,6 @@ AudioAnalyzer.prototype.init = function(gain, _stream)
 AudioAnalyzer.prototype.init_without_stream = function()
 {
     alert("microphone is not detected. pulse is activated instead of mic input");
-
-    this.bass = 0.;
-    this.mid = 0.;
-    this.high = 0.;
-    this.level = 0.;
-
-    this.frame = 0;
 
     this.reset_history();
 
@@ -104,9 +99,11 @@ AudioAnalyzer.prototype.update = function()
             
             const _pass_size = this.buffer_length / 3.;
 
-            for(let i = 0; i < this.buffer_length; i++){
-
+            for(let i = 0; i < this.buffer_length; i++) 
+            {
                 let _val = this.audio_buffer[i] / 256;
+
+                if(_val < this.cutout) _val *= 0.; 
 
                 if (i < _pass_size) _bass += _val;
                 else if (i >= _pass_size && i < _pass_size * 2) _mid += _val;
@@ -125,6 +122,8 @@ AudioAnalyzer.prototype.update = function()
                 _mid = Math.random();
                 _high = Math.random();
             }
+
+            this.frame++;
         }
 
         console.log(_bass, _mid, _high);
@@ -137,12 +136,10 @@ AudioAnalyzer.prototype.update = function()
         this.mid = Math.max(Math.min(this.mid, 1.), 0.);
         this.high = Math.max(Math.min(this.high, 1.), 0.);
 
-        this.level = (this.bass + this.mid + this.high)/3.;
+        this.level = (this.bass + this.mid + this.high) / 3.;
 
         this.history += this.level * .01 + .005; 
     }
-
-    this.frame++;
 };
 
 AudioAnalyzer.prototype.reset_history = function()
@@ -209,17 +206,14 @@ AudioAnalyzer.prototype.debug = function(_canvas)
         console.log("debug canvas created", canvas);
     }
 
-    var _ctx = canvas.getContext("2d");
+    const _ctx = canvas.getContext("2d");
 
     _ctx.fillStyle = 'rgb(0, 0, 0)';
     _ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    var _w = (canvas.width / this.buffer_length);
-    var _h;
-    var _x = 0;
-
-    _x = 0;
-    _w = (canvas.width / 4.);
+    const _w = (canvas.width / 4.);
+    let _h;
+    let _x = 0;
 
     _h = this.bass * canvas.height;
     _ctx.fillStyle = 'rgb(200,0,0)';

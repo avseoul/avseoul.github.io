@@ -19,7 +19,7 @@ class Parameters
             SphereResolution: 16,
 
             // force
-            AudioGain: 7000,
+            AudioGain: 10,
             GlobalGravity: .057,
             LocalGravity: .29,
             OrbitAcc: .77,
@@ -47,7 +47,7 @@ class Parameters
 
         // setup
         {
-            this.ctrl.add(this.ctrlParams, 'AudioGain', 0, 10000).onChange(
+            this.ctrl.add(this.ctrlParams, 'AudioGain', 0, 10).onChange(
 
                 (val) => {
                     
