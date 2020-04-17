@@ -3,7 +3,6 @@ var input_frag =
 varying vec2 v_uv;
 
 uniform float u_t;
-uniform bool u_is_init;
 uniform vec2 u_res;
 
 uniform float u_audio_high;

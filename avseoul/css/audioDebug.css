@@ -1,0 +1,10 @@
+
+.audioDebug {
+	width: 320px;
+	height: 140px;
+	z-index: 999;
+    
+    position: absolute;
+	right: 0px;
+	bottom: 0px;
+}

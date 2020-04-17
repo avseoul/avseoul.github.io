@@ -51,6 +51,7 @@ var update = function(){
 
     // update audio analyzer
     m_analyzer.update();
+    // m_analyzer.debug();
 
     // update glitch
     m_blob.update();

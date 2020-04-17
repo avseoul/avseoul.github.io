@@ -1,238 +1,213 @@
-let AudioAnalyzer = function(gain)
-{
-    this.is_init = false;
-    this.is_pulse = false;
+let AudioAnalyzer = function (gain) {
+    this.isInit = false;
+    this.isPulse = false;
 
     this.debugCanvas = null;
+    this.debugCanvasCtx = null;
+
+    this.FFT_SIZE = 256;
 
     this.bass = 0.;
     this.mid = 0.;
     this.high = 0.;
     this.level = 0.;
-
     this.cutout = .5;
-
     this.frame = 0;
 
     navigator.getUserMedia = (
-
         navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia
     );
 
-    if (navigator.getUserMedia) 
-    {
-        console.log('getUserMedia supported.');
-        
-        navigator.getUserMedia ({
-            
-            audio: true
-            
-        }, this.init.bind(this, gain),
-        this.init_without_stream.bind(this));
-    } 
-    else 
-    {
-        if(window.location.protocol == 'https:')
-        {
-            this.init_without_stream();
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({audio: true}, 
+            this.init.bind(this, gain),
+            this.initWithoutStream.bind(this));
+    }
+    else {
+        if (window.location.protocol == 'https:') {
+            this.initWithoutStream();
         }
-
-        console.log('getUserMedia not supported on your browser!');
     }
 };
 
-AudioAnalyzer.prototype.init = function(gain, _stream)
-{
-    const _ctx = new (
-
-        window.AudioContext || 
-        window.webkitAudioContext || 
-        window.mozAudioContext || 
+AudioAnalyzer.prototype.init = function (gain, stream) {
+    const audioCtx = new (
+        window.AudioContext ||
+        window.webkitAudioContext ||
+        window.mozAudioContext ||
         window.msAudioContext)();
+    
+    const mediaStreamSource = audioCtx.createMediaStreamSource(stream);
 
-    let _source = _ctx.createMediaStreamSource(_stream);
-
-    // https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
-    this.analyzer = _ctx.createAnalyser();
-    this.analyzer.fftSize = 256;
-
-    this.gain = _ctx.createGain();
-    _source.connect(this.gain);
-    this.gain.connect(this.analyzer);
+    this.gain = audioCtx.createGain();
     this.gain.gain.value = gain || 70.;
-
-    this.reset_history();
     
-    this.buffer_length = this.analyzer.frequencyBinCount;
-    this.audio_buffer = new Uint8Array(this.buffer_length);
-
-    console.log("audio analyzer is init");
+    const lowPass = audioCtx.createBiquadFilter();
+    lowPass.type = "lowpass";
+    lowPass.frequency.value = 1000;
     
-    this.is_init = true;
+    const highPass = audioCtx.createBiquadFilter();
+    highPass.type = "highpass";
+    highPass.frequency.value = 20000;
+    
+    this.analyzer = audioCtx.createAnalyser();
+    this.analyzer.fftSize = this.FFT_SIZE;
+    
+    // Node tree
+    mediaStreamSource.connect(this.gain);
+    this.gain.connect(lowPass);
+    this.gain.connect(highPass);
+    lowPass.connect(this.analyzer);
+    highPass.connect(this.analyzer);
+
+    this.reset();
+
+    this.audioBuffer = new Uint8Array(this.analyzer.frequencyBinCount);
+
+    this.isInit = true;
 };
 
-AudioAnalyzer.prototype.init_without_stream = function()
-{
+AudioAnalyzer.prototype.initWithoutStream = function () {
     alert("microphone is not detected. pulse is activated instead of mic input");
 
-    this.reset_history();
+    this.reset();
 
-    console.log("audio analyzer is init without mic");
-    
-    this.is_init = true;
-    this.is_pulse = true;
+    this.isInit = true;
+    this.isPulse = true;
 };
 
-AudioAnalyzer.prototype.update = function()
-{   
-    
-    if(this.is_init)
-    {    
-        let _bass = 0., _mid = 0., _high = 0.;
+AudioAnalyzer.prototype.update = function () {
+    if (!this.isInit) return;
 
-        if(!this.is_pulse){
+    let bass = 0, mid = 0, high = 0;
+    if (!this.isPulse) {   
+        this.analyzer.getByteFrequencyData(this.audioBuffer);
+        const passSize = this.analyzer.frequencyBinCount / 3;
+        const DATA_SCALE = 255;
 
-            this.analyzer.getByteFrequencyData(this.audio_buffer);
+        for (let i = 0; i < this.analyzer.frequencyBinCount; i++) {
             
-            const _pass_size = this.buffer_length / 3.;
+            const val = this.audioBuffer[i] / DATA_SCALE;
 
-            for(let i = 0; i < this.buffer_length; i++) 
-            {
-                let _val = this.audio_buffer[i] / 256;
+            if (val === Infinity || val < this.cutout) continue;
 
-                if(_val < this.cutout) _val *= 0.; 
-
-                if (i < _pass_size) _bass += _val;
-                else if (i >= _pass_size && i < _pass_size * 2) _mid += _val;
-                else if (i >= _pass_size * 2) _high += _val;  
-            }
-
-            _bass /= _pass_size;
-            _mid /= _pass_size;
-            _high /= _pass_size;
-        } 
-        else 
-        {
-            if(this.frame % 40 == (Math.floor(Math.random() * 40.)))
-            {
-                _bass = Math.random();
-                _mid = Math.random();
-                _high = Math.random();
-            }
-
-            this.frame++;
+            if (i < passSize) bass += val;
+            else if (i < passSize * 2) mid += val;
+            else if (i <= passSize * 3) high += val;
         }
 
-        console.log(_bass, _mid, _high);
+        bass /= passSize;
+        mid /= passSize;
+        high /= passSize;
+    } else {
+        if (this.frame % 40 == (Math.floor(Math.random() * 40.))) {
+            bass = Math.random();
+            mid = Math.random();
+            high = Math.random();
+        }
 
-        this.bass = this.bass > _bass ? this.bass * .96 : _bass;
-        this.mid = this.mid > _mid ? this.mid * .96 : _mid;
-        this.high = this.high > _high ? this.high * .96 : _high;
-
-        this.bass = Math.max(Math.min(this.bass, 1.), 0.);
-        this.mid = Math.max(Math.min(this.mid, 1.), 0.);
-        this.high = Math.max(Math.min(this.high, 1.), 0.);
-
-        this.level = (this.bass + this.mid + this.high) / 3.;
-
-        this.history += this.level * .01 + .005; 
+        this.frame++;
     }
+
+    this.bass = this.bass > bass ? this.bass * .96 : bass;
+    this.mid = this.mid > mid ? this.mid * .96 : mid;
+    this.high = this.high > high ? this.high * .96 : high;
+
+    this.level = (this.bass + this.mid + this.high) / 3.;
+    this.history += this.level * .01 + .005;
 };
 
-AudioAnalyzer.prototype.reset_history = function()
-{
+AudioAnalyzer.prototype.reset = function () {
     this.history = 0.;
 };
 
-AudioAnalyzer.prototype.set_gain = function(_val)
-{
-    if(this.gain) this.gain.gain.value = _val;
+AudioAnalyzer.prototype.set_gain = function (_val) {
+    if (this.gain) this.gain.gain.value = _val;
 };
 
-AudioAnalyzer.prototype.get_gain = function()
-{
-    if(this.gain) this.gain.gain.value;
+AudioAnalyzer.prototype.get_gain = function () {
+    if (this.gain) this.gain.gain.value;
 };
 
-AudioAnalyzer.prototype.get_bass = function()
-{
+AudioAnalyzer.prototype.get_bass = function () {
     return this.bass == undefined ? 0. : this.bass;
 };
 
-AudioAnalyzer.prototype.get_mid = function()
-{
+AudioAnalyzer.prototype.get_mid = function () {
     return this.mid == undefined ? 0. : this.mid;
 };
 
-AudioAnalyzer.prototype.get_high = function()
-{
+AudioAnalyzer.prototype.get_high = function () {
     return this.high == undefined ? 0. : this.high;
 };
 
-AudioAnalyzer.prototype.get_level = function()
-{
+AudioAnalyzer.prototype.get_level = function () {
     return this.level == undefined ? 0. : this.level;
 };
 
-AudioAnalyzer.prototype.get_history = function()
-{
+AudioAnalyzer.prototype.get_history = function () {
     return this.history == undefined ? 0. : this.history;
 };
 
-AudioAnalyzer.prototype.trigger_pulse = function(_is_pulse)
-{
-    this.is_pulse = _is_pulse;
+AudioAnalyzer.prototype.trigger_pulse = function (_isPulse) {
+    this.isPulse = _isPulse;
 };
 
-AudioAnalyzer.prototype.debug = function(_canvas)
-{   
+AudioAnalyzer.prototype.debug = function (_canvas = null) {
     let canvas = _canvas || this.debugCanvas;
 
-    if(canvas === null) 
-    {
+    if (canvas === null) {
         this.debugCanvas = document.createElement("canvas");
-
-        this.debugCanvas.style["width"] = "30px";
-        this.debugCanvas.style["height"] = "70px";
-        this.debugCanvas.style["z-index"] = 99999;
-
+        this.debugCanvas.className = "audioDebug";
+        
         document.body.appendChild(this.debugCanvas);
         
         canvas = this.debugCanvas;
-
-        console.log("debug canvas created", canvas);
     }
 
-    const _ctx = canvas.getContext("2d");
+    if(this.debugCanvasCtx === null)
+        this.debugCanvasCtx = canvas.getContext("2d");
 
-    _ctx.fillStyle = 'rgb(0, 0, 0)';
-    _ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const w = canvas.width / 4;
+    let h;
+    let x = 0;
 
-    const _w = (canvas.width / 4.);
-    let _h;
-    let _x = 0;
+    const black = "rgb(0, 0, 0)";
+    const white = "rgb(255, 255, 255)";
 
-    _h = this.bass * canvas.height;
-    _ctx.fillStyle = 'rgb(200,0,0)';
-    _ctx.fillRect(_x, canvas.height - _h, _w, _h);
-    _x += _w;
+    this.debugCanvasCtx.fillStyle = white;
+    this.debugCanvasCtx.fillRect(0, 0, canvas.width, canvas.height);
 
-    _h = this.mid * canvas.height;
-    _ctx.fillStyle = 'rgb(0,200,0)';
-    _ctx.fillRect(_x,canvas.height - _h, _w, _h);
-    _x += _w;
+    this.debugCanvasCtx.font = "10px Verdana";
 
-    _h = this.high * canvas.height;
-    _ctx.fillStyle = 'rgb(0,0,200)';
-    _ctx.fillRect(_x,canvas.height - _h, _w, _h);
-    _x += _w;
+    h = this.bass * canvas.height;
+    this.debugCanvasCtx.fillStyle = black;
+    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+    this.debugCanvasCtx.fillStyle = white;
+    this.debugCanvasCtx.fillText(this.bass.toFixed(2).toString(), x, canvas.height);
+    x += w;
 
-    _h = this.level * canvas.height;
-    _ctx.fillStyle = 'rgb(200,200,200)';
-    _ctx.fillRect(_x,canvas.height - _h, _w, _h);
-    _x += _w;
+    h = this.mid * canvas.height;
+    this.debugCanvasCtx.fillStyle = black;
+    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+    this.debugCanvasCtx.fillStyle = white;
+    this.debugCanvasCtx.fillText(this.mid.toFixed(2).toString(), x, canvas.height);
+    x += w;
+
+    h = this.high * canvas.height;
+    this.debugCanvasCtx.fillStyle = black;
+    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+    this.debugCanvasCtx.fillStyle = white;
+    this.debugCanvasCtx.fillText(this.high.toFixed(2).toString(), x, canvas.height);
+    x += w;
+
+    h = this.level * canvas.height;
+    this.debugCanvasCtx.fillStyle = black;
+    this.debugCanvasCtx.fillRect(x, canvas.height - h, w, h);
+    this.debugCanvasCtx.fillStyle = white;
+    this.debugCanvasCtx.fillText(this.level.toFixed(2).toString(), x, canvas.height);
 };
 
