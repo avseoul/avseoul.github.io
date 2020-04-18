@@ -12,9 +12,9 @@ uniform sampler2D u_tex_src;
 void main(){
 	vec2 src = texture2D(u_tex_src, v_uv).rg;
 
-	vec2 coord = (src * 2. - 1.) * .9;
+	vec2 coord = (src * 2. - 1.) * 1.1;
 	coord.x *= u_res.x / u_res.y;
-	float blob = pow( sqrt(coord.x * coord.x + coord.y * coord.y), 10. );
+	float blob = pow(sqrt(coord.x * coord.x + coord.y * coord.y), 15.);
 
 	vec3 c = vec3(blob, 0., src.g);
 
@@ -22,15 +22,15 @@ void main(){
 	float oscilInv = 1. - oscil;
 	c = mix(c, c.bgr, oscil);
 
-	float fu = smoothstep(.0, 1., v_uv.y) * u_audio_high;
-	float fd = smoothstep(.0, 1., 1. - v_uv.y) * u_audio_high;
+	float fu = smoothstep(.1, 1., v_uv.y) * u_audio_high;
+	float fd = smoothstep(.1, 1., 1. - v_uv.y) * u_audio_high;
 	c.g += fd * oscil;
 	c.r += fd * oscilInv;
 	c.r += fu * oscil;
 
 	c = mix(c, normalize(c), oscil);
 	c *= (1. + fd);
-	c = pow(c, vec3(.62));
+	c = pow(c, vec3(.42));
 
 	gl_FragColor = vec4(c, 1.);
 }
