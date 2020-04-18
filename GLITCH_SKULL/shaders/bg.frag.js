@@ -1,15 +1,7 @@
-var bg_frag = 
-`
+const bg_frag =
+  `
 varying vec2 v_uv;
 
-uniform float u_t;
-uniform bool u_is_init;
-uniform vec2 u_res;
-
-uniform float u_audio_high;
-uniform float u_audio_mid;
-uniform float u_audio_bass;
-uniform float u_audio_level;
 uniform float u_audio_history;
 
 uniform sampler2D u_tex_src;
@@ -36,9 +28,7 @@ float noise(vec2 p) {
 }
 
 void main(){
-  vec2 m_uv = v_uv;
-
-  vec3 m_src = texture2D(u_tex_src, m_uv).rgb;
+  vec3 m_src = texture2D(u_tex_src, v_uv).rgb;
 
   float m_noise_r = noise(v_uv.xy*.5+.2345+u_audio_history*1.456);
   float m_noise_b = noise(v_uv.xy*.5+.5678+u_audio_history*1.124);

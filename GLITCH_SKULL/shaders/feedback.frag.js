@@ -2,22 +2,11 @@ var feedback_frag =
 `
 varying vec2 v_uv;
 
-uniform float u_t;
-uniform bool u_is_init;
-uniform vec2 u_res;
-
-uniform float u_audio_high;
-uniform float u_audio_mid;
-uniform float u_audio_bass;
-uniform float u_audio_level;
 uniform float u_audio_history;
 
 uniform sampler2D u_tex_src;
 uniform sampler2D u_tex_input;
 uniform sampler2D u_tex_noise;
-
-uniform vec2 u_mouse;
-uniform vec2 u_mouse_dir;
 
 vec4 advect(sampler2D _tex, vec2 _uv, vec2 _dir, vec2 _texel){
     //https://www.shadertoy.com/view/MsyXRW
@@ -91,7 +80,6 @@ vec3 hsv2rgb(vec3 c)
 
 void main(){
 	vec2 m_uv = v_uv;
-    float m_mouse_delta = length(u_mouse_dir);
 
 	vec2 m_noise = texture2D(u_tex_noise, m_uv).rg;
     vec3 m_src = texture2D(u_tex_src, m_uv).rgb;
