@@ -81,22 +81,21 @@ ThreeSharedRenderer.prototype.render = function(_queue){
     }
 };
 
-ThreeSharedRenderer.prototype.ziggle_cam = function(_frame){
-    var _e = _frame;
-    var _n_loc = new THREE.Vector3(
-        Math.sin(_e),
-        Math.cos(_e*.9)*Math.sin(_e*.7),
-        Math.cos(_e)).normalize();
-    _n_loc.multiplyScalar( 8. + 2. * Math.sin(2.*_e) );
+ThreeSharedRenderer.prototype.ziggle_cam = function(frame){
+    const position = new THREE.Vector3(
+        Math.sin(frame),
+        Math.cos(frame * .9) * Math.sin(frame * .7),
+        Math.cos(frame * 2.));
+    position.multiplyScalar(6 + 2 * Math.sin(2 * frame));
 
-    var _n_center = new THREE.Vector3(
-        Math.sin(.6*_e),
+    const anchor = new THREE.Vector3(
+        Math.sin(.6 * frame),
         0.,
-        Math.cos(.4*_e)).normalize();
-    _n_center.multiplyScalar(.3);
+        Math.cos(.4 * frame));
+    anchor.multiplyScalar(.3);
     
-    this.matrix.position.copy(_n_loc);
-    this.matrix.lookAt( _n_center, new THREE.Vector3(0., 1., 0.) );  
+    this.matrix.position.copy(position);
+    this.matrix.lookAt(anchor, new THREE.Vector3(0, 1, 0));  
 
     this.matrix.updateProjectionMatrix();    
 };

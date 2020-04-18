@@ -104,32 +104,14 @@ vec3 norm(in vec3 _v){
 	return length(_v) > .0 ? normalize(_v) : vec3(.0);
 }
 
-mat4 rotationMatrix(vec3 axis, float angle)
-{
-    axis = norm(axis);
-    float s = sin(angle);
-    float c = cos(angle);
-    float oc = 1.0 - c;
-    
-    return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
-                oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
-                oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
-                0.0,                                0.0,                                0.0,                                1.0);
-}
-
 #define NOISE_COMPLEXITY .6
 #define NOISE_OCTAVE 5
 
 void main(){
-	float m_high = u_audio_high;
-	float m_level = u_audio_level;
-	float m_history = u_audio_history;
-
-	float m_noise_time = u_audio_history * .3;
-	float m_noise_scale = 1.2 + m_level;
+	float m_noise_time = u_audio_history;
+	float m_noise_scale = 2.2 + u_audio_level;
 
     float m_fbm = 0.;
-
     for(int i = 0; i < NOISE_OCTAVE; i++){
     	m_fbm += snoise(
     		position.xyz * NOISE_COMPLEXITY * float(i) + 
@@ -142,33 +124,26 @@ void main(){
 
 	// get color 
     float m_noise_col = pow(abs(1.-m_fbm), 3.5);
-    v_noise = m_noise_col + m_noise_col * m_level * 2.2;     
+    v_noise = m_noise_col + m_noise_col * u_audio_level * 2.2;     
 
     // rand direction
     float _dirx = snoise(m_pos.zyx * 4. + m_noise_time * .01);
 	float _diry = snoise(m_pos.yzx * 4. + m_noise_time * .01);
 	float _dirz = snoise(m_pos.zxy * 4. + m_noise_time * .01);
 	vec3 _rand_point_dir = vec3(_dirx, _diry, _dirz);
-	_rand_point_dir = 1.-2.*_rand_point_dir;
+	_rand_point_dir = 1. - 2. * _rand_point_dir;
 
 #if defined(IS_WIRE) || defined(IS_POINTS)
-	// size
-	gl_PointSize = pow(abs(m_fbm), 6.) * 1000. * m_high;
-
-	m_pos += (_rand_point_dir * .3 * m_level);
+	gl_PointSize = pow(abs(m_fbm), 6.) * 1000. * u_audio_high;
+    m_pos += (_rand_point_dir * .3 * u_audio_level);
 #endif
 
 #if defined(IS_POP)
-	gl_PointSize *= .5;
-	m_pos *= 1.1 * m_fbm;
-	m_pos = vec3(rotationMatrix(vec3(.3,1.,.2), .5*m_history) * vec4(m_pos, 1.));
+    m_pos += (_rand_point_dir * .1 * u_audio_high * u_audio_high);
 #endif
-#if defined(IS_POP_OUT)
-	gl_PointSize *= .5;
-	m_pos *= 1.2;
 
-	m_pos += (_rand_point_dir*_rand_point_dir * .2 * m_high);
-	m_pos = vec3(rotationMatrix(vec3(1.,.2,.3), -.5*m_history) * vec4(m_pos, 1.));
+#if defined(IS_POP_OUT)
+	m_pos += (_rand_point_dir*_rand_point_dir * .2 * u_audio_high);
 #endif
 
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(m_pos, 1.);
