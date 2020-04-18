@@ -1,59 +1,12 @@
 var blob_vert = 
 `
-uniform vec2 u_mouse;
-uniform vec2 u_mouse_delta;
 uniform float u_t;
-uniform bool u_is_init;
 
 uniform float u_audio_high;
-uniform float u_audio_mid;
-uniform float u_audio_bass;
 uniform float u_audio_level;
 uniform float u_audio_history;
 
 varying float v_noise;
-
-
-
-
-#if defined(IS_PBR) && defined(HAS_CUBEMAP)
-	uniform mat4 u_view_matrix_inverse;
-	
-	varying vec3 v_world_normal;
-	varying vec3 v_eye_pos;
-	varying vec3 v_object_pos;
-	varying vec3 v_pos;
-	varying vec3 v_normal;
-	varying vec3 v_world_pos;
-	varying vec2 v_uv;
-#endif
-
-
-
-#if defined(HAS_SHADOW)
-	uniform mat4 u_shadow_matrix;
-	varying vec4 v_shadow_coord;
-
-	const mat4 biasMat  = mat4(	0.5, 0.0, 0.0, 0.0,
-							0.0, 0.5, 0.0, 0.0,
-							0.0, 0.0, 0.5, 0.0,
-							0.5, 0.5, 0.5, 1.0 );
-#endif
-
-
-// (Keijiro) This shader was slightly modified from the original version.
-// It's recommended to use the original version for other purposes.
-
-//
-// Description : Array and textureless GLSL 2D/3D/4D simplex
-//               noise functions.
-//      Author : Ian McEwan, Ashima Arts.
-//  Maintainer : ijm
-//     Lastmod : 20110822 (ijm)
-//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
-//               Distributed under the MIT License. See LICENSE file.
-//               https://github.com/ashima/webgl-noise
-//
 
 vec3 mod289(vec3 x)
 {
@@ -164,51 +117,28 @@ mat4 rotationMatrix(vec3 axis, float angle)
                 0.0,                                0.0,                                0.0,                                1.0);
 }
 
+#define NOISE_COMPLEXITY .6
+#define NOISE_OCTAVE 5
+
 void main(){
-	float m_bass = u_audio_bass;
-	float m_mid = u_audio_mid;
 	float m_high = u_audio_high;
 	float m_level = u_audio_level;
 	float m_history = u_audio_history;
 
-	vec3 m_noise_seed = position.xyz;
-	float m_noise_complexity = .6;
 	float m_noise_time = u_audio_history * .3;
 	float m_noise_scale = 1.2 + m_level;
-    
-	vec3 m_tangent_vector = .00001 * norm(cross(position, vec3(1., 0., 0.))
-							+ cross(position, vec3(0., 1., 0.)));
-	vec3 m_bitangent_vector = .00001 * norm(cross(m_tangent_vector, position));
 
     float m_fbm = 0.;
-    float m_fbm_tangent = 0.;
-    float m_fbm_bitangent = 0.;
 
-    const int m_noise_oct = 5;
-    for(int i = 0; i < m_noise_oct; i++){
+    for(int i = 0; i < NOISE_OCTAVE; i++){
     	m_fbm += snoise(
-    		(m_noise_seed) * m_noise_complexity * float(i) + 
-    		m_noise_time * float(i)
-    	);
-    	m_fbm_tangent += snoise(
-    		(m_noise_seed + m_tangent_vector) * m_noise_complexity * float(i) + 
-    		m_noise_time * float(i)
-    	);
-    	m_fbm_bitangent += snoise(
-    		(m_noise_seed + m_bitangent_vector) * m_noise_complexity * float(i) + 
+    		position.xyz * NOISE_COMPLEXITY * float(i) + 
     		m_noise_time * float(i)
     	);
     }
-    m_fbm /= (float(m_noise_oct));
-    m_fbm_tangent /= (float(m_noise_oct));
-    m_fbm_bitangent /= (float(m_noise_oct));
+    m_fbm /= float(NOISE_OCTAVE);
 
     vec3 m_pos = position + norm(position) * m_fbm * m_noise_scale;
-    vec3 m_pos_tangent = (position + m_tangent_vector) + norm(position + m_tangent_vector) * m_fbm * m_noise_scale;
-    vec3 m_pos_bitangent = (position + m_bitangent_vector) + norm(position + m_bitangent_vector) * m_fbm * m_noise_scale;
-
-    vec3 m_normal = norm(cross( (m_pos_tangent - m_pos), (m_pos_bitangent - m_pos)));
-
 
 	// get color 
     float m_noise_col = pow(abs(1.-m_fbm), 3.5);
@@ -239,26 +169,6 @@ void main(){
 
 	m_pos += (_rand_point_dir*_rand_point_dir * .2 * m_high);
 	m_pos = vec3(rotationMatrix(vec3(1.,.2,.3), -.5*m_history) * vec4(m_pos, 1.));
-#endif
-
-
-
-#if defined(IS_PBR) && defined(HAS_CUBEMAP)
-	vec4 _world_pos	= modelMatrix * vec4(m_pos, 1.);
-    vec4 _view_pos	= viewMatrix * _world_pos;
-
-    v_object_pos = m_pos;
-    v_pos = _view_pos.xyz;
-	v_normal = normalMatrix * m_normal; 
-	v_world_pos = _world_pos.xyz;
-	v_world_normal = vec3(u_view_matrix_inverse * vec4(v_normal, 0.));
-	v_eye_pos = -1. * vec3(u_view_matrix_inverse * (_view_pos - vec4(0.,0.,0.,1.)) );
-	v_uv = uv;
-	
-#endif
-
-#if defined(HAS_SHADOW)
-	v_shadow_coord = (biasMat * u_shadow_matrix) * vec4(m_pos, 1.);
 #endif
 
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(m_pos, 1.);
