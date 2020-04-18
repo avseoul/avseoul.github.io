@@ -16,7 +16,7 @@ let GlitchSkull = function (_renderer, _mouse, _analyzer, _is_retina) {
     this.lowerPart;
     this.transform;
 
-    this.init_buffer();
+    this.initBuffer();
     this.init_shader();
     this.init_scene();
     this.load_obj();
@@ -202,8 +202,19 @@ GlitchSkull.prototype.init_shader = function () {
     ];
 };
 
-GlitchSkull.prototype.init_buffer = function () {
-    // frame buffers 
+GlitchSkull.prototype.clearBuffer = function() {
+    for (let i = 0; i < 2; i++) {
+        if(this.fbo_input[i] !== null) this.fbo_input[i].dispose();
+        if(this.fbo_feedback[i] !== null) this.fbo_feedback[i].dispose();
+    }
+    if(this.fbo_obj_illum !== null) this.fbo_obj_illum.dispose();
+    if(this.fbo_master !== null) this.fbo_master.dispose();
+
+    this.fbo_input = null;
+    this.fbo_feedback = null;
+}
+
+GlitchSkull.prototype.initBuffer = function () {
     const format = {
         wrapS: THREE.ClampToEdgeWrapping,
         wrapT: THREE.ClampToEdgeWrapping,
@@ -215,17 +226,18 @@ GlitchSkull.prototype.init_buffer = function () {
         depthBuffer: true
     };
 
-    const bufferSize = 1024;
+    const w = this.renderer.w;
+    const h = this.renderer.h;
 
     this.fbo_input = [2];
     this.fbo_feedback = [2];
 
     for (let i = 0; i < 2; i++) {
-        this.fbo_input[i] = new THREE.WebGLRenderTarget(bufferSize, bufferSize, format);
-        this.fbo_feedback[i] = new THREE.WebGLRenderTarget(bufferSize, bufferSize, format);
+        this.fbo_input[i] = new THREE.WebGLRenderTarget(w, h, format);
+        this.fbo_feedback[i] = new THREE.WebGLRenderTarget(w, h, format);
     }
-    this.fbo_obj_illum = new THREE.WebGLRenderTarget(bufferSize, bufferSize, format);
-    this.fbo_master = new THREE.WebGLRenderTarget(bufferSize, bufferSize, format);
+    this.fbo_obj_illum = new THREE.WebGLRenderTarget(w, h, format);
+    this.fbo_master = new THREE.WebGLRenderTarget(w, h, format);
 };
 
 GlitchSkull.prototype.init_scene = function () {
@@ -311,4 +323,7 @@ GlitchSkull.prototype.resize = function () {
     for (const shader of this.shdr_batch) {
         shader.uniforms.u_res.value = new THREE.Vector2(this.renderer.w, this.renderer.h);
     }
+    
+    this.clearBuffer();
+    this.initBuffer();
 };
