@@ -45,7 +45,7 @@ void main(){
 #endif
 
 #if defined(IS_POP) || defined(IS_POP_OUT)
-  gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(1.2));
+  gl_FragColor.rgb = pow(abs(gl_FragColor.rgb), vec3(1.2));
 #endif
 }
 `
