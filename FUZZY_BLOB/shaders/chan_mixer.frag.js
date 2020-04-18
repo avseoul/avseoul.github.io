@@ -5,6 +5,7 @@ varying vec2 v_uv;
 uniform vec2 u_res;
 
 uniform float u_audio_high;
+uniform float u_audio_level;
 uniform float u_audio_history;
 
 uniform sampler2D u_tex_src;
@@ -12,9 +13,9 @@ uniform sampler2D u_tex_src;
 void main(){
 	vec2 src = texture2D(u_tex_src, v_uv).rg;
 
-	vec2 coord = (src * 2. - 1.) * 1.1;
+	vec2 coord = src * 2. - 1.;
 	coord.x *= u_res.x / u_res.y;
-	float blob = pow(sqrt(coord.x * coord.x + coord.y * coord.y), 15.);
+	float blob = pow(sqrt(coord.x * coord.x + coord.y * coord.y), 10. * u_audio_level);
 
 	vec3 c = vec3(blob, 0., src.g);
 
