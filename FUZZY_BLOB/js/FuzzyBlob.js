@@ -87,8 +87,7 @@ FuzzyBlob.prototype.init = function () {
     this.shaderBatch = [
         this.shdr_input,
         this.shdr_chan_rgb,
-        this.shdr_chan_mixer,
-        this.shdr_master
+        this.shdr_chan_mixer
     ];
 
     // init uniforms 
