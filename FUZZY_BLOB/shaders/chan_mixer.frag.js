@@ -22,14 +22,14 @@ void main(){
 	float oscilInv = 1. - oscil;
 	c = mix(c, c.bgr, oscil);
 
-	float fu = smoothstep(.2, 1., v_uv.y) * u_audio_high;
-	float fd = smoothstep(.2, 1., 1. - v_uv.y) * u_audio_high;
+	float fu = smoothstep(.0, 1., v_uv.y) * u_audio_high;
+	float fd = smoothstep(.0, 1., 1. - v_uv.y) * u_audio_high;
 	c.g += fd * oscil;
 	c.r += fd * oscilInv;
 	c.r += fu * oscil;
 
 	c = mix(c, normalize(c), oscil);
-	c *= (1. + u_audio_high * .3);
+	c *= (1. + fd);
 	c = pow(c, vec3(.62));
 
 	gl_FragColor = vec4(c, 1.);
