@@ -12,21 +12,21 @@ uniform sampler2D u_tex_src;
 void main(){
 	vec2 src = texture2D(u_tex_src, v_uv).rg;
 
-	vec2 coord = (src * 2. - 1.) * .6;
+	vec2 coord = (src * 2. - 1.) * .9;
 	coord.x *= u_res.x / u_res.y;
-	float blob = pow( sqrt(coord.x * coord.x + coord.y * coord.y), 5. );
-	blob *= 15.;
+	float blob = pow( sqrt(coord.x * coord.x + coord.y * coord.y), 10. );
 
 	vec3 c = vec3(blob, 0., src.g);
 
-	float oscil = sin(u_audio_history * .5) * .5 + .5;	
+	float oscil = smoothstep(0., 1., sin(u_audio_history * .5) * .5 + .5);	
 	c = mix(c, c.bgr, oscil);
 
-	c.g += (1. - v_uv.y) * u_audio_high;
-	c.r += v_uv.y * u_audio_high;
+	c.g += smoothstep(.2, 1., 1. - v_uv.y) * u_audio_high;
+	c.r += smoothstep(.2, 1., v_uv.y) * u_audio_high;
 
 	c = mix(c, normalize(c), oscil);
 	c *= (1. + u_audio_high * .3);
+	c = pow(c, vec3(.62));
 
 	gl_FragColor = vec4(c, 1.);
 }
