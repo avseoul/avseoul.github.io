@@ -19,10 +19,14 @@ void main(){
 	vec3 c = vec3(blob, 0., src.g);
 
 	float oscil = smoothstep(0., 1., sin(u_audio_history * .5) * .5 + .5);	
+	float oscilInv = 1. - oscil;
 	c = mix(c, c.bgr, oscil);
 
-	c.g += smoothstep(.2, 1., 1. - v_uv.y) * u_audio_high;
-	c.r += smoothstep(.2, 1., v_uv.y) * u_audio_high;
+	float fu = smoothstep(.2, 1., v_uv.y) * u_audio_high;
+	float fd = smoothstep(.2, 1., 1. - v_uv.y) * u_audio_high;
+	c.g += fd * oscil;
+	c.r += fd * oscilInv;
+	c.r += fu * oscil;
 
 	c = mix(c, normalize(c), oscil);
 	c *= (1. + u_audio_high * .3);
