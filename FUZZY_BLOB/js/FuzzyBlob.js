@@ -16,10 +16,9 @@ let FuzzyBlob = function (renderer, analyzer, mouse, isRetina, isMobile) {
 FuzzyBlob.prototype.update = function () {
     if(!this.isInit) return;
 
-    const time = this.renderer.get_timer();
+    const time = this.renderer.get_timer() * 500;
 
     const audioHigh = this.audioAnalyzer.get_high();
-    const audioMid = this.audioAnalyzer.get_mid();
     const audioBass = this.audioAnalyzer.get_bass();
     const audioLevel = this.audioAnalyzer.get_level();
     const audioHistory = this.audioAnalyzer.get_history();
@@ -31,7 +30,6 @@ FuzzyBlob.prototype.update = function () {
         shader.uniforms.u_t.value = time;
 
         shader.uniforms.u_audio_high.value = audioHigh;
-        shader.uniforms.u_audio_mid.value = audioMid;
         shader.uniforms.u_audio_bass.value = audioBass;
         shader.uniforms.u_audio_level.value = audioLevel;
         shader.uniforms.u_audio_history.value = audioHistory;

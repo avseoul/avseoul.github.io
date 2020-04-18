@@ -69,36 +69,37 @@ float cal_noise(vec2 p) {
 		hash( i + vec2(1.0,1.0) ), u.x), u.y);
 }
 
+#define SQRT_TWO 1.41421356237
+#define OCTAVE 6
+#define COMPLEXITY 18.
+#define STROKE_SIZE .08
+#define STROKE_INTENSITY .00088
+#define AUDIO_FUZZY_INTENSITY .004
+#define DAMPING .96
+
 void main(){
-	vec2 m_uv = v_uv;
-	vec2 m_noise = texture2D(u_tex_noise, m_uv).rg;
-	vec3 m_src = advect(u_tex_src, m_uv, m_noise * 40., 1./(u_res*.2)).rgb;
-	float m_mouse_delta = length(u_mouse_dir);
+	vec2 m_noise = texture2D(u_tex_noise, v_uv).rg;
+	vec3 m_src = advect(u_tex_src, v_uv, m_noise * 40., 1. / (u_res * .2)).rgb;
 
-	float dist = distance(m_uv, u_mouse);
-	dist = max(dist, .05); // the force shall stay in sanity and have smooth brush tiptoe 
-	float max_dist = sqrt(2.);
-	float decay = pow(max_dist - dist, 40.);
-	float mag = m_mouse_delta * .002 * decay;
-
-	const int oct = 6;
-    const float complexity = 18.;
-    float _noise = 0.;
-    for(int i = 0; i < oct; i++) {
-    	vec2 _uv = m_uv * complexity * float(i);
-    	_uv.y += (u_t*500.);
-        _noise += cal_noise(_uv);
+    float noise = 0.;
+    for(int i = 0; i < OCTAVE; i++) {
+    	vec2 uv = v_uv * COMPLEXITY * float(i);
+    	uv.y += u_t;
+        noise += cal_noise(uv);
     }
-    _noise /= float(oct);
+    noise /= float(OCTAVE);
 	
-	vec2 m_audio_f = _noise * normalize(.5-m_uv);
-
+    vec2 m_audio_f = noise * normalize(.5-v_uv);
+    
+    float dist = distance(v_uv, u_mouse);
+	dist = max(dist, STROKE_SIZE);
+    float mag = SQRT_TWO - dist;
 
 	vec2 m_out = m_src.rg;
-	m_out += u_mouse_dir * mag * (.98/dist*dist*.01);
-	m_out += m_audio_f*.004*(pow(u_audio_level, 10.));
-	m_out *= .96;
+	m_out += u_mouse_dir * mag * STROKE_INTENSITY / (dist * dist);
+	m_out += m_audio_f * AUDIO_FUZZY_INTENSITY * u_audio_level;
+	m_out *= DAMPING;
 
-	gl_FragColor = vec4(m_out,0,1);
+	gl_FragColor = vec4(m_out, 0, 1);
 }
 `;

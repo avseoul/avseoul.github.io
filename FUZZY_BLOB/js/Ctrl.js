@@ -4,7 +4,7 @@ var Ctrl = function(_analyzer){
 	this.analyzer = _analyzer;
 
 	this.params = {
-		audio_gain: 1000.,
+		audio_gain: 20.,
 		show_fps: true
 	};
 

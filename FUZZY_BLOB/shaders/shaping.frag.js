@@ -2,19 +2,9 @@ var shaping_frag =
 `
 varying vec2 v_uv;
 
-uniform float u_t;
-uniform vec2 u_res;
-
-uniform float u_audio_high;
-uniform float u_audio_mid;
-uniform float u_audio_bass;
-uniform float u_audio_level;
-uniform float u_audio_history;
-
 uniform sampler2D u_tex_src;
 uniform sampler2D u_tex_input;
 
-uniform vec2 u_mouse;
 uniform vec2 u_mouse_dir;
 
 void main(){
