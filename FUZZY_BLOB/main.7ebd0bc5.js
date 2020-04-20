@@ -202,7 +202,7 @@ function () {
     this.cutout = .5;
     this.frame = 0;
     this.gainValue = gainValue;
-    Utils_1.getMicStream(this.init, this.initWithoutStream);
+    Utils_1.getMicStream(this.init.bind(this), this.initWithoutStream.bind(this));
   }
 
   Object.defineProperty(AudioAnalyzer.prototype, "gain", {
@@ -297,15 +297,13 @@ function () {
   ;
 
   AudioAnalyzer.prototype.update = function () {
-    var _a;
-
     if (!this.isInit || !this.analyzer || !this.audioBuffer) return;
     var bass = 0,
         mid = 0,
         high = 0;
 
     if (!this.isPulse) {
-      (_a = this.analyzer) === null || _a === void 0 ? void 0 : _a.getByteFrequencyData(this.audioBuffer);
+      this.analyzer.getByteFrequencyData(this.audioBuffer);
       var passSize = this.analyzer.frequencyBinCount / 3;
       var DATA_SCALE = 255;
 
@@ -35804,7 +35802,7 @@ function () {
 
   MouseHandler.prototype.handler = function (event) {
     window.clearTimeout(this.counter);
-    this.counter = window.setTimeout(this.reset.bind(this), 100.);
+    this.counter = window.setTimeout(this.reset.bind(this), 500.);
 
     if (event.targetTouches) {
       var touch = event.targetTouches[0];
@@ -35843,7 +35841,6 @@ function () {
 
     target.addEventListener("mousemove", this.handler.bind(this), false);
     target.addEventListener("touchmove", this.handler.bind(this), false);
-    console.log("MouseHandler : handler() is registered mousemove event listener");
     target.addEventListener('touchstart', function (event) {
       event.preventDefault();
     }, {
@@ -35866,13 +35863,13 @@ exports.default = MouseHandler;
 },{}],"shader/shared.vert":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nvoid main() {\n\tv_uv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);\n}";
 },{}],"shader/channelMixer.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform vec2 u_res;\n\nuniform float u_audio_high;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\n\nvoid main(){\n\tvec2 src = texture2D(u_tex_src, v_uv).rg;\n\n\tvec2 coord = src * 2. - 1.;\n\tcoord.x *= u_res.x / u_res.y;\n\tfloat blob = pow(sqrt(coord.x * coord.x + coord.y * coord.y), 10. * u_audio_level);\n\n\tvec3 c = vec3(blob, 0., src.g);\n\n\tfloat oscil = smoothstep(0., 1., sin(u_audio_history * .5) * .5 + .5);\t\n\tfloat oscilInv = 1. - oscil;\n\tc = mix(c, c.bgr, oscil);\n\n\tfloat fu = smoothstep(.1, 1., v_uv.y) * u_audio_high;\n\tfloat fd = smoothstep(.1, 1., 1. - v_uv.y) * u_audio_high;\n\tc.g += fd * oscil;\n\tc.r += fd * oscilInv;\n\tc.r += fu * oscil;\n\n\tc = mix(c, normalize(c), oscil);\n\tc *= (1. + fd);\n\tc = pow(abs(c), vec3(.42));\n\n\tgl_FragColor = vec4(c, 1.);\n}";
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\n\nuniform vec2 u_res;\nuniform vec2 u_ratio;\n\nuniform float u_audio_high;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\n\nvec3 norm(in vec3 src) {\n\tif(length(src) == 0.) return vec3(.0001);\n\telse return normalize(src);\n}\n\nvoid main() {\n\tvec2 src = texture2D(u_tex_src, v_uv).rg;\n\n\tfloat oscil = smoothstep(0., 1., sin(u_t) * .5 + .5);\t\n\tfloat oscilInv = 1. - oscil;\n\n\tvec2 coord = (src * 2. - 1.) * (1. + .2 * oscil);\n\tcoord *= u_ratio;\n\tfloat dist = coord.x * coord.x + coord.y * coord.y;\n\tfloat blob = pow(dist, 1. + 20. * u_audio_level);\n\n\tvec3 c = vec3(blob, 0., src.g);\n\tc = mix(c, c.bgr, oscil);\n\n\tfloat fu = smoothstep(.1, 1., v_uv.y) * u_audio_high;\n\tfloat fd = smoothstep(.1, 1., 1. - v_uv.y) * u_audio_high;\n\tc.g += fd * oscil;\n\tc.r += fd * oscilInv;\n\tc.r += fu * oscil;\n\n\tc = mix(c, norm(c), oscil);\n\tc *= (1. + fd);\n\tc = pow(abs(c), vec3(.42));\n\n\tgl_FragColor = vec4(c, 1.);\n}";
 },{}],"shader/input.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform vec2 u_res;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_noise;\n\nuniform vec2 u_mouse;\nuniform vec2 u_mouse_dir;\n\nvec4 advect(sampler2D _tex, vec2 _uv, vec2 _dir, vec2 _texel){\n    //https://www.shadertoy.com/view/MsyXRW\n    const float _G0 = .25;\n    const float _G1 = .125;\n    const float _G2 = .0625;\n    const float ADVECT_DIST = 2.;\n\n    vec2 uv = _uv - _dir * ADVECT_DIST * _texel;\n\n    vec2 n  = vec2( 0., 1.);\n    vec2 ne = vec2( 1., 1.);\n    vec2 e  = vec2( 1., 0.);\n    vec2 se = vec2( 1.,-1.);\n    vec2 s  = vec2( 0.,-1.);\n    vec2 sw = vec2(-1.,-1.);\n    vec2 w  = vec2(-1., 0.);\n    vec2 nw = vec2(-1., 1.);\n\n    vec4 c =    texture2D(_tex, fract(uv));\n    vec4 c_n =  texture2D(_tex, fract(uv+_texel*n));\n    vec4 c_e =  texture2D(_tex, fract(uv+_texel*e));\n    vec4 c_s =  texture2D(_tex, fract(uv+_texel*s));\n    vec4 c_w =  texture2D(_tex, fract(uv+_texel*w));\n    vec4 c_nw = texture2D(_tex, fract(uv+_texel*nw));\n    vec4 c_sw = texture2D(_tex, fract(uv+_texel*sw));\n    vec4 c_ne = texture2D(_tex, fract(uv+_texel*ne));\n    vec4 c_se = texture2D(_tex, fract(uv+_texel*se));\n\n    return _G0*c+_G1*(c_n+c_e+c_w+c_s)+_G2*(c_nw+c_sw+c_ne+c_se);\n}\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat cal_noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\n#define SQRT_TWO 1.41421356237\n#define OCTAVE 6\n#define COMPLEXITY 18.\n#define STROKE_SIZE .08\n#define STROKE_INTENSITY .00088\n#define AUDIO_FUZZY_INTENSITY .004\n#define DAMPING .96\n\nvoid main(){\n\tvec2 m_noise = texture2D(u_tex_noise, v_uv).rg;\n\tvec3 m_src = advect(u_tex_src, v_uv, m_noise * 40., 1. / (u_res * .2)).rgb;\n\n    float noise = 0.;\n    for(int i = 0; i < OCTAVE; i++) {\n    \tvec2 uv = v_uv * COMPLEXITY * float(i);\n    \tuv.y += u_t;\n        noise += cal_noise(uv);\n    }\n    noise /= float(OCTAVE);\n\t\n    vec2 m_audio_f = noise * normalize(.5-v_uv);\n    \n    float dist = distance(v_uv, u_mouse);\n\tdist = max(dist, STROKE_SIZE);\n    float mag = SQRT_TWO - dist;\n\n\tvec2 m_out = m_src.rg;\n\tm_out += u_mouse_dir * mag * STROKE_INTENSITY / (dist * dist);\n\tm_out += m_audio_f * AUDIO_FUZZY_INTENSITY * u_audio_level;\n\tm_out *= DAMPING;\n\n\tgl_FragColor = vec4(m_out, 0, 1);\n}";
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform vec2 u_res;\n\nuniform float u_audio_high;\nuniform float u_audio_level;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_noise;\n\nuniform vec2 u_mouse;\nuniform vec2 u_mouse_dir;\n\nvec4 advect(sampler2D _tex, vec2 _uv, vec2 _dir, vec2 _texel){\n    //https://www.shadertoy.com/view/MsyXRW\n    const float _G0 = .25;\n    const float _G1 = .125;\n    const float _G2 = .0625;\n    const float ADVECT_DIST = 2.;\n\n    vec2 uv = _uv - _dir * ADVECT_DIST * _texel;\n\n    vec2 n  = vec2( 0., 1.);\n    vec2 ne = vec2( 1., 1.);\n    vec2 e  = vec2( 1., 0.);\n    vec2 se = vec2( 1.,-1.);\n    vec2 s  = vec2( 0.,-1.);\n    vec2 sw = vec2(-1.,-1.);\n    vec2 w  = vec2(-1., 0.);\n    vec2 nw = vec2(-1., 1.);\n\n    vec4 c =    texture2D(_tex, fract(uv));\n    vec4 c_n =  texture2D(_tex, fract(uv+_texel*n));\n    vec4 c_e =  texture2D(_tex, fract(uv+_texel*e));\n    vec4 c_s =  texture2D(_tex, fract(uv+_texel*s));\n    vec4 c_w =  texture2D(_tex, fract(uv+_texel*w));\n    vec4 c_nw = texture2D(_tex, fract(uv+_texel*nw));\n    vec4 c_sw = texture2D(_tex, fract(uv+_texel*sw));\n    vec4 c_ne = texture2D(_tex, fract(uv+_texel*ne));\n    vec4 c_se = texture2D(_tex, fract(uv+_texel*se));\n\n    return _G0*c+_G1*(c_n+c_e+c_w+c_s)+_G2*(c_nw+c_sw+c_ne+c_se);\n}\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat cal_noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\n#define SQRT_TWO 1.41421356237\n#define OCTAVE 6\n#define COMPLEXITY 18.\n#define STROKE_SIZE .08\n#define STROKE_INTENSITY .00088\n#define AUDIO_FUZZY_INTENSITY .004\n#define DAMPING .96\n\nvoid main(){\n\tvec2 m_noise = texture2D(u_tex_noise, v_uv).rg;\n\tvec3 m_src = advect(u_tex_src, v_uv, m_noise * 40., 1. / (u_res * .2)).rgb;\n\n    float noise = 0.;\n    for(int i = 0; i < OCTAVE; i++) {\n    \tvec2 uv = v_uv * COMPLEXITY * float(i);\n    \tuv.y += u_t;\n        noise += cal_noise(uv);\n    }\n    noise /= float(OCTAVE);\n\t\n    vec2 m_audio_f = noise * normalize(.5-v_uv);\n    \n    float dist = distance(v_uv, u_mouse);\n\tdist = max(dist, STROKE_SIZE);\n    float mag = SQRT_TWO - dist;\n\n\tvec2 m_out = m_src.rg;\n\tm_out += u_mouse_dir * mag * STROKE_INTENSITY / (dist * dist);\n\tm_out += m_audio_f * AUDIO_FUZZY_INTENSITY * u_audio_level;\n\tm_out *= DAMPING;\n\n\tgl_FragColor = vec4(m_out, 0, 1);\n}";
 },{}],"shader/master.frag":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform sampler2D u_tex_src;\n\nvoid main(){\n\tgl_FragColor = texture2D(u_tex_src, v_uv);\n}";
 },{}],"shader/rgb.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_input;\n\nvoid main(){\n\tvec2 m_uv = v_uv;\n\n\tvec2 m_input = texture2D(u_tex_input, m_uv).rg;\n\tm_uv += m_input;\n\tvec2 m_src = texture2D(u_tex_src, m_uv).rg;\n\n\tvec2 r_dir = normalize(v_uv - m_src.rg);\n\tfloat r_dist = distance(v_uv, m_src.rg);\n\t\n\tvec2 c = m_src + (r_dir * r_dist * .05);\n\n\tgl_FragColor = vec4(c, 0., 1.);\n}";
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_input;\n\nvec2 norm(in vec2 src) {\n\tif(length(src) == 0.) return vec2(.0001);\n\telse return normalize(src);\n}\n\nvoid main(){\n\tvec2 m_uv = v_uv;\n\n\tvec2 m_input = texture2D(u_tex_input, m_uv).rg;\n\tm_uv += m_input;\n\tvec2 m_src = texture2D(u_tex_src, m_uv).rg;\n\n\tvec2 r_dir = norm(v_uv - m_src.rg);\n\tfloat r_dist = distance(v_uv, m_src.rg);\n\t\n\tvec2 c = m_src + (r_dir * r_dist * .05);\n\n\tgl_FragColor = vec4(c, 0., 1.);\n}";
 },{}],"assets/noise.jpg":[function(require,module,exports) {
 module.exports = "/noise.4bfbbc3c.jpg";
 },{}],"js/FuzzyBlob.ts":[function(require,module,exports) {
@@ -35912,6 +35909,7 @@ function () {
 
     this.isInit = false;
     this.frameBufferIndex = 1;
+    this.frame = 0;
     var w = document.documentElement.clientWidth;
     var h = document.documentElement.clientHeight;
     this.audioAnalyzer = audioAnalyzer;
@@ -35944,13 +35942,10 @@ function () {
             u_res: {
               value: new three_1.Vector2(w, h)
             },
+            u_ratio: {
+              value: _this.getRatioOffset(w, h)
+            },
             u_audio_high: {
-              value: 0.
-            },
-            u_audio_mid: {
-              value: 0.
-            },
-            u_audio_bass: {
               value: 0.
             },
             u_audio_level: {
@@ -35975,8 +35970,7 @@ function () {
       this.inputShader = loadShader(shared_vert_1.default, input_frag_1.default);
       this.rgbShader = loadShader(shared_vert_1.default, rgb_frag_1.default);
       this.channelMixerShader = loadShader(shared_vert_1.default, channelMixer_frag_1.default);
-      this.masterShader = loadShader(shared_vert_1.default, master_frag_1.default);
-      this.shaderBatch = [this.inputShader, this.rgbShader, this.channelMixerShader]; // init uniforms 
+      this.masterShader = loadShader(shared_vert_1.default, master_frag_1.default); // init uniforms 
 
       this.inputShader.uniforms.u_tex_src = {
         value: null
@@ -36040,36 +36034,29 @@ function () {
       this.channelMixerScene.add(new three_1.Mesh(geom, this.channelMixerShader));
       this.masterScene = new three_1.Scene();
       this.masterScene.add(new three_1.Mesh(geom, this.masterShader));
-    }
-    this.clock = new three_1.Clock(); // Ready to go
+    } // Ready to go
 
     this.isInit = true;
     window.addEventListener('resize', this.resize.bind(this));
   }
 
   FuzzyBlob.prototype.update = function () {
-    var _a;
-
     if (!this.isInit) return;
-    var time = this.clock.getElapsedTime();
-    var audioHigh = this.audioAnalyzer.high;
-    var audioBass = this.audioAnalyzer.bass;
+    var audioHigh = this.audioAnalyzer.bass; //intended as usually bass is the strongest frequency
+
     var audioLevel = this.audioAnalyzer.level;
     var audioHistory = this.audioAnalyzer.history;
     var mousePosition = new three_1.Vector2(this.mouseHandler.normalizedX, this.mouseHandler.normalizedY);
     var mouseDirection = new three_1.Vector2(this.mouseHandler.directionX, this.mouseHandler.directionY);
-
-    for (var _i = 0, _b = this.shaderBatch; _i < _b.length; _i++) {
-      var shader = _b[_i];
-      shader.uniforms.u_t.value = time;
-      shader.uniforms.u_audio_high.value = audioHigh;
-      shader.uniforms.u_audio_bass.value = audioBass;
-      shader.uniforms.u_audio_level.value = audioLevel;
-      shader.uniforms.u_audio_history.value = audioHistory;
-      shader.uniforms.u_mouse.value = mousePosition;
-      shader.uniforms.u_mouse_dir.value = mouseDirection;
-    }
-
+    this.inputShader.uniforms.u_t.value = this.frame;
+    this.inputShader.uniforms.u_audio_high.value = audioHigh;
+    this.inputShader.uniforms.u_audio_level.value = audioLevel;
+    this.inputShader.uniforms.u_mouse.value = mousePosition;
+    this.inputShader.uniforms.u_mouse_dir.value = mouseDirection;
+    this.channelMixerShader.uniforms.u_t.value = this.frame * .01;
+    this.channelMixerShader.uniforms.u_audio_high.value = audioHigh;
+    this.channelMixerShader.uniforms.u_audio_level.value = audioLevel;
+    this.channelMixerShader.uniforms.u_audio_history.value = audioHistory;
     this.inputShader.uniforms.u_tex_src.value = this.inputFrameBuffers[this.frameBufferIndex ^ 1].texture;
     this.renderer.setRenderTarget(this.inputFrameBuffers[this.frameBufferIndex]);
     this.renderer.render(this.inputScene, this.camera);
@@ -36081,8 +36068,10 @@ function () {
     this.renderer.setRenderTarget(this.channelMixerFrameBuffer);
     this.renderer.render(this.channelMixerScene, this.camera);
     this.renderer.setRenderTarget(null);
-    this.masterShader.uniforms.u_tex_src.value = (_a = this.channelMixerFrameBuffer) === null || _a === void 0 ? void 0 : _a.texture;
+    this.masterShader.uniforms.u_tex_src.value = this.channelMixerFrameBuffer.texture;
     this.renderer.render(this.masterScene, this.camera);
+    this.frame += .5;
+    if (this.frame > 999999) this.frame = 0;
     this.frameBufferIndex ^= 1;
   };
 
@@ -36090,17 +36079,22 @@ function () {
 
   FuzzyBlob.prototype.resize = function () {
     var w = document.documentElement.clientWidth;
-    var h = document.documentElement.clientWidth;
+    var h = document.documentElement.clientHeight;
+    var res = new three_1.Vector2(w, h);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(w, h);
-
-    for (var _i = 0, _a = this.shaderBatch; _i < _a.length; _i++) {
-      var shader = _a[_i];
-      shader.uniforms.u_res.value = new three_1.Vector2(w, h);
-    }
+    this.camera.updateProjectionMatrix();
+    this.inputShader.uniforms.u_res.value = res;
+    this.channelMixerShader.uniforms.u_res.value = res;
+    this.channelMixerShader.uniforms.u_ratio.value = this.getRatioOffset(w, h);
   };
 
   ;
+
+  FuzzyBlob.prototype.getRatioOffset = function (w, h) {
+    return w > h ? new three_1.Vector2(w / h, 1) : new three_1.Vector2(1, h / w);
+  };
+
   return FuzzyBlob;
 }();
 
@@ -36135,23 +36129,27 @@ var Stats = require("stats.js");
 var fuzzyBlob;
 var audioAnalyzer;
 var stats;
+var debugEnabled = "development" === 'development';
 
 var init = function init() {
   audioAnalyzer = new AudioAnalyzer_1.default(1);
-  fuzzyBlob = new FuzzyBlob_1.default(audioAnalyzer); // stats
+  audioAnalyzer.gain = 1000;
+  fuzzyBlob = new FuzzyBlob_1.default(audioAnalyzer);
 
-  stats = new Stats();
-  stats.showPanel(0);
-  stats.dom.id = "stats";
-  document.body.appendChild(stats.dom);
+  if (debugEnabled) {
+    stats = new Stats();
+    stats.showPanel(0);
+    stats.dom.id = "stats";
+    document.body.appendChild(stats.dom);
+  }
 };
 
 var update = function update() {
   requestAnimationFrame(update);
-  stats.begin();
+  if (debugEnabled) stats.begin();
   audioAnalyzer.update();
   fuzzyBlob.update();
-  stats.end();
+  if (debugEnabled) stats.end();
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -36190,7 +36188,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60656" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65296" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
