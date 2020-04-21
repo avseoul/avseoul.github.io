@@ -166,14 +166,10 @@ exports.getVideoStream = function (width, height, callback) {
 };
 
 exports.getMicStream = function (onSucceedCallback, onFailCallback) {
-  navigator.getUserMedia({
-    audio: true
-  }, function (stream) {
-    if (onSucceedCallback) onSucceedCallback(stream);
-  }, function (error) {
-    console.error(error);
-    if (onFailCallback) onFailCallback();
-  });
+  navigator.mediaDevices.getUserMedia({
+    audio: true,
+    video: false
+  }).then(onSucceedCallback).catch(onFailCallback);
 };
 },{}],"common/js/AudioAnalyzer.ts":[function(require,module,exports) {
 "use strict";
@@ -36146,7 +36142,8 @@ var init = function init() {
   if (debugEnabled) {
     stats = new Stats();
     stats.showPanel(0);
-    stats.dom.id = "stats"; // document.body.appendChild(stats.dom);
+    stats.dom.id = "stats";
+    document.body.appendChild(stats.dom);
   }
 };
 
@@ -36194,7 +36191,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52293" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61382" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
