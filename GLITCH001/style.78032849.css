@@ -1,0 +1,53 @@
+body {
+    min-width: 1024px;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    font-family: Helvetica, arial, sans-serif;
+    background-color: #e2e2e2;
+}
+
+#CanvasGroup {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100vw;
+    text-align: center;
+}
+
+canvas {
+    display: inline-block;
+    margin: 5px auto;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.label {
+    position: absolute;
+    z-index: 999;
+    font-size: 11px;
+    color: #fff;
+}
+
+.title {
+    position: absolute;
+    z-index: 999;
+    font-size: 13px;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background: #333;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #999; 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #999; 
+}
+
+/*# sourceMappingURL=/style.78032849.css.map */
