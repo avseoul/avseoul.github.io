@@ -117,287 +117,249 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"common/js/Utils.ts":[function(require,module,exports) {
+})({"../node_modules/avseoul_common_npm/js/Utils.ts":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.isRetina = function () {
-  if (window.matchMedia) {
-    var _m = window.matchMedia("only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)");
-
-    return _m && _m.matches || window.devicePixelRatio > 1;
-  }
-
-  return false;
+    if (window.matchMedia) {
+        var _m = window.matchMedia("only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)");
+        return (_m && _m.matches || (window.devicePixelRatio > 1));
+    }
+    return false;
 };
-
 exports.isMobile = function () {
-  var check = false;
-
-  (function (a) {
-    if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
-  })(navigator.userAgent || navigator.vendor);
-
-  return check;
+    var check = false;
+    (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4)))
+        check = true; })(navigator.userAgent || navigator.vendor);
+    return check;
 };
-
+exports.getNearestPowerOfTwo = function (value) {
+    return Math.pow(2, Math.round(Math.log2(value)));
+};
 exports.getVideoStream = function (width, height, callback) {
-  var constraints = {
-    audio: false,
-    video: {
-      width: width,
-      height: height
-    }
-  };
-  var videoNode = document.createElement("video");
-  navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
-    videoNode.srcObject = mediaStream;
-
-    videoNode.onloadedmetadata = function () {
-      videoNode.play();
-      if (callback) callback(videoNode);
-    };
-  }).catch(function (err) {
-    return console.error(err.name + ": " + err.message);
-  });
+    var constraints = { audio: false, video: { width: width, height: height } };
+    var videoNode = document.createElement("video");
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(function (mediaStream) {
+        videoNode.srcObject = mediaStream;
+        videoNode.onloadedmetadata = function () {
+            videoNode.play();
+            if (callback)
+                callback(videoNode);
+        };
+    })
+        .catch(function (err) { return console.error(err.name + ": " + err.message); });
 };
-
 exports.getMicStream = function (onSucceedCallback, onFailCallback) {
-  navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: false
-  }).then(onSucceedCallback).catch(onFailCallback);
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+        .then(onSucceedCallback).catch(onFailCallback);
 };
-},{}],"common/js/AudioAnalyzer.ts":[function(require,module,exports) {
+
+},{}],"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
+Object.defineProperty(exports, "__esModule", { value: true });
 var Utils_1 = require("./Utils");
-
-var AudioAnalyzer =
-/** @class */
-function () {
-  function AudioAnalyzer(gainValue) {
-    this.gainValue = 1;
-    this.isInit = false;
-    this.isPulse = false;
-    this.debugCanvas = null;
-    this.debugCanvasCtx = null;
-    this.FFT_SIZE = 256;
-    this._bass = 0.;
-    this._mid = 0.;
-    this._high = 0.;
-    this._level = 0.;
-    this._history = 0.;
-    this.cutout = .5;
-    this.frame = 0;
-    this.gainValue = gainValue;
-    Utils_1.getMicStream(this.init.bind(this), this.initWithoutStream.bind(this));
-  }
-
-  Object.defineProperty(AudioAnalyzer.prototype, "gain", {
-    get: function get() {
-      if (this._gain) return this._gain.gain.value;else return 1;
-    },
-    set: function set(value) {
-      if (this._gain) this._gain.gain.value = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "bass", {
-    get: function get() {
-      return this._bass == undefined ? 0. : this._bass;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "mid", {
-    get: function get() {
-      return this._mid == undefined ? 0. : this._mid;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "high", {
-    get: function get() {
-      return this._high == undefined ? 0. : this._high;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "level", {
-    get: function get() {
-      return this._level == undefined ? 0. : this._level;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "history", {
-    get: function get() {
-      return this._history == undefined ? 0. : this._history;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-
-  AudioAnalyzer.prototype.init = function (stream) {
-    var audioCtx = new AudioContext();
-    var mediaStreamSource = audioCtx.createMediaStreamSource(stream);
-    this._gain = audioCtx.createGain();
-    this._gain.gain.value = this.gainValue || 70.;
-    var lowPass = audioCtx.createBiquadFilter();
-    lowPass.type = "lowpass";
-    lowPass.frequency.value = 1000;
-    var highPass = audioCtx.createBiquadFilter();
-    highPass.type = "highpass";
-    highPass.frequency.value = 20000;
-    this.analyzer = audioCtx.createAnalyser();
-    this.analyzer.fftSize = this.FFT_SIZE; // Node tree
-
-    mediaStreamSource.connect(this._gain);
-
-    this._gain.connect(this.analyzer); // this._gain.connect(lowPass);
-    // this._gain.connect(highPass);
-    // lowPass.connect(this.analyzer);
-    // highPass.connect(this.analyzer);
-
-
-    this.reset();
-    this.audioBuffer = new Uint8Array(this.analyzer.frequencyBinCount);
-    this.isInit = true;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.initWithoutStream = function () {
-    alert("microphone is not detected. pulse is activated instead of mic input");
-    this.reset();
-    this.isInit = true;
-    this.isPulse = true;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.update = function () {
-    if (!this.isInit || !this.analyzer || !this.audioBuffer) return;
-    var bass = 0,
-        mid = 0,
-        high = 0;
-
-    if (!this.isPulse) {
-      this.analyzer.getByteFrequencyData(this.audioBuffer);
-      var passSize = this.analyzer.frequencyBinCount / 3;
-      var DATA_SCALE = 255;
-
-      for (var i = 0; i < this.analyzer.frequencyBinCount; i++) {
-        var val = this.audioBuffer[i] / DATA_SCALE;
-        if (val === Infinity || val < this.cutout) continue;
-        if (i < passSize) bass += val;else if (i < passSize * 2) mid += val;else if (i <= passSize * 3) high += val;
-      }
-
-      bass /= passSize;
-      mid /= passSize;
-      high /= passSize;
-    } else {
-      if (this.frame % 40 == Math.floor(Math.random() * 40.)) {
-        bass = Math.random();
-        mid = Math.random();
-        high = Math.random();
-      }
-
-      this.frame++;
+var AudioAnalyzer = /** @class */ (function () {
+    function AudioAnalyzer(gainValue) {
+        this.gainValue = 1;
+        this.isInit = false;
+        this.isPulse = false;
+        this.debugCanvas = null;
+        this.debugCanvasCtx = null;
+        this.FFT_SIZE = 256;
+        this._bass = 0.;
+        this._mid = 0.;
+        this._high = 0.;
+        this._level = 0.;
+        this._history = 0.;
+        this.cutout = .5;
+        this.frame = 0;
+        this.gainValue = gainValue;
+        Utils_1.getMicStream(this.init.bind(this), this.initWithoutStream.bind(this));
     }
-
-    this._bass = this._bass > bass ? this._bass * .96 : bass;
-    this._mid = this._mid > mid ? this._mid * .96 : mid;
-    this._high = this._high > high ? this._high * .96 : high;
-    this._level = (this._bass + this._mid + this._high) / 3.;
-    this._history += this._level * .01 + .005;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.reset = function () {
-    this._history = 0.;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.trigger_pulse = function (isPulse) {
-    this.isPulse = isPulse;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.debug = function (_canvas) {
-    if (_canvas === void 0) {
-      _canvas = null;
-    }
-
-    var canvas = _canvas || this.debugCanvas;
-
-    if (canvas === null) {
-      this.debugCanvas = document.createElement("canvas");
-      this.debugCanvas.className = "audioDebug";
-      document.body.appendChild(this.debugCanvas);
-      canvas = this.debugCanvas;
-    }
-
-    if (this.debugCanvasCtx === null) this.debugCanvasCtx = canvas.getContext("2d");
-    var w = canvas.width / 4;
-    var h;
-    var x = 0;
-    var black = "rgb(0, 0, 0)";
-    var white = "rgb(255, 255, 255)";
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-    this.debugCanvasCtx.font = "10px Verdana";
-    h = this._bass * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._bass.toFixed(2).toString(), x, canvas.height);
-    x += w;
-    h = this._mid * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._mid.toFixed(2).toString(), x, canvas.height);
-    x += w;
-    h = this._high * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._high.toFixed(2).toString(), x, canvas.height);
-    x += w;
-    h = this._level * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._level.toFixed(2).toString(), x, canvas.height);
-  };
-
-  ;
-  return AudioAnalyzer;
-}();
-
+    Object.defineProperty(AudioAnalyzer.prototype, "gain", {
+        get: function () {
+            if (this._gain)
+                return this._gain.gain.value;
+            else
+                return 1;
+        },
+        set: function (value) {
+            if (this._gain)
+                this._gain.gain.value = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "bass", {
+        get: function () {
+            return this._bass == undefined ? 0. : this._bass;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "mid", {
+        get: function () {
+            return this._mid == undefined ? 0. : this._mid;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "high", {
+        get: function () {
+            return this._high == undefined ? 0. : this._high;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "level", {
+        get: function () {
+            return this._level == undefined ? 0. : this._level;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "history", {
+        get: function () {
+            return this._history == undefined ? 0. : this._history;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    AudioAnalyzer.prototype.init = function (stream) {
+        var audioCtx = new AudioContext();
+        var mediaStreamSource = audioCtx.createMediaStreamSource(stream);
+        this._gain = audioCtx.createGain();
+        this._gain.gain.value = this.gainValue || 70.;
+        var lowPass = audioCtx.createBiquadFilter();
+        lowPass.type = "lowpass";
+        lowPass.frequency.value = 1000;
+        var highPass = audioCtx.createBiquadFilter();
+        highPass.type = "highpass";
+        highPass.frequency.value = 20000;
+        this.analyzer = audioCtx.createAnalyser();
+        this.analyzer.fftSize = this.FFT_SIZE;
+        // Node tree
+        mediaStreamSource.connect(this._gain);
+        this._gain.connect(lowPass);
+        this._gain.connect(highPass);
+        lowPass.connect(this.analyzer);
+        highPass.connect(this.analyzer);
+        this.reset();
+        this.audioBuffer = new Uint8Array(this.analyzer.frequencyBinCount);
+        this.isInit = true;
+    };
+    ;
+    AudioAnalyzer.prototype.initWithoutStream = function () {
+        alert("microphone is not detected. pulse is activated instead of mic input");
+        this.reset();
+        this.isInit = true;
+        this.isPulse = true;
+    };
+    ;
+    AudioAnalyzer.prototype.update = function () {
+        if (!this.isInit || !this.analyzer || !this.audioBuffer)
+            return;
+        var bass = 0, mid = 0, high = 0;
+        if (!this.isPulse) {
+            this.analyzer.getByteFrequencyData(this.audioBuffer);
+            var passSize = this.analyzer.frequencyBinCount / 3;
+            var DATA_SCALE = 255;
+            for (var i = 0; i < this.analyzer.frequencyBinCount; i++) {
+                var val = this.audioBuffer[i] / DATA_SCALE;
+                if (val === Infinity || val < this.cutout)
+                    continue;
+                if (i < passSize)
+                    bass += val;
+                else if (i < passSize * 2)
+                    mid += val;
+                else if (i <= passSize * 3)
+                    high += val;
+            }
+            bass /= passSize;
+            mid /= passSize;
+            high /= passSize;
+        }
+        else {
+            if (this.frame % 40 == (Math.floor(Math.random() * 40.))) {
+                bass = Math.random();
+                mid = Math.random();
+                high = Math.random();
+            }
+            this.frame++;
+        }
+        this._bass = this._bass > bass ? this._bass * .96 : bass;
+        this._mid = this._mid > mid ? this._mid * .96 : mid;
+        this._high = this._high > high ? this._high * .96 : high;
+        this._level = (this._bass + this._mid + this._high) / 3.;
+        this._history += this._level * .01 + .005;
+    };
+    ;
+    AudioAnalyzer.prototype.reset = function () {
+        this._history = 0.;
+    };
+    ;
+    AudioAnalyzer.prototype.trigger_pulse = function (isPulse) {
+        this.isPulse = isPulse;
+    };
+    ;
+    AudioAnalyzer.prototype.debug = function (_canvas) {
+        if (_canvas === void 0) { _canvas = null; }
+        var canvas = _canvas || this.debugCanvas;
+        if (canvas === null) {
+            this.debugCanvas = document.createElement("canvas");
+            this.debugCanvas.className = "audioDebug";
+            document.body.appendChild(this.debugCanvas);
+            canvas = this.debugCanvas;
+        }
+        if (this.debugCanvasCtx === null)
+            this.debugCanvasCtx = canvas.getContext("2d");
+        var w = canvas.width / 4;
+        var h;
+        var x = 0;
+        var black = "rgb(0, 0, 0)";
+        var white = "rgb(255, 255, 255)";
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+        this.debugCanvasCtx.font = "10px Verdana";
+        h = this._bass * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._bass.toFixed(2).toString(), x, canvas.height);
+        x += w;
+        h = this._mid * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._mid.toFixed(2).toString(), x, canvas.height);
+        x += w;
+        h = this._high * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._high.toFixed(2).toString(), x, canvas.height);
+        x += w;
+        h = this._level * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._level.toFixed(2).toString(), x, canvas.height);
+    };
+    ;
+    return AudioAnalyzer;
+}());
 exports.default = AudioAnalyzer;
 ;
-},{"./Utils":"common/js/Utils.ts"}],"../node_modules/three/build/three.module.js":[function(require,module,exports) {
+
+},{"./Utils":"../node_modules/avseoul_common_npm/js/Utils.ts"}],"../node_modules/three/build/three.module.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35689,186 +35651,25 @@ if (typeof __THREE_DEVTOOLS__ !== 'undefined') {
   /* eslint-enable no-undef */
 
 }
-},{}],"common/js/MouseHandler.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var MouseHandler =
-/** @class */
-function () {
-  function MouseHandler() {
-    this.w = document.documentElement.clientWidth;
-    this.h = document.documentElement.clientHeight;
-    this.counter = 0;
-    this._x = 0;
-    this._y = 0;
-    this._normX = 0;
-    this._normY = 0;
-    this._normPx = 0;
-    this._normPy = 0;
-    this._deltaX = 0;
-    this._deltaY = 0;
-    this._dirX = 0;
-    this._dirY = 0;
-  }
-
-  Object.defineProperty(MouseHandler.prototype, "x", {
-    get: function get() {
-      return this._x;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "y", {
-    get: function get() {
-      return this._y;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "normalizedX", {
-    get: function get() {
-      return this._normX;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "normalizedY", {
-    get: function get() {
-      return this._normY;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "prevNormalizedX", {
-    get: function get() {
-      return this._normPx;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "prevNormalizedY", {
-    get: function get() {
-      return this._normPy;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "deltaX", {
-    get: function get() {
-      return this._deltaX;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "deltaY", {
-    get: function get() {
-      return this._deltaY;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "directionX", {
-    get: function get() {
-      return this._dirX;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "directionY", {
-    get: function get() {
-      return this._dirY;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-
-  MouseHandler.prototype.handler = function (event) {
-    window.clearTimeout(this.counter);
-    this.counter = window.setTimeout(this.reset.bind(this), 500.);
-
-    if (event.targetTouches) {
-      var touch = event.targetTouches[0];
-      this._x = touch.pageX;
-      this._y = touch.pageY;
-    } else {
-      this._x = event.clientX;
-      this._y = event.clientY;
-    }
-
-    this._normX = this._x / this.w;
-    this._normY = 1. - this._y / this.h;
-    this._deltaX = this._normX - this._normPx;
-    this._deltaY = this._normY - this._normPy;
-    this._dirX = this._normPx - this._normX;
-    this._dirY = this._normPy - this._normY;
-    this._normPx = this._normX;
-    this._normPy = this._normY;
-  };
-
-  ;
-
-  MouseHandler.prototype.reset = function () {
-    this._normPx = this._normX;
-    this._normPy = this._normY;
-    this._deltaX = 0.;
-    this._deltaY = 0.;
-    this._dirX = 0.;
-    this._dirY = 0.;
-  };
-
-  ;
-
-  MouseHandler.prototype.registerDomEvents = function (target) {
-    var _this = this;
-
-    target.addEventListener("mousemove", this.handler.bind(this), false);
-    target.addEventListener("touchmove", this.handler.bind(this), false);
-    target.addEventListener('touchstart', function (event) {
-      event.preventDefault();
-    }, {
-      passive: false
-    });
-    window.addEventListener("resize", function () {
-      _this.w = document.documentElement.clientWidth;
-      _this.h = document.documentElement.clientHeight;
-    });
-    window.addEventListener("mouseout", function () {
-      _this.reset();
-    });
-  };
-
-  ;
-  return MouseHandler;
-}();
-
-exports.default = MouseHandler;
-},{}],"shader/shared.vert":[function(require,module,exports) {
+},{}],"shaders/shared.vert":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nvoid main() {\n\tv_uv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);\n}";
-},{}],"shader/channelMixer.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\n\nuniform vec2 u_res;\nuniform vec2 u_ratio;\n\nuniform float u_audio_high;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\n\nmat2 getRotationMatrix(in float angle) {\n    float rad = angle * 0.01745329251;\n    return mat2(cos(rad), sin(rad), -sin(rad), cos(rad));\n}\n\nvec3 norm(in vec3 src) {\n\tif(length(src) == 0.) return vec3(.0001);\n\telse return normalize(src);\n}\n\nvoid main() {\n\tvec2 src = texture2D(u_tex_src, v_uv).rg;\n\tfloat audioTime = u_audio_history + u_t;\n\n\tfloat t1 = smoothstep(0., 1., sin(audioTime) * .5 + .5);\n\tfloat t2 = smoothstep(0., 1., sin(audioTime * .7) * .5 + .5);\n\tfloat t3 = smoothstep(0., 1., sin(audioTime * .3) * .5 + .5);\n\n\tvec2 coord = (src * 2. - 1.) * (.95 + .2 * t2);\n\tcoord *= u_ratio;\n\tfloat dist = sqrt(coord.x * coord.x + coord.y * coord.y);\n\tfloat blob = pow(dist, 5. + 15. * u_audio_level);\n\n\tvec3 c = vec3(blob, 0., src.g);\n\tvec3 c2 = vec3(0., src.r, blob);\n\tc = mix(c, c.bgr, t1);\n\tc = mix(c2, c, t2);\n\n\tfloat fu = smoothstep(.0, 1., v_uv.y) * u_audio_high;\n\tfloat fd = smoothstep(.0, 1., 1. - v_uv.y) * u_audio_high;\n\tc.g += fd * t1 * .3;\n\tc.r += fu * t2 * .5;\n\n\t// gradient to ink, don't swap the damn order\n\tc = mix(norm(c), c, t3);\n\tc = pow(abs(c), vec3(.42));\n\n\tgl_FragColor = vec4(c, 1.);\n}";
-},{}],"shader/input.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform vec2 u_res;\nuniform vec2 u_ratio;\n\nuniform float u_audio_high;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_noise;\n\nuniform vec2 u_mouse;\nuniform vec2 u_mouse_dir;\n\nvec4 advect(sampler2D _tex, vec2 _uv, vec2 _dir, vec2 _texel){\n    //https://www.shadertoy.com/view/MsyXRW\n    const float _G0 = .25;\n    const float _G1 = .125;\n    const float _G2 = .0625;\n    const float ADVECT_DIST = 2.;\n\n    vec2 uv = _uv - _dir * ADVECT_DIST * _texel;\n\n    vec2 n  = vec2( 0., 1.);\n    vec2 ne = vec2( 1., 1.);\n    vec2 e  = vec2( 1., 0.);\n    vec2 se = vec2( 1.,-1.);\n    vec2 s  = vec2( 0.,-1.);\n    vec2 sw = vec2(-1.,-1.);\n    vec2 w  = vec2(-1., 0.);\n    vec2 nw = vec2(-1., 1.);\n\n    vec4 c =    texture2D(_tex, fract(uv));\n    vec4 c_n =  texture2D(_tex, fract(uv+_texel*n));\n    vec4 c_e =  texture2D(_tex, fract(uv+_texel*e));\n    vec4 c_s =  texture2D(_tex, fract(uv+_texel*s));\n    vec4 c_w =  texture2D(_tex, fract(uv+_texel*w));\n    vec4 c_nw = texture2D(_tex, fract(uv+_texel*nw));\n    vec4 c_sw = texture2D(_tex, fract(uv+_texel*sw));\n    vec4 c_ne = texture2D(_tex, fract(uv+_texel*ne));\n    vec4 c_se = texture2D(_tex, fract(uv+_texel*se));\n\n    return _G0*c+_G1*(c_n+c_e+c_w+c_s)+_G2*(c_nw+c_sw+c_ne+c_se);\n}\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat cal_noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\n#define SQRT_TWO 1.41421356237\n#define OCTAVE 6\n#define COMPLEXITY 3.\n#define CONTRAST .7\n#define AUDIO_FUZZY_INTENSITY .0022\n\n#define STROKE_SIZE .08\n#define STROKE_INTENSITY .0088\n\n#define DAMPING .73\n\nmat2 getRotationMatrix(in float angle) {\n    float rad = angle * 0.01745329251;\n    return mat2(cos(rad), sin(rad), -sin(rad), cos(rad));\n}\n\nfloat fbm (in vec2 st, in float t) {\n    float n = .0;\n    float a = 1.;\n    for (int i = 0; i < OCTAVE; ++i) {\n        n += a * cal_noise(st * COMPLEXITY);\n        st = getRotationMatrix(t) * st * COMPLEXITY;\n        st.y += t * COMPLEXITY;\n        a *= CONTRAST;\n    }\n    return n;\n}\n\nvec2 norm(in vec2 src) {\n\tif(length(src) == 0.) return vec2(.0001);\n\telse return normalize(src);\n}\n\nvoid main(){\n    vec2 rotUV = getRotationMatrix(u_audio_history * 2.) * v_uv;\n\tvec2 m_noise = texture2D(u_tex_noise, rotUV).gb;\n\tvec3 m_src = advect(u_tex_src, v_uv, m_noise * 40., 1. / u_res).rgb;\n\n    float dist = distance(v_uv, u_mouse);\n\tdist = max(dist, STROKE_SIZE);\n    float mag = SQRT_TWO - dist;\n\n    float noise = fbm(v_uv, u_audio_history);\n    vec2 m_audio_f = noise * norm(rotUV * 2. - 1.);\n\n\tvec2 m_out = m_src.rg;\n\tm_out += u_mouse_dir * mag * STROKE_INTENSITY / (dist * dist);\n\tm_out += m_audio_f * AUDIO_FUZZY_INTENSITY * u_audio_level;\n\tm_out *= DAMPING;\n\n\tgl_FragColor = vec4(m_out, 0, 1);\n}";
-},{}],"shader/master.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform sampler2D u_tex_src;\n\nvoid main(){\n\tgl_FragColor = texture2D(u_tex_src, v_uv);\n}";
-},{}],"shader/rgb.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\nuniform vec2 u_ratio;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_input;\n\nvec2 norm(in vec2 src) {\n\tif(length(src) == 0.) return vec2(.0001);\n\telse return normalize(src);\n}\n\n// Set lower number has more impact\n#define COLOR_MOVEMENT .08 \nvoid main(){\n\tvec2 m_input = texture2D(u_tex_input, v_uv).rg;\n\tvec2 m_src = texture2D(u_tex_src, v_uv + m_input).rg;\n\n\tvec2 r_dir = v_uv - m_src.rg;\n\tfloat r_dist = length(r_dir);\n\tr_dir = norm(r_dir);\n\t\n\tvec2 c = m_src + r_dir * r_dist * COLOR_MOVEMENT; \n\n\tgl_FragColor = vec4(c, 0., 1.);\n}";
-},{}],"assets/noise.jpg":[function(require,module,exports) {
-module.exports = "/noise.4bfbbc3c.jpg";
-},{}],"js/FuzzyBlob.ts":[function(require,module,exports) {
+},{}],"shaders/feed.frag":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform bool u_is_init;\n\nuniform vec2 u_screen_res;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_videoTexture;\n\nvoid main(){\n\tvec3 m_src = texture2D( u_tex_src, v_uv).rgb;\n\tvec3 m_blend = texture2D( u_videoTexture, vec2(1. - v_uv.x, v_uv.y)).rgb;\n\n\tvec3 m_c = m_src - pow(m_blend, vec3(3.)) * 55.;\n\n    gl_FragColor = vec4(m_c, 1.);\n}";
+},{}],"shaders/glitch.frag":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform bool u_is_init;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvoid main(){\n\tvec2 m_uv = v_uv;\n\n\tvec3 c;\n\n\t// audio input vars\n\tfloat m_ahigh = u_audio_high;\n\tfloat m_amid = u_audio_mid;\n\tfloat m_abass = u_audio_bass;\n\tfloat m_alevel = u_audio_level;\n\tfloat m_aframe = u_audio_history;\n\n\t// slice vars\n\tconst float m_num_slice = 2.;\n\tfloat m_slice = floor(m_uv.y * m_num_slice);\n    float m_rand = hash(m_slice/m_num_slice + .4562341, 0.);\n    m_rand *= hash(m_rand/m_num_slice, m_aframe);\n\n\t// VHS color bar ziggle\n\t{\n\t\t// up&down ziggle\n\t\tm_uv -= .5;\n\t\tm_uv.y += (2. * m_ahigh * (1.-2.*m_rand)) * m_rand;\n\t\tm_uv += .5;\n\t}\n\n\t// render image \n\t{\n\t\tfloat rgb_shift = .08 * m_alevel;\n\n\t\tc.r = texture2D(u_tex_src, fract(m_uv + vec2(rgb_shift))).r;\n\t\tc.g = texture2D(u_tex_src, fract(m_uv)).g;\n\t\tc.b = texture2D(u_tex_src, fract(m_uv + vec2(-rgb_shift))).b;\n\t}\n\n\t// VHS blend ziggle\n\t{\n\t\tvec2 m_ziggle_uv = m_uv;\n\t\tm_ziggle_uv.y += (1.-2.*hash(m_ahigh, m_aframe))*.1 * m_rand;\n\t\tvec3 m_blend_ziggle = texture2D(u_tex_src, fract(m_ziggle_uv)).rgb;\n\t\tc += m_blend_ziggle;\n\t\tc /= 2.;\n\t}\n\n\t// VHS color bar burn \n\t{\n\t\t// create random seed\n\t\tfloat _seed_a = hash(m_slice/10. + .12347, -m_aframe * 1.9);\n\t\tfloat _seed_b = hash(m_slice/5. + .34562, -m_aframe * 1.7);\n\t\tfloat _seed_c = hash(m_slice/2. + .78906, -m_aframe * 1.8);\n\t\tfloat m_seed = (_seed_a * _seed_b * _seed_c)/3.; //<-- normalized 0-1\n\t\t\n\t\t// seed selector bar\n\t\t// should be less than 1.\n\t\tfloat m_noise_freq = m_ahigh * .1;\n\n\t\t// color burn based on seed event \n\t\tif(m_noise_freq > m_seed){\n\t\t\tc.r *= _seed_a * hash(m_ahigh, .23) * 16.;\n\t\t\tc.g *= _seed_b * hash(m_ahigh, .34) * 16.;\n\t\t\tc.b *= _seed_c * hash(m_ahigh, .45) * 16.;\n\t\t}\n\t}\n\n\tgl_FragColor = vec4(c, 1.);\n}";
+},{}],"shaders/master.frag":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\nuniform sampler2D u_tex_src;\n\nvoid main(){\n\tgl_FragColor = texture2D(u_tex_src, v_uv);\n}";
+},{}],"shaders/monochromeIntense.frag":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform bool u_is_init;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvoid main(){\n\tvec2 m_uv = v_uv;\n\n\tvec3 c;\n\n\t// audio input vars\n\tfloat m_ahigh = u_audio_high;\n\tfloat m_amid = u_audio_mid;\n\tfloat m_abass = u_audio_bass;\n\tfloat m_alevel = u_audio_level;\n\tfloat m_aframe = u_audio_history;\n\t\n\tfloat m_glitch = 0.;\n\n\t// vertical movemnet\n\tm_uv.y -= m_aframe*.5 + pow(m_abass, 5.);\n\n\t// wave\n\t{\n\t\tvec2 _seed_a = vec2(m_alevel, m_uv.y) + 80.*u_t;\n\t\tvec2 _seed_b = vec2(-m_alevel, m_uv.y) - 100.*u_t;\n\n\t\tfloat _zig = 0., _low = 0., _high = 0.;\n\n\t\t// horizontal wavy ziggle\n\t\tm_glitch += pow(noise(_seed_a * 2.), 3.) * .2 * m_alevel;\n\t\tm_glitch -= pow(noise(_seed_b * 2.), 3.) * .2 * m_alevel; \n\n\t\t// high freq wav\n\t\tm_glitch += pow(noise(_seed_a * 3.), 3.) * .2 * m_ahigh; \n\t\tm_glitch -= pow(noise(-_seed_b * 3.), 3.) * .2 * m_ahigh; \n\t\t\n\t\tm_uv += m_glitch;\n\t}\n\n\t// render image \n\t{\n\t\tfloat rgb_shift = .3 * m_ahigh * m_glitch + .008 * m_alevel;\n\n\t\tc.r = texture2D(u_tex_src, fract(m_uv + vec2(rgb_shift))).g;\n\t\tc.g = texture2D(u_tex_src, fract(m_uv)).g;\n\t\tc.b = texture2D(u_tex_src, fract(m_uv + vec2(-rgb_shift))).g;\n\t}\n\n\t// rolling bar\n\t{\t\n\t\tc = mix(c, vec3(0.), m_glitch*20.);\n\t}\n\n\tgl_FragColor = vec4(c, 1.);\n}";
+},{}],"shaders/ratioCorrect.vert":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform vec2 u_src_res;\nuniform vec2 u_screen_res;\n\nuniform bool is_fit_horizontal;\n\nvoid main() {\n\tvec3 m_pos = position;\n\n\t// width stay filling the canvas' width\n\tif(is_fit_horizontal){\n\t\tfloat m_screen_ratio = u_screen_res.x / u_screen_res.y;\n\t\tfloat m_tex_ratio = u_src_res.y / u_src_res.x;\n\t\tm_pos.y *= m_screen_ratio * m_tex_ratio;\n\t} else {\n\t\tfloat m_screen_ratio = u_screen_res.y / u_screen_res.x;\n\t\tfloat m_tex_ratio = u_src_res.x / u_src_res.y;\n\t\tm_pos.x *= m_screen_ratio * m_tex_ratio;\n\t}\n\t\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(m_pos, 1.);\n\n    v_uv = uv;\n}";
+},{}],"shaders/VHS.frag":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform bool u_is_init;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvoid main(){\n\tvec2 m_uv = v_uv;\n\n\t// audio input vars\n\tfloat m_ahigh = u_audio_high;\n\tfloat m_amid = u_audio_mid;\n\tfloat m_abass = u_audio_bass;\n\tfloat m_alevel = u_audio_level;\n\tfloat m_aframe = u_audio_history * .1;\n\n\t// rolling bar\n\tfloat m_rolling_bar = noise(m_uv.yy * 5. - m_aframe*5. + m_alevel*.8) * m_alevel; \n\n\t// vertical ziggle\n\tm_uv.y -= pow(m_alevel, 5.)*.1*pow(m_abass, 5.);\n\n\t// wave\n\t{\n\t\tvec2 _seed_a = vec2(m_alevel, m_uv.y) + 80.*u_t;\n\t\tvec2 _seed_b = vec2(-m_alevel, m_uv.y) - 100.*u_t;\n\n\t\tfloat _zig = 0., _low = 0., _high = 0.;\n\n\t\t// horizontal wavy ziggle\n\t\t_zig += pow(noise(_seed_a * .2), 3.) * .3 * m_alevel;\n\t\t_zig -= pow(noise(_seed_b * .2), 3.) * .3 * m_alevel; \n\n\t\t// low freq wav\n\t\t_low = _zig;\n\n\t\t// high freq wav\n\t\t_high += pow(noise(_seed_a * 30.), 6.) * .8 * m_ahigh; \n\t\t_high -= pow(noise(-_seed_b * 30.), 6.) * .8 * m_ahigh; \n\t\t\n\t\tm_uv.x += _zig;\n\t\tm_uv += (_low + _high)*pow(m_rolling_bar, 3.);\n\t}\n \t\n \t// chromatic aberration rgb shifting\n \tfloat _r, _g, _b;\n \t{\n \t\tvec2 _dir = normalize(vec2(.5) - m_uv);\n \t\tfloat _dist = distance(m_uv, vec2(.5));\n\t \tvec2 _offset = _dir * _dist * .04;\n\t \t_r = texture2D(u_tex_src, fract(m_uv + m_ahigh*_offset )).r;\n\t \t_g = texture2D(u_tex_src, fract(m_uv + m_amid*_offset )).g;\n\t \t_b = texture2D(u_tex_src, fract(m_uv + m_abass*_offset )).b;\n\t}\n\n \t// layer\n \tvec3 m_src = vec3(_r, _g, _b);\n \tvec3 m_bad = m_src.bgr;\n\n \t// vertical color burn seed\n \t{\n\t \tfloat _seed = noise(m_uv.yy * .8 - m_aframe);\n\t \t_seed = pow(_seed, 3.);\n\t \t_seed *= 10.;\n\t \tm_src = mix(m_src, m_bad, _seed);\n\t}\n\n \t// noise pattern color burn \n \t{\n\t \tfloat _noise = (.5-noise( vec2(v_uv.x, v_uv.y - u_t*10.) * 1. )) * m_alevel;\n\t \tfloat _seed = distance(v_uv + _noise, vec2(.5));\n\t \tm_src = mix(m_src, m_bad.rbg, _seed);\n\t}\n\n\t// rolling bar color burn\n\t{\t\n\t\tm_src = mix(m_src, m_bad, m_rolling_bar);\n\t}\n\n \t// add noise\n \t{\n\t\tfloat _nr = hash(m_uv.xy + m_ahigh + u_t*.01);\n\t\tfloat _ng = hash(m_uv.xy + m_amid + u_t*.01);\n\t\tfloat _nb = hash(m_uv.xy + m_abass + u_t*.01);\n\t\tvec3 _noise = vec3(_nr, _ng, _nb);\n\n \t\t// rolling bar noise\n\t\tm_src += _noise * pow(m_rolling_bar, 5.);\n\n\t\t// canvas noise\n\t\tm_src += _noise * .1;\n\t}\n \t\n \tgl_FragColor = vec4(m_src, 1.);\n\n}";
+},{}],"assets/test_pattern_black.jpg":[function(require,module,exports) {
+module.exports = "/test_pattern_black.4cf86f23.jpg";
+},{}],"assets/test_pattern_ntsc.png":[function(require,module,exports) {
+module.exports = "/test_pattern_ntsc.b03a666b.png";
+},{}],"js/BadSignals.ts":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -35883,226 +35684,260 @@ Object.defineProperty(exports, "__esModule", {
 
 var three_1 = require("three");
 
-var MouseHandler_1 = __importDefault(require("../common/js/MouseHandler"));
+var Utils_1 = require("avseoul_common_npm/js/Utils");
 
-var Utils_1 = require("../common/js/Utils");
+var shared_vert_1 = __importDefault(require("../shaders/shared.vert"));
 
-var shared_vert_1 = __importDefault(require("../shader/shared.vert"));
+var feed_frag_1 = __importDefault(require("../shaders/feed.frag"));
 
-var channelMixer_frag_1 = __importDefault(require("../shader/channelMixer.frag"));
+var glitch_frag_1 = __importDefault(require("../shaders/glitch.frag"));
 
-var input_frag_1 = __importDefault(require("../shader/input.frag"));
+var master_frag_1 = __importDefault(require("../shaders/master.frag"));
 
-var master_frag_1 = __importDefault(require("../shader/master.frag"));
+var monochromeIntense_frag_1 = __importDefault(require("../shaders/monochromeIntense.frag"));
 
-var rgb_frag_1 = __importDefault(require("../shader/rgb.frag"));
+var ratioCorrect_vert_1 = __importDefault(require("../shaders/ratioCorrect.vert"));
 
-var noise_jpg_1 = __importDefault(require("../assets/noise.jpg"));
+var VHS_frag_1 = __importDefault(require("../shaders/VHS.frag"));
 
-var FuzzyBlob =
+var test_pattern_black_jpg_1 = __importDefault(require("../assets/test_pattern_black.jpg"));
+
+var test_pattern_ntsc_png_1 = __importDefault(require("../assets/test_pattern_ntsc.png"));
+
+var BadSignals =
 /** @class */
 function () {
-  function FuzzyBlob(audioAnalyzer) {
+  function BadSignals(audioAnalyzer) {
     var _this = this;
 
+    this.isLandscape = false;
+    this.isMonochrome = false;
+    this.isGlitch = false;
     this.isInit = false;
-    this.frameBufferIndex = 1;
-    this.frame = 0;
-    var w = document.documentElement.clientWidth;
-    var h = document.documentElement.clientHeight;
+    this.frame = 1;
+    this.timer = 0;
+    this.VIDEO_TEXTURE_WIDTH = 320;
+    this.VIDEO_TEXTURE_HEIGHT = 240;
+    this.BUFFER_SIZE = 860;
     this.audioAnalyzer = audioAnalyzer;
-    this.mouseHandler = new MouseHandler_1.default();
-    this.mouseHandler.registerDomEvents(document.body); // Setup renderer
+    this.renderer = new three_1.WebGLRenderer();
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(this.w, this.h);
+    this.renderer.setClearColor(new three_1.Color(0x000000), 1);
+    this.renderer.autoClear = true;
+    var context = this.renderer.getContext();
+    context.disable(context.DEPTH_TEST); // Append renderer to dom
 
-    {
-      this.renderer = new three_1.WebGLRenderer();
-      this.renderer.setPixelRatio(window.devicePixelRatio);
-      this.renderer.setSize(w, h);
-      this.renderer.extensions.get("OES_texture_float_linear");
-      var context = this.renderer.getContext();
-      context.disable(context.DEPTH_TEST); // Append renderer to dom
-
-      document.body.appendChild(this.renderer.domElement);
-    } // Setup camera
-
-    {
-      this.camera = new three_1.OrthographicCamera(-.5, .5, .5, -.5, .1, 1);
-      this.camera.position.z = .5;
-      this.camera.updateProjectionMatrix();
-    } // Load shaders 
-
-    {
-      var loadShader = function loadShader(vert, frag) {
-        return new three_1.ShaderMaterial({
-          uniforms: {
-            u_t: {
-              value: 0
-            },
-            u_res: {
-              value: new three_1.Vector2(w, h)
-            },
-            u_ratio: {
-              value: _this.getRatioOffset(w, h)
-            },
-            u_audio_high: {
-              value: 0.
-            },
-            u_audio_level: {
-              value: 0.
-            },
-            u_audio_history: {
-              value: 0.
-            },
-            u_mouse: {
-              value: new three_1.Vector2(.5, .5)
-            },
-            u_mouse_dir: {
-              value: new three_1.Vector2(0., 0.)
-            }
-          },
-          depthTest: false,
-          vertexShader: vert,
-          fragmentShader: frag
-        });
-      };
-
-      this.inputShader = loadShader(shared_vert_1.default, input_frag_1.default);
-      this.rgbShader = loadShader(shared_vert_1.default, rgb_frag_1.default);
-      this.channelMixerShader = loadShader(shared_vert_1.default, channelMixer_frag_1.default);
-      this.masterShader = loadShader(shared_vert_1.default, master_frag_1.default); // init uniforms 
-
-      this.inputShader.uniforms.u_tex_src = {
-        value: null
-      };
-      this.rgbShader.uniforms.u_tex_src = {
-        value: null
-      };
-      this.rgbShader.uniforms.u_tex_input = {
-        value: null
-      };
-      this.channelMixerShader.uniforms.u_tex_src = {
-        value: null
-      };
-      this.masterShader.uniforms.u_tex_src = {
-        value: null
-      };
-    } // Load noise texture
-
-    var texNoise = new three_1.TextureLoader().load(noise_jpg_1.default, function () {
-      _this.inputShader.uniforms.u_tex_noise = {
-        value: texNoise
-      };
-    }, undefined, function (err) {
-      return console.error(err);
+    document.body.appendChild(this.renderer.domElement);
+    this.camera = new three_1.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 1);
+    this.camera.position.z = 0.5;
+    this.camera.updateProjectionMatrix();
+    Utils_1.getVideoStream(this.VIDEO_TEXTURE_WIDTH, this.VIDEO_TEXTURE_HEIGHT, function (video) {
+      return _this.videoTexture = new three_1.VideoTexture(video);
     });
-    texNoise.wrapS = three_1.ClampToEdgeWrapping;
-    texNoise.wrapT = three_1.ClampToEdgeWrapping;
-    texNoise.magFilter = three_1.LinearFilter;
-    texNoise.minFilter = three_1.LinearFilter; // Init buffers
-
-    {
-      var format = {
-        wrapS: three_1.ClampToEdgeWrapping,
-        wrapT: three_1.ClampToEdgeWrapping,
-        minFilter: three_1.LinearFilter,
-        magFilter: three_1.LinearFilter,
-        type: Utils_1.isMobile() ? three_1.HalfFloatType : three_1.FloatType,
-        format: three_1.RGBAFormat,
-        stencilBuffer: false,
-        depthBuffer: false
-      };
-      this.inputFrameBuffers = [];
-      this.rgbFrameBuffers = [];
-      var bufferSize = 512;
-
-      for (var i = 0; i < 2; i++) {
-        this.inputFrameBuffers[i] = new three_1.WebGLRenderTarget(bufferSize, bufferSize, format);
-        this.rgbFrameBuffers[i] = new three_1.WebGLRenderTarget(bufferSize, bufferSize, format);
-      }
-
-      this.channelMixerFrameBuffer = new three_1.WebGLRenderTarget(bufferSize, bufferSize, format);
-    } // Init scenes
-
-    {
-      var geom = new three_1.PlaneBufferGeometry(1, 1, 1, 1);
-      this.inputScene = new three_1.Scene();
-      this.inputScene.add(new three_1.Mesh(geom, this.inputShader));
-      this.rgbScene = new three_1.Scene();
-      this.rgbScene.add(new three_1.Mesh(geom, this.rgbShader));
-      this.channelMixerScene = new three_1.Scene();
-      this.channelMixerScene.add(new three_1.Mesh(geom, this.channelMixerShader));
-      this.masterScene = new three_1.Scene();
-      this.masterScene.add(new three_1.Mesh(geom, this.masterShader));
-    } // Ready to go
-
-    this.isInit = true;
-    window.addEventListener('resize', this.resize.bind(this));
+    this.initBuffer();
+    this.initShader();
+    this.initTexture();
+    this.initScene();
+    window.addEventListener("resize", this.resize.bind(this));
   }
 
-  FuzzyBlob.prototype.update = function () {
+  Object.defineProperty(BadSignals.prototype, "w", {
+    get: function get() {
+      return document.documentElement.clientWidth;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  Object.defineProperty(BadSignals.prototype, "h", {
+    get: function get() {
+      return document.documentElement.clientHeight;
+    },
+    enumerable: true,
+    configurable: true
+  });
+
+  BadSignals.prototype.update = function () {
     if (!this.isInit) return;
-    var audioHigh = this.audioAnalyzer.bass * 2; //intended as usually bass is the strongest frequency
 
-    var audioLevel = this.audioAnalyzer.level * 2;
-    var audioHistory = this.audioAnalyzer.history * .3;
-    var mousePosition = new three_1.Vector2(this.mouseHandler.normalizedX, this.mouseHandler.normalizedY);
-    var mouseDirection = new three_1.Vector2(this.mouseHandler.directionX, this.mouseHandler.directionY);
-    this.inputShader.uniforms.u_t.value = this.frame;
-    this.inputShader.uniforms.u_audio_high.value = audioHigh;
-    this.inputShader.uniforms.u_audio_level.value = audioLevel;
-    this.inputShader.uniforms.u_audio_history.value = audioHistory;
-    this.inputShader.uniforms.u_mouse.value = mousePosition;
-    this.inputShader.uniforms.u_mouse_dir.value = mouseDirection;
-    this.channelMixerShader.uniforms.u_t.value = this.frame * .01;
-    this.channelMixerShader.uniforms.u_audio_high.value = audioHigh;
-    this.channelMixerShader.uniforms.u_audio_level.value = audioLevel;
-    this.channelMixerShader.uniforms.u_audio_history.value = audioHistory;
-    this.inputShader.uniforms.u_tex_src.value = this.inputFrameBuffers[this.frameBufferIndex ^ 1].texture;
-    this.renderer.setRenderTarget(this.inputFrameBuffers[this.frameBufferIndex]);
-    this.renderer.render(this.inputScene, this.camera);
-    this.rgbShader.uniforms.u_tex_input.value = this.inputFrameBuffers[this.frameBufferIndex].texture;
-    this.rgbShader.uniforms.u_tex_src.value = this.rgbFrameBuffers[this.frameBufferIndex ^ 1].texture;
-    this.renderer.setRenderTarget(this.rgbFrameBuffers[this.frameBufferIndex]);
-    this.renderer.render(this.rgbScene, this.camera);
-    this.channelMixerShader.uniforms.u_tex_src.value = this.rgbFrameBuffers[this.frameBufferIndex].texture;
-    this.renderer.setRenderTarget(this.channelMixerFrameBuffer);
-    this.renderer.render(this.channelMixerScene, this.camera);
+    for (var _i = 0, _a = this.shaderBatch; _i < _a.length; _i++) {
+      var shader = _a[_i];
+      shader.uniforms.u_t.value = this.timer;
+      shader.uniforms.u_audio_high.value = this.audioAnalyzer.high;
+      shader.uniforms.u_audio_mid.value = this.audioAnalyzer.mid;
+      shader.uniforms.u_audio_bass.value = this.audioAnalyzer.bass;
+      shader.uniforms.u_audio_level.value = this.audioAnalyzer.level;
+      shader.uniforms.u_audio_history.value = this.audioAnalyzer.history;
+    }
+
+    this.shuffle();
+    this.passShader.uniforms.u_tex_src.value = this.sourceTexture;
+    this.passShader.uniforms.u_videoTexture.value = this.videoTexture;
+    this.renderer.setRenderTarget(this.webGLRenderTargets[this.frame]);
+    this.renderer.render(this.scenePass, this.camera);
+
+    if (this.isGlitch) {
+      this.glitchShader.uniforms.u_tex_src.value = this.webGLRenderTargets[this.frame].texture;
+      this.frame ^= 1;
+      this.renderer.setRenderTarget(this.webGLRenderTargets[this.frame]);
+      this.renderer.render(this.sceneGlitch, this.camera);
+    }
+
+    this.VHSshader.uniforms.u_tex_src.value = this.webGLRenderTargets[this.frame].texture;
+    this.frame ^= 1;
+    this.renderer.setRenderTarget(this.webGLRenderTargets[this.frame]);
+    this.renderer.render(this.sceneVHS, this.camera);
+
+    if (this.isMonochrome) {
+      this.monochromeIntenseShader.uniforms.u_tex_src.value = this.webGLRenderTargets[this.frame].texture;
+      this.frame ^= 1;
+      this.renderer.setRenderTarget(this.webGLRenderTargets[this.frame]);
+      this.renderer.render(this.sceneMonochromeIntense, this.camera);
+    }
+
+    this.masterShader.uniforms.u_tex_src.value = this.webGLRenderTargets[this.frame].texture;
+    this.frame ^= 1;
     this.renderer.setRenderTarget(null);
-    this.masterShader.uniforms.u_tex_src.value = this.channelMixerFrameBuffer.texture;
-    this.renderer.render(this.masterScene, this.camera);
-    this.frame += .5;
-    if (this.frame > 999999) this.frame = 0;
-    this.frameBufferIndex ^= 1;
+    this.renderer.render(this.sceneMaster, this.camera);
+    this.timer += 0.001;
+    if (this.timer > 999999) this.timer = 0;
   };
 
-  ;
+  BadSignals.prototype.shuffle = function () {
+    var _seed = Math.floor(this.timer * 1000) % 40 == Math.floor(Math.random() * 40);
 
-  FuzzyBlob.prototype.resize = function () {
-    var w = document.documentElement.clientWidth;
-    var h = document.documentElement.clientHeight;
-    var res = new three_1.Vector2(w, h);
+    if (_seed) {
+      this.isMonochrome = Math.random() > 0.5;
+      this.isGlitch = Math.random() > 0.5;
+      var dice = Math.floor(Math.random() * this.textureBatch.length);
+      this.swapTexture(this.textureBatch[dice]);
+    }
+  };
+
+  BadSignals.prototype.swapTexture = function (targetTexture) {
+    var res = new three_1.Vector2(targetTexture.image.naturalWidth, targetTexture.image.naturalHeight);
+    this.passShader.uniforms.u_src_res.value = res;
+    this.sourceTexture = targetTexture;
+  };
+
+  BadSignals.prototype.initScene = function () {
+    var geometry = new three_1.PlaneBufferGeometry(1, 1, 1, 1);
+    this.sceneMonochromeIntense = new three_1.Scene();
+    this.sceneMonochromeIntense.add(new three_1.Mesh(geometry, this.monochromeIntenseShader));
+    this.sceneGlitch = new three_1.Scene();
+    this.sceneGlitch.add(new three_1.Mesh(geometry, this.glitchShader));
+    this.sceneVHS = new three_1.Scene();
+    this.sceneVHS.add(new three_1.Mesh(geometry, this.VHSshader));
+    this.sceneMaster = new three_1.Scene();
+    this.sceneMaster.add(new three_1.Mesh(geometry, this.masterShader));
+    this.scenePass = new three_1.Scene();
+    this.scenePass.add(new three_1.Mesh(geometry, this.passShader));
+  };
+
+  BadSignals.prototype.initBuffer = function () {
+    var format = {
+      type: three_1.HalfFloatType,
+      format: three_1.RGBAFormat,
+      depthBuffer: false
+    };
+    this.webGLRenderTargets = [];
+
+    for (var i = 0; i < 2; i++) {
+      this.webGLRenderTargets[i] = new three_1.WebGLRenderTarget(this.BUFFER_SIZE, this.BUFFER_SIZE, format);
+    }
+  };
+
+  BadSignals.prototype.initTexture = function () {
+    var _this = this;
+
+    var onLoadCallback = function onLoadCallback() {
+      var res = new three_1.Vector2(tex01.image.naturalWidth, tex01.image.naturalHeight);
+      _this.passShader.uniforms.u_src_res.value = res;
+      _this.sourceTexture = tex01;
+      _this.isInit = true;
+    };
+
+    var tex01 = new three_1.TextureLoader().load(test_pattern_ntsc_png_1.default, onLoadCallback, undefined, function (err) {
+      return console.error("errr texture not loaded", err);
+    });
+    var tex02 = new three_1.TextureLoader().load(test_pattern_black_jpg_1.default, undefined, undefined, function (err) {
+      return console.error("errr texture not loaded", err);
+    });
+    this.textureBatch = [tex01, tex02];
+  };
+
+  BadSignals.prototype.initShader = function () {
+    var res = "vec2( " + this.w.toFixed(1) + ", " + this.h.toFixed(1) + ")";
+
+    function load(vert, frag) {
+      return new three_1.ShaderMaterial({
+        defines: {
+          SCREEN_RES: res
+        },
+        uniforms: {
+          u_t: {
+            value: 0
+          },
+          u_isInit: {
+            value: false
+          },
+          u_audio_high: {
+            value: 0
+          },
+          u_audio_mid: {
+            value: 0
+          },
+          u_audio_bass: {
+            value: 0
+          },
+          u_audio_level: {
+            value: 0
+          },
+          u_audio_history: {
+            value: 0
+          },
+          u_tex_src: {
+            value: null
+          }
+        },
+        depthTest: false,
+        vertexShader: vert,
+        fragmentShader: frag
+      });
+    }
+
+    this.VHSshader = load(shared_vert_1.default, VHS_frag_1.default);
+    this.monochromeIntenseShader = load(shared_vert_1.default, monochromeIntense_frag_1.default);
+    this.glitchShader = load(shared_vert_1.default, glitch_frag_1.default);
+    this.masterShader = load(shared_vert_1.default, master_frag_1.default);
+    this.passShader = load(ratioCorrect_vert_1.default, feed_frag_1.default);
+    this.passShader.uniforms.u_src_res = {
+      value: new three_1.Vector2(1, 1)
+    };
+    this.passShader.uniforms.u_screen_res = {
+      value: new three_1.Vector2(this.w, this.h)
+    };
+    this.passShader.uniforms.is_fit_horizontal = {
+      value: this.isLandscape
+    };
+    this.passShader.uniforms.u_videoTexture = {
+      value: this.videoTexture
+    };
+    this.shaderBatch = [this.monochromeIntenseShader, this.VHSshader, this.glitchShader];
+  };
+
+  BadSignals.prototype.resize = function () {
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(w, h);
+    this.renderer.setSize(this.w, this.h);
     this.camera.updateProjectionMatrix();
-    this.inputShader.uniforms.u_res.value = res;
-    this.channelMixerShader.uniforms.u_res.value = res;
-    var ratio = this.getRatioOffset(w, h);
-    this.channelMixerShader.uniforms.u_ratio.value = ratio;
-    this.inputShader.uniforms.u_ratio.value = ratio;
-    this.rgbShader.uniforms.u_ratio.value = ratio;
+    this.passShader.uniforms.u_screen_res.value = new three_1.Vector2(this.w, this.h);
   };
 
-  ;
-
-  FuzzyBlob.prototype.getRatioOffset = function (w, h) {
-    return w > h ? new three_1.Vector2(w / h, 1) : new three_1.Vector2(1, h / w);
-  };
-
-  return FuzzyBlob;
+  return BadSignals;
 }();
 
-exports.default = FuzzyBlob;
-},{"three":"../node_modules/three/build/three.module.js","../common/js/MouseHandler":"common/js/MouseHandler.ts","../common/js/Utils":"common/js/Utils.ts","../shader/shared.vert":"shader/shared.vert","../shader/channelMixer.frag":"shader/channelMixer.frag","../shader/input.frag":"shader/input.frag","../shader/master.frag":"shader/master.frag","../shader/rgb.frag":"shader/rgb.frag","../assets/noise.jpg":"assets/noise.jpg"}],"../node_modules/stats.js/build/stats.min.js":[function(require,module,exports) {
+exports.default = BadSignals;
+},{"three":"../node_modules/three/build/three.module.js","avseoul_common_npm/js/Utils":"../node_modules/avseoul_common_npm/js/Utils.ts","../shaders/shared.vert":"shaders/shared.vert","../shaders/feed.frag":"shaders/feed.frag","../shaders/glitch.frag":"shaders/glitch.frag","../shaders/master.frag":"shaders/master.frag","../shaders/monochromeIntense.frag":"shaders/monochromeIntense.frag","../shaders/ratioCorrect.vert":"shaders/ratioCorrect.vert","../shaders/VHS.frag":"shaders/VHS.frag","../assets/test_pattern_black.jpg":"assets/test_pattern_black.jpg","../assets/test_pattern_ntsc.png":"assets/test_pattern_ntsc.png"}],"../node_modules/stats.js/build/stats.min.js":[function(require,module,exports) {
 var define;
 // stats.js - http://github.com/mrdoob/stats.js
 (function(f,e){"object"===typeof exports&&"undefined"!==typeof module?module.exports=e():"function"===typeof define&&define.amd?define(e):f.Stats=e()})(this,function(){var f=function(){function e(a){c.appendChild(a.dom);return a}function u(a){for(var d=0;d<c.children.length;d++)c.children[d].style.display=d===a?"block":"none";l=a}var l=0,c=document.createElement("div");c.style.cssText="position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000";c.addEventListener("click",function(a){a.preventDefault();
@@ -36123,21 +35958,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var AudioAnalyzer_1 = __importDefault(require("../common/js/AudioAnalyzer"));
+var AudioAnalyzer_1 = __importDefault(require("avseoul_common_npm/js/AudioAnalyzer"));
 
-var FuzzyBlob_1 = __importDefault(require("../js/FuzzyBlob"));
+var BadSignals_1 = __importDefault(require("../js/BadSignals"));
 
 var Stats = require("stats.js");
 
-var fuzzyBlob;
+var badSignals;
 var audioAnalyzer;
 var stats;
 var debugEnabled = "development" === 'development';
 
 var init = function init() {
-  audioAnalyzer = new AudioAnalyzer_1.default(1);
-  audioAnalyzer.gain = 1000;
-  fuzzyBlob = new FuzzyBlob_1.default(audioAnalyzer);
+  audioAnalyzer = new AudioAnalyzer_1.default(70);
+  badSignals = new BadSignals_1.default(audioAnalyzer);
 
   if (debugEnabled) {
     stats = new Stats();
@@ -36151,7 +35985,7 @@ var update = function update() {
   requestAnimationFrame(update);
   if (debugEnabled) stats.begin();
   audioAnalyzer.update();
-  fuzzyBlob.update();
+  badSignals.update();
   if (debugEnabled) stats.end();
 };
 
@@ -36163,7 +35997,7 @@ document.addEventListener('DOMContentLoaded', function () {
     update();
   }
 });
-},{"../common/js/AudioAnalyzer":"common/js/AudioAnalyzer.ts","../js/FuzzyBlob":"js/FuzzyBlob.ts","stats.js":"../node_modules/stats.js/build/stats.min.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"avseoul_common_npm/js/AudioAnalyzer":"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts","../js/BadSignals":"js/BadSignals.ts","stats.js":"../node_modules/stats.js/build/stats.min.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -36191,7 +36025,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61382" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50255" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
