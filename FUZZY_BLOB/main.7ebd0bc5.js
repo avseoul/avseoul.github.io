@@ -117,287 +117,259 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"common/js/Utils.ts":[function(require,module,exports) {
+})({"../node_modules/avseoul_common_npm/js/Utils.ts":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.isRetina = function () {
-  if (window.matchMedia) {
-    var _m = window.matchMedia("only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)");
-
-    return _m && _m.matches || window.devicePixelRatio > 1;
-  }
-
-  return false;
+    if (window.matchMedia) {
+        var _m = window.matchMedia("only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)");
+        return (_m && _m.matches || (window.devicePixelRatio > 1));
+    }
+    return false;
 };
-
 exports.isMobile = function () {
-  var check = false;
-
-  (function (a) {
-    if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
-  })(navigator.userAgent || navigator.vendor);
-
-  return check;
+    var check = false;
+    (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4)))
+        check = true; })(navigator.userAgent || navigator.vendor);
+    return check;
 };
-
+exports.getNearestPowerOfTwo = function (value) {
+    return Math.pow(2, Math.round(Math.log2(value)));
+};
 exports.getVideoStream = function (width, height, callback) {
-  var constraints = {
-    audio: false,
-    video: {
-      width: width,
-      height: height
-    }
-  };
-  var videoNode = document.createElement("video");
-  navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
-    videoNode.srcObject = mediaStream;
-
-    videoNode.onloadedmetadata = function () {
-      videoNode.play();
-      if (callback) callback(videoNode);
-    };
-  }).catch(function (err) {
-    return console.error(err.name + ": " + err.message);
-  });
+    var constraints = { audio: false, video: { width: width, height: height } };
+    var videoNode = document.createElement("video");
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(function (mediaStream) {
+        videoNode.srcObject = mediaStream;
+        videoNode.onloadedmetadata = function () {
+            videoNode.play();
+            if (callback)
+                callback(videoNode);
+        };
+    })
+        .catch(function (err) { return console.error(err.name + ": " + err.message); });
 };
-
 exports.getMicStream = function (onSucceedCallback, onFailCallback) {
-  navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: false
-  }).then(onSucceedCallback).catch(onFailCallback);
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+        .then(onSucceedCallback)
+        .catch(function (error) {
+        console.log("getUserMedia failed", error);
+        if (onFailCallback !== undefined)
+            onFailCallback();
+    });
 };
-},{}],"common/js/AudioAnalyzer.ts":[function(require,module,exports) {
+
+},{}],"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
+Object.defineProperty(exports, "__esModule", { value: true });
 var Utils_1 = require("./Utils");
-
-var AudioAnalyzer =
-/** @class */
-function () {
-  function AudioAnalyzer(gainValue) {
-    this.gainValue = 1;
-    this.isInit = false;
-    this.isPulse = false;
-    this.debugCanvas = null;
-    this.debugCanvasCtx = null;
-    this.FFT_SIZE = 256;
-    this._bass = 0.;
-    this._mid = 0.;
-    this._high = 0.;
-    this._level = 0.;
-    this._history = 0.;
-    this.cutout = .5;
-    this.frame = 0;
-    this.gainValue = gainValue;
-    Utils_1.getMicStream(this.init.bind(this), this.initWithoutStream.bind(this));
-  }
-
-  Object.defineProperty(AudioAnalyzer.prototype, "gain", {
-    get: function get() {
-      if (this._gain) return this._gain.gain.value;else return 1;
-    },
-    set: function set(value) {
-      if (this._gain) this._gain.gain.value = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "bass", {
-    get: function get() {
-      return this._bass == undefined ? 0. : this._bass;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "mid", {
-    get: function get() {
-      return this._mid == undefined ? 0. : this._mid;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "high", {
-    get: function get() {
-      return this._high == undefined ? 0. : this._high;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "level", {
-    get: function get() {
-      return this._level == undefined ? 0. : this._level;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(AudioAnalyzer.prototype, "history", {
-    get: function get() {
-      return this._history == undefined ? 0. : this._history;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-
-  AudioAnalyzer.prototype.init = function (stream) {
-    var audioCtx = new AudioContext();
-    var mediaStreamSource = audioCtx.createMediaStreamSource(stream);
-    this._gain = audioCtx.createGain();
-    this._gain.gain.value = this.gainValue || 70.;
-    var lowPass = audioCtx.createBiquadFilter();
-    lowPass.type = "lowpass";
-    lowPass.frequency.value = 1000;
-    var highPass = audioCtx.createBiquadFilter();
-    highPass.type = "highpass";
-    highPass.frequency.value = 20000;
-    this.analyzer = audioCtx.createAnalyser();
-    this.analyzer.fftSize = this.FFT_SIZE; // Node tree
-
-    mediaStreamSource.connect(this._gain);
-
-    this._gain.connect(this.analyzer); // this._gain.connect(lowPass);
-    // this._gain.connect(highPass);
-    // lowPass.connect(this.analyzer);
-    // highPass.connect(this.analyzer);
-
-
-    this.reset();
-    this.audioBuffer = new Uint8Array(this.analyzer.frequencyBinCount);
-    this.isInit = true;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.initWithoutStream = function () {
-    alert("microphone is not detected. pulse is activated instead of mic input");
-    this.reset();
-    this.isInit = true;
-    this.isPulse = true;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.update = function () {
-    if (!this.isInit || !this.analyzer || !this.audioBuffer) return;
-    var bass = 0,
-        mid = 0,
-        high = 0;
-
-    if (!this.isPulse) {
-      this.analyzer.getByteFrequencyData(this.audioBuffer);
-      var passSize = this.analyzer.frequencyBinCount / 3;
-      var DATA_SCALE = 255;
-
-      for (var i = 0; i < this.analyzer.frequencyBinCount; i++) {
-        var val = this.audioBuffer[i] / DATA_SCALE;
-        if (val === Infinity || val < this.cutout) continue;
-        if (i < passSize) bass += val;else if (i < passSize * 2) mid += val;else if (i <= passSize * 3) high += val;
-      }
-
-      bass /= passSize;
-      mid /= passSize;
-      high /= passSize;
-    } else {
-      if (this.frame % 40 == Math.floor(Math.random() * 40.)) {
-        bass = Math.random();
-        mid = Math.random();
-        high = Math.random();
-      }
-
-      this.frame++;
+var AudioAnalyzer = /** @class */ (function () {
+    function AudioAnalyzer(gainValue) {
+        this.gainValue = 1;
+        this.isInit = false;
+        this.isPulse = false;
+        this.debugCanvas = null;
+        this.debugCanvasCtx = null;
+        this.FFT_SIZE = 256;
+        this._bass = 0.;
+        this._mid = 0.;
+        this._high = 0.;
+        this._level = 0.;
+        this._history = 0.;
+        this.cutout = .5;
+        this.frame = 0;
+        this.gainValue = gainValue;
+        Utils_1.getMicStream(this.init.bind(this), this.initWithoutStream.bind(this));
     }
-
-    this._bass = this._bass > bass ? this._bass * .96 : bass;
-    this._mid = this._mid > mid ? this._mid * .96 : mid;
-    this._high = this._high > high ? this._high * .96 : high;
-    this._level = (this._bass + this._mid + this._high) / 3.;
-    this._history += this._level * .01 + .005;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.reset = function () {
-    this._history = 0.;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.trigger_pulse = function (isPulse) {
-    this.isPulse = isPulse;
-  };
-
-  ;
-
-  AudioAnalyzer.prototype.debug = function (_canvas) {
-    if (_canvas === void 0) {
-      _canvas = null;
-    }
-
-    var canvas = _canvas || this.debugCanvas;
-
-    if (canvas === null) {
-      this.debugCanvas = document.createElement("canvas");
-      this.debugCanvas.className = "audioDebug";
-      document.body.appendChild(this.debugCanvas);
-      canvas = this.debugCanvas;
-    }
-
-    if (this.debugCanvasCtx === null) this.debugCanvasCtx = canvas.getContext("2d");
-    var w = canvas.width / 4;
-    var h;
-    var x = 0;
-    var black = "rgb(0, 0, 0)";
-    var white = "rgb(255, 255, 255)";
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-    this.debugCanvasCtx.font = "10px Verdana";
-    h = this._bass * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._bass.toFixed(2).toString(), x, canvas.height);
-    x += w;
-    h = this._mid * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._mid.toFixed(2).toString(), x, canvas.height);
-    x += w;
-    h = this._high * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._high.toFixed(2).toString(), x, canvas.height);
-    x += w;
-    h = this._level * canvas.height;
-    this.debugCanvasCtx.fillStyle = black;
-    this.debugCanvasCtx.fillRect(x, canvas.height - h, w, h);
-    this.debugCanvasCtx.fillStyle = white;
-    this.debugCanvasCtx.fillText(this._level.toFixed(2).toString(), x, canvas.height);
-  };
-
-  ;
-  return AudioAnalyzer;
-}();
-
+    Object.defineProperty(AudioAnalyzer.prototype, "gain", {
+        get: function () {
+            if (this._gain)
+                return this._gain.gain.value;
+            else
+                return 1;
+        },
+        set: function (value) {
+            if (this._gain)
+                this._gain.gain.value = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "bass", {
+        get: function () {
+            return this._bass == undefined ? 0. : this._bass;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "mid", {
+        get: function () {
+            return this._mid == undefined ? 0. : this._mid;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "high", {
+        get: function () {
+            return this._high == undefined ? 0. : this._high;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "level", {
+        get: function () {
+            return this._level == undefined ? 0. : this._level;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AudioAnalyzer.prototype, "history", {
+        get: function () {
+            return this._history == undefined ? 0. : this._history;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    AudioAnalyzer.prototype.init = function (stream) {
+        var AudioContext = window.AudioContext // Default
+            || window.webkitAudioContext // Safari and old versions of Chrome
+            || false;
+        var audioCtx = new AudioContext();
+        var mediaStreamSource = audioCtx.createMediaStreamSource(stream);
+        this._gain = audioCtx.createGain();
+        this._gain.gain.value = this.gainValue || 70.;
+        var lowPass = audioCtx.createBiquadFilter();
+        lowPass.type = "lowpass";
+        lowPass.frequency.value = 1000;
+        var highPass = audioCtx.createBiquadFilter();
+        highPass.type = "highpass";
+        highPass.frequency.value = 20000;
+        this.analyzer = audioCtx.createAnalyser();
+        this.analyzer.fftSize = this.FFT_SIZE;
+        // Node tree
+        mediaStreamSource.connect(this._gain);
+        this._gain.connect(lowPass);
+        this._gain.connect(highPass);
+        lowPass.connect(this.analyzer);
+        highPass.connect(this.analyzer);
+        this.reset();
+        this.audioBuffer = new Uint8Array(this.analyzer.frequencyBinCount);
+        this.isInit = true;
+    };
+    ;
+    AudioAnalyzer.prototype.initWithoutStream = function () {
+        alert("microphone is not detected. pulse is activated instead of mic input");
+        this.reset();
+        this.isInit = true;
+        this.isPulse = true;
+    };
+    ;
+    AudioAnalyzer.prototype.update = function () {
+        if (!this.isInit)
+            return;
+        var bass = 0, mid = 0, high = 0;
+        if (!this.isPulse) {
+            if (!this.analyzer || !this.audioBuffer)
+                return;
+            this.analyzer.getByteFrequencyData(this.audioBuffer);
+            var passSize = this.analyzer.frequencyBinCount / 3;
+            var DATA_SCALE = 255;
+            for (var i = 0; i < this.analyzer.frequencyBinCount; i++) {
+                var val = this.audioBuffer[i] / DATA_SCALE;
+                if (val === Infinity || val < this.cutout)
+                    continue;
+                if (i < passSize)
+                    bass += val;
+                else if (i < passSize * 2)
+                    mid += val;
+                else if (i <= passSize * 3)
+                    high += val;
+            }
+            bass /= passSize;
+            mid /= passSize;
+            high /= passSize;
+        }
+        else {
+            if (this.frame % 40 == (Math.floor(Math.random() * 40.))) {
+                bass = Math.random();
+                mid = Math.random();
+                high = Math.random();
+            }
+            this.frame++;
+        }
+        this._bass = this._bass > bass ? this._bass * .96 : bass;
+        this._mid = this._mid > mid ? this._mid * .96 : mid;
+        this._high = this._high > high ? this._high * .96 : high;
+        this._level = (this._bass + this._mid + this._high) / 3.;
+        this._history += this._level * .01 + .005;
+    };
+    ;
+    AudioAnalyzer.prototype.reset = function () {
+        this._history = 0.;
+    };
+    ;
+    AudioAnalyzer.prototype.trigger_pulse = function (isPulse) {
+        this.isPulse = isPulse;
+    };
+    ;
+    AudioAnalyzer.prototype.debug = function (_canvas) {
+        if (_canvas === void 0) { _canvas = null; }
+        var canvas = _canvas || this.debugCanvas;
+        if (canvas === null) {
+            this.debugCanvas = document.createElement("canvas");
+            this.debugCanvas.className = "audioDebug";
+            document.body.appendChild(this.debugCanvas);
+            canvas = this.debugCanvas;
+        }
+        if (this.debugCanvasCtx === null)
+            this.debugCanvasCtx = canvas.getContext("2d");
+        var w = canvas.width / 4;
+        var h;
+        var x = 0;
+        var black = "rgb(0, 0, 0)";
+        var white = "rgb(255, 255, 255)";
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+        this.debugCanvasCtx.font = "10px Verdana";
+        h = this._bass * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._bass.toFixed(2).toString(), x, canvas.height);
+        x += w;
+        h = this._mid * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._mid.toFixed(2).toString(), x, canvas.height);
+        x += w;
+        h = this._high * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w - 1, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._high.toFixed(2).toString(), x, canvas.height);
+        x += w;
+        h = this._level * canvas.height;
+        this.debugCanvasCtx.fillStyle = black;
+        this.debugCanvasCtx.fillRect(x, canvas.height - h, w, h);
+        this.debugCanvasCtx.fillStyle = white;
+        this.debugCanvasCtx.fillText(this._level.toFixed(2).toString(), x, canvas.height);
+    };
+    ;
+    return AudioAnalyzer;
+}());
 exports.default = AudioAnalyzer;
 ;
-},{"./Utils":"common/js/Utils.ts"}],"../node_modules/three/build/three.module.js":[function(require,module,exports) {
+
+},{"./Utils":"../node_modules/avseoul_common_npm/js/Utils.ts"}],"../node_modules/three/build/three.module.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35689,173 +35661,156 @@ if (typeof __THREE_DEVTOOLS__ !== 'undefined') {
   /* eslint-enable no-undef */
 
 }
-},{}],"common/js/MouseHandler.ts":[function(require,module,exports) {
+},{}],"../node_modules/avseoul_common_npm/js/MouseHandler.ts":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var MouseHandler =
-/** @class */
-function () {
-  function MouseHandler() {
-    this.w = document.documentElement.clientWidth;
-    this.h = document.documentElement.clientHeight;
-    this.counter = 0;
-    this._x = 0;
-    this._y = 0;
-    this._normX = 0;
-    this._normY = 0;
-    this._normPx = 0;
-    this._normPy = 0;
-    this._deltaX = 0;
-    this._deltaY = 0;
-    this._dirX = 0;
-    this._dirY = 0;
-  }
-
-  Object.defineProperty(MouseHandler.prototype, "x", {
-    get: function get() {
-      return this._x;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "y", {
-    get: function get() {
-      return this._y;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "normalizedX", {
-    get: function get() {
-      return this._normX;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "normalizedY", {
-    get: function get() {
-      return this._normY;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "prevNormalizedX", {
-    get: function get() {
-      return this._normPx;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "prevNormalizedY", {
-    get: function get() {
-      return this._normPy;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "deltaX", {
-    get: function get() {
-      return this._deltaX;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "deltaY", {
-    get: function get() {
-      return this._deltaY;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "directionX", {
-    get: function get() {
-      return this._dirX;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-  Object.defineProperty(MouseHandler.prototype, "directionY", {
-    get: function get() {
-      return this._dirY;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  ;
-
-  MouseHandler.prototype.handler = function (event) {
-    window.clearTimeout(this.counter);
-    this.counter = window.setTimeout(this.reset.bind(this), 500.);
-
-    if (event.targetTouches) {
-      var touch = event.targetTouches[0];
-      this._x = touch.pageX;
-      this._y = touch.pageY;
-    } else {
-      this._x = event.clientX;
-      this._y = event.clientY;
+Object.defineProperty(exports, "__esModule", { value: true });
+var MouseHandler = /** @class */ (function () {
+    function MouseHandler() {
+        this.w = document.documentElement.clientWidth;
+        this.h = document.documentElement.clientHeight;
+        this.counter = 0;
+        this._x = 0;
+        this._y = 0;
+        this._normX = 0;
+        this._normY = 0;
+        this._normPx = 0;
+        this._normPy = 0;
+        this._deltaX = 0;
+        this._deltaY = 0;
+        this._dirX = 0;
+        this._dirY = 0;
     }
-
-    this._normX = this._x / this.w;
-    this._normY = 1. - this._y / this.h;
-    this._deltaX = this._normX - this._normPx;
-    this._deltaY = this._normY - this._normPy;
-    this._dirX = this._normPx - this._normX;
-    this._dirY = this._normPy - this._normY;
-    this._normPx = this._normX;
-    this._normPy = this._normY;
-  };
-
-  ;
-
-  MouseHandler.prototype.reset = function () {
-    this._normPx = this._normX;
-    this._normPy = this._normY;
-    this._deltaX = 0.;
-    this._deltaY = 0.;
-    this._dirX = 0.;
-    this._dirY = 0.;
-  };
-
-  ;
-
-  MouseHandler.prototype.registerDomEvents = function (target) {
-    var _this = this;
-
-    target.addEventListener("mousemove", this.handler.bind(this), false);
-    target.addEventListener("touchmove", this.handler.bind(this), false);
-    target.addEventListener('touchstart', function (event) {
-      event.preventDefault();
-    }, {
-      passive: false
+    Object.defineProperty(MouseHandler.prototype, "x", {
+        get: function () {
+            return this._x;
+        },
+        enumerable: true,
+        configurable: true
     });
-    window.addEventListener("resize", function () {
-      _this.w = document.documentElement.clientWidth;
-      _this.h = document.documentElement.clientHeight;
+    ;
+    Object.defineProperty(MouseHandler.prototype, "y", {
+        get: function () {
+            return this._y;
+        },
+        enumerable: true,
+        configurable: true
     });
-    window.addEventListener("mouseout", function () {
-      _this.reset();
+    ;
+    Object.defineProperty(MouseHandler.prototype, "normalizedX", {
+        get: function () {
+            return this._normX;
+        },
+        enumerable: true,
+        configurable: true
     });
-  };
-
-  ;
-  return MouseHandler;
-}();
-
+    ;
+    Object.defineProperty(MouseHandler.prototype, "normalizedY", {
+        get: function () {
+            return this._normY;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(MouseHandler.prototype, "prevNormalizedX", {
+        get: function () {
+            return this._normPx;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(MouseHandler.prototype, "prevNormalizedY", {
+        get: function () {
+            return this._normPy;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(MouseHandler.prototype, "deltaX", {
+        get: function () {
+            return this._deltaX;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(MouseHandler.prototype, "deltaY", {
+        get: function () {
+            return this._deltaY;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(MouseHandler.prototype, "directionX", {
+        get: function () {
+            return this._dirX;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(MouseHandler.prototype, "directionY", {
+        get: function () {
+            return this._dirY;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    MouseHandler.prototype.handler = function (event) {
+        window.clearTimeout(this.counter);
+        this.counter = window.setTimeout(this.reset.bind(this), 500.);
+        if (event.targetTouches) {
+            var touch = event.targetTouches[0];
+            this._x = touch.pageX;
+            this._y = touch.pageY;
+        }
+        else {
+            this._x = event.clientX;
+            this._y = event.clientY;
+        }
+        this._normX = this._x / this.w;
+        this._normY = 1. - this._y / this.h;
+        this._deltaX = this._normX - this._normPx;
+        this._deltaY = this._normY - this._normPy;
+        this._dirX = this._normPx - this._normX;
+        this._dirY = this._normPy - this._normY;
+        this._normPx = this._normX;
+        this._normPy = this._normY;
+    };
+    ;
+    MouseHandler.prototype.reset = function () {
+        this._normPx = this._normX;
+        this._normPy = this._normY;
+        this._deltaX = 0.;
+        this._deltaY = 0.;
+        this._dirX = 0.;
+        this._dirY = 0.;
+    };
+    ;
+    MouseHandler.prototype.registerDomEvents = function (target) {
+        var _this = this;
+        target.addEventListener("mousemove", this.handler.bind(this), false);
+        target.addEventListener("touchmove", this.handler.bind(this), false);
+        target.addEventListener('touchstart', function (event) {
+            event.preventDefault();
+        }, { passive: false });
+        window.addEventListener("resize", function () {
+            _this.w = document.documentElement.clientWidth;
+            _this.h = document.documentElement.clientHeight;
+        });
+        window.addEventListener("mouseout", function () {
+            _this.reset();
+        });
+    };
+    ;
+    return MouseHandler;
+}());
 exports.default = MouseHandler;
+
 },{}],"shader/shared.vert":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nvoid main() {\n\tv_uv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);\n}";
 },{}],"shader/channelMixer.frag":[function(require,module,exports) {
@@ -35883,9 +35838,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var three_1 = require("three");
 
-var MouseHandler_1 = __importDefault(require("../common/js/MouseHandler"));
+var MouseHandler_1 = __importDefault(require("avseoul_common_npm/js/MouseHandler"));
 
-var Utils_1 = require("../common/js/Utils");
+var Utils_1 = require("avseoul_common_npm/js/Utils");
 
 var shared_vert_1 = __importDefault(require("../shader/shared.vert"));
 
@@ -36102,7 +36057,7 @@ function () {
 }();
 
 exports.default = FuzzyBlob;
-},{"three":"../node_modules/three/build/three.module.js","../common/js/MouseHandler":"common/js/MouseHandler.ts","../common/js/Utils":"common/js/Utils.ts","../shader/shared.vert":"shader/shared.vert","../shader/channelMixer.frag":"shader/channelMixer.frag","../shader/input.frag":"shader/input.frag","../shader/master.frag":"shader/master.frag","../shader/rgb.frag":"shader/rgb.frag","../assets/noise.jpg":"assets/noise.jpg"}],"../node_modules/stats.js/build/stats.min.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","avseoul_common_npm/js/MouseHandler":"../node_modules/avseoul_common_npm/js/MouseHandler.ts","avseoul_common_npm/js/Utils":"../node_modules/avseoul_common_npm/js/Utils.ts","../shader/shared.vert":"shader/shared.vert","../shader/channelMixer.frag":"shader/channelMixer.frag","../shader/input.frag":"shader/input.frag","../shader/master.frag":"shader/master.frag","../shader/rgb.frag":"shader/rgb.frag","../assets/noise.jpg":"assets/noise.jpg"}],"../node_modules/stats.js/build/stats.min.js":[function(require,module,exports) {
 var define;
 // stats.js - http://github.com/mrdoob/stats.js
 (function(f,e){"object"===typeof exports&&"undefined"!==typeof module?module.exports=e():"function"===typeof define&&define.amd?define(e):f.Stats=e()})(this,function(){var f=function(){function e(a){c.appendChild(a.dom);return a}function u(a){for(var d=0;d<c.children.length;d++)c.children[d].style.display=d===a?"block":"none";l=a}var l=0,c=document.createElement("div");c.style.cssText="position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000";c.addEventListener("click",function(a){a.preventDefault();
@@ -36123,7 +36078,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var AudioAnalyzer_1 = __importDefault(require("../common/js/AudioAnalyzer"));
+var AudioAnalyzer_1 = __importDefault(require("avseoul_common_npm/js/AudioAnalyzer"));
 
 var FuzzyBlob_1 = __importDefault(require("../js/FuzzyBlob"));
 
@@ -36135,8 +36090,7 @@ var stats;
 var debugEnabled = "development" === 'development';
 
 var init = function init() {
-  audioAnalyzer = new AudioAnalyzer_1.default(1);
-  audioAnalyzer.gain = 1000;
+  audioAnalyzer = new AudioAnalyzer_1.default(70);
   fuzzyBlob = new FuzzyBlob_1.default(audioAnalyzer);
 
   if (debugEnabled) {
@@ -36163,7 +36117,7 @@ document.addEventListener('DOMContentLoaded', function () {
     update();
   }
 });
-},{"../common/js/AudioAnalyzer":"common/js/AudioAnalyzer.ts","../js/FuzzyBlob":"js/FuzzyBlob.ts","stats.js":"../node_modules/stats.js/build/stats.min.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"avseoul_common_npm/js/AudioAnalyzer":"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts","../js/FuzzyBlob":"js/FuzzyBlob.ts","stats.js":"../node_modules/stats.js/build/stats.min.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -36191,7 +36145,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61382" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62608" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
