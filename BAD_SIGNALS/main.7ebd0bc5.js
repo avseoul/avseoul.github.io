@@ -152,7 +152,12 @@ exports.getVideoStream = function (width, height, callback) {
 };
 exports.getMicStream = function (onSucceedCallback, onFailCallback) {
     navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-        .then(onSucceedCallback).catch(onFailCallback);
+        .then(onSucceedCallback)
+        .catch(function (error) {
+        console.log("getUserMedia failed", error);
+        if (onFailCallback !== undefined)
+            onFailCallback();
+    });
 };
 
 },{}],"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts":[function(require,module,exports) {
@@ -234,6 +239,9 @@ var AudioAnalyzer = /** @class */ (function () {
     });
     ;
     AudioAnalyzer.prototype.init = function (stream) {
+        var AudioContext = window.AudioContext // Default
+            || window.webkitAudioContext // Safari and old versions of Chrome
+            || false;
         var audioCtx = new AudioContext();
         var mediaStreamSource = audioCtx.createMediaStreamSource(stream);
         this._gain = audioCtx.createGain();
@@ -265,10 +273,12 @@ var AudioAnalyzer = /** @class */ (function () {
     };
     ;
     AudioAnalyzer.prototype.update = function () {
-        if (!this.isInit || !this.analyzer || !this.audioBuffer)
+        if (!this.isInit)
             return;
         var bass = 0, mid = 0, high = 0;
         if (!this.isPulse) {
+            if (!this.analyzer || !this.audioBuffer)
+                return;
             this.analyzer.getByteFrequencyData(this.audioBuffer);
             var passSize = this.analyzer.frequencyBinCount / 3;
             var DATA_SCALE = 255;
@@ -35710,7 +35720,6 @@ function () {
   function BadSignals(audioAnalyzer) {
     var _this = this;
 
-    this.isLandscape = false;
     this.isMonochrome = false;
     this.isGlitch = false;
     this.isInit = false;
@@ -35918,7 +35927,7 @@ function () {
       value: new three_1.Vector2(this.w, this.h)
     };
     this.passShader.uniforms.is_fit_horizontal = {
-      value: this.isLandscape
+      value: this.w < this.h
     };
     this.passShader.uniforms.u_videoTexture = {
       value: this.videoTexture
@@ -35931,6 +35940,7 @@ function () {
     this.renderer.setSize(this.w, this.h);
     this.camera.updateProjectionMatrix();
     this.passShader.uniforms.u_screen_res.value = new three_1.Vector2(this.w, this.h);
+    this.passShader.uniforms.is_fit_horizontal.value = this.w < this.h;
   };
 
   return BadSignals;
@@ -36025,7 +36035,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50255" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60273" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
