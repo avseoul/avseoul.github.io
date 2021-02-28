@@ -37291,7 +37291,7 @@ function () {
     }
 
     var targetQuality = this.bufferQuality;
-    if (fps > 55 && targetQuality < BufferQuality.Highest) targetQuality++;else if (fps < 45 && targetQuality > BufferQuality.Lowest) targetQuality--;
+    if (fps > 30 && targetQuality < BufferQuality.Highest) targetQuality++;else if (fps < 30 && targetQuality > BufferQuality.Lowest) targetQuality--;
 
     if (this.bufferQuality != targetQuality) {
       this.bufferQuality = targetQuality;
@@ -37901,7 +37901,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53051" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51977" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
