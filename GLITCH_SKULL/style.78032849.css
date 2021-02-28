@@ -17,15 +17,16 @@ canvas {
 
 .title {
     height: 100vh;
-    font-size: 390px;
-    font-stretch: ultra-condensed;
+    width: 100vw;
+    font-size: 21vw;
+    font-stretch: condensed;
     font-weight: 800;
-    letter-spacing: -20px;
+    letter-spacing: -0.05em;
     color: black;
+    margin-left: 0vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: -50px;
 }
 
 ::-webkit-scrollbar {

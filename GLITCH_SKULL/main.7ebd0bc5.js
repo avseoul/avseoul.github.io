@@ -134,7 +134,13 @@ exports.isMobile = function () {
     return check;
 };
 exports.getNearestPowerOfTwo = function (value) {
-    return Math.pow(2, Math.round(Math.log2(value)));
+    return Math.pow(2, Math.round(Math.log(value) * Math.LOG2E));
+};
+exports.getSmallerOrEqualPowerOfTwo = function (value) {
+    return Math.pow(2, Math.floor(Math.log(value) * Math.LOG2E));
+};
+exports.getLargerOrEqualPowerOfTwo = function (value) {
+    return Math.pow(2, Math.ceil(Math.log(value) * Math.LOG2E));
 };
 exports.getVideoStream = function (width, height, callback) {
     var constraints = { audio: false, video: { width: width, height: height } };
@@ -158,6 +164,15 @@ exports.getMicStream = function (onSucceedCallback, onFailCallback) {
         if (onFailCallback !== undefined)
             onFailCallback();
     });
+};
+var times = [];
+exports.getFPS = function () {
+    var now = performance.now();
+    while (times.length > 0 && times[0] <= now - 1000) {
+        times.shift();
+    }
+    times.push(now);
+    return times.length;
 };
 
 },{}],"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts":[function(require,module,exports) {
@@ -275,7 +290,7 @@ var AudioAnalyzer = /** @class */ (function () {
     AudioAnalyzer.prototype.update = function () {
         if (!this.isInit)
             return;
-        if (this._history > 1000)
+        if (this._history > 9999)
             this.reset();
         var bass = 0, mid = 0, high = 0;
         if (!this.isPulse) {
@@ -37109,19 +37124,19 @@ exports.OBJLoader = THREE.OBJLoader;
 },{"three":"../node_modules/three/build/three.module.js"}],"shaders/shared.vert":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nvoid main() {\n\tv_uv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);\n}";
 },{}],"shaders/obj_illum.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform bool u_is_init;\nuniform vec2 u_res;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_noise;\n\nfloat hash(float _v, float _t) {\n  return fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n  float h = dot(p,vec2(127.1,311.7));\n  return -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n  vec2 i = floor(p);\n  vec2 f = fract(p);\n\n  vec2 u = f*f*(3.0-2.0*f);\n\n  return mix(mix(hash( i + vec2(0.0,0.0) ), \n    hash( i + vec2(1.0,0.0) ), u.x),\n  mix( hash( i + vec2(0.0,1.0) ), \n    hash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvoid main(){\n  vec2 uv = v_uv;\n  uv.y -= u_audio_history * .2;\n\n  float noisePattern = 0.;\n\n  vec2 noiseUV = uv.yy - u_audio_history * .05;\n  noisePattern += noise( noiseUV * 520.) * u_audio_level;\n  float r = texture2D(u_tex_noise, fract(noiseUV - noisePattern*.1)).r;\n\n  noiseUV = uv.yy + u_audio_history * .1;\n  noisePattern += noise( noiseUV * 520.) * u_audio_level;\n  float g = texture2D(u_tex_noise, fract(noiseUV + noisePattern*.05)).g;\n\n  noiseUV = uv.yy - u_audio_history * .02;\n  noisePattern += noise( noiseUV * 520.) * u_audio_level;\n  float b = texture2D(u_tex_noise, fract(noiseUV - noisePattern*.08)).b;\n\n  vec3 col = vec3(r, g, b);\n\n  col *= noisePattern;\n  col = pow(col, vec3(15.)) * 2.2;\n\n  gl_FragColor = vec4(col, 1);\n}";
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform bool u_is_init;\nuniform vec2 u_res;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_noise;\n\nfloat hash(float _v, float _t) {\n  return fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n  float h = dot(p,vec2(127.1,311.7));\n  return -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n  vec2 i = floor(p);\n  vec2 f = fract(p);\n\n  vec2 u = f*f*(3.0-2.0*f);\n\n  return mix(mix(hash( i + vec2(0.0,0.0) ), \n    hash( i + vec2(1.0,0.0) ), u.x),\n  mix( hash( i + vec2(0.0,1.0) ), \n    hash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvoid main(){\n  vec2 uv = v_uv;\n  uv.y -= u_audio_history * .2;\n\n  float noisePattern = 0.;\n\n  vec2 noiseUV = uv.yy - u_audio_history * .05;\n  noisePattern += noise( noiseUV * 520.) * u_audio_level;\n  float r = texture2D(u_tex_noise, fract(noiseUV - noisePattern*.1)).r;\n\n  noiseUV = uv.yy + u_audio_history * .1;\n  noisePattern += noise( noiseUV * 520.) * u_audio_level;\n  float g = texture2D(u_tex_noise, fract(noiseUV + noisePattern*.05)).g;\n\n  noiseUV = uv.yy - u_audio_history * .02;\n  noisePattern += noise( noiseUV * 520.) * u_audio_level;\n  float b = texture2D(u_tex_noise, fract(noiseUV - noisePattern*.08)).b;\n\n  vec3 col = vec3(r, g, b);\n\n  col *= noisePattern;\n  col = pow(col, vec3(15.)) * .05;\n\n  gl_FragColor = vec4(col, 1);\n}";
 },{}],"shaders/bg.frag":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\nuniform float u_audio_history;\nuniform sampler2D u_tex_src;\n\nfloat hash(float _v, float _t) {\n  return fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n  float h = dot(p,vec2(127.1,311.7));\n  return -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n  vec2 i = floor(p);\n  vec2 f = fract(p);\n\n  vec2 u = f*f*(3.0-2.0*f);\n\n  return mix(mix(hash( i + vec2(0.0,0.0) ), \n    hash( i + vec2(1.0,0.0) ), u.x),\n  mix( hash( i + vec2(0.0,1.0) ), \n    hash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvoid main(){\n  vec3 col = texture2D(u_tex_src, v_uv).rgb;\n\n  vec2 audioOffset = vec2(0., u_audio_history);\n  vec2 uv = v_uv.xy * .2;\n  float nr = abs(noise(uv + .2345 + audioOffset * 1.456));\n  float nb = abs(noise(uv + .5678 + audioOffset * 1.124));\n\n  col.r += nr * .3;\n  col.b += nb * .3;\n\n  gl_FragColor = vec4(col, 1);\n}";
 },{}],"shaders/feedback.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_input;\nuniform sampler2D u_tex_noise;\n\nvec4 advect(sampler2D _tex, vec2 _uv, vec2 _dir, vec2 _texel){\n    //https://www.shadertoy.com/view/MsyXRW\n    const float _G0 = .25;\n    const float _G1 = .125;\n    const float _G2 = .0625;\n    const float ADVECT_DIST = 2.;\n\n    vec2 uv = _uv - _dir * ADVECT_DIST * _texel;\n\n    vec2 n  = vec2( 0., 1.);\n    vec2 ne = vec2( 1., 1.);\n    vec2 e  = vec2( 1., 0.);\n    vec2 se = vec2( 1.,-1.);\n    vec2 s  = vec2( 0.,-1.);\n    vec2 sw = vec2(-1.,-1.);\n    vec2 w  = vec2(-1., 0.);\n    vec2 nw = vec2(-1., 1.);\n\n    vec4 c =    texture2D(_tex, fract(uv));\n    vec4 c_n =  texture2D(_tex, fract(uv+_texel*n));\n    vec4 c_e =  texture2D(_tex, fract(uv+_texel*e));\n    vec4 c_s =  texture2D(_tex, fract(uv+_texel*s));\n    vec4 c_w =  texture2D(_tex, fract(uv+_texel*w));\n    vec4 c_nw = texture2D(_tex, fract(uv+_texel*nw));\n    vec4 c_sw = texture2D(_tex, fract(uv+_texel*sw));\n    vec4 c_ne = texture2D(_tex, fract(uv+_texel*ne));\n    vec4 c_se = texture2D(_tex, fract(uv+_texel*se));\n\n    return _G0*c+_G1*(c_n+c_e+c_w+c_s)+_G2*(c_nw+c_sw+c_ne+c_se);\n}\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat cal_noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvec3 rgb2hsv(vec3 c)\n{\n    vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);\n    vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));\n    vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));\n\n    float d = q.x - min(q.w, q.y);\n    float e = 1.0e-10;\n    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);\n}\n\nvec3 hsv2rgb(vec3 c)\n{\n    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);\n    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);\n}\n\nvoid main(){\n\tvec3 col = .962 * (texture2D(u_tex_input, v_uv).rgb + texture2D(u_tex_src, v_uv).rgb);\n    float noisePattern = cal_noise(v_uv * 2. + u_audio_history);\n\n    col = rgb2hsv(col);\n    col.r += u_audio_history * .01 * noisePattern; // hue shifting\n    col = hsv2rgb(col);\n\n\tgl_FragColor = vec4(col,1);\n}";
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\nuniform sampler2D u_tex_input;\nuniform sampler2D u_tex_noise;\n\nvec4 advect(sampler2D _tex, vec2 _uv, vec2 _dir, vec2 _texel){\n    //https://www.shadertoy.com/view/MsyXRW\n    const float _G0 = .25;\n    const float _G1 = .125;\n    const float _G2 = .0625;\n    const float ADVECT_DIST = 2.;\n\n    vec2 uv = _uv - _dir * ADVECT_DIST * _texel;\n\n    vec2 n  = vec2( 0., 1.);\n    vec2 ne = vec2( 1., 1.);\n    vec2 e  = vec2( 1., 0.);\n    vec2 se = vec2( 1.,-1.);\n    vec2 s  = vec2( 0.,-1.);\n    vec2 sw = vec2(-1.,-1.);\n    vec2 w  = vec2(-1., 0.);\n    vec2 nw = vec2(-1., 1.);\n\n    vec4 c =    texture2D(_tex, fract(uv));\n    vec4 c_n =  texture2D(_tex, fract(uv+_texel*n));\n    vec4 c_e =  texture2D(_tex, fract(uv+_texel*e));\n    vec4 c_s =  texture2D(_tex, fract(uv+_texel*s));\n    vec4 c_w =  texture2D(_tex, fract(uv+_texel*w));\n    vec4 c_nw = texture2D(_tex, fract(uv+_texel*nw));\n    vec4 c_sw = texture2D(_tex, fract(uv+_texel*sw));\n    vec4 c_ne = texture2D(_tex, fract(uv+_texel*ne));\n    vec4 c_se = texture2D(_tex, fract(uv+_texel*se));\n\n    return _G0*c+_G1*(c_n+c_e+c_w+c_s)+_G2*(c_nw+c_sw+c_ne+c_se);\n}\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat cal_noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvec3 rgb2hsv(vec3 c)\n{\n    vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);\n    vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));\n    vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));\n\n    float d = q.x - min(q.w, q.y);\n    float e = 1.0e-10;\n    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);\n}\n\nvec3 hsv2rgb(vec3 c)\n{\n    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);\n    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);\n}\n\nvoid main(){\n    float noisePattern = cal_noise(v_uv * 2. + u_audio_history);\n\tvec3 col = noisePattern * .96 * (texture2D(u_tex_input, v_uv).rgb + texture2D(u_tex_src, v_uv).rgb);\n\n    col = rgb2hsv(col);\n    col.r += u_audio_history * .01 * noisePattern; // hue shifting\n    col = hsv2rgb(col);\n\n\tgl_FragColor = vec4(clamp(col, 0., 5.), 1);\n}";
 },{}],"shaders/master.frag":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv; \nuniform sampler2D u_tex_src;\n\nvoid main(){\n\tgl_FragColor = texture2D(u_tex_src, v_uv);\n}";
 },{}],"shaders/postLCDLeak.frag":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform float u_t;\n\nuniform sampler2D uSourceTexture;\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nfloat noise(vec2 p, int oct) {\n\tmat2 m = mat2( 1.6,  1.2, -1.2,  1.6 );\n\tfloat f  = 0.0;\n\n\tfor(int i = 1; i < oct; i++){\n\t\tfloat mul = 1.0/pow(2.0, float(i));\n\t\tf += mul*noise(p); \n\t\tp = m*p;\n\t}\n\n\treturn pow(f, 1.);\n}\n\nvoid main() {\n\tvec3 c = texture2D(uSourceTexture, fract(v_uv)).rgb;\n\tfloat noise = noise(v_uv * .01 + u_audio_history * .1 + u_t);\n\t\n\tc = mix(c, c.bgr, pow(noise, 2.) * 2.);\n\tc = mix(c, c.gbr, pow(1. - noise, 2.) * 2.);\n\t\n\tgl_FragColor = vec4(c, 1.);\n}";
 },{}],"shaders/bnwGlitch.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform float u_t;\n\nuniform sampler2D uSourceTexture;\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nfloat noise(vec2 p, int oct) {\n\tmat2 m = mat2( 1.6,  1.2, -1.2,  1.6 );\n\tfloat f  = 0.0;\n\n\tfor(int i = 1; i < oct; i++){\n\t\tfloat mul = 1.0/pow(2.0, float(i));\n\t\tf += mul*noise(p); \n\t\tp = m*p;\n\t}\n\n\treturn pow(f, 1.);\n}\n\nfloat center_to_out(in float val){\n\treturn val * 1. - .5;\n}\n\nvoid main(){\n\tvec2 uv = v_uv;\n\n    float level = u_audio_level * .1;\n\n\t// vertical movement\n\tuv.y -= u_audio_history * .4;\n\tuv.y += level * .3;\n\n\tvec2 hp = vec2(0., uv.y);\n\tfloat nh = center_to_out( noise(hp * 10. * level, 3) ) * 1.8;\n\tnh *= center_to_out( noise(hp * 30. * level, 3) ) * .3;\n\tnh += center_to_out( noise(hp * 20. * level, 3) ) * .1;\n\t\n\tfloat rgb_shift = 10. * level * nh;\n\tfloat r = texture2D(uSourceTexture, fract(uv + vec2(nh + rgb_shift, 0.))).g;\n\tfloat g = texture2D(uSourceTexture, fract(uv + vec2(nh, 0.0))).g;\n\tfloat b = texture2D(uSourceTexture, fract(uv + vec2(nh - rgb_shift, 0.))).g;\n\t\n\tvec3 original = texture2D(uSourceTexture, fract(uv)).rgb;\n\tvec3 col = vec3(r, g, b);\n\t\n\tcol = mix(col, original, nh * 20.);\n\t\n\tgl_FragColor = vec4(col, 1.0);\n}";
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform float u_t;\n\nuniform sampler2D uSourceTexture;\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nfloat noise(vec2 p, int oct) {\n\tmat2 m = mat2( 1.6,  1.2, -1.2,  1.6 );\n\tfloat f  = 0.0;\n\n\tfor(int i = 1; i < oct; i++){\n\t\tfloat mul = 1.0/pow(2.0, float(i));\n\t\tf += mul*noise(p); \n\t\tp = m*p;\n\t}\n\n\treturn pow(f, 1.);\n}\n\nfloat center_to_out(in float val){\n\treturn val * 1. - .5;\n}\n\nvoid main(){\n\tvec2 uv = v_uv;\n\n    float level = u_audio_high * .1;\n\n\t// vertical movement\n\tuv.y -= u_audio_history * .4;\n\tuv.y += level * .3;\n\n\tvec2 hp = vec2(0., uv.y);\n\tfloat nh = center_to_out( noise(hp * 10. * level, 3) ) * 1.8;\n\tnh *= center_to_out( noise(hp * 30. * level, 3) ) * .3;\n\tnh += center_to_out( noise(hp * 20. * level, 3) ) * .1;\n\t\n\tfloat rgb_shift = 10. * level * nh;\n\tfloat r = texture2D(uSourceTexture, fract(uv + vec2(nh + rgb_shift, 0.))).g;\n\tfloat g = texture2D(uSourceTexture, fract(uv + vec2(nh, 0.0))).g;\n\tfloat b = texture2D(uSourceTexture, fract(uv + vec2(nh - rgb_shift, 0.))).g;\n\t\n\tvec3 original = texture2D(uSourceTexture, fract(uv)).rgb;\n\tvec3 col = vec3(r, g, b);\n\t\n\tcol = mix(col, original, nh * 20.);\n\t\n\tgl_FragColor = vec4(col, 1.0);\n}";
 },{}],"shaders/sliceBar.frag":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform float u_t;\n\nuniform sampler2D uSourceTexture;\n\nfloat rand(float x){\n\treturn fract(sin(x) * 123458.);\n}\n\nvoid main()\n{\n\tconst float slicePiece = 2.;\n    vec2 uv = v_uv;\n    float slicing = floor(uv.y * slicePiece);\n    float random = rand(slicing/slicePiece + .1);\n    float intensity = pow(u_audio_level, 5.);\n\n    if (mod(slicing, 2.) == 0.) uv.x += intensity * random;\n    else uv.x -= intensity * random;\n    \n    gl_FragColor = texture2D(uSourceTexture, fract(uv));\n}\n";
+module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform float u_t;\n\nuniform sampler2D uSourceTexture;\n\nfloat rand(float x){\n\treturn fract(sin(x) * 123458.);\n}\n\nvoid main()\n{\n\tconst float slicePiece = 2.;\n    vec2 uv = v_uv;\n    float slicing = floor(uv.y * slicePiece);\n    float random = rand(slicing/slicePiece + .1);\n    float intensity = pow(u_audio_high, 5.) * .4;\n\n    if (mod(slicing, 2.) == 0.) uv.x += intensity * random;\n    else uv.x -= intensity * random;\n    \n    gl_FragColor = texture2D(uSourceTexture, fract(uv));\n}\n";
 },{}],"shaders/overlay.frag":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec2 v_uv;\n\nuniform float u_t;\nuniform vec2 u_res;\n\nuniform float uMonochrome;\n\nuniform float u_audio_high;\nuniform float u_audio_mid;\nuniform float u_audio_bass;\nuniform float u_audio_level;\nuniform float u_audio_history;\n\nuniform sampler2D u_tex_src;\n\nfloat hash(float _v, float _t) {\n\treturn fract(sin(_v)*43758.5453123 + _t);\n}\n\nfloat hash(vec2 p) {\n\tfloat h = dot(p,vec2(127.1,311.7));\n\treturn -1.0 + 2.0*fract(sin(h)*43758.5453123);\n}\n\nfloat noise(vec2 p) {\n\tvec2 i = floor(p);\n\tvec2 f = fract(p);\n\n\tvec2 u = f*f*(3.0-2.0*f);\n\n\treturn mix(mix(hash( i + vec2(0.0,0.0) ), \n\t\thash( i + vec2(1.0,0.0) ), u.x),\n\tmix( hash( i + vec2(0.0,1.0) ), \n\t\thash( i + vec2(1.0,1.0) ), u.x), u.y);\n}\n\nvoid main(){\n\t// rgb_shift\n\tvec2 rgbShiftOffset = vec2(.02 * pow(u_audio_high, 5.), 0.);\n\n\tfloat r = texture2D(u_tex_src, fract(v_uv + rgbShiftOffset)).r;\n\tfloat g = texture2D(u_tex_src, v_uv).g;\n\tfloat b = texture2D(u_tex_src, fract(v_uv - rgbShiftOffset)).b;\n\tvec3 col = vec3(r, g, b);\n\n\t// vertical color burn seed\n \t{\n\t \tfloat seed = noise(v_uv.yy * .8 - u_audio_history);\n\t \tseed = pow(seed, 3.) * 3.;\n\t \tcol = mix(col, col.bgr, seed);\n\t}\n\n\t// canvas noise\n\t{\n\t\tvec2 offset = v_uv.xy + u_t * .01;\n\t\tfloat nr = hash(offset + u_audio_high);\n\t\tfloat ng = hash(offset + u_audio_mid);\n\t\tfloat nb = hash(offset + u_audio_bass);\n\n\t\tcol *= vec3(nr, ng, nb) + 1.;\n\t}\n\n\t// VHS color bar burn \n\t{\n\t\t// slice vars\n\t\tconst float NUM_SLICE = 2.;\n\t\tfloat slice = floor(v_uv.y * NUM_SLICE);\n\t    // float m_rand = hash(slice/NUM_SLICE + .4562341, 0.);\n\t    // m_rand *= hash(m_rand/NUM_SLICE, u_audio_history);\n\n\t\t// create random seed\n\t\tfloat seed_a = hash(slice / 10. + .12347, -u_audio_history * 1.9);\n\t\tfloat seed_b = hash(slice / 5. + .34562, -u_audio_history * 1.7);\n\t\tfloat seed_c = hash(slice / 2. + .78906, -u_audio_history * 1.8);\n\n\t\t// color burn based on seed event \n\t\tif(.36 < u_audio_high) {\n\t\t\tcol.r *= seed_a * hash(u_audio_high, .23);\n\t\t\tcol.g *= seed_b * hash(u_audio_high, .34);\n\t\t\tcol.b *= seed_c * hash(u_audio_high, .45);\n\t\t\tcol *= 16.;\n\t\t}\n\t}\n\tif (uMonochrome > .5) col.rgb = col.rrr;\n\n\tgl_FragColor = vec4(col.rgb, 1);\n}";
 },{}],"assets/NormalmapSkull_B_up.jpg":[function(require,module,exports) {
@@ -37152,6 +37167,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var three_1 = require("three");
+
+var Utils_1 = require("avseoul_common_npm/js/Utils");
 
 var three_obj_mtl_loader_1 = require("three-obj-mtl-loader");
 
@@ -37187,11 +37204,25 @@ var Skull_B_up_low_obj_1 = __importDefault(require("../assets/Skull_B_up_low.obj
 
 var Skull_B_down_low_obj_1 = __importDefault(require("../assets/Skull_B_down_low.obj"));
 
+var BufferQuality;
+
+(function (BufferQuality) {
+  BufferQuality[BufferQuality["Lowest"] = 0] = "Lowest";
+  BufferQuality[BufferQuality["Low"] = 1] = "Low";
+  BufferQuality[BufferQuality["Mid"] = 2] = "Mid";
+  BufferQuality[BufferQuality["High"] = 3] = "High";
+  BufferQuality[BufferQuality["Highest"] = 4] = "Highest";
+})(BufferQuality || (BufferQuality = {}));
+
+;
+
 var GlitchSkull =
 /** @class */
 function () {
   function GlitchSkull(audioAnalyzer) {
+    this.bufferQuality = BufferQuality.Highest;
     this.isInit = false;
+    this.highQualityModeEnabled = false;
     this.isNoMotion = false;
     this.isLCDLeak = false;
     this.isBNWGlitch = false;
@@ -37200,6 +37231,7 @@ function () {
     this.frame = 0;
     this.skullZPositionTargets = [];
     this.EFFECT_BUFFER_SIZE = 512;
+    this.SKULL_DISTANCE = 3;
     this.audioAnalyzer = audioAnalyzer;
     this.renderer = new three_1.WebGLRenderer();
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -37219,6 +37251,7 @@ function () {
     this.initScene();
     this.loadObj();
     window.addEventListener('resize', this.onResize.bind(this), false);
+    window.addEventListener('keyup', this.onKeyUp.bind(this), false);
     this.isInit = true;
   }
 
@@ -37244,7 +37277,35 @@ function () {
     this.passSourceBuffer = tempBuffer;
   };
 
+  GlitchSkull.prototype.updateDynamicBufferSize = function (fps) {
+    if (this.highQualityModeEnabled) {
+      if (this.bufferQuality !== BufferQuality.Highest) {
+        this.bufferQuality = BufferQuality.Highest;
+        this.clearBuffer();
+        this.initBuffer();
+        this.reLinkSkullBuffers();
+        console.log("High Quality Mode Enabled");
+      }
+
+      return;
+    }
+
+    var targetQuality = this.bufferQuality;
+    if (fps > 55 && targetQuality < BufferQuality.Highest) targetQuality++;else if (fps < 45 && targetQuality > BufferQuality.Lowest) targetQuality--;
+
+    if (this.bufferQuality != targetQuality) {
+      this.bufferQuality = targetQuality;
+      this.clearBuffer();
+      this.initBuffer();
+      this.reLinkSkullBuffers();
+      console.log("Buffer Quality is set to " + BufferQuality[this.bufferQuality]);
+    }
+  };
+
   GlitchSkull.prototype.update = function () {
+    var fps = Utils_1.getFPS(); // Check fps intervally to update buffer quality
+
+    if (Math.floor(this.timer * 1000) % 15 === 0) this.updateDynamicBufferSize(fps);
     this.shuffle();
 
     for (var _i = 0, _a = this.shaderBatch; _i < _a.length; _i++) {
@@ -37325,36 +37386,27 @@ function () {
   };
 
   GlitchSkull.prototype.shuffle = function () {
-    var dice = Math.floor(this.timer * 1000) % 40 == Math.floor(Math.random() * 40);
+    var trigger = Math.floor(this.audioAnalyzer.history * 1000) % 40 == Math.floor(Math.random() * 40);
 
-    if (dice) {
+    if (trigger) {
       // Monochrome
-      if (Math.random() > 0.9) {
-        this.overlayShader.uniforms.uMonochrome.value = !this.overlayShader.uniforms.uMonochrome.value;
-      } // No Motion
+      if (Math.random() > 0.5) this.overlayShader.uniforms.uMonochrome.value = !this.overlayShader.uniforms.uMonochrome.value; // No Motion
 
+      if (Math.random() > 0.5) this.isNoMotion = !this.isNoMotion; // LCD Leak
 
-      if (Math.random() > 0.9) {
-        this.isNoMotion = !this.isNoMotion;
-      } // LCD Leak
+      if (Math.random() > 0.5) this.isLCDLeak = !this.isLCDLeak; // Some intense stuff
 
+      if (this.audioAnalyzer.level > .9) {
+        // BNW Glitch
+        if (Math.random() > 0.5) this.isBNWGlitch = !this.isBNWGlitch; // Slicebar
 
-      if (Math.random() > 0.9) {
-        this.isLCDLeak = !this.isLCDLeak;
-      } // BNW Glitch
-
-
-      if (Math.random() > 0.9) {
-        this.isBNWGlitch = !this.isBNWGlitch;
+        if (Math.random() > 0.5) this.isSliceBar = !this.isSliceBar;
+      } else {
+        this.isNoMotion = false;
+        this.isLCDLeak = false;
+        this.isBNWGlitch = false;
+        this.isSliceBar = false;
       }
-
-      ; // Slicebar
-
-      if (Math.random() > 0.9) {
-        this.isSliceBar = !this.isSliceBar;
-      }
-
-      ;
     }
   };
 
@@ -37551,10 +37603,41 @@ function () {
 
     for (var i = 0; i < 2; i++) {
       this.emissiveFeedbackBuffer[i] = new three_1.WebGLRenderTarget(this.EFFECT_BUFFER_SIZE, this.EFFECT_BUFFER_SIZE, format);
+    } // Get dynamic buffer size based on buffer quality
+
+
+    var input = this.w > this.h ? this.w : this.h;
+    var targetBufferQuality = Utils_1.getSmallerOrEqualPowerOfTwo(input);
+    var numIteration = 0;
+
+    switch (this.bufferQuality) {
+      case BufferQuality.High:
+        numIteration = 1;
+        break;
+
+      case BufferQuality.Mid:
+        numIteration = 2;
+        break;
+
+      case BufferQuality.Low:
+        numIteration = 3;
+        break;
+
+      case BufferQuality.Lowest:
+        numIteration = 4;
+        break;
+
+      default:
+        break;
     }
 
-    this.passSourceBuffer = new three_1.WebGLRenderTarget(this.w, this.h, format);
-    this.passDestinationBuffer = new three_1.WebGLRenderTarget(this.w, this.h, format);
+    for (var i = 0; i < numIteration; i++) {
+      if (targetBufferQuality !== 2) targetBufferQuality--;
+      targetBufferQuality = Utils_1.getSmallerOrEqualPowerOfTwo(targetBufferQuality);
+    }
+
+    this.passSourceBuffer = new three_1.WebGLRenderTarget(targetBufferQuality, targetBufferQuality, format);
+    this.passDestinationBuffer = new three_1.WebGLRenderTarget(targetBufferQuality, targetBufferQuality, format);
     this.sceneBuffer = new three_1.WebGLRenderTarget(this.w, this.h, format);
     this.sceneBuffer.depthBuffer = true;
   };
@@ -37621,13 +37704,11 @@ function () {
           break;
 
         case 1:
-          this.skullTransforms[i].position.x = -4;
-          this.skullTransforms[i].position.z = -3;
+          this.skullTransforms[i].position.x = -this.SKULL_DISTANCE;
           break;
 
         case 2:
-          this.skullTransforms[i].position.x = 4;
-          this.skullTransforms[i].position.z = -3;
+          this.skullTransforms[i].position.x = this.SKULL_DISTANCE;
           break;
 
         default:
@@ -37638,13 +37719,13 @@ function () {
 
   GlitchSkull.prototype.animateJaw = function () {
     if (!this.isInit) return;
-    var jawRotationValue = Math.sin(this.audioAnalyzer.history * 5) * .002;
+    var jawRotationValue = Math.abs(Math.sin(this.audioAnalyzer.history * 2.5)) * Math.PI / 10;
 
     for (var i = 0; i < this.skulls.length; i++) {
       // jaw
       var jaw = this.jaws[i];
       var jawRotation = jaw.rotation.clone();
-      jawRotation.x += jawRotationValue;
+      jawRotation.x = jawRotationValue;
       jaw.rotation.copy(jawRotation);
     }
   };
@@ -37660,15 +37741,20 @@ function () {
       position.y = Math.sin(this.audioAnalyzer.history * 2.) * .3;
       var diff = this.skullZPositionTargets[i] - position.z;
       position.z += diff * .035;
-      if (Math.abs(diff) < .05) this.skullZPositionTargets[i] = -1 + Math.random() * -4; // update rotation values
+      if (Math.abs(diff) < .15) this.skullZPositionTargets[i] = -1 + Math.random() * -4; // update rotation values
 
       rotation.y = Math.sin(this.audioAnalyzer.history * 1) * .1;
       rotation.x = Math.sin(this.audioAnalyzer.history * 3) * .1;
 
       if (i > 0) {
         var skullTransform = this.skullTransforms[i];
+        var indivisualPosition = skullTransform.position.clone();
         var indivisualRotation = skullTransform.rotation.clone();
-        indivisualRotation.y = Math.sin(this.audioAnalyzer.history * .5) * .4;
+        var direction = i == 1 ? -1 : 1;
+        var range = Math.sin(this.audioAnalyzer.history * .5 + i * 100);
+        indivisualPosition.x = direction * (this.SKULL_DISTANCE + .5 * range);
+        indivisualRotation.y = direction * (range * Math.PI / 4 - Math.PI / 8);
+        skullTransform.position.copy(indivisualPosition);
         skullTransform.rotation.copy(indivisualRotation);
       } // update objects
 
@@ -37698,13 +37784,35 @@ function () {
     this.renderToTextureCamera.updateProjectionMatrix();
     this.clearBuffer();
     this.initBuffer();
+    this.reLinkSkullBuffers();
+  };
+
+  GlitchSkull.prototype.onKeyUp = function (event) {
+    if (event.key === "h") this.highQualityModeEnabled = !this.highQualityModeEnabled;
+  };
+
+  GlitchSkull.prototype.reLinkSkullBuffers = function () {
+    var _this = this;
+
+    if (!this.isInit) return;
+
+    for (var _i = 0, _a = this.skulls; _i < _a.length; _i++) {
+      var skull = _a[_i];
+      skull.traverse(function (mesh) {
+        if (mesh instanceof three_1.Mesh) {
+          if (!mesh.material.wireframe) {
+            mesh.material.emissiveMap = _this.emissiveFeedbackBuffer[_this.frame].texture;
+          }
+        }
+      });
+    }
   };
 
   return GlitchSkull;
 }();
 
 exports.default = GlitchSkull;
-},{"three":"../node_modules/three/build/three.module.js","three-obj-mtl-loader":"../node_modules/three-obj-mtl-loader/index.js","../shaders/shared.vert":"shaders/shared.vert","../shaders/obj_illum.frag":"shaders/obj_illum.frag","../shaders/bg.frag":"shaders/bg.frag","../shaders/feedback.frag":"shaders/feedback.frag","../shaders/master.frag":"shaders/master.frag","../shaders/postLCDLeak.frag":"shaders/postLCDLeak.frag","../shaders/bnwGlitch.frag":"shaders/bnwGlitch.frag","../shaders/sliceBar.frag":"shaders/sliceBar.frag","../shaders/overlay.frag":"shaders/overlay.frag","../assets/NormalmapSkull_B_up.jpg":"assets/NormalmapSkull_B_up.jpg","../assets/NormalmapSkull_B_down.jpg":"assets/NormalmapSkull_B_down.jpg","../assets/DisplacementSkull_B_up.jpg":"assets/DisplacementSkull_B_up.jpg","../assets/DisplacementSkull_B_down.jpg":"assets/DisplacementSkull_B_down.jpg","../assets/noise.jpg":"assets/noise.jpg","../assets/Skull_B_up_low.obj":"assets/Skull_B_up_low.obj","../assets/Skull_B_down_low.obj":"assets/Skull_B_down_low.obj"}],"../node_modules/stats.js/build/stats.min.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","avseoul_common_npm/js/Utils":"../node_modules/avseoul_common_npm/js/Utils.ts","three-obj-mtl-loader":"../node_modules/three-obj-mtl-loader/index.js","../shaders/shared.vert":"shaders/shared.vert","../shaders/obj_illum.frag":"shaders/obj_illum.frag","../shaders/bg.frag":"shaders/bg.frag","../shaders/feedback.frag":"shaders/feedback.frag","../shaders/master.frag":"shaders/master.frag","../shaders/postLCDLeak.frag":"shaders/postLCDLeak.frag","../shaders/bnwGlitch.frag":"shaders/bnwGlitch.frag","../shaders/sliceBar.frag":"shaders/sliceBar.frag","../shaders/overlay.frag":"shaders/overlay.frag","../assets/NormalmapSkull_B_up.jpg":"assets/NormalmapSkull_B_up.jpg","../assets/NormalmapSkull_B_down.jpg":"assets/NormalmapSkull_B_down.jpg","../assets/DisplacementSkull_B_up.jpg":"assets/DisplacementSkull_B_up.jpg","../assets/DisplacementSkull_B_down.jpg":"assets/DisplacementSkull_B_down.jpg","../assets/noise.jpg":"assets/noise.jpg","../assets/Skull_B_up_low.obj":"assets/Skull_B_up_low.obj","../assets/Skull_B_down_low.obj":"assets/Skull_B_down_low.obj"}],"../node_modules/stats.js/build/stats.min.js":[function(require,module,exports) {
 var define;
 // stats.js - http://github.com/mrdoob/stats.js
 (function(f,e){"object"===typeof exports&&"undefined"!==typeof module?module.exports=e():"function"===typeof define&&define.amd?define(e):f.Stats=e()})(this,function(){var f=function(){function e(a){c.appendChild(a.dom);return a}function u(a){for(var d=0;d<c.children.length;d++)c.children[d].style.display=d===a?"block":"none";l=a}var l=0,c=document.createElement("div");c.style.cssText="position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000";c.addEventListener("click",function(a){a.preventDefault();
@@ -37737,7 +37845,7 @@ var stats;
 var debugEnabled = "development" === 'development';
 
 var init = function init() {
-  audioAnylizer = new AudioAnalyzer_1.default(70);
+  audioAnylizer = new AudioAnalyzer_1.default(500);
   glitchSkull = new GlitchSkull_1.default(audioAnylizer);
 
   if (debugEnabled) {
@@ -37760,6 +37868,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (window.location.protocol == 'http:' && window.location.hostname != "localhost") {
     window.open("https://" + window.location.hostname + window.location.pathname, '_top');
   } else {
+    alert("*** EPILEPSY WARNING *** THIS VIDEO HAS BEEN IDENTIFIED BY EPILEPSY ACTION TO POTENTIALLY TRIGGER SEIZURES FOR PEOPLE WITH PHOTOSENSITIVE EPILEPSY. VIEWER DISCRESION IS ADVISED.");
     init();
     update();
   }
@@ -37792,7 +37901,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62023" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53051" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
