@@ -134,7 +134,13 @@ exports.isMobile = function () {
     return check;
 };
 exports.getNearestPowerOfTwo = function (value) {
-    return Math.pow(2, Math.round(Math.log2(value)));
+    return Math.pow(2, Math.round(Math.log(value) * Math.LOG2E));
+};
+exports.getSmallerOrEqualPowerOfTwo = function (value) {
+    return Math.pow(2, Math.floor(Math.log(value) * Math.LOG2E));
+};
+exports.getLargerOrEqualPowerOfTwo = function (value) {
+    return Math.pow(2, Math.ceil(Math.log(value) * Math.LOG2E));
 };
 exports.getVideoStream = function (width, height, callback) {
     var constraints = { audio: false, video: { width: width, height: height } };
@@ -158,6 +164,22 @@ exports.getMicStream = function (onSucceedCallback, onFailCallback) {
         if (onFailCallback !== undefined)
             onFailCallback();
     });
+};
+var times = [];
+exports.getFPS = function () {
+    var now = performance.now();
+    while (times.length > 0 && times[0] <= now - 1000) {
+        times.shift();
+    }
+    times.push(now);
+    return times.length;
+};
+exports.customAlert = function (alertType, message) {
+    var alert = document.createElement('div');
+    alert.setAttribute('style', "\n        position: fixed;\n        top: 50%;\n        width: 100vw;\n        height: auto;\n        padding: 20px;\n        background-color: black;\n        color: white;\n        z-index: 9999999;\n        text-transform: uppercase;\n        cursor: pointer;\n    ");
+    alert.onclick = function () { return alert.style.display = 'none'; };
+    alert.innerHTML = "<strong>" + alertType + "</strong> " + message;
+    document.body.appendChild(alert);
 };
 
 },{}],"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts":[function(require,module,exports) {
@@ -266,7 +288,7 @@ var AudioAnalyzer = /** @class */ (function () {
     };
     ;
     AudioAnalyzer.prototype.initWithoutStream = function () {
-        alert("microphone is not detected. pulse is activated instead of mic input");
+        Utils_1.customAlert('microphone is not detected.', 'Pulsing random value will be mimicing the mic input');
         this.reset();
         this.isInit = true;
         this.isPulse = true;
@@ -275,6 +297,8 @@ var AudioAnalyzer = /** @class */ (function () {
     AudioAnalyzer.prototype.update = function () {
         if (!this.isInit)
             return;
+        if (this._history > 9999)
+            this.reset();
         var bass = 0, mid = 0, high = 0;
         if (!this.isPulse) {
             if (!this.analyzer || !this.audioBuffer)
@@ -35741,6 +35765,8 @@ function () {
     this.camera = new three_1.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 1);
     this.camera.position.z = 0.5;
     this.camera.updateProjectionMatrix();
+    console.log(Utils_1.customAlert);
+    Utils_1.customAlert('microphone is not detected.', 'Pulsing random value will be mimicing the mic input');
     Utils_1.getVideoStream(this.VIDEO_TEXTURE_WIDTH, this.VIDEO_TEXTURE_HEIGHT, function (video) {
       return _this.videoTexture = new three_1.VideoTexture(video);
     });
@@ -36000,7 +36026,7 @@ var update = function update() {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  if (window.location.protocol == 'http:' && window.location.hostname != "localhost") {
+  if (window.location.pathname.includes("BAD_SIGNALS") && window.location.protocol == 'http:' && window.location.hostname != "localhost") {
     window.open("https://" + window.location.hostname + window.location.pathname, '_top');
   } else {
     init();
@@ -36035,7 +36061,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60273" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57530" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
