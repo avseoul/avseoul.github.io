@@ -81,7 +81,7 @@ iframe {
 }
 
 .contentDescription {
-    margin: 5px 2px 30px 2px;
+    margin: 5px 0px 30px 0px;
 }
 
 .listContainer {
@@ -160,9 +160,42 @@ credit {
     font-weight: 100;
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (max-width: 960px) {
     :root {
-        /* --width: 85%; */
+        --width: 100%;
+        --globalMarginSize: 0px;
+        --titlePaddingSize: 0px;
+        --containerPaddingBottomSize: 100px;
+        --contentContainerWidth: 100%;
+        --contentContainerHeight: 70%;
+        --contentContainerVerticalPaddingSize: 50px;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    #logo {
+        position: relative;
+        width: 100px;
+        left: 0;
+        top: 0;
+    }
+    
+    #menu {
+        position: relative;
+        text-align: left;
+        margin-right: 0;
+        left: 0;
+        bottom: 0;
+    }
+
+    #title {
+        display: none;
+    }
+
+    #bio {
+        width: 100%;
     }
 }
 
