@@ -273,7 +273,7 @@ module.exports = {
         "h": "320"
       }
     },
-    "category": "case_study, creative_coding, show_all"
+    "category": "case_studies, creative_coding, show_all"
   }, {
     "thumbnail_src": "thumb_49.gif",
     "id": "049",
@@ -330,7 +330,7 @@ module.exports = {
         "h": "360"
       }
     },
-    "category": "case_study, creative_coding, show_all"
+    "category": "selected_works, creative_coding, show_all"
   }, {
     "thumbnail_src": "thumb_48.jpg",
     "id": "048",
@@ -715,7 +715,7 @@ module.exports = {
         "h": "518"
       }
     },
-    "category": "case_study, show_all, creative_coding"
+    "category": "selected_works, show_all, creative_coding"
   }, {
     "thumbnail_src": "bigscreen_thumb.jpg",
     "id": "034",
@@ -1183,26 +1183,11 @@ module.exports = {
 },{}],"js/utils.ts":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-exports.insertNext = function (targetNode, referenceNode) {
-  var _a;
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-  (_a = referenceNode === null || referenceNode === void 0 ? void 0 : referenceNode.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(targetNode, referenceNode.nextSibling);
-};
-
-exports.getImageAssetURL = function (imageAssets, imageSrc) {
-  var imageAssetsKey = imageSrc.split(".")[0];
-  return Object.entries(imageAssets[imageAssetsKey])[0][1];
-};
-
-exports.getRandomColorCSS = function () {
-  return 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')';
-};
-},{}],"js/const.ts":[function(require,module,exports) {
-"use strict";
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -1394,64 +1379,210 @@ exports.CONTENT_TYPE = {
   VIDEO: 2,
   REALTIME: 3
 };
-},{}],"assets/img/2-agrippa.jpg":[function(require,module,exports) {
-module.exports = "/2-agrippa.d0e15463.jpg";
+
+exports.insertNext = function (targetNode, referenceNode) {
+  var _a;
+
+  (_a = referenceNode === null || referenceNode === void 0 ? void 0 : referenceNode.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(targetNode, referenceNode.nextSibling);
+};
+
+exports.getImageAssetURL = function (imageAssets, imageSrc) {
+  var imageAssetsKey = imageSrc.split(".")[0];
+  return Object.entries(imageAssets[imageAssetsKey])[0][1];
+};
+
+exports.getRandomColorCSS = function () {
+  return 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')';
+};
+
+exports.shuffleRandomScreeningContent = function () {
+  var seed = Math.floor(Math.random() * exports.CONTET_JAR.length);
+  var m = exports.CONTET_JAR[seed];
+  var targetDiv = document.getElementById("random_selected_works");
+  var w = parseFloat(getComputedStyle(targetDiv.parentNode, null).getPropertyValue('width'));
+  var h = w * .6666;
+  targetDiv.style['width'] = w + 'px';
+  targetDiv.style['height'] = h + 'px';
+  targetDiv.style['background'] = '#000';
+  targetDiv.innerHTML = '<iframe src=\"https://player.vimeo.com/video/' + m.url + '\" width=\"' + w + '\" height=\"' + h + '\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+};
+
+exports.linksAlive = function () {
+  var links = [].slice.call(document.querySelectorAll("a"));
+
+  var _iterator = _createForOfIteratorHelper(links),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var link = _step.value;
+
+      if (link.className != "is_fucked") {
+        link.style["color"] = exports.getRandomColorCSS();
+        link.style.backgroundColor = exports.getRandomColorCSS();
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+};
+
+exports.renderRainbow = function () {
+  var paragraphs = [].slice.call(document.querySelectorAll("p"));
+  var titles = [].slice.call(document.querySelectorAll("av_title"));
+  var links = [].slice.call(document.querySelectorAll("a"));
+
+  var _iterator2 = _createForOfIteratorHelper(paragraphs),
+      _step2;
+
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var p = _step2.value;
+      p.style.backgroundColor = exports.getRandomColorCSS();
+      var words = p.textContent.split(" ");
+      p.textContent = '';
+
+      var _iterator5 = _createForOfIteratorHelper(words),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var w = _step5.value;
+          var tag = document.createElement("rainbow");
+          tag.style.color = exports.getRandomColorCSS();
+          tag.style.backgroundColor = exports.getRandomColorCSS();
+          tag.textContent = w + ' ';
+          p.appendChild(tag);
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+
+  var _iterator3 = _createForOfIteratorHelper(titles),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var t = _step3.value;
+
+      var _words = t.textContent.split(" ");
+
+      t.textContent = '';
+
+      var _iterator6 = _createForOfIteratorHelper(_words),
+          _step6;
+
+      try {
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var _w = _step6.value;
+
+          var _tag = document.createElement("rainbow");
+
+          _tag.style.color = exports.getRandomColorCSS();
+          _tag.style.backgroundColor = exports.getRandomColorCSS();
+          _tag.textContent = _w + ' ';
+          t.appendChild(_tag);
+        }
+      } catch (err) {
+        _iterator6.e(err);
+      } finally {
+        _iterator6.f();
+      }
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+
+  var _iterator4 = _createForOfIteratorHelper(links),
+      _step4;
+
+  try {
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      var l = _step4.value;
+      l.className = "is_fucked";
+      l.style.backgroundColor = exports.getRandomColorCSS();
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
+};
+
+exports.buildVimeoEmbedCode = function (url, showInfo) {
+  var n = showInfo ? 1 : 0;
+  return "\n\t\t<div style=\"height: 100%;position:relative;\">\n\t\t\t<iframe src=\"".concat(url, "?color=ffffff&title=").concat(n, "&byline=").concat(n, "&portrait=").concat(n, "&controls=").concat(n, "\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" frameborder=\"0\" allow=\"autoplay\" allowfullscreen></iframe>\n\t\t</div>\n\t\t<script src=\"https://player.vimeo.com/api/player.js\"></script>\n\t");
+};
 },{}],"assets/img/10years.jpg":[function(require,module,exports) {
 module.exports = "/10years.8af2ff4e.jpg";
+},{}],"assets/img/2-agrippa.jpg":[function(require,module,exports) {
+module.exports = "/2-agrippa.d0e15463.jpg";
 },{}],"assets/img/3-answer.jpg":[function(require,module,exports) {
 module.exports = "/3-answer.706045e0.jpg";
-},{}],"assets/img/8sec1.jpg":[function(require,module,exports) {
-module.exports = "/8sec1.fef64fd2.jpg";
-},{}],"assets/img/360stadium.jpg":[function(require,module,exports) {
-module.exports = "/360stadium.7e42e4c2.jpg";
-},{}],"assets/img/8sec2.jpg":[function(require,module,exports) {
-module.exports = "/8sec2.ef126d0d.jpg";
 },{}],"assets/img/5-tea.jpg":[function(require,module,exports) {
 module.exports = "/5-tea.5bfffa98.jpg";
+},{}],"assets/img/360stadium.jpg":[function(require,module,exports) {
+module.exports = "/360stadium.7e42e4c2.jpg";
+},{}],"assets/img/8sec1.jpg":[function(require,module,exports) {
+module.exports = "/8sec1.fef64fd2.jpg";
+},{}],"assets/img/8sec2.jpg":[function(require,module,exports) {
+module.exports = "/8sec2.ef126d0d.jpg";
 },{}],"assets/img/DTS_W01.jpg":[function(require,module,exports) {
 module.exports = "/DTS_W01.8658b95f.jpg";
 },{}],"assets/img/ICM01.jpg":[function(require,module,exports) {
 module.exports = "/ICM01.e74b0948.jpg";
-},{}],"assets/img/MUFE_screen2.png":[function(require,module,exports) {
-module.exports = "/MUFE_screen2.2ac983af.png";
 },{}],"assets/img/MUFE_screen1.png":[function(require,module,exports) {
 module.exports = "/MUFE_screen1.189afb9f.png";
 },{}],"assets/img/MUFE_screen3.png":[function(require,module,exports) {
 module.exports = "/MUFE_screen3.5287578c.png";
+},{}],"assets/img/MUFE_screen2.png":[function(require,module,exports) {
+module.exports = "/MUFE_screen2.2ac983af.png";
 },{}],"assets/img/MUFE_screen4.png":[function(require,module,exports) {
 module.exports = "/MUFE_screen4.c8e30979.png";
 },{}],"assets/img/MUFE_screen5.jpg":[function(require,module,exports) {
 module.exports = "/MUFE_screen5.60e0cc41.jpg";
-},{}],"assets/img/NM02.jpg":[function(require,module,exports) {
-module.exports = "/NM02.42ec3e7a.jpg";
 },{}],"assets/img/NM01.jpg":[function(require,module,exports) {
 module.exports = "/NM01.292dc989.jpg";
+},{}],"assets/img/NM02.jpg":[function(require,module,exports) {
+module.exports = "/NM02.42ec3e7a.jpg";
 },{}],"assets/img/NOC_W05_01.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_01.7f6172d0.jpg";
-},{}],"assets/img/NOC_W05_02.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_02.0f7bd28f.jpg";
 },{}],"assets/img/NOC_W05_03.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_03.2ad2eb4d.jpg";
-},{}],"assets/img/NOC_W05_04.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_04.61ef4c92.jpg";
+},{}],"assets/img/NOC_W05_02.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_02.0f7bd28f.jpg";
 },{}],"assets/img/NOC_W05_05.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_05.b7de7344.jpg";
 },{}],"assets/img/NOC_W05_06.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_06.d5ee7504.jpg";
+},{}],"assets/img/NOC_W05_04.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_04.61ef4c92.jpg";
 },{}],"assets/img/NOC_W05_07.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_07.bccbec35.jpg";
 },{}],"assets/img/NOC_W05_08.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_08.52663260.jpg";
 },{}],"assets/img/NOC_W05_09.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_09.7b59a009.jpg";
-},{}],"assets/img/NOC_W05_10.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_10.8cee04ce.jpg";
 },{}],"assets/img/NOC_W05_11.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_11.a7039c10.jpg";
 },{}],"assets/img/NOC_W05_12.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_12.6536aa1b.jpg";
 },{}],"assets/img/NOC_W05_13.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_13.42ab5fb0.jpg";
+},{}],"assets/img/NOC_W05_10.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_10.8cee04ce.jpg";
 },{}],"assets/img/NOC_W05_14.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_14.04092639.jpg";
 },{}],"assets/img/NOC_W05_15.jpg":[function(require,module,exports) {
@@ -1462,16 +1593,16 @@ module.exports = "/NOC_W05_16.b06b7cec.jpg";
 module.exports = "/NOC_W05_17.4bc811cb.jpg";
 },{}],"assets/img/NOC_W05_thumb.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_thumb.d9984e5d.jpg";
+},{}],"assets/img/RG_main.png":[function(require,module,exports) {
+module.exports = "/RG_main.fe5b3a72.png";
 },{}],"assets/img/RG_rasterize.png":[function(require,module,exports) {
 module.exports = "/RG_rasterize.01c0923c.png";
 },{}],"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":[function(require,module,exports) {
 module.exports = "/Screen-Shot-2012-07-04-at-5.37.24-PM.9a547d53.jpg";
-},{}],"assets/img/RG_main.png":[function(require,module,exports) {
-module.exports = "/RG_main.fe5b3a72.png";
-},{}],"assets/img/[DTS]_W01_process.png":[function(require,module,exports) {
-module.exports = {};
 },{}],"assets/img/artcol.jpg":[function(require,module,exports) {
 module.exports = "/artcol.84432dc6.jpg";
+},{}],"assets/img/[DTS]_W01_process.png":[function(require,module,exports) {
+module.exports = {};
 },{}],"assets/img/asdf.jpg":[function(require,module,exports) {
 module.exports = "/asdf.b34e70b7.jpg";
 },{}],"assets/img/bemyluv.jpg":[function(require,module,exports) {
@@ -1490,10 +1621,10 @@ module.exports = "/cityweather01.87d7d14d.jpg";
 module.exports = "/cityweather02.fcc69c05.jpg";
 },{}],"assets/img/cityweather04.jpg":[function(require,module,exports) {
 module.exports = "/cityweather04.5c0cc5f3.jpg";
-},{}],"assets/img/cityweatherThumb.jpg":[function(require,module,exports) {
-module.exports = "/cityweatherThumb.b5ed08dd.jpg";
 },{}],"assets/img/cityweather03.jpg":[function(require,module,exports) {
 module.exports = "/cityweather03.0afbd51d.jpg";
+},{}],"assets/img/cityweatherThumb.jpg":[function(require,module,exports) {
+module.exports = "/cityweatherThumb.b5ed08dd.jpg";
 },{}],"assets/img/clip_content_01.png":[function(require,module,exports) {
 module.exports = "/clip_content_01.99ecd0da.png";
 },{}],"assets/img/clip_thumb.jpg":[function(require,module,exports) {
@@ -1502,20 +1633,20 @@ module.exports = "/clip_thumb.2aa518c5.jpg";
 module.exports = "/contact.46c77f0a.jpg";
 },{}],"assets/img/cosmosonic.jpg":[function(require,module,exports) {
 module.exports = "/cosmosonic.e3186de5.jpg";
-},{}],"assets/img/drpepper.jpg":[function(require,module,exports) {
-module.exports = "/drpepper.dac48e6c.jpg";
-},{}],"assets/img/crazyparticlesystem.jpg":[function(require,module,exports) {
-module.exports = "/crazyparticlesystem.57a573ef.jpg";
 },{}],"assets/img/diffuse.jpg":[function(require,module,exports) {
 module.exports = "/diffuse.8d5ee2a4.jpg";
+},{}],"assets/img/crazyparticlesystem.jpg":[function(require,module,exports) {
+module.exports = "/crazyparticlesystem.57a573ef.jpg";
+},{}],"assets/img/drpepper.jpg":[function(require,module,exports) {
+module.exports = "/drpepper.dac48e6c.jpg";
 },{}],"assets/img/expressivetypography.jpg":[function(require,module,exports) {
 module.exports = "/expressivetypography.5b766ea0.jpg";
 },{}],"assets/img/expressivetypography01.png":[function(require,module,exports) {
 module.exports = "/expressivetypography01.6dc059b3.png";
-},{}],"assets/img/expressivetypography03.png":[function(require,module,exports) {
-module.exports = "/expressivetypography03.e2bb8394.png";
 },{}],"assets/img/expressivetypography02.png":[function(require,module,exports) {
 module.exports = "/expressivetypography02.05963285.png";
+},{}],"assets/img/expressivetypography03.png":[function(require,module,exports) {
+module.exports = "/expressivetypography03.e2bb8394.png";
 },{}],"assets/img/fakelovernd01.png":[function(require,module,exports) {
 module.exports = "/fakelovernd01.494b6c4c.png";
 },{}],"assets/img/fakelovernd02.jpg":[function(require,module,exports) {
@@ -1532,38 +1663,38 @@ module.exports = "/glitchnl.9f6c013e.jpg";
 module.exports = "/hiddenfigures.36c28af1.jpg";
 },{}],"assets/img/hoam.jpg":[function(require,module,exports) {
 module.exports = "/hoam.30455737.jpg";
+},{}],"assets/img/itp-t-shirts-appl-2.jpg":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl-2.0234ed6a.jpg";
 },{}],"assets/img/itp-t-shirts-appl-3.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-3.8f74e884.jpg";
 },{}],"assets/img/itp-t-shirts-appl-4.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-4.c91fc52b.jpg";
-},{}],"assets/img/itp-t-shirts-appl-2.jpg":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl-2.0234ed6a.jpg";
-},{}],"assets/img/itp-t-shirts-appl-5.jpg":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl-5.37fe39cf.jpg";
 },{}],"assets/img/itp-t-shirts-appl-6.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-6.f7db556a.jpg";
-},{}],"assets/img/itp-t-shirts-appl-7.jpg":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl-7.172d2450.jpg";
 },{}],"assets/img/itp-t-shirts-appl.png":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl.2228479a.png";
+},{}],"assets/img/itp-t-shirts-appl-5.jpg":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl-5.37fe39cf.jpg";
+},{}],"assets/img/itp-t-shirts-appl-7.jpg":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl-7.172d2450.jpg";
 },{}],"assets/img/itplogo.jpg":[function(require,module,exports) {
 module.exports = "/itplogo.7907b520.jpg";
-},{}],"assets/img/jthtime.jpg":[function(require,module,exports) {
-module.exports = "/jthtime.8760d08d.jpg";
 },{}],"assets/img/kiacadenza.jpg":[function(require,module,exports) {
 module.exports = "/kiacadenza.7c9e3f49.jpg";
 },{}],"assets/img/logo.png":[function(require,module,exports) {
 module.exports = "/logo.fb412750.png";
 },{}],"assets/img/logo_dot_w.png":[function(require,module,exports) {
 module.exports = "/logo_dot_w.d055efcf.png";
-},{}],"assets/img/moreraytracing.jpg":[function(require,module,exports) {
-module.exports = "/moreraytracing.8f080f55.jpg";
-},{}],"assets/img/noise.jpg":[function(require,module,exports) {
-module.exports = "/noise.d565e126.jpg";
+},{}],"assets/img/jthtime.jpg":[function(require,module,exports) {
+module.exports = "/jthtime.8760d08d.jpg";
 },{}],"assets/img/noc_w04_thumb.jpg":[function(require,module,exports) {
 module.exports = "/noc_w04_thumb.0b16ee06.jpg";
+},{}],"assets/img/moreraytracing.jpg":[function(require,module,exports) {
+module.exports = "/moreraytracing.8f080f55.jpg";
 },{}],"assets/img/nonagon.jpg":[function(require,module,exports) {
 module.exports = "/nonagon.59e780f8.jpg";
+},{}],"assets/img/noise.jpg":[function(require,module,exports) {
+module.exports = "/noise.d565e126.jpg";
 },{}],"assets/img/ofs_mv.jpg":[function(require,module,exports) {
 module.exports = "/ofs_mv.5ccb63cc.jpg";
 },{}],"assets/img/op3.jpg":[function(require,module,exports) {
@@ -1582,10 +1713,10 @@ module.exports = "/profile.0ac66c1e.jpg";
 module.exports = "/quickavsketch01.7a8671cc.png";
 },{}],"assets/img/rainytypewriter.jpg":[function(require,module,exports) {
 module.exports = "/rainytypewriter.b3a01e1b.jpg";
-},{}],"assets/img/rg_thumbnail.jpg":[function(require,module,exports) {
-module.exports = "/rg_thumbnail.951e8542.jpg";
 },{}],"assets/img/slitscan.jpg":[function(require,module,exports) {
 module.exports = "/slitscan.921cc49e.jpg";
+},{}],"assets/img/rg_thumbnail.jpg":[function(require,module,exports) {
+module.exports = "/rg_thumbnail.951e8542.jpg";
 },{}],"assets/img/slitscan_01.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_01.b0023709.jpg";
 },{}],"assets/img/slitscan_02.jpg":[function(require,module,exports) {
@@ -1642,10 +1773,10 @@ module.exports = "/thumb_51.e4112863.gif";
 module.exports = "/thumb_52.5e3f9ac7.gif";
 },{}],"assets/img/thumb_53.gif":[function(require,module,exports) {
 module.exports = "/thumb_53.f91aa14d.gif";
-},{}],"assets/img/ujnnova.jpg":[function(require,module,exports) {
-module.exports = "/ujnnova.ca74a571.jpg";
 },{}],"assets/img/toneandthree.jpg":[function(require,module,exports) {
 module.exports = "/toneandthree.f94e1e28.jpg";
+},{}],"assets/img/ujnnova.jpg":[function(require,module,exports) {
+module.exports = "/ujnnova.ca74a571.jpg";
 },{}],"assets/img/unpredictable.jpg":[function(require,module,exports) {
 module.exports = "/unpredictable.f1b25abf.jpg";
 },{}],"assets/img/upload1.jpg":[function(require,module,exports) {
@@ -1656,10 +1787,10 @@ module.exports = "/visexp.642e46b0.jpg";
 module.exports = "/web_thumbnail.41c80570.jpg";
 },{}],"assets/img/webgl_bad.gif":[function(require,module,exports) {
 module.exports = "/webgl_bad.8a242a7d.gif";
-},{}],"assets/img/webgl_fuz.jpg":[function(require,module,exports) {
-module.exports = "/webgl_fuz.623b7fe9.jpg";
 },{}],"assets/img/webgl_par.jpg":[function(require,module,exports) {
 module.exports = "/webgl_par.f199f185.jpg";
+},{}],"assets/img/webgl_fuz.jpg":[function(require,module,exports) {
+module.exports = "/webgl_fuz.623b7fe9.jpg";
 },{}],"assets/img/webgl_peq.jpg":[function(require,module,exports) {
 module.exports = "/webgl_peq.5b7abcba.jpg";
 },{}],"assets/img/wooven.jpg":[function(require,module,exports) {
@@ -1668,26 +1799,26 @@ module.exports = "/wooven.e235df90.jpg";
 module.exports = "/webgl_sku.bfd6464b.jpg";
 },{}],"assets/img/*.*":[function(require,module,exports) {
 module.exports = {
-  "2-agrippa": {
-    "jpg": require("./2-agrippa.jpg")
-  },
   "10years": {
     "jpg": require("./10years.jpg")
+  },
+  "2-agrippa": {
+    "jpg": require("./2-agrippa.jpg")
   },
   "3-answer": {
     "jpg": require("./3-answer.jpg")
   },
-  "8sec1": {
-    "jpg": require("./8sec1.jpg")
+  "5-tea": {
+    "jpg": require("./5-tea.jpg")
   },
   "360stadium": {
     "jpg": require("./360stadium.jpg")
   },
+  "8sec1": {
+    "jpg": require("./8sec1.jpg")
+  },
   "8sec2": {
     "jpg": require("./8sec2.jpg")
-  },
-  "5-tea": {
-    "jpg": require("./5-tea.jpg")
   },
   "DTS_W01": {
     "jpg": require("./DTS_W01.jpg")
@@ -1695,14 +1826,14 @@ module.exports = {
   "ICM01": {
     "jpg": require("./ICM01.jpg")
   },
-  "MUFE_screen2": {
-    "png": require("./MUFE_screen2.png")
-  },
   "MUFE_screen1": {
     "png": require("./MUFE_screen1.png")
   },
   "MUFE_screen3": {
     "png": require("./MUFE_screen3.png")
+  },
+  "MUFE_screen2": {
+    "png": require("./MUFE_screen2.png")
   },
   "MUFE_screen4": {
     "png": require("./MUFE_screen4.png")
@@ -1710,29 +1841,29 @@ module.exports = {
   "MUFE_screen5": {
     "jpg": require("./MUFE_screen5.jpg")
   },
-  "NM02": {
-    "jpg": require("./NM02.jpg")
-  },
   "NM01": {
     "jpg": require("./NM01.jpg")
+  },
+  "NM02": {
+    "jpg": require("./NM02.jpg")
   },
   "NOC_W05_01": {
     "jpg": require("./NOC_W05_01.jpg")
   },
-  "NOC_W05_02": {
-    "jpg": require("./NOC_W05_02.jpg")
-  },
   "NOC_W05_03": {
     "jpg": require("./NOC_W05_03.jpg")
   },
-  "NOC_W05_04": {
-    "jpg": require("./NOC_W05_04.jpg")
+  "NOC_W05_02": {
+    "jpg": require("./NOC_W05_02.jpg")
   },
   "NOC_W05_05": {
     "jpg": require("./NOC_W05_05.jpg")
   },
   "NOC_W05_06": {
     "jpg": require("./NOC_W05_06.jpg")
+  },
+  "NOC_W05_04": {
+    "jpg": require("./NOC_W05_04.jpg")
   },
   "NOC_W05_07": {
     "jpg": require("./NOC_W05_07.jpg")
@@ -1743,9 +1874,6 @@ module.exports = {
   "NOC_W05_09": {
     "jpg": require("./NOC_W05_09.jpg")
   },
-  "NOC_W05_10": {
-    "jpg": require("./NOC_W05_10.jpg")
-  },
   "NOC_W05_11": {
     "jpg": require("./NOC_W05_11.jpg")
   },
@@ -1754,6 +1882,9 @@ module.exports = {
   },
   "NOC_W05_13": {
     "jpg": require("./NOC_W05_13.jpg")
+  },
+  "NOC_W05_10": {
+    "jpg": require("./NOC_W05_10.jpg")
   },
   "NOC_W05_14": {
     "jpg": require("./NOC_W05_14.jpg")
@@ -1770,20 +1901,20 @@ module.exports = {
   "NOC_W05_thumb": {
     "jpg": require("./NOC_W05_thumb.jpg")
   },
+  "RG_main": {
+    "png": require("./RG_main.png")
+  },
   "RG_rasterize": {
     "png": require("./RG_rasterize.png")
   },
   "Screen-Shot-2012-07-04-at-5": {
     "37.24-PM.jpg": require("./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg")
   },
-  "RG_main": {
-    "png": require("./RG_main.png")
+  "artcol": {
+    "jpg": require("./artcol.jpg")
   },
   "[DTS]_W01_process": {
     "png": require("./[DTS]_W01_process.png")
-  },
-  "artcol": {
-    "jpg": require("./artcol.jpg")
   },
   "asdf": {
     "jpg": require("./asdf.jpg")
@@ -1812,11 +1943,11 @@ module.exports = {
   "cityweather04": {
     "jpg": require("./cityweather04.jpg")
   },
-  "cityweatherThumb": {
-    "jpg": require("./cityweatherThumb.jpg")
-  },
   "cityweather03": {
     "jpg": require("./cityweather03.jpg")
+  },
+  "cityweatherThumb": {
+    "jpg": require("./cityweatherThumb.jpg")
   },
   "clip_content_01": {
     "png": require("./clip_content_01.png")
@@ -1830,14 +1961,14 @@ module.exports = {
   "cosmosonic": {
     "jpg": require("./cosmosonic.jpg")
   },
-  "drpepper": {
-    "jpg": require("./drpepper.jpg")
+  "diffuse": {
+    "jpg": require("./diffuse.jpg")
   },
   "crazyparticlesystem": {
     "jpg": require("./crazyparticlesystem.jpg")
   },
-  "diffuse": {
-    "jpg": require("./diffuse.jpg")
+  "drpepper": {
+    "jpg": require("./drpepper.jpg")
   },
   "expressivetypography": {
     "jpg": require("./expressivetypography.jpg")
@@ -1845,11 +1976,11 @@ module.exports = {
   "expressivetypography01": {
     "png": require("./expressivetypography01.png")
   },
-  "expressivetypography03": {
-    "png": require("./expressivetypography03.png")
-  },
   "expressivetypography02": {
     "png": require("./expressivetypography02.png")
+  },
+  "expressivetypography03": {
+    "png": require("./expressivetypography03.png")
   },
   "fakelovernd01": {
     "png": require("./fakelovernd01.png")
@@ -1875,32 +2006,29 @@ module.exports = {
   "hoam": {
     "jpg": require("./hoam.jpg")
   },
+  "itp-t-shirts-appl-2": {
+    "jpg": require("./itp-t-shirts-appl-2.jpg")
+  },
   "itp-t-shirts-appl-3": {
     "jpg": require("./itp-t-shirts-appl-3.jpg")
   },
   "itp-t-shirts-appl-4": {
     "jpg": require("./itp-t-shirts-appl-4.jpg")
   },
-  "itp-t-shirts-appl-2": {
-    "jpg": require("./itp-t-shirts-appl-2.jpg")
-  },
-  "itp-t-shirts-appl-5": {
-    "jpg": require("./itp-t-shirts-appl-5.jpg")
-  },
   "itp-t-shirts-appl-6": {
     "jpg": require("./itp-t-shirts-appl-6.jpg")
-  },
-  "itp-t-shirts-appl-7": {
-    "jpg": require("./itp-t-shirts-appl-7.jpg")
   },
   "itp-t-shirts-appl": {
     "png": require("./itp-t-shirts-appl.png")
   },
+  "itp-t-shirts-appl-5": {
+    "jpg": require("./itp-t-shirts-appl-5.jpg")
+  },
+  "itp-t-shirts-appl-7": {
+    "jpg": require("./itp-t-shirts-appl-7.jpg")
+  },
   "itplogo": {
     "jpg": require("./itplogo.jpg")
-  },
-  "jthtime": {
-    "jpg": require("./jthtime.jpg")
   },
   "kiacadenza": {
     "jpg": require("./kiacadenza.jpg")
@@ -1911,17 +2039,20 @@ module.exports = {
   "logo_dot_w": {
     "png": require("./logo_dot_w.png")
   },
-  "moreraytracing": {
-    "jpg": require("./moreraytracing.jpg")
-  },
-  "noise": {
-    "jpg": require("./noise.jpg")
+  "jthtime": {
+    "jpg": require("./jthtime.jpg")
   },
   "noc_w04_thumb": {
     "jpg": require("./noc_w04_thumb.jpg")
   },
+  "moreraytracing": {
+    "jpg": require("./moreraytracing.jpg")
+  },
   "nonagon": {
     "jpg": require("./nonagon.jpg")
+  },
+  "noise": {
+    "jpg": require("./noise.jpg")
   },
   "ofs_mv": {
     "jpg": require("./ofs_mv.jpg")
@@ -1950,11 +2081,11 @@ module.exports = {
   "rainytypewriter": {
     "jpg": require("./rainytypewriter.jpg")
   },
-  "rg_thumbnail": {
-    "jpg": require("./rg_thumbnail.jpg")
-  },
   "slitscan": {
     "jpg": require("./slitscan.jpg")
+  },
+  "rg_thumbnail": {
+    "jpg": require("./rg_thumbnail.jpg")
   },
   "slitscan_01": {
     "jpg": require("./slitscan_01.jpg")
@@ -2040,11 +2171,11 @@ module.exports = {
   "thumb_53": {
     "gif": require("./thumb_53.gif")
   },
-  "ujnnova": {
-    "jpg": require("./ujnnova.jpg")
-  },
   "toneandthree": {
     "jpg": require("./toneandthree.jpg")
+  },
+  "ujnnova": {
+    "jpg": require("./ujnnova.jpg")
   },
   "unpredictable": {
     "jpg": require("./unpredictable.jpg")
@@ -2061,11 +2192,11 @@ module.exports = {
   "webgl_bad": {
     "gif": require("./webgl_bad.gif")
   },
-  "webgl_fuz": {
-    "jpg": require("./webgl_fuz.jpg")
-  },
   "webgl_par": {
     "jpg": require("./webgl_par.jpg")
+  },
+  "webgl_fuz": {
+    "jpg": require("./webgl_fuz.jpg")
   },
   "webgl_peq": {
     "jpg": require("./webgl_peq.jpg")
@@ -2077,7 +2208,7 @@ module.exports = {
     "jpg": require("./webgl_sku.jpg")
   }
 };
-},{"./2-agrippa.jpg":"assets/img/2-agrippa.jpg","./10years.jpg":"assets/img/10years.jpg","./3-answer.jpg":"assets/img/3-answer.jpg","./8sec1.jpg":"assets/img/8sec1.jpg","./360stadium.jpg":"assets/img/360stadium.jpg","./8sec2.jpg":"assets/img/8sec2.jpg","./5-tea.jpg":"assets/img/5-tea.jpg","./DTS_W01.jpg":"assets/img/DTS_W01.jpg","./ICM01.jpg":"assets/img/ICM01.jpg","./MUFE_screen2.png":"assets/img/MUFE_screen2.png","./MUFE_screen1.png":"assets/img/MUFE_screen1.png","./MUFE_screen3.png":"assets/img/MUFE_screen3.png","./MUFE_screen4.png":"assets/img/MUFE_screen4.png","./MUFE_screen5.jpg":"assets/img/MUFE_screen5.jpg","./NM02.jpg":"assets/img/NM02.jpg","./NM01.jpg":"assets/img/NM01.jpg","./NOC_W05_01.jpg":"assets/img/NOC_W05_01.jpg","./NOC_W05_02.jpg":"assets/img/NOC_W05_02.jpg","./NOC_W05_03.jpg":"assets/img/NOC_W05_03.jpg","./NOC_W05_04.jpg":"assets/img/NOC_W05_04.jpg","./NOC_W05_05.jpg":"assets/img/NOC_W05_05.jpg","./NOC_W05_06.jpg":"assets/img/NOC_W05_06.jpg","./NOC_W05_07.jpg":"assets/img/NOC_W05_07.jpg","./NOC_W05_08.jpg":"assets/img/NOC_W05_08.jpg","./NOC_W05_09.jpg":"assets/img/NOC_W05_09.jpg","./NOC_W05_10.jpg":"assets/img/NOC_W05_10.jpg","./NOC_W05_11.jpg":"assets/img/NOC_W05_11.jpg","./NOC_W05_12.jpg":"assets/img/NOC_W05_12.jpg","./NOC_W05_13.jpg":"assets/img/NOC_W05_13.jpg","./NOC_W05_14.jpg":"assets/img/NOC_W05_14.jpg","./NOC_W05_15.jpg":"assets/img/NOC_W05_15.jpg","./NOC_W05_16.jpg":"assets/img/NOC_W05_16.jpg","./NOC_W05_17.jpg":"assets/img/NOC_W05_17.jpg","./NOC_W05_thumb.jpg":"assets/img/NOC_W05_thumb.jpg","./RG_rasterize.png":"assets/img/RG_rasterize.png","./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg","./RG_main.png":"assets/img/RG_main.png","./[DTS]_W01_process.png":"assets/img/[DTS]_W01_process.png","./artcol.jpg":"assets/img/artcol.jpg","./asdf.jpg":"assets/img/asdf.jpg","./bemyluv.jpg":"assets/img/bemyluv.jpg","./bg_pattern_01.jpg":"assets/img/bg_pattern_01.jpg","./bg_pattern_02.png":"assets/img/bg_pattern_02.png","./bigscreen_thumb.jpg":"assets/img/bigscreen_thumb.jpg","./buttonMirrorThumb.jpg":"assets/img/buttonMirrorThumb.jpg","./cityweather01.jpg":"assets/img/cityweather01.jpg","./cityweather02.jpg":"assets/img/cityweather02.jpg","./cityweather04.jpg":"assets/img/cityweather04.jpg","./cityweatherThumb.jpg":"assets/img/cityweatherThumb.jpg","./cityweather03.jpg":"assets/img/cityweather03.jpg","./clip_content_01.png":"assets/img/clip_content_01.png","./clip_thumb.jpg":"assets/img/clip_thumb.jpg","./contact.jpg":"assets/img/contact.jpg","./cosmosonic.jpg":"assets/img/cosmosonic.jpg","./drpepper.jpg":"assets/img/drpepper.jpg","./crazyparticlesystem.jpg":"assets/img/crazyparticlesystem.jpg","./diffuse.jpg":"assets/img/diffuse.jpg","./expressivetypography.jpg":"assets/img/expressivetypography.jpg","./expressivetypography01.png":"assets/img/expressivetypography01.png","./expressivetypography03.png":"assets/img/expressivetypography03.png","./expressivetypography02.png":"assets/img/expressivetypography02.png","./fakelovernd01.png":"assets/img/fakelovernd01.png","./fakelovernd02.jpg":"assets/img/fakelovernd02.jpg","./fragthumbnail.jpg":"assets/img/fragthumbnail.jpg","./fuckdetector.jpg":"assets/img/fuckdetector.jpg","./g_cam_thumb.jpg":"assets/img/g_cam_thumb.jpg","./glitchnl.jpg":"assets/img/glitchnl.jpg","./hiddenfigures.jpg":"assets/img/hiddenfigures.jpg","./hoam.jpg":"assets/img/hoam.jpg","./itp-t-shirts-appl-3.jpg":"assets/img/itp-t-shirts-appl-3.jpg","./itp-t-shirts-appl-4.jpg":"assets/img/itp-t-shirts-appl-4.jpg","./itp-t-shirts-appl-2.jpg":"assets/img/itp-t-shirts-appl-2.jpg","./itp-t-shirts-appl-5.jpg":"assets/img/itp-t-shirts-appl-5.jpg","./itp-t-shirts-appl-6.jpg":"assets/img/itp-t-shirts-appl-6.jpg","./itp-t-shirts-appl-7.jpg":"assets/img/itp-t-shirts-appl-7.jpg","./itp-t-shirts-appl.png":"assets/img/itp-t-shirts-appl.png","./itplogo.jpg":"assets/img/itplogo.jpg","./jthtime.jpg":"assets/img/jthtime.jpg","./kiacadenza.jpg":"assets/img/kiacadenza.jpg","./logo.png":"assets/img/logo.png","./logo_dot_w.png":"assets/img/logo_dot_w.png","./moreraytracing.jpg":"assets/img/moreraytracing.jpg","./noise.jpg":"assets/img/noise.jpg","./noc_w04_thumb.jpg":"assets/img/noc_w04_thumb.jpg","./nonagon.jpg":"assets/img/nonagon.jpg","./ofs_mv.jpg":"assets/img/ofs_mv.jpg","./op3.jpg":"assets/img/op3.jpg","./opticalpiramid.jpg":"assets/img/opticalpiramid.jpg","./opticalpy2.jpg":"assets/img/opticalpy2.jpg","./optpym3.jpg":"assets/img/optpym3.jpg","./particleEQ_thumb.jpg":"assets/img/particleEQ_thumb.jpg","./profile.jpg":"assets/img/profile.jpg","./quickavsketch01.png":"assets/img/quickavsketch01.png","./rainytypewriter.jpg":"assets/img/rainytypewriter.jpg","./rg_thumbnail.jpg":"assets/img/rg_thumbnail.jpg","./slitscan.jpg":"assets/img/slitscan.jpg","./slitscan_01.jpg":"assets/img/slitscan_01.jpg","./slitscan_02.jpg":"assets/img/slitscan_02.jpg","./slitscan_03.jpg":"assets/img/slitscan_03.jpg","./slitscan_04.jpg":"assets/img/slitscan_04.jpg","./slitscan_05.jpg":"assets/img/slitscan_05.jpg","./slitscan_06.jpg":"assets/img/slitscan_06.jpg","./slitscan_07.png":"assets/img/slitscan_07.png","./slitscan_08.jpg":"assets/img/slitscan_08.jpg","./slitscan_09.jpg":"assets/img/slitscan_09.jpg","./slitscan_10.jpg":"assets/img/slitscan_10.jpg","./slitscan_11.jpg":"assets/img/slitscan_11.jpg","./slitscan_12.jpg":"assets/img/slitscan_12.jpg","./slitscan_13.jpg":"assets/img/slitscan_13.jpg","./slitscan_14.jpg":"assets/img/slitscan_14.jpg","./slitscan_15.jpg":"assets/img/slitscan_15.jpg","./slitscan_16.jpg":"assets/img/slitscan_16.jpg","./slitscan_17.jpg":"assets/img/slitscan_17.jpg","./thesis_thumb.jpg":"assets/img/thesis_thumb.jpg","./threejsstudy01.jpg":"assets/img/threejsstudy01.jpg","./thumb_36.jpg":"assets/img/thumb_36.jpg","./thumb_45.jpg":"assets/img/thumb_45.jpg","./thumb_47.gif":"assets/img/thumb_47.gif","./thumb_48.jpg":"assets/img/thumb_48.jpg","./thumb_49.gif":"assets/img/thumb_49.gif","./thumb_50.gif":"assets/img/thumb_50.gif","./thumb_51.gif":"assets/img/thumb_51.gif","./thumb_52.gif":"assets/img/thumb_52.gif","./thumb_53.gif":"assets/img/thumb_53.gif","./ujnnova.jpg":"assets/img/ujnnova.jpg","./toneandthree.jpg":"assets/img/toneandthree.jpg","./unpredictable.jpg":"assets/img/unpredictable.jpg","./upload1.jpg":"assets/img/upload1.jpg","./visexp.jpg":"assets/img/visexp.jpg","./web_thumbnail.jpg":"assets/img/web_thumbnail.jpg","./webgl_bad.gif":"assets/img/webgl_bad.gif","./webgl_fuz.jpg":"assets/img/webgl_fuz.jpg","./webgl_par.jpg":"assets/img/webgl_par.jpg","./webgl_peq.jpg":"assets/img/webgl_peq.jpg","./wooven.jpg":"assets/img/wooven.jpg","./webgl_sku.jpg":"assets/img/webgl_sku.jpg"}],"../node_modules/process/browser.js":[function(require,module,exports) {
+},{"./10years.jpg":"assets/img/10years.jpg","./2-agrippa.jpg":"assets/img/2-agrippa.jpg","./3-answer.jpg":"assets/img/3-answer.jpg","./5-tea.jpg":"assets/img/5-tea.jpg","./360stadium.jpg":"assets/img/360stadium.jpg","./8sec1.jpg":"assets/img/8sec1.jpg","./8sec2.jpg":"assets/img/8sec2.jpg","./DTS_W01.jpg":"assets/img/DTS_W01.jpg","./ICM01.jpg":"assets/img/ICM01.jpg","./MUFE_screen1.png":"assets/img/MUFE_screen1.png","./MUFE_screen3.png":"assets/img/MUFE_screen3.png","./MUFE_screen2.png":"assets/img/MUFE_screen2.png","./MUFE_screen4.png":"assets/img/MUFE_screen4.png","./MUFE_screen5.jpg":"assets/img/MUFE_screen5.jpg","./NM01.jpg":"assets/img/NM01.jpg","./NM02.jpg":"assets/img/NM02.jpg","./NOC_W05_01.jpg":"assets/img/NOC_W05_01.jpg","./NOC_W05_03.jpg":"assets/img/NOC_W05_03.jpg","./NOC_W05_02.jpg":"assets/img/NOC_W05_02.jpg","./NOC_W05_05.jpg":"assets/img/NOC_W05_05.jpg","./NOC_W05_06.jpg":"assets/img/NOC_W05_06.jpg","./NOC_W05_04.jpg":"assets/img/NOC_W05_04.jpg","./NOC_W05_07.jpg":"assets/img/NOC_W05_07.jpg","./NOC_W05_08.jpg":"assets/img/NOC_W05_08.jpg","./NOC_W05_09.jpg":"assets/img/NOC_W05_09.jpg","./NOC_W05_11.jpg":"assets/img/NOC_W05_11.jpg","./NOC_W05_12.jpg":"assets/img/NOC_W05_12.jpg","./NOC_W05_13.jpg":"assets/img/NOC_W05_13.jpg","./NOC_W05_10.jpg":"assets/img/NOC_W05_10.jpg","./NOC_W05_14.jpg":"assets/img/NOC_W05_14.jpg","./NOC_W05_15.jpg":"assets/img/NOC_W05_15.jpg","./NOC_W05_16.jpg":"assets/img/NOC_W05_16.jpg","./NOC_W05_17.jpg":"assets/img/NOC_W05_17.jpg","./NOC_W05_thumb.jpg":"assets/img/NOC_W05_thumb.jpg","./RG_main.png":"assets/img/RG_main.png","./RG_rasterize.png":"assets/img/RG_rasterize.png","./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg","./artcol.jpg":"assets/img/artcol.jpg","./[DTS]_W01_process.png":"assets/img/[DTS]_W01_process.png","./asdf.jpg":"assets/img/asdf.jpg","./bemyluv.jpg":"assets/img/bemyluv.jpg","./bg_pattern_01.jpg":"assets/img/bg_pattern_01.jpg","./bg_pattern_02.png":"assets/img/bg_pattern_02.png","./bigscreen_thumb.jpg":"assets/img/bigscreen_thumb.jpg","./buttonMirrorThumb.jpg":"assets/img/buttonMirrorThumb.jpg","./cityweather01.jpg":"assets/img/cityweather01.jpg","./cityweather02.jpg":"assets/img/cityweather02.jpg","./cityweather04.jpg":"assets/img/cityweather04.jpg","./cityweather03.jpg":"assets/img/cityweather03.jpg","./cityweatherThumb.jpg":"assets/img/cityweatherThumb.jpg","./clip_content_01.png":"assets/img/clip_content_01.png","./clip_thumb.jpg":"assets/img/clip_thumb.jpg","./contact.jpg":"assets/img/contact.jpg","./cosmosonic.jpg":"assets/img/cosmosonic.jpg","./diffuse.jpg":"assets/img/diffuse.jpg","./crazyparticlesystem.jpg":"assets/img/crazyparticlesystem.jpg","./drpepper.jpg":"assets/img/drpepper.jpg","./expressivetypography.jpg":"assets/img/expressivetypography.jpg","./expressivetypography01.png":"assets/img/expressivetypography01.png","./expressivetypography02.png":"assets/img/expressivetypography02.png","./expressivetypography03.png":"assets/img/expressivetypography03.png","./fakelovernd01.png":"assets/img/fakelovernd01.png","./fakelovernd02.jpg":"assets/img/fakelovernd02.jpg","./fragthumbnail.jpg":"assets/img/fragthumbnail.jpg","./fuckdetector.jpg":"assets/img/fuckdetector.jpg","./g_cam_thumb.jpg":"assets/img/g_cam_thumb.jpg","./glitchnl.jpg":"assets/img/glitchnl.jpg","./hiddenfigures.jpg":"assets/img/hiddenfigures.jpg","./hoam.jpg":"assets/img/hoam.jpg","./itp-t-shirts-appl-2.jpg":"assets/img/itp-t-shirts-appl-2.jpg","./itp-t-shirts-appl-3.jpg":"assets/img/itp-t-shirts-appl-3.jpg","./itp-t-shirts-appl-4.jpg":"assets/img/itp-t-shirts-appl-4.jpg","./itp-t-shirts-appl-6.jpg":"assets/img/itp-t-shirts-appl-6.jpg","./itp-t-shirts-appl.png":"assets/img/itp-t-shirts-appl.png","./itp-t-shirts-appl-5.jpg":"assets/img/itp-t-shirts-appl-5.jpg","./itp-t-shirts-appl-7.jpg":"assets/img/itp-t-shirts-appl-7.jpg","./itplogo.jpg":"assets/img/itplogo.jpg","./kiacadenza.jpg":"assets/img/kiacadenza.jpg","./logo.png":"assets/img/logo.png","./logo_dot_w.png":"assets/img/logo_dot_w.png","./jthtime.jpg":"assets/img/jthtime.jpg","./noc_w04_thumb.jpg":"assets/img/noc_w04_thumb.jpg","./moreraytracing.jpg":"assets/img/moreraytracing.jpg","./nonagon.jpg":"assets/img/nonagon.jpg","./noise.jpg":"assets/img/noise.jpg","./ofs_mv.jpg":"assets/img/ofs_mv.jpg","./op3.jpg":"assets/img/op3.jpg","./opticalpiramid.jpg":"assets/img/opticalpiramid.jpg","./opticalpy2.jpg":"assets/img/opticalpy2.jpg","./optpym3.jpg":"assets/img/optpym3.jpg","./particleEQ_thumb.jpg":"assets/img/particleEQ_thumb.jpg","./profile.jpg":"assets/img/profile.jpg","./quickavsketch01.png":"assets/img/quickavsketch01.png","./rainytypewriter.jpg":"assets/img/rainytypewriter.jpg","./slitscan.jpg":"assets/img/slitscan.jpg","./rg_thumbnail.jpg":"assets/img/rg_thumbnail.jpg","./slitscan_01.jpg":"assets/img/slitscan_01.jpg","./slitscan_02.jpg":"assets/img/slitscan_02.jpg","./slitscan_03.jpg":"assets/img/slitscan_03.jpg","./slitscan_04.jpg":"assets/img/slitscan_04.jpg","./slitscan_05.jpg":"assets/img/slitscan_05.jpg","./slitscan_06.jpg":"assets/img/slitscan_06.jpg","./slitscan_07.png":"assets/img/slitscan_07.png","./slitscan_08.jpg":"assets/img/slitscan_08.jpg","./slitscan_09.jpg":"assets/img/slitscan_09.jpg","./slitscan_10.jpg":"assets/img/slitscan_10.jpg","./slitscan_11.jpg":"assets/img/slitscan_11.jpg","./slitscan_12.jpg":"assets/img/slitscan_12.jpg","./slitscan_13.jpg":"assets/img/slitscan_13.jpg","./slitscan_14.jpg":"assets/img/slitscan_14.jpg","./slitscan_15.jpg":"assets/img/slitscan_15.jpg","./slitscan_16.jpg":"assets/img/slitscan_16.jpg","./slitscan_17.jpg":"assets/img/slitscan_17.jpg","./thesis_thumb.jpg":"assets/img/thesis_thumb.jpg","./threejsstudy01.jpg":"assets/img/threejsstudy01.jpg","./thumb_36.jpg":"assets/img/thumb_36.jpg","./thumb_45.jpg":"assets/img/thumb_45.jpg","./thumb_47.gif":"assets/img/thumb_47.gif","./thumb_48.jpg":"assets/img/thumb_48.jpg","./thumb_49.gif":"assets/img/thumb_49.gif","./thumb_50.gif":"assets/img/thumb_50.gif","./thumb_51.gif":"assets/img/thumb_51.gif","./thumb_52.gif":"assets/img/thumb_52.gif","./thumb_53.gif":"assets/img/thumb_53.gif","./toneandthree.jpg":"assets/img/toneandthree.jpg","./ujnnova.jpg":"assets/img/ujnnova.jpg","./unpredictable.jpg":"assets/img/unpredictable.jpg","./upload1.jpg":"assets/img/upload1.jpg","./visexp.jpg":"assets/img/visexp.jpg","./web_thumbnail.jpg":"assets/img/web_thumbnail.jpg","./webgl_bad.gif":"assets/img/webgl_bad.gif","./webgl_par.jpg":"assets/img/webgl_par.jpg","./webgl_fuz.jpg":"assets/img/webgl_fuz.jpg","./webgl_peq.jpg":"assets/img/webgl_peq.jpg","./wooven.jpg":"assets/img/wooven.jpg","./webgl_sku.jpg":"assets/img/webgl_sku.jpg"}],"../node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -2310,135 +2441,7 @@ var content_json_1 = __importDefault(require("/json/content.json"));
 
 var utils_1 = require("/js/utils");
 
-var const_1 = require("/js/const");
-
 var ___1 = __importDefault(require("./../assets/img/*.*"));
-
-var shuffleRandomScreeningContent = function shuffleRandomScreeningContent() {
-  var seed = Math.floor(Math.random() * const_1.CONTET_JAR.length);
-  var m = const_1.CONTET_JAR[seed];
-  var targetDiv = document.getElementById("random_selected_works");
-  var w = parseFloat(getComputedStyle(targetDiv.parentNode, null).getPropertyValue('width'));
-  var h = w * .6666;
-  targetDiv.style['width'] = w + 'px';
-  targetDiv.style['height'] = h + 'px';
-  targetDiv.style['background'] = '#000';
-  targetDiv.innerHTML = '<iframe id="mIframe_content" src=\"https://player.vimeo.com/video/' + m.url + '\" width=\"' + w + '\" height=\"' + h + '\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-};
-
-var linksAlive = function linksAlive() {
-  var links = [].slice.call(document.querySelectorAll("a"));
-
-  var _iterator = _createForOfIteratorHelper(links),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var link = _step.value;
-
-      if (link.className != "is_fucked") {
-        link.style["color"] = utils_1.getRandomColorCSS();
-        link.style.backgroundColor = utils_1.getRandomColorCSS();
-      }
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-};
-
-var renderRainbow = function renderRainbow() {
-  var paragraphs = [].slice.call(document.querySelectorAll("p"));
-  var titles = [].slice.call(document.querySelectorAll("av_title"));
-  var links = [].slice.call(document.querySelectorAll("a"));
-
-  var _iterator2 = _createForOfIteratorHelper(paragraphs),
-      _step2;
-
-  try {
-    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-      var p = _step2.value;
-      p.style.backgroundColor = utils_1.getRandomColorCSS();
-      var words = p.textContent.split(" ");
-      p.textContent = '';
-
-      var _iterator5 = _createForOfIteratorHelper(words),
-          _step5;
-
-      try {
-        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-          var w = _step5.value;
-          var tag = document.createElement("rainbow");
-          tag.style.color = utils_1.getRandomColorCSS();
-          tag.style.backgroundColor = utils_1.getRandomColorCSS();
-          tag.textContent = w + ' ';
-          p.appendChild(tag);
-        }
-      } catch (err) {
-        _iterator5.e(err);
-      } finally {
-        _iterator5.f();
-      }
-    }
-  } catch (err) {
-    _iterator2.e(err);
-  } finally {
-    _iterator2.f();
-  }
-
-  var _iterator3 = _createForOfIteratorHelper(titles),
-      _step3;
-
-  try {
-    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-      var t = _step3.value;
-
-      var _words = t.textContent.split(" ");
-
-      t.textContent = '';
-
-      var _iterator6 = _createForOfIteratorHelper(_words),
-          _step6;
-
-      try {
-        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-          var _w = _step6.value;
-
-          var _tag = document.createElement("rainbow");
-
-          _tag.style.color = utils_1.getRandomColorCSS();
-          _tag.style.backgroundColor = utils_1.getRandomColorCSS();
-          _tag.textContent = _w + ' ';
-          t.appendChild(_tag);
-        }
-      } catch (err) {
-        _iterator6.e(err);
-      } finally {
-        _iterator6.f();
-      }
-    }
-  } catch (err) {
-    _iterator3.e(err);
-  } finally {
-    _iterator3.f();
-  }
-
-  var _iterator4 = _createForOfIteratorHelper(links),
-      _step4;
-
-  try {
-    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-      var l = _step4.value;
-      l.className = "is_fucked";
-      l.style.backgroundColor = utils_1.getRandomColorCSS();
-    }
-  } catch (err) {
-    _iterator4.e(err);
-  } finally {
-    _iterator4.f();
-  }
-};
 
 var expandContent = function expandContent(index, titleNode) {
   var _a; // Reset the dom
@@ -2446,19 +2449,19 @@ var expandContent = function expandContent(index, titleNode) {
 
   var containers = document.getElementsByClassName("contentContainer");
 
-  var _iterator7 = _createForOfIteratorHelper(containers),
-      _step7;
+  var _iterator = _createForOfIteratorHelper(containers),
+      _step;
 
   try {
-    for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-      var container = _step7.value;
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var container = _step.value;
       (_a = container === null || container === void 0 ? void 0 : container.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(container);
     } // Construct doms 
 
   } catch (err) {
-    _iterator7.e(err);
+    _iterator.e(err);
   } finally {
-    _iterator7.f();
+    _iterator.f();
   }
 
   var project = content_json_1.default.projects[index];
@@ -2468,7 +2471,28 @@ var expandContent = function expandContent(index, titleNode) {
 
   utils_1.insertNext(contentContainer, targetDom); // Contruct content doms
 
-  var targetDomWidth = parseFloat(getComputedStyle(document.body, null).getPropertyValue('width')); // Content info
+  var content = null;
+  var targetDomWidth = parseFloat(getComputedStyle(selectedWorkNode, null).getPropertyValue('width'));
+  var info = project.content;
+
+  switch (project.content.is) {
+    case 'video':
+      content = buildDescriptionNode(targetDomWidth, info, utils_1.CONTENT_TYPE.VIDEO);
+      break;
+
+    case 'image':
+      content = buildDescriptionNode(targetDomWidth, info, utils_1.CONTENT_TYPE.IMAGE);
+      break;
+
+    case 'realtime':
+      content = buildDescriptionNode(targetDomWidth, info, utils_1.CONTENT_TYPE.REALTIME);
+      break;
+
+    default:
+      break;
+  }
+
+  if (content !== null) contentContainer.appendChild(content); // Content info
 
   var contentTitle = '';
 
@@ -2503,24 +2527,24 @@ var expandContent = function expandContent(index, titleNode) {
 
     switch (i) {
       case 0:
-        var _iterator8 = _createForOfIteratorHelper(project.info),
-            _step8;
+        var _iterator2 = _createForOfIteratorHelper(project.info),
+            _step2;
 
         try {
-          for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-            var info = _step8.value;
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var _info = _step2.value;
 
-            switch (info.is) {
+            switch (_info.is) {
               case 'video':
-                infoDescription = buildDescriptionNode(targetDomWidth, info, const_1.CONTENT_TYPE.VIDEO);
+                infoDescription = buildDescriptionNode(targetDomWidth, _info, utils_1.CONTENT_TYPE.VIDEO);
                 break;
 
               case 'image':
-                infoDescription = buildDescriptionNode(targetDomWidth, info, const_1.CONTENT_TYPE.IMAGE);
+                infoDescription = buildDescriptionNode(targetDomWidth, _info, utils_1.CONTENT_TYPE.IMAGE);
                 break;
 
               case 'text':
-                infoDescription = buildDescriptionNode(targetDomWidth, info, const_1.CONTENT_TYPE.TEXT);
+                infoDescription = buildDescriptionNode(targetDomWidth, _info, utils_1.CONTENT_TYPE.TEXT);
                 break;
 
               default:
@@ -2530,32 +2554,32 @@ var expandContent = function expandContent(index, titleNode) {
             if (infoDescription !== null) description.appendChild(infoDescription);
           }
         } catch (err) {
-          _iterator8.e(err);
+          _iterator2.e(err);
         } finally {
-          _iterator8.f();
+          _iterator2.f();
         }
 
         break;
 
       case 1:
-        var _iterator9 = _createForOfIteratorHelper(project.process),
-            _step9;
+        var _iterator3 = _createForOfIteratorHelper(project.process),
+            _step3;
 
         try {
-          for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-            var process = _step9.value;
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var process = _step3.value;
 
             switch (process.is) {
               case 'video':
-                processDescription = buildDescriptionNode(targetDomWidth, process, const_1.CONTENT_TYPE.VIDEO);
+                processDescription = buildDescriptionNode(targetDomWidth, process, utils_1.CONTENT_TYPE.VIDEO);
                 break;
 
               case 'image':
-                processDescription = buildDescriptionNode(targetDomWidth, process, const_1.CONTENT_TYPE.IMAGE);
+                processDescription = buildDescriptionNode(targetDomWidth, process, utils_1.CONTENT_TYPE.IMAGE);
                 break;
 
               case 'text':
-                processDescription = buildDescriptionNode(targetDomWidth, process, const_1.CONTENT_TYPE.TEXT);
+                processDescription = buildDescriptionNode(targetDomWidth, process, utils_1.CONTENT_TYPE.TEXT);
                 break;
 
               default:
@@ -2565,27 +2589,27 @@ var expandContent = function expandContent(index, titleNode) {
             if (processDescription !== null) description.appendChild(processDescription);
           }
         } catch (err) {
-          _iterator9.e(err);
+          _iterator3.e(err);
         } finally {
-          _iterator9.f();
+          _iterator3.f();
         }
 
         break;
 
       case 2:
-        var _iterator10 = _createForOfIteratorHelper(project.credit),
-            _step10;
+        var _iterator4 = _createForOfIteratorHelper(project.credit),
+            _step4;
 
         try {
-          for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-            var credit = _step10.value;
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var credit = _step4.value;
             var creditNode = buildCreditNode(credit);
             if (creditNode !== null) description.appendChild(creditNode);
           }
         } catch (err) {
-          _iterator10.e(err);
+          _iterator4.e(err);
         } finally {
-          _iterator10.f();
+          _iterator4.f();
         }
 
         break;
@@ -2612,20 +2636,19 @@ var buildDescriptionNode = function buildDescriptionNode(width, info, contentTyp
   var domElement = null;
 
   switch (contentType) {
-    case const_1.CONTENT_TYPE.VIDEO:
+    case utils_1.CONTENT_TYPE.VIDEO:
       domElement = document.createElement('div');
-      domElement.style['width'] = width + 'px';
-      domElement.style['height'] = width + 'px';
-      domElement.innerHTML = '<iframe id="mIframe_content" src=\"' + info.url + '\" width=\"' + width + '\" height="' + width + '"' + '\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+      domElement.className = "listThumbnailImageContainer";
+      domElement.innerHTML = utils_1.buildVimeoEmbedCode(info.url, true);
       break;
 
-    case const_1.CONTENT_TYPE.IMAGE:
+    case utils_1.CONTENT_TYPE.IMAGE:
       domElement = document.createElement('img');
       domElement.src = utils_1.getImageAssetURL(___1.default, info.url);
       domElement.width = width;
       break;
 
-    case const_1.CONTENT_TYPE.TEXT:
+    case utils_1.CONTENT_TYPE.TEXT:
       domElement = document.createElement('p');
       domElement.innerHTML = info.p;
       break;
@@ -2637,22 +2660,17 @@ var buildDescriptionNode = function buildDescriptionNode(width, info, contentTyp
   return domElement;
 };
 
-var buildContentNode = function buildContentNode(width, url, contentType) {
+var buildContentNode = function buildContentNode(width, url, name, contentType) {
   var content = document.createElement('div');
-  content.id = '_content';
 
-  if (contentType === const_1.CONTENT_TYPE.IMAGE) {
+  if (contentType === utils_1.CONTENT_TYPE.IMAGE) {
     // Image content
     content.innerHTML = '<img src=\"avseoul/assets/' + utils_1.getImageAssetURL(___1.default, url) + '\" width=\"' + width + '\" height="auto">';
   } else {
     // Video and realtime content
     content.style.cursor = 'pointer';
-    content.style.width = width.toString() + 'px';
-    content.style.height = width.toString() + 'px';
-    window.setTimeout(function () {
-      content.style.opacity = '1';
-      content.innerHTML = '<iframe src=\"' + url + '?title=0&byline=0&portrait=0 ' + '\" width=\"' + width + '\" height="' + width + '"' + '\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-    }, 500);
+    content.style.opacity = '1';
+    content.innerHTML = utils_1.buildVimeoEmbedCode(url, true);
   }
 
   return content;
@@ -2677,21 +2695,21 @@ var buildContentContainerNode = function buildContentContainerNode(contentData, 
   descriptionMask.appendChild(detail); // Nodes attributes
 
   container.className = 'listContainer';
-  container.id = contentData.id; // let content: any = null;
-
-  var targetDomWidth = parseFloat(getComputedStyle(document.body, null).getPropertyValue('width'));
+  container.id = contentData.id;
+  container.setAttribute('name', contentData.title);
+  var targetDomWidth = parseFloat(getComputedStyle(selectedWorkNode, null).getPropertyValue('width'));
 
   switch (contentData.content.is) {
     case 'video':
-      thumbnail = buildContentNode(targetDomWidth, contentData.content.url, const_1.CONTENT_TYPE.VIDEO);
+      thumbnail = buildContentNode(targetDomWidth, contentData.content.url, contentData.title, utils_1.CONTENT_TYPE.VIDEO);
       break;
 
     case 'image':
-      thumbnail = buildContentNode(targetDomWidth, contentData.content.url, const_1.CONTENT_TYPE.IMAGE);
+      thumbnail = buildContentNode(targetDomWidth, contentData.content.url, contentData.title, utils_1.CONTENT_TYPE.IMAGE);
       break;
 
     case 'realtime':
-      thumbnail = buildContentNode(targetDomWidth, contentData.content.url, const_1.CONTENT_TYPE.REALTIME);
+      thumbnail = buildContentNode(targetDomWidth, contentData.content.url, contentData.title, utils_1.CONTENT_TYPE.REALTIME);
       break;
 
     default:
@@ -2720,6 +2738,11 @@ var buildContentContainerNode = function buildContentContainerNode(contentData, 
 };
 
 var init = function init() {
+  webglNode = document.getElementById('webgl');
+  aboutNode = document.getElementById('about');
+  selectedWorkNode = document.getElementById('selectedWorks');
+  caseStudyNode = document.getElementById('caseStudies');
+  titleNode = document.getElementById('title');
   var selectedWorksContainer = document.getElementById('selectedWorks');
   var caseStudiesContainer = document.getElementById('caseStudies');
 
@@ -2727,54 +2750,119 @@ var init = function init() {
     var s = content_json_1.default['projects'][i];
     var scriptNode = buildContentContainerNode(s, i);
     if (s.category.includes("case_study")) caseStudiesContainer.append(scriptNode);else if (s.category.includes("selected_works")) selectedWorksContainer.append(scriptNode);
-  } // linksAlive();
+  } // Add all webgl work nodes to focusTargetnodes for raycasting
 
 
-  webglNode = document.getElementById('webgl');
-  selectedWorkNode = document.getElementById('selectedWorks');
-  caseStudyNode = document.getElementById('caseStudies');
-  titleNode = document.getElementById('title');
-  webglDemoNode = document.getElementById('webGLDemoViewer');
+  fillRaycastingNode(aboutNode);
+  fillRaycastingNode(webglNode); // TODO: make dynamic
+
+  webglIFrameURLNodes.GLITCH_SKULL.node = document.getElementById('iframe_GLITCH_SKULL');
+  webglIFrameURLNodes.FUZZY_BLOB.node = document.getElementById('iframe_FUZZY_BLOB');
+  webglIFrameURLNodes.BAD_SIGNALS.node = document.getElementById('iframe_BAD_SIGNALS');
+  webglIFrameURLNodes.particleEqualizer.node = document.getElementById('iframe_particleEqualizer');
+  onScroll();
 };
 
 document.addEventListener('DOMContentLoaded', init, false);
+var raycastTargetNodes = [];
+var aboutNode;
 var webglNode;
 var selectedWorkNode;
 var caseStudyNode;
 var titleNode;
-var webglDemoNode;
-var webglEnabled = true;
-
-var toggleWebGLDemo = function toggleWebGLDemo(enabled) {
-  if (!webglEnabled && enabled) {
-    webglDemoNode.src = "https://avseoul.net/GLITCH_SKULL/";
-    webglEnabled = enabled;
-  } else if (webglEnabled && !enabled) {
-    webglDemoNode.src = "";
-    webglEnabled = enabled;
+var webglIFrameURLNodes = {
+  GLITCH_SKULL: {
+    node: null,
+    url: "https://avseoul.net/GLITCH_SKULL/"
+  },
+  FUZZY_BLOB: {
+    node: null,
+    url: "https://avseoul.net/FUZZY_BLOB/"
+  },
+  BAD_SIGNALS: {
+    node: null,
+    url: "https://avseoul.net/BAD_SIGNALS/"
+  },
+  particleEqualizer: {
+    node: null,
+    url: "https://avseoul.net/particleEqualizer/"
   }
 };
 
-window.addEventListener('scroll', function () {
-  var scrollPos = window.scrollY + window.innerHeight; // Handle enable/disable webgl demo
+var toggleWebGLDemo = function toggleWebGLDemo(name, enabled) {
+  if (webglIFrameURLNodes[name].node.src !== webglIFrameURLNodes[name].url && enabled) {
+    webglIFrameURLNodes[name].node.src = webglIFrameURLNodes[name].url;
+  } else if (webglIFrameURLNodes[name].node.src !== "" && !enabled) {
+    webglIFrameURLNodes[name].node.src = "";
+  }
+};
 
-  if (scrollPos > webglNode.offsetTop && window.scrollY > 50) {
+var fillRaycastingNode = function fillRaycastingNode(sourceNode) {
+  var _a;
+
+  var _iterator5 = _createForOfIteratorHelper(sourceNode.childNodes),
+      _step5;
+
+  try {
+    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+      var childNode = _step5.value;
+
+      if ((_a = childNode.className) === null || _a === void 0 ? void 0 : _a.includes('listContainer')) {
+        raycastTargetNodes.push(childNode);
+      }
+    }
+  } catch (err) {
+    _iterator5.e(err);
+  } finally {
+    _iterator5.f();
+  }
+};
+
+var handleRaycasting = function handleRaycasting(max) {
+  var _iterator6 = _createForOfIteratorHelper(raycastTargetNodes),
+      _step6;
+
+  try {
+    for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+      var raycastNode = _step6.value;
+      var nodeBound = raycastNode.getBoundingClientRect();
+      var nodePosition = nodeBound.top + window.pageYOffset;
+      var name = raycastNode.getAttribute('name'); // Is visible in viewport?
+
+      if (nodePosition < max && nodePosition > window.scrollY - nodeBound.height) {
+        toggleWebGLDemo(name, true);
+      } else {
+        toggleWebGLDemo(name, false);
+      }
+    }
+  } catch (err) {
+    _iterator6.e(err);
+  } finally {
+    _iterator6.f();
+  }
+};
+
+var onScroll = function onScroll() {
+  var raycastPosition = window.scrollY + .5 * window.innerHeight;
+  handleRaycasting(raycastPosition);
+
+  if (raycastPosition > webglNode.offsetTop) {
     titleNode.innerHTML = "WebGL Demos";
-    toggleWebGLDemo(false);
   } else {
     titleNode.innerHTML = "About";
-    toggleWebGLDemo(true);
   }
 
-  if (scrollPos > selectedWorkNode.offsetTop) {
+  if (raycastPosition > selectedWorkNode.offsetTop) {
     titleNode.innerHTML = "Selected Works";
   }
 
-  if (scrollPos > caseStudyNode.offsetTop) {
+  if (raycastPosition > caseStudyNode.offsetTop) {
     titleNode.innerHTML = "Case Studies";
   }
-}, false);
-},{"/json/content.json":"json/content.json","/js/utils":"js/utils.ts","/js/const":"js/const.ts","./../assets/img/*.*":"assets/img/*.*","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+};
+
+window.addEventListener('scroll', onScroll, true);
+},{"/json/content.json":"json/content.json","/js/utils":"js/utils.ts","./../assets/img/*.*":"assets/img/*.*","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2802,7 +2890,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64946" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62805" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
