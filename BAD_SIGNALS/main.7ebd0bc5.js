@@ -288,7 +288,7 @@ var AudioAnalyzer = /** @class */ (function () {
     };
     ;
     AudioAnalyzer.prototype.initWithoutStream = function () {
-        Utils_1.customAlert('microphone is not detected.', 'Pulsing random value will be mimicing the mic input');
+        Utils_1.customAlert('microphone is not detected.', 'Pulsing random value will be mimicing mic input.');
         this.reset();
         this.isInit = true;
         this.isPulse = true;
@@ -35765,8 +35765,6 @@ function () {
     this.camera = new three_1.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 1);
     this.camera.position.z = 0.5;
     this.camera.updateProjectionMatrix();
-    console.log(Utils_1.customAlert);
-    Utils_1.customAlert('microphone is not detected.', 'Pulsing random value will be mimicing the mic input');
     Utils_1.getVideoStream(this.VIDEO_TEXTURE_WIDTH, this.VIDEO_TEXTURE_HEIGHT, function (video) {
       return _this.videoTexture = new three_1.VideoTexture(video);
     });
@@ -36061,7 +36059,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57530" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52483" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
