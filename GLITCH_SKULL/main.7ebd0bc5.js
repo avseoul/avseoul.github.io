@@ -174,6 +174,13 @@ exports.getFPS = function () {
     times.push(now);
     return times.length;
 };
+exports.customAlert = function (alertType, message) {
+    var alert = document.createElement('div');
+    alert.setAttribute('style', "\n        position: fixed;\n        top: 50%;\n        width: 100vw;\n        height: auto;\n        padding: 20px;\n        background-color: black;\n        color: white;\n        z-index: 9999999;\n        text-transform: uppercase;\n        cursor: pointer;\n    ");
+    alert.onclick = function () { return alert.style.display = 'none'; };
+    alert.innerHTML = "<strong>" + alertType + "</strong> " + message;
+    document.body.appendChild(alert);
+};
 
 },{}],"../node_modules/avseoul_common_npm/js/AudioAnalyzer.ts":[function(require,module,exports) {
 "use strict";
@@ -281,7 +288,7 @@ var AudioAnalyzer = /** @class */ (function () {
     };
     ;
     AudioAnalyzer.prototype.initWithoutStream = function () {
-        alert("microphone is not detected. pulse is activated instead of mic input");
+        Utils_1.customAlert('microphone is not detected.', 'Pulsing random value will be mimicing mic input.');
         this.reset();
         this.isInit = true;
         this.isPulse = true;
@@ -37867,10 +37874,11 @@ var update = function update() {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  if (window.location.protocol == 'http:' && window.location.hostname != "localhost") {
+  if (window.location.hostname != "localhost") Utils_1.customAlert("*** EPILEPSY WARNING *** THIS WEBSITE HAS BEEN IDENTIFIED BY EPILEPSY ACTION TO POTENTIALLY TRIGGER SEIZURES FOR PEOPLE WITH PHOTOSENSITIVE EPILEPSY. VIEWER DISCRESION IS ADVISED.");
+
+  if (window.location.pathname.includes("GLITCH_SKULL") && window.location.protocol == 'http:' && window.location.hostname != "localhost") {
     window.open("https://" + window.location.hostname + window.location.pathname, '_top');
   } else {
-    alert("*** EPILEPSY WARNING *** THIS VIDEO HAS BEEN IDENTIFIED BY EPILEPSY ACTION TO POTENTIALLY TRIGGER SEIZURES FOR PEOPLE WITH PHOTOSENSITIVE EPILEPSY. VIEWER DISCRESION IS ADVISED.");
     init();
     update();
   }
@@ -37903,7 +37911,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57486" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52588" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
