@@ -1527,12 +1527,12 @@ exports.buildVimeoEmbedCode = function (url, showInfo) {
 };
 },{}],"assets/img/10years.jpg":[function(require,module,exports) {
 module.exports = "/10years.8af2ff4e.jpg";
-},{}],"assets/img/3-answer.jpg":[function(require,module,exports) {
-module.exports = "/3-answer.706045e0.jpg";
-},{}],"assets/img/360stadium.jpg":[function(require,module,exports) {
-module.exports = "/360stadium.7e42e4c2.jpg";
 },{}],"assets/img/2-agrippa.jpg":[function(require,module,exports) {
 module.exports = "/2-agrippa.d0e15463.jpg";
+},{}],"assets/img/360stadium.jpg":[function(require,module,exports) {
+module.exports = "/360stadium.7e42e4c2.jpg";
+},{}],"assets/img/3-answer.jpg":[function(require,module,exports) {
+module.exports = "/3-answer.706045e0.jpg";
 },{}],"assets/img/8sec1.jpg":[function(require,module,exports) {
 module.exports = "/8sec1.fef64fd2.jpg";
 },{}],"assets/img/5-tea.jpg":[function(require,module,exports) {
@@ -1559,24 +1559,24 @@ module.exports = "/NM01.292dc989.jpg";
 module.exports = "/NM02.42ec3e7a.jpg";
 },{}],"assets/img/NOC_W05_01.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_01.7f6172d0.jpg";
-},{}],"assets/img/NOC_W05_02.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_02.0f7bd28f.jpg";
-},{}],"assets/img/NOC_W05_04.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_04.61ef4c92.jpg";
 },{}],"assets/img/NOC_W05_03.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_03.2ad2eb4d.jpg";
+},{}],"assets/img/NOC_W05_04.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_04.61ef4c92.jpg";
+},{}],"assets/img/NOC_W05_02.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_02.0f7bd28f.jpg";
 },{}],"assets/img/NOC_W05_05.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_05.b7de7344.jpg";
-},{}],"assets/img/NOC_W05_06.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_06.d5ee7504.jpg";
 },{}],"assets/img/NOC_W05_07.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_07.bccbec35.jpg";
+},{}],"assets/img/NOC_W05_06.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_06.d5ee7504.jpg";
 },{}],"assets/img/NOC_W05_08.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_08.52663260.jpg";
-},{}],"assets/img/NOC_W05_10.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_10.8cee04ce.jpg";
 },{}],"assets/img/NOC_W05_09.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_09.7b59a009.jpg";
+},{}],"assets/img/NOC_W05_10.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_10.8cee04ce.jpg";
 },{}],"assets/img/NOC_W05_11.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_11.a7039c10.jpg";
 },{}],"assets/img/NOC_W05_12.jpg":[function(require,module,exports) {
@@ -1587,22 +1587,22 @@ module.exports = "/NOC_W05_13.42ab5fb0.jpg";
 module.exports = "/NOC_W05_14.04092639.jpg";
 },{}],"assets/img/NOC_W05_15.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_15.15555209.jpg";
+},{}],"assets/img/NOC_W05_thumb.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_thumb.d9984e5d.jpg";
 },{}],"assets/img/NOC_W05_16.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_16.b06b7cec.jpg";
 },{}],"assets/img/NOC_W05_17.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_17.4bc811cb.jpg";
-},{}],"assets/img/NOC_W05_thumb.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_thumb.d9984e5d.jpg";
 },{}],"assets/img/RG_main.png":[function(require,module,exports) {
 module.exports = "/RG_main.fe5b3a72.png";
 },{}],"assets/img/RG_rasterize.png":[function(require,module,exports) {
 module.exports = "/RG_rasterize.01c0923c.png";
+},{}],"assets/img/[DTS]_W01_process.png":[function(require,module,exports) {
+module.exports = {};
 },{}],"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":[function(require,module,exports) {
 module.exports = "/Screen-Shot-2012-07-04-at-5.37.24-PM.9a547d53.jpg";
 },{}],"assets/img/artcol.jpg":[function(require,module,exports) {
 module.exports = "/artcol.84432dc6.jpg";
-},{}],"assets/img/[DTS]_W01_process.png":[function(require,module,exports) {
-module.exports = {};
 },{}],"assets/img/asdf.jpg":[function(require,module,exports) {
 module.exports = "/asdf.b34e70b7.jpg";
 },{}],"assets/img/bemyluv.jpg":[function(require,module,exports) {
@@ -1627,10 +1627,10 @@ module.exports = "/cityweather04.5c0cc5f3.jpg";
 module.exports = "/cityweatherThumb.b5ed08dd.jpg";
 },{}],"assets/img/clip_thumb.jpg":[function(require,module,exports) {
 module.exports = "/clip_thumb.2aa518c5.jpg";
-},{}],"assets/img/contact.jpg":[function(require,module,exports) {
-module.exports = "/contact.46c77f0a.jpg";
 },{}],"assets/img/clip_content_01.png":[function(require,module,exports) {
 module.exports = "/clip_content_01.99ecd0da.png";
+},{}],"assets/img/contact.jpg":[function(require,module,exports) {
+module.exports = "/contact.46c77f0a.jpg";
 },{}],"assets/img/cosmosonic.jpg":[function(require,module,exports) {
 module.exports = "/cosmosonic.e3186de5.jpg";
 },{}],"assets/img/crazyparticlesystem.jpg":[function(require,module,exports) {
@@ -1657,10 +1657,10 @@ module.exports = "/fragthumbnail.c5703f6e.jpg";
 module.exports = "/fuckdetector.b2024b8a.jpg";
 },{}],"assets/img/g_cam_thumb.jpg":[function(require,module,exports) {
 module.exports = "/g_cam_thumb.2c3b6650.jpg";
-},{}],"assets/img/hiddenfigures.jpg":[function(require,module,exports) {
-module.exports = "/hiddenfigures.36c28af1.jpg";
 },{}],"assets/img/glitchnl.jpg":[function(require,module,exports) {
 module.exports = "/glitchnl.9f6c013e.jpg";
+},{}],"assets/img/hiddenfigures.jpg":[function(require,module,exports) {
+module.exports = "/hiddenfigures.36c28af1.jpg";
 },{}],"assets/img/hoam.jpg":[function(require,module,exports) {
 module.exports = "/hoam.30455737.jpg";
 },{}],"assets/img/itp-t-shirts-appl-2.jpg":[function(require,module,exports) {
@@ -1669,18 +1669,18 @@ module.exports = "/itp-t-shirts-appl-2.0234ed6a.jpg";
 module.exports = "/itp-t-shirts-appl-3.8f74e884.jpg";
 },{}],"assets/img/itp-t-shirts-appl-4.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-4.c91fc52b.jpg";
-},{}],"assets/img/itp-t-shirts-appl-5.jpg":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl-5.37fe39cf.jpg";
 },{}],"assets/img/itp-t-shirts-appl-6.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-6.f7db556a.jpg";
 },{}],"assets/img/itp-t-shirts-appl-7.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-7.172d2450.jpg";
+},{}],"assets/img/itp-t-shirts-appl-5.jpg":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl-5.37fe39cf.jpg";
+},{}],"assets/img/itplogo.jpg":[function(require,module,exports) {
+module.exports = "/itplogo.7907b520.jpg";
 },{}],"assets/img/itp-t-shirts-appl.png":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl.2228479a.png";
 },{}],"assets/img/jthtime.jpg":[function(require,module,exports) {
 module.exports = "/jthtime.8760d08d.jpg";
-},{}],"assets/img/itplogo.jpg":[function(require,module,exports) {
-module.exports = "/itplogo.7907b520.jpg";
 },{}],"assets/img/kiacadenza.jpg":[function(require,module,exports) {
 module.exports = "/kiacadenza.7c9e3f49.jpg";
 },{}],"assets/img/logo.png":[function(require,module,exports) {
@@ -1697,12 +1697,12 @@ module.exports = "/noise.d565e126.jpg";
 module.exports = "/nonagon.59e780f8.jpg";
 },{}],"assets/img/ofs_mv.jpg":[function(require,module,exports) {
 module.exports = "/ofs_mv.5ccb63cc.jpg";
+},{}],"assets/img/op3.jpg":[function(require,module,exports) {
+module.exports = "/op3.26cd8c40.jpg";
 },{}],"assets/img/opticalpiramid.jpg":[function(require,module,exports) {
 module.exports = "/opticalpiramid.744b36ea.jpg";
 },{}],"assets/img/opticalpy2.jpg":[function(require,module,exports) {
 module.exports = "/opticalpy2.e83bd740.jpg";
-},{}],"assets/img/op3.jpg":[function(require,module,exports) {
-module.exports = "/op3.26cd8c40.jpg";
 },{}],"assets/img/optpym3.jpg":[function(require,module,exports) {
 module.exports = "/optpym3.eda5a2c8.jpg";
 },{}],"assets/img/particleEQ_thumb.jpg":[function(require,module,exports) {
@@ -1715,30 +1715,30 @@ module.exports = "/quickavsketch01.7a8671cc.png";
 module.exports = "/rainytypewriter.b3a01e1b.jpg";
 },{}],"assets/img/rg_thumbnail.jpg":[function(require,module,exports) {
 module.exports = "/rg_thumbnail.951e8542.jpg";
-},{}],"assets/img/slitscan_01.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_01.b0023709.jpg";
 },{}],"assets/img/slitscan.jpg":[function(require,module,exports) {
 module.exports = "/slitscan.921cc49e.jpg";
+},{}],"assets/img/slitscan_01.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_01.b0023709.jpg";
 },{}],"assets/img/slitscan_02.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_02.06f991c9.jpg";
-},{}],"assets/img/slitscan_03.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_03.a57604f1.jpg";
-},{}],"assets/img/slitscan_04.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_04.091e1db7.jpg";
-},{}],"assets/img/slitscan_05.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_05.35caaec4.jpg";
-},{}],"assets/img/slitscan_07.png":[function(require,module,exports) {
-module.exports = "/slitscan_07.70c753b9.png";
 },{}],"assets/img/slitscan_06.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_06.c1b52822.jpg";
+},{}],"assets/img/slitscan_04.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_04.091e1db7.jpg";
+},{}],"assets/img/slitscan_03.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_03.a57604f1.jpg";
+},{}],"assets/img/slitscan_05.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_05.35caaec4.jpg";
 },{}],"assets/img/slitscan_08.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_08.ca4b3261.jpg";
-},{}],"assets/img/slitscan_11.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_11.c750a815.jpg";
-},{}],"assets/img/slitscan_10.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_10.150676a7.jpg";
 },{}],"assets/img/slitscan_09.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_09.2c2315b8.jpg";
+},{}],"assets/img/slitscan_07.png":[function(require,module,exports) {
+module.exports = "/slitscan_07.70c753b9.png";
+},{}],"assets/img/slitscan_10.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_10.150676a7.jpg";
+},{}],"assets/img/slitscan_11.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_11.c750a815.jpg";
 },{}],"assets/img/slitscan_12.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_12.41992476.jpg";
 },{}],"assets/img/slitscan_13.jpg":[function(require,module,exports) {
@@ -1757,10 +1757,10 @@ module.exports = "/thesis_thumb.129f4ca1.jpg";
 module.exports = "/threejsstudy01.1727c358.jpg";
 },{}],"assets/img/thumb_36.jpg":[function(require,module,exports) {
 module.exports = "/thumb_36.a4ef69b4.jpg";
-},{}],"assets/img/thumb_47.gif":[function(require,module,exports) {
-module.exports = "/thumb_47.36b6379a.gif";
 },{}],"assets/img/thumb_45.jpg":[function(require,module,exports) {
 module.exports = "/thumb_45.c9d189ad.jpg";
+},{}],"assets/img/thumb_47.gif":[function(require,module,exports) {
+module.exports = "/thumb_47.36b6379a.gif";
 },{}],"assets/img/thumb_48.jpg":[function(require,module,exports) {
 module.exports = "/thumb_48.1ea224b5.jpg";
 },{}],"assets/img/thumb_49.gif":[function(require,module,exports) {
@@ -1783,12 +1783,12 @@ module.exports = "/unpredictable.f1b25abf.jpg";
 module.exports = "/upload1.9a084043.jpg";
 },{}],"assets/img/visexp.jpg":[function(require,module,exports) {
 module.exports = "/visexp.642e46b0.jpg";
+},{}],"assets/img/web_thumbnail.jpg":[function(require,module,exports) {
+module.exports = "/web_thumbnail.41c80570.jpg";
 },{}],"assets/img/webgl_bad.gif":[function(require,module,exports) {
 module.exports = "/webgl_bad.8a242a7d.gif";
 },{}],"assets/img/webgl_fuz.jpg":[function(require,module,exports) {
 module.exports = "/webgl_fuz.623b7fe9.jpg";
-},{}],"assets/img/web_thumbnail.jpg":[function(require,module,exports) {
-module.exports = "/web_thumbnail.41c80570.jpg";
 },{}],"assets/img/webgl_par.jpg":[function(require,module,exports) {
 module.exports = "/webgl_par.f199f185.jpg";
 },{}],"assets/img/webgl_peq.jpg":[function(require,module,exports) {
@@ -1802,14 +1802,14 @@ module.exports = {
   "10years": {
     "jpg": require("./10years.jpg")
   },
-  "3-answer": {
-    "jpg": require("./3-answer.jpg")
+  "2-agrippa": {
+    "jpg": require("./2-agrippa.jpg")
   },
   "360stadium": {
     "jpg": require("./360stadium.jpg")
   },
-  "2-agrippa": {
-    "jpg": require("./2-agrippa.jpg")
+  "3-answer": {
+    "jpg": require("./3-answer.jpg")
   },
   "8sec1": {
     "jpg": require("./8sec1.jpg")
@@ -1850,32 +1850,32 @@ module.exports = {
   "NOC_W05_01": {
     "jpg": require("./NOC_W05_01.jpg")
   },
-  "NOC_W05_02": {
-    "jpg": require("./NOC_W05_02.jpg")
+  "NOC_W05_03": {
+    "jpg": require("./NOC_W05_03.jpg")
   },
   "NOC_W05_04": {
     "jpg": require("./NOC_W05_04.jpg")
   },
-  "NOC_W05_03": {
-    "jpg": require("./NOC_W05_03.jpg")
+  "NOC_W05_02": {
+    "jpg": require("./NOC_W05_02.jpg")
   },
   "NOC_W05_05": {
     "jpg": require("./NOC_W05_05.jpg")
   },
-  "NOC_W05_06": {
-    "jpg": require("./NOC_W05_06.jpg")
-  },
   "NOC_W05_07": {
     "jpg": require("./NOC_W05_07.jpg")
+  },
+  "NOC_W05_06": {
+    "jpg": require("./NOC_W05_06.jpg")
   },
   "NOC_W05_08": {
     "jpg": require("./NOC_W05_08.jpg")
   },
-  "NOC_W05_10": {
-    "jpg": require("./NOC_W05_10.jpg")
-  },
   "NOC_W05_09": {
     "jpg": require("./NOC_W05_09.jpg")
+  },
+  "NOC_W05_10": {
+    "jpg": require("./NOC_W05_10.jpg")
   },
   "NOC_W05_11": {
     "jpg": require("./NOC_W05_11.jpg")
@@ -1892,14 +1892,14 @@ module.exports = {
   "NOC_W05_15": {
     "jpg": require("./NOC_W05_15.jpg")
   },
+  "NOC_W05_thumb": {
+    "jpg": require("./NOC_W05_thumb.jpg")
+  },
   "NOC_W05_16": {
     "jpg": require("./NOC_W05_16.jpg")
   },
   "NOC_W05_17": {
     "jpg": require("./NOC_W05_17.jpg")
-  },
-  "NOC_W05_thumb": {
-    "jpg": require("./NOC_W05_thumb.jpg")
   },
   "RG_main": {
     "png": require("./RG_main.png")
@@ -1907,14 +1907,14 @@ module.exports = {
   "RG_rasterize": {
     "png": require("./RG_rasterize.png")
   },
+  "[DTS]_W01_process": {
+    "png": require("./[DTS]_W01_process.png")
+  },
   "Screen-Shot-2012-07-04-at-5": {
     "37.24-PM.jpg": require("./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg")
   },
   "artcol": {
     "jpg": require("./artcol.jpg")
-  },
-  "[DTS]_W01_process": {
-    "png": require("./[DTS]_W01_process.png")
   },
   "asdf": {
     "jpg": require("./asdf.jpg")
@@ -1952,11 +1952,11 @@ module.exports = {
   "clip_thumb": {
     "jpg": require("./clip_thumb.jpg")
   },
-  "contact": {
-    "jpg": require("./contact.jpg")
-  },
   "clip_content_01": {
     "png": require("./clip_content_01.png")
+  },
+  "contact": {
+    "jpg": require("./contact.jpg")
   },
   "cosmosonic": {
     "jpg": require("./cosmosonic.jpg")
@@ -1997,11 +1997,11 @@ module.exports = {
   "g_cam_thumb": {
     "jpg": require("./g_cam_thumb.jpg")
   },
-  "hiddenfigures": {
-    "jpg": require("./hiddenfigures.jpg")
-  },
   "glitchnl": {
     "jpg": require("./glitchnl.jpg")
+  },
+  "hiddenfigures": {
+    "jpg": require("./hiddenfigures.jpg")
   },
   "hoam": {
     "jpg": require("./hoam.jpg")
@@ -2015,23 +2015,23 @@ module.exports = {
   "itp-t-shirts-appl-4": {
     "jpg": require("./itp-t-shirts-appl-4.jpg")
   },
-  "itp-t-shirts-appl-5": {
-    "jpg": require("./itp-t-shirts-appl-5.jpg")
-  },
   "itp-t-shirts-appl-6": {
     "jpg": require("./itp-t-shirts-appl-6.jpg")
   },
   "itp-t-shirts-appl-7": {
     "jpg": require("./itp-t-shirts-appl-7.jpg")
   },
+  "itp-t-shirts-appl-5": {
+    "jpg": require("./itp-t-shirts-appl-5.jpg")
+  },
+  "itplogo": {
+    "jpg": require("./itplogo.jpg")
+  },
   "itp-t-shirts-appl": {
     "png": require("./itp-t-shirts-appl.png")
   },
   "jthtime": {
     "jpg": require("./jthtime.jpg")
-  },
-  "itplogo": {
-    "jpg": require("./itplogo.jpg")
   },
   "kiacadenza": {
     "jpg": require("./kiacadenza.jpg")
@@ -2057,14 +2057,14 @@ module.exports = {
   "ofs_mv": {
     "jpg": require("./ofs_mv.jpg")
   },
+  "op3": {
+    "jpg": require("./op3.jpg")
+  },
   "opticalpiramid": {
     "jpg": require("./opticalpiramid.jpg")
   },
   "opticalpy2": {
     "jpg": require("./opticalpy2.jpg")
-  },
-  "op3": {
-    "jpg": require("./op3.jpg")
   },
   "optpym3": {
     "jpg": require("./optpym3.jpg")
@@ -2084,41 +2084,41 @@ module.exports = {
   "rg_thumbnail": {
     "jpg": require("./rg_thumbnail.jpg")
   },
-  "slitscan_01": {
-    "jpg": require("./slitscan_01.jpg")
-  },
   "slitscan": {
     "jpg": require("./slitscan.jpg")
+  },
+  "slitscan_01": {
+    "jpg": require("./slitscan_01.jpg")
   },
   "slitscan_02": {
     "jpg": require("./slitscan_02.jpg")
   },
-  "slitscan_03": {
-    "jpg": require("./slitscan_03.jpg")
+  "slitscan_06": {
+    "jpg": require("./slitscan_06.jpg")
   },
   "slitscan_04": {
     "jpg": require("./slitscan_04.jpg")
   },
+  "slitscan_03": {
+    "jpg": require("./slitscan_03.jpg")
+  },
   "slitscan_05": {
     "jpg": require("./slitscan_05.jpg")
-  },
-  "slitscan_07": {
-    "png": require("./slitscan_07.png")
-  },
-  "slitscan_06": {
-    "jpg": require("./slitscan_06.jpg")
   },
   "slitscan_08": {
     "jpg": require("./slitscan_08.jpg")
   },
-  "slitscan_11": {
-    "jpg": require("./slitscan_11.jpg")
+  "slitscan_09": {
+    "jpg": require("./slitscan_09.jpg")
+  },
+  "slitscan_07": {
+    "png": require("./slitscan_07.png")
   },
   "slitscan_10": {
     "jpg": require("./slitscan_10.jpg")
   },
-  "slitscan_09": {
-    "jpg": require("./slitscan_09.jpg")
+  "slitscan_11": {
+    "jpg": require("./slitscan_11.jpg")
   },
   "slitscan_12": {
     "jpg": require("./slitscan_12.jpg")
@@ -2147,11 +2147,11 @@ module.exports = {
   "thumb_36": {
     "jpg": require("./thumb_36.jpg")
   },
-  "thumb_47": {
-    "gif": require("./thumb_47.gif")
-  },
   "thumb_45": {
     "jpg": require("./thumb_45.jpg")
+  },
+  "thumb_47": {
+    "gif": require("./thumb_47.gif")
   },
   "thumb_48": {
     "jpg": require("./thumb_48.jpg")
@@ -2186,14 +2186,14 @@ module.exports = {
   "visexp": {
     "jpg": require("./visexp.jpg")
   },
+  "web_thumbnail": {
+    "jpg": require("./web_thumbnail.jpg")
+  },
   "webgl_bad": {
     "gif": require("./webgl_bad.gif")
   },
   "webgl_fuz": {
     "jpg": require("./webgl_fuz.jpg")
-  },
-  "web_thumbnail": {
-    "jpg": require("./web_thumbnail.jpg")
   },
   "webgl_par": {
     "jpg": require("./webgl_par.jpg")
@@ -2208,7 +2208,7 @@ module.exports = {
     "jpg": require("./wooven.jpg")
   }
 };
-},{"./10years.jpg":"assets/img/10years.jpg","./3-answer.jpg":"assets/img/3-answer.jpg","./360stadium.jpg":"assets/img/360stadium.jpg","./2-agrippa.jpg":"assets/img/2-agrippa.jpg","./8sec1.jpg":"assets/img/8sec1.jpg","./5-tea.jpg":"assets/img/5-tea.jpg","./DTS_W01.jpg":"assets/img/DTS_W01.jpg","./8sec2.jpg":"assets/img/8sec2.jpg","./ICM01.jpg":"assets/img/ICM01.jpg","./MUFE_screen1.png":"assets/img/MUFE_screen1.png","./MUFE_screen2.png":"assets/img/MUFE_screen2.png","./MUFE_screen3.png":"assets/img/MUFE_screen3.png","./MUFE_screen4.png":"assets/img/MUFE_screen4.png","./MUFE_screen5.jpg":"assets/img/MUFE_screen5.jpg","./NM01.jpg":"assets/img/NM01.jpg","./NM02.jpg":"assets/img/NM02.jpg","./NOC_W05_01.jpg":"assets/img/NOC_W05_01.jpg","./NOC_W05_02.jpg":"assets/img/NOC_W05_02.jpg","./NOC_W05_04.jpg":"assets/img/NOC_W05_04.jpg","./NOC_W05_03.jpg":"assets/img/NOC_W05_03.jpg","./NOC_W05_05.jpg":"assets/img/NOC_W05_05.jpg","./NOC_W05_06.jpg":"assets/img/NOC_W05_06.jpg","./NOC_W05_07.jpg":"assets/img/NOC_W05_07.jpg","./NOC_W05_08.jpg":"assets/img/NOC_W05_08.jpg","./NOC_W05_10.jpg":"assets/img/NOC_W05_10.jpg","./NOC_W05_09.jpg":"assets/img/NOC_W05_09.jpg","./NOC_W05_11.jpg":"assets/img/NOC_W05_11.jpg","./NOC_W05_12.jpg":"assets/img/NOC_W05_12.jpg","./NOC_W05_13.jpg":"assets/img/NOC_W05_13.jpg","./NOC_W05_14.jpg":"assets/img/NOC_W05_14.jpg","./NOC_W05_15.jpg":"assets/img/NOC_W05_15.jpg","./NOC_W05_16.jpg":"assets/img/NOC_W05_16.jpg","./NOC_W05_17.jpg":"assets/img/NOC_W05_17.jpg","./NOC_W05_thumb.jpg":"assets/img/NOC_W05_thumb.jpg","./RG_main.png":"assets/img/RG_main.png","./RG_rasterize.png":"assets/img/RG_rasterize.png","./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg","./artcol.jpg":"assets/img/artcol.jpg","./[DTS]_W01_process.png":"assets/img/[DTS]_W01_process.png","./asdf.jpg":"assets/img/asdf.jpg","./bemyluv.jpg":"assets/img/bemyluv.jpg","./bg_pattern_01.jpg":"assets/img/bg_pattern_01.jpg","./bg_pattern_02.png":"assets/img/bg_pattern_02.png","./bigscreen_thumb.jpg":"assets/img/bigscreen_thumb.jpg","./buttonMirrorThumb.jpg":"assets/img/buttonMirrorThumb.jpg","./cityweather01.jpg":"assets/img/cityweather01.jpg","./cityweather02.jpg":"assets/img/cityweather02.jpg","./cityweather03.jpg":"assets/img/cityweather03.jpg","./cityweather04.jpg":"assets/img/cityweather04.jpg","./cityweatherThumb.jpg":"assets/img/cityweatherThumb.jpg","./clip_thumb.jpg":"assets/img/clip_thumb.jpg","./contact.jpg":"assets/img/contact.jpg","./clip_content_01.png":"assets/img/clip_content_01.png","./cosmosonic.jpg":"assets/img/cosmosonic.jpg","./crazyparticlesystem.jpg":"assets/img/crazyparticlesystem.jpg","./diffuse.jpg":"assets/img/diffuse.jpg","./drpepper.jpg":"assets/img/drpepper.jpg","./expressivetypography.jpg":"assets/img/expressivetypography.jpg","./expressivetypography01.png":"assets/img/expressivetypography01.png","./expressivetypography02.png":"assets/img/expressivetypography02.png","./expressivetypography03.png":"assets/img/expressivetypography03.png","./fakelovernd01.png":"assets/img/fakelovernd01.png","./fakelovernd02.jpg":"assets/img/fakelovernd02.jpg","./fragthumbnail.jpg":"assets/img/fragthumbnail.jpg","./fuckdetector.jpg":"assets/img/fuckdetector.jpg","./g_cam_thumb.jpg":"assets/img/g_cam_thumb.jpg","./hiddenfigures.jpg":"assets/img/hiddenfigures.jpg","./glitchnl.jpg":"assets/img/glitchnl.jpg","./hoam.jpg":"assets/img/hoam.jpg","./itp-t-shirts-appl-2.jpg":"assets/img/itp-t-shirts-appl-2.jpg","./itp-t-shirts-appl-3.jpg":"assets/img/itp-t-shirts-appl-3.jpg","./itp-t-shirts-appl-4.jpg":"assets/img/itp-t-shirts-appl-4.jpg","./itp-t-shirts-appl-5.jpg":"assets/img/itp-t-shirts-appl-5.jpg","./itp-t-shirts-appl-6.jpg":"assets/img/itp-t-shirts-appl-6.jpg","./itp-t-shirts-appl-7.jpg":"assets/img/itp-t-shirts-appl-7.jpg","./itp-t-shirts-appl.png":"assets/img/itp-t-shirts-appl.png","./jthtime.jpg":"assets/img/jthtime.jpg","./itplogo.jpg":"assets/img/itplogo.jpg","./kiacadenza.jpg":"assets/img/kiacadenza.jpg","./logo.png":"assets/img/logo.png","./logo_dot_w.png":"assets/img/logo_dot_w.png","./moreraytracing.jpg":"assets/img/moreraytracing.jpg","./noc_w04_thumb.jpg":"assets/img/noc_w04_thumb.jpg","./noise.jpg":"assets/img/noise.jpg","./nonagon.jpg":"assets/img/nonagon.jpg","./ofs_mv.jpg":"assets/img/ofs_mv.jpg","./opticalpiramid.jpg":"assets/img/opticalpiramid.jpg","./opticalpy2.jpg":"assets/img/opticalpy2.jpg","./op3.jpg":"assets/img/op3.jpg","./optpym3.jpg":"assets/img/optpym3.jpg","./particleEQ_thumb.jpg":"assets/img/particleEQ_thumb.jpg","./profile.jpg":"assets/img/profile.jpg","./quickavsketch01.png":"assets/img/quickavsketch01.png","./rainytypewriter.jpg":"assets/img/rainytypewriter.jpg","./rg_thumbnail.jpg":"assets/img/rg_thumbnail.jpg","./slitscan_01.jpg":"assets/img/slitscan_01.jpg","./slitscan.jpg":"assets/img/slitscan.jpg","./slitscan_02.jpg":"assets/img/slitscan_02.jpg","./slitscan_03.jpg":"assets/img/slitscan_03.jpg","./slitscan_04.jpg":"assets/img/slitscan_04.jpg","./slitscan_05.jpg":"assets/img/slitscan_05.jpg","./slitscan_07.png":"assets/img/slitscan_07.png","./slitscan_06.jpg":"assets/img/slitscan_06.jpg","./slitscan_08.jpg":"assets/img/slitscan_08.jpg","./slitscan_11.jpg":"assets/img/slitscan_11.jpg","./slitscan_10.jpg":"assets/img/slitscan_10.jpg","./slitscan_09.jpg":"assets/img/slitscan_09.jpg","./slitscan_12.jpg":"assets/img/slitscan_12.jpg","./slitscan_13.jpg":"assets/img/slitscan_13.jpg","./slitscan_14.jpg":"assets/img/slitscan_14.jpg","./slitscan_15.jpg":"assets/img/slitscan_15.jpg","./slitscan_16.jpg":"assets/img/slitscan_16.jpg","./slitscan_17.jpg":"assets/img/slitscan_17.jpg","./thesis_thumb.jpg":"assets/img/thesis_thumb.jpg","./threejsstudy01.jpg":"assets/img/threejsstudy01.jpg","./thumb_36.jpg":"assets/img/thumb_36.jpg","./thumb_47.gif":"assets/img/thumb_47.gif","./thumb_45.jpg":"assets/img/thumb_45.jpg","./thumb_48.jpg":"assets/img/thumb_48.jpg","./thumb_49.gif":"assets/img/thumb_49.gif","./thumb_50.gif":"assets/img/thumb_50.gif","./thumb_51.gif":"assets/img/thumb_51.gif","./thumb_52.gif":"assets/img/thumb_52.gif","./thumb_53.gif":"assets/img/thumb_53.gif","./toneandthree.jpg":"assets/img/toneandthree.jpg","./ujnnova.jpg":"assets/img/ujnnova.jpg","./unpredictable.jpg":"assets/img/unpredictable.jpg","./upload1.jpg":"assets/img/upload1.jpg","./visexp.jpg":"assets/img/visexp.jpg","./webgl_bad.gif":"assets/img/webgl_bad.gif","./webgl_fuz.jpg":"assets/img/webgl_fuz.jpg","./web_thumbnail.jpg":"assets/img/web_thumbnail.jpg","./webgl_par.jpg":"assets/img/webgl_par.jpg","./webgl_peq.jpg":"assets/img/webgl_peq.jpg","./webgl_sku.jpg":"assets/img/webgl_sku.jpg","./wooven.jpg":"assets/img/wooven.jpg"}],"../node_modules/process/browser.js":[function(require,module,exports) {
+},{"./10years.jpg":"assets/img/10years.jpg","./2-agrippa.jpg":"assets/img/2-agrippa.jpg","./360stadium.jpg":"assets/img/360stadium.jpg","./3-answer.jpg":"assets/img/3-answer.jpg","./8sec1.jpg":"assets/img/8sec1.jpg","./5-tea.jpg":"assets/img/5-tea.jpg","./DTS_W01.jpg":"assets/img/DTS_W01.jpg","./8sec2.jpg":"assets/img/8sec2.jpg","./ICM01.jpg":"assets/img/ICM01.jpg","./MUFE_screen1.png":"assets/img/MUFE_screen1.png","./MUFE_screen2.png":"assets/img/MUFE_screen2.png","./MUFE_screen3.png":"assets/img/MUFE_screen3.png","./MUFE_screen4.png":"assets/img/MUFE_screen4.png","./MUFE_screen5.jpg":"assets/img/MUFE_screen5.jpg","./NM01.jpg":"assets/img/NM01.jpg","./NM02.jpg":"assets/img/NM02.jpg","./NOC_W05_01.jpg":"assets/img/NOC_W05_01.jpg","./NOC_W05_03.jpg":"assets/img/NOC_W05_03.jpg","./NOC_W05_04.jpg":"assets/img/NOC_W05_04.jpg","./NOC_W05_02.jpg":"assets/img/NOC_W05_02.jpg","./NOC_W05_05.jpg":"assets/img/NOC_W05_05.jpg","./NOC_W05_07.jpg":"assets/img/NOC_W05_07.jpg","./NOC_W05_06.jpg":"assets/img/NOC_W05_06.jpg","./NOC_W05_08.jpg":"assets/img/NOC_W05_08.jpg","./NOC_W05_09.jpg":"assets/img/NOC_W05_09.jpg","./NOC_W05_10.jpg":"assets/img/NOC_W05_10.jpg","./NOC_W05_11.jpg":"assets/img/NOC_W05_11.jpg","./NOC_W05_12.jpg":"assets/img/NOC_W05_12.jpg","./NOC_W05_13.jpg":"assets/img/NOC_W05_13.jpg","./NOC_W05_14.jpg":"assets/img/NOC_W05_14.jpg","./NOC_W05_15.jpg":"assets/img/NOC_W05_15.jpg","./NOC_W05_thumb.jpg":"assets/img/NOC_W05_thumb.jpg","./NOC_W05_16.jpg":"assets/img/NOC_W05_16.jpg","./NOC_W05_17.jpg":"assets/img/NOC_W05_17.jpg","./RG_main.png":"assets/img/RG_main.png","./RG_rasterize.png":"assets/img/RG_rasterize.png","./[DTS]_W01_process.png":"assets/img/[DTS]_W01_process.png","./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg","./artcol.jpg":"assets/img/artcol.jpg","./asdf.jpg":"assets/img/asdf.jpg","./bemyluv.jpg":"assets/img/bemyluv.jpg","./bg_pattern_01.jpg":"assets/img/bg_pattern_01.jpg","./bg_pattern_02.png":"assets/img/bg_pattern_02.png","./bigscreen_thumb.jpg":"assets/img/bigscreen_thumb.jpg","./buttonMirrorThumb.jpg":"assets/img/buttonMirrorThumb.jpg","./cityweather01.jpg":"assets/img/cityweather01.jpg","./cityweather02.jpg":"assets/img/cityweather02.jpg","./cityweather03.jpg":"assets/img/cityweather03.jpg","./cityweather04.jpg":"assets/img/cityweather04.jpg","./cityweatherThumb.jpg":"assets/img/cityweatherThumb.jpg","./clip_thumb.jpg":"assets/img/clip_thumb.jpg","./clip_content_01.png":"assets/img/clip_content_01.png","./contact.jpg":"assets/img/contact.jpg","./cosmosonic.jpg":"assets/img/cosmosonic.jpg","./crazyparticlesystem.jpg":"assets/img/crazyparticlesystem.jpg","./diffuse.jpg":"assets/img/diffuse.jpg","./drpepper.jpg":"assets/img/drpepper.jpg","./expressivetypography.jpg":"assets/img/expressivetypography.jpg","./expressivetypography01.png":"assets/img/expressivetypography01.png","./expressivetypography02.png":"assets/img/expressivetypography02.png","./expressivetypography03.png":"assets/img/expressivetypography03.png","./fakelovernd01.png":"assets/img/fakelovernd01.png","./fakelovernd02.jpg":"assets/img/fakelovernd02.jpg","./fragthumbnail.jpg":"assets/img/fragthumbnail.jpg","./fuckdetector.jpg":"assets/img/fuckdetector.jpg","./g_cam_thumb.jpg":"assets/img/g_cam_thumb.jpg","./glitchnl.jpg":"assets/img/glitchnl.jpg","./hiddenfigures.jpg":"assets/img/hiddenfigures.jpg","./hoam.jpg":"assets/img/hoam.jpg","./itp-t-shirts-appl-2.jpg":"assets/img/itp-t-shirts-appl-2.jpg","./itp-t-shirts-appl-3.jpg":"assets/img/itp-t-shirts-appl-3.jpg","./itp-t-shirts-appl-4.jpg":"assets/img/itp-t-shirts-appl-4.jpg","./itp-t-shirts-appl-6.jpg":"assets/img/itp-t-shirts-appl-6.jpg","./itp-t-shirts-appl-7.jpg":"assets/img/itp-t-shirts-appl-7.jpg","./itp-t-shirts-appl-5.jpg":"assets/img/itp-t-shirts-appl-5.jpg","./itplogo.jpg":"assets/img/itplogo.jpg","./itp-t-shirts-appl.png":"assets/img/itp-t-shirts-appl.png","./jthtime.jpg":"assets/img/jthtime.jpg","./kiacadenza.jpg":"assets/img/kiacadenza.jpg","./logo.png":"assets/img/logo.png","./logo_dot_w.png":"assets/img/logo_dot_w.png","./moreraytracing.jpg":"assets/img/moreraytracing.jpg","./noc_w04_thumb.jpg":"assets/img/noc_w04_thumb.jpg","./noise.jpg":"assets/img/noise.jpg","./nonagon.jpg":"assets/img/nonagon.jpg","./ofs_mv.jpg":"assets/img/ofs_mv.jpg","./op3.jpg":"assets/img/op3.jpg","./opticalpiramid.jpg":"assets/img/opticalpiramid.jpg","./opticalpy2.jpg":"assets/img/opticalpy2.jpg","./optpym3.jpg":"assets/img/optpym3.jpg","./particleEQ_thumb.jpg":"assets/img/particleEQ_thumb.jpg","./profile.jpg":"assets/img/profile.jpg","./quickavsketch01.png":"assets/img/quickavsketch01.png","./rainytypewriter.jpg":"assets/img/rainytypewriter.jpg","./rg_thumbnail.jpg":"assets/img/rg_thumbnail.jpg","./slitscan.jpg":"assets/img/slitscan.jpg","./slitscan_01.jpg":"assets/img/slitscan_01.jpg","./slitscan_02.jpg":"assets/img/slitscan_02.jpg","./slitscan_06.jpg":"assets/img/slitscan_06.jpg","./slitscan_04.jpg":"assets/img/slitscan_04.jpg","./slitscan_03.jpg":"assets/img/slitscan_03.jpg","./slitscan_05.jpg":"assets/img/slitscan_05.jpg","./slitscan_08.jpg":"assets/img/slitscan_08.jpg","./slitscan_09.jpg":"assets/img/slitscan_09.jpg","./slitscan_07.png":"assets/img/slitscan_07.png","./slitscan_10.jpg":"assets/img/slitscan_10.jpg","./slitscan_11.jpg":"assets/img/slitscan_11.jpg","./slitscan_12.jpg":"assets/img/slitscan_12.jpg","./slitscan_13.jpg":"assets/img/slitscan_13.jpg","./slitscan_14.jpg":"assets/img/slitscan_14.jpg","./slitscan_15.jpg":"assets/img/slitscan_15.jpg","./slitscan_16.jpg":"assets/img/slitscan_16.jpg","./slitscan_17.jpg":"assets/img/slitscan_17.jpg","./thesis_thumb.jpg":"assets/img/thesis_thumb.jpg","./threejsstudy01.jpg":"assets/img/threejsstudy01.jpg","./thumb_36.jpg":"assets/img/thumb_36.jpg","./thumb_45.jpg":"assets/img/thumb_45.jpg","./thumb_47.gif":"assets/img/thumb_47.gif","./thumb_48.jpg":"assets/img/thumb_48.jpg","./thumb_49.gif":"assets/img/thumb_49.gif","./thumb_50.gif":"assets/img/thumb_50.gif","./thumb_51.gif":"assets/img/thumb_51.gif","./thumb_52.gif":"assets/img/thumb_52.gif","./thumb_53.gif":"assets/img/thumb_53.gif","./toneandthree.jpg":"assets/img/toneandthree.jpg","./ujnnova.jpg":"assets/img/ujnnova.jpg","./unpredictable.jpg":"assets/img/unpredictable.jpg","./upload1.jpg":"assets/img/upload1.jpg","./visexp.jpg":"assets/img/visexp.jpg","./web_thumbnail.jpg":"assets/img/web_thumbnail.jpg","./webgl_bad.gif":"assets/img/webgl_bad.gif","./webgl_fuz.jpg":"assets/img/webgl_fuz.jpg","./webgl_par.jpg":"assets/img/webgl_par.jpg","./webgl_peq.jpg":"assets/img/webgl_peq.jpg","./webgl_sku.jpg":"assets/img/webgl_sku.jpg","./wooven.jpg":"assets/img/wooven.jpg"}],"../node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -2879,7 +2879,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53797" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62889" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
