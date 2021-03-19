@@ -1724,10 +1724,10 @@ module.exports = "/asdf.b34e70b7.jpg";
 module.exports = "/bemyluv.9187897c.jpg";
 },{}],"assets/img/bg_pattern_01.jpg":[function(require,module,exports) {
 module.exports = "/bg_pattern_01.6fcf146f.jpg";
-},{}],"assets/img/bigscreen_thumb.jpg":[function(require,module,exports) {
-module.exports = "/bigscreen_thumb.e2addfd7.jpg";
 },{}],"assets/img/bg_pattern_02.png":[function(require,module,exports) {
 module.exports = "/bg_pattern_02.8ab4780c.png";
+},{}],"assets/img/bigscreen_thumb.jpg":[function(require,module,exports) {
+module.exports = "/bigscreen_thumb.e2addfd7.jpg";
 },{}],"assets/img/buttonMirrorThumb.jpg":[function(require,module,exports) {
 module.exports = "/buttonMirrorThumb.9075c567.jpg";
 },{}],"assets/img/cityweather02.jpg":[function(require,module,exports) {
@@ -1740,8 +1740,6 @@ module.exports = "/cityweather03.0afbd51d.jpg";
 module.exports = "/cityweather04.5c0cc5f3.jpg";
 },{}],"assets/img/cityweatherThumb.jpg":[function(require,module,exports) {
 module.exports = "/cityweatherThumb.b5ed08dd.jpg";
-},{}],"assets/img/clip_content_01.png":[function(require,module,exports) {
-module.exports = "/clip_content_01.99ecd0da.png";
 },{}],"assets/img/clip_thumb.jpg":[function(require,module,exports) {
 module.exports = "/clip_thumb.2aa518c5.jpg";
 },{}],"assets/img/contact.jpg":[function(require,module,exports) {
@@ -1750,158 +1748,158 @@ module.exports = "/contact.46c77f0a.jpg";
 module.exports = "/cosmosonic.e3186de5.jpg";
 },{}],"assets/img/crazyparticlesystem.jpg":[function(require,module,exports) {
 module.exports = "/crazyparticlesystem.57a573ef.jpg";
-},{}],"assets/img/diffuse.jpg":[function(require,module,exports) {
-module.exports = "/diffuse.8d5ee2a4.jpg";
 },{}],"assets/img/drpepper.jpg":[function(require,module,exports) {
 module.exports = "/drpepper.dac48e6c.jpg";
-},{}],"assets/img/expressivetypography.jpg":[function(require,module,exports) {
-module.exports = "/expressivetypography.5b766ea0.jpg";
 },{}],"assets/img/DTS_W01.jpg":[function(require,module,exports) {
 module.exports = "/DTS_W01.8658b95f.jpg";
 },{}],"assets/img/expressivetypography01.png":[function(require,module,exports) {
 module.exports = "/expressivetypography01.6dc059b3.png";
-},{}],"assets/img/expressivetypography02.png":[function(require,module,exports) {
-module.exports = "/expressivetypography02.05963285.png";
+},{}],"assets/img/expressivetypography.jpg":[function(require,module,exports) {
+module.exports = "/expressivetypography.5b766ea0.jpg";
+},{}],"assets/img/clip_content_01.png":[function(require,module,exports) {
+module.exports = "/clip_content_01.99ecd0da.png";
+},{}],"assets/img/diffuse.jpg":[function(require,module,exports) {
+module.exports = "/diffuse.8d5ee2a4.jpg";
 },{}],"assets/img/expressivetypography03.png":[function(require,module,exports) {
 module.exports = "/expressivetypography03.e2bb8394.png";
 },{}],"assets/img/fakelovernd01.png":[function(require,module,exports) {
 module.exports = "/fakelovernd01.494b6c4c.png";
 },{}],"assets/img/fakelovernd02.jpg":[function(require,module,exports) {
 module.exports = "/fakelovernd02.92653313.jpg";
-},{}],"assets/img/fragthumbnail.jpg":[function(require,module,exports) {
-module.exports = "/fragthumbnail.c5703f6e.jpg";
+},{}],"assets/img/expressivetypography02.png":[function(require,module,exports) {
+module.exports = "/expressivetypography02.05963285.png";
 },{}],"assets/img/fuckdetector.jpg":[function(require,module,exports) {
 module.exports = "/fuckdetector.b2024b8a.jpg";
-},{}],"assets/img/g_cam_thumb.jpg":[function(require,module,exports) {
-module.exports = "/g_cam_thumb.2c3b6650.jpg";
 },{}],"assets/img/glitchnl.jpg":[function(require,module,exports) {
 module.exports = "/glitchnl.9f6c013e.jpg";
-},{}],"assets/img/hoam.jpg":[function(require,module,exports) {
-module.exports = "/hoam.30455737.jpg";
-},{}],"assets/img/ICM01.jpg":[function(require,module,exports) {
-module.exports = "/ICM01.e74b0948.jpg";
-},{}],"assets/img/itp-t-shirts-appl-2.jpg":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl-2.0234ed6a.jpg";
-},{}],"assets/img/itp-t-shirts-appl-3.jpg":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl-3.8f74e884.jpg";
+},{}],"assets/img/fragthumbnail.jpg":[function(require,module,exports) {
+module.exports = "/fragthumbnail.c5703f6e.jpg";
+},{}],"assets/img/g_cam_thumb.jpg":[function(require,module,exports) {
+module.exports = "/g_cam_thumb.2c3b6650.jpg";
 },{}],"assets/img/hiddenfigures.jpg":[function(require,module,exports) {
 module.exports = "/hiddenfigures.36c28af1.jpg";
+},{}],"assets/img/itp-t-shirts-appl-3.jpg":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl-3.8f74e884.jpg";
+},{}],"assets/img/itp-t-shirts-appl-2.jpg":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl-2.0234ed6a.jpg";
+},{}],"assets/img/ICM01.jpg":[function(require,module,exports) {
+module.exports = "/ICM01.e74b0948.jpg";
 },{}],"assets/img/itp-t-shirts-appl-4.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-4.c91fc52b.jpg";
+},{}],"assets/img/hoam.jpg":[function(require,module,exports) {
+module.exports = "/hoam.30455737.jpg";
 },{}],"assets/img/itp-t-shirts-appl-5.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-5.37fe39cf.jpg";
 },{}],"assets/img/itp-t-shirts-appl-7.jpg":[function(require,module,exports) {
 module.exports = "/itp-t-shirts-appl-7.172d2450.jpg";
-},{}],"assets/img/itp-t-shirts-appl.png":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl.2228479a.png";
-},{}],"assets/img/itp-t-shirts-appl-6.jpg":[function(require,module,exports) {
-module.exports = "/itp-t-shirts-appl-6.f7db556a.jpg";
 },{}],"assets/img/itplogo.jpg":[function(require,module,exports) {
 module.exports = "/itplogo.7907b520.jpg";
-},{}],"assets/img/kiacadenza.jpg":[function(require,module,exports) {
-module.exports = "/kiacadenza.7c9e3f49.jpg";
 },{}],"assets/img/jthtime.jpg":[function(require,module,exports) {
 module.exports = "/jthtime.8760d08d.jpg";
+},{}],"assets/img/itp-t-shirts-appl.png":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl.2228479a.png";
+},{}],"assets/img/kiacadenza.jpg":[function(require,module,exports) {
+module.exports = "/kiacadenza.7c9e3f49.jpg";
 },{}],"assets/img/logo.png":[function(require,module,exports) {
 module.exports = "/logo.fb412750.png";
 },{}],"assets/img/logo_dot_w.png":[function(require,module,exports) {
 module.exports = "/logo_dot_w.d055efcf.png";
+},{}],"assets/img/itp-t-shirts-appl-6.jpg":[function(require,module,exports) {
+module.exports = "/itp-t-shirts-appl-6.f7db556a.jpg";
 },{}],"assets/img/MUFE_screen1.png":[function(require,module,exports) {
 module.exports = "/MUFE_screen1.189afb9f.png";
 },{}],"assets/img/moreraytracing.jpg":[function(require,module,exports) {
 module.exports = "/moreraytracing.8f080f55.jpg";
 },{}],"assets/img/MUFE_screen2.png":[function(require,module,exports) {
 module.exports = "/MUFE_screen2.2ac983af.png";
-},{}],"assets/img/MUFE_screen3.png":[function(require,module,exports) {
-module.exports = "/MUFE_screen3.5287578c.png";
 },{}],"assets/img/MUFE_screen4.png":[function(require,module,exports) {
 module.exports = "/MUFE_screen4.c8e30979.png";
-},{}],"assets/img/MUFE_screen5.jpg":[function(require,module,exports) {
-module.exports = "/MUFE_screen5.60e0cc41.jpg";
-},{}],"assets/img/NM01.jpg":[function(require,module,exports) {
-module.exports = "/NM01.292dc989.jpg";
 },{}],"assets/img/NM02.jpg":[function(require,module,exports) {
 module.exports = "/NM02.42ec3e7a.jpg";
+},{}],"assets/img/MUFE_screen5.jpg":[function(require,module,exports) {
+module.exports = "/MUFE_screen5.60e0cc41.jpg";
 },{}],"assets/img/noc_w04_thumb.jpg":[function(require,module,exports) {
 module.exports = "/noc_w04_thumb.0b16ee06.jpg";
+},{}],"assets/img/NM01.jpg":[function(require,module,exports) {
+module.exports = "/NM01.292dc989.jpg";
 },{}],"assets/img/NOC_W05_01.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_01.7f6172d0.jpg";
-},{}],"assets/img/NOC_W05_03.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_03.2ad2eb4d.jpg";
 },{}],"assets/img/NOC_W05_02.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_02.0f7bd28f.jpg";
-},{}],"assets/img/NOC_W05_04.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_04.61ef4c92.jpg";
 },{}],"assets/img/NOC_W05_05.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_05.b7de7344.jpg";
+},{}],"assets/img/NOC_W05_06.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_06.d5ee7504.jpg";
 },{}],"assets/img/NOC_W05_07.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_07.bccbec35.jpg";
 },{}],"assets/img/NOC_W05_08.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_08.52663260.jpg";
-},{}],"assets/img/NOC_W05_10.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_10.8cee04ce.jpg";
+},{}],"assets/img/NOC_W05_04.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_04.61ef4c92.jpg";
 },{}],"assets/img/NOC_W05_09.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_09.7b59a009.jpg";
-},{}],"assets/img/NOC_W05_06.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_06.d5ee7504.jpg";
-},{}],"assets/img/NOC_W05_12.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_12.6536aa1b.jpg";
+},{}],"assets/img/NOC_W05_03.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_03.2ad2eb4d.jpg";
+},{}],"assets/img/MUFE_screen3.png":[function(require,module,exports) {
+module.exports = "/MUFE_screen3.5287578c.png";
 },{}],"assets/img/NOC_W05_11.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_11.a7039c10.jpg";
-},{}],"assets/img/NOC_W05_13.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_13.42ab5fb0.jpg";
+},{}],"assets/img/NOC_W05_12.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_12.6536aa1b.jpg";
 },{}],"assets/img/NOC_W05_14.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_14.04092639.jpg";
-},{}],"assets/img/NOC_W05_17.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_17.4bc811cb.jpg";
-},{}],"assets/img/NOC_W05_15.jpg":[function(require,module,exports) {
-module.exports = "/NOC_W05_15.15555209.jpg";
+},{}],"assets/img/NOC_W05_10.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_10.8cee04ce.jpg";
 },{}],"assets/img/NOC_W05_16.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_16.b06b7cec.jpg";
+},{}],"assets/img/NOC_W05_15.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_15.15555209.jpg";
 },{}],"assets/img/NOC_W05_thumb.jpg":[function(require,module,exports) {
 module.exports = "/NOC_W05_thumb.d9984e5d.jpg";
+},{}],"assets/img/NOC_W05_17.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_17.4bc811cb.jpg";
 },{}],"assets/img/noise.jpg":[function(require,module,exports) {
 module.exports = "/noise.d565e126.jpg";
 },{}],"assets/img/nonagon.jpg":[function(require,module,exports) {
 module.exports = "/nonagon.59e780f8.jpg";
-},{}],"assets/img/ofs_mv.jpg":[function(require,module,exports) {
-module.exports = "/ofs_mv.5ccb63cc.jpg";
-},{}],"assets/img/op3.jpg":[function(require,module,exports) {
-module.exports = "/op3.26cd8c40.jpg";
 },{}],"assets/img/opticalpiramid.jpg":[function(require,module,exports) {
 module.exports = "/opticalpiramid.744b36ea.jpg";
-},{}],"assets/img/optpym3.jpg":[function(require,module,exports) {
-module.exports = "/optpym3.eda5a2c8.jpg";
+},{}],"assets/img/NOC_W05_13.jpg":[function(require,module,exports) {
+module.exports = "/NOC_W05_13.42ab5fb0.jpg";
+},{}],"assets/img/op3.jpg":[function(require,module,exports) {
+module.exports = "/op3.26cd8c40.jpg";
+},{}],"assets/img/ofs_mv.jpg":[function(require,module,exports) {
+module.exports = "/ofs_mv.5ccb63cc.jpg";
 },{}],"assets/img/opticalpy2.jpg":[function(require,module,exports) {
 module.exports = "/opticalpy2.e83bd740.jpg";
-},{}],"assets/img/quickavsketch01.png":[function(require,module,exports) {
-module.exports = "/quickavsketch01.7a8671cc.png";
 },{}],"assets/img/particleEQ_thumb.jpg":[function(require,module,exports) {
 module.exports = "/particleEQ_thumb.25afce77.jpg";
 },{}],"assets/img/profile.jpg":[function(require,module,exports) {
 module.exports = "/profile.0ac66c1e.jpg";
+},{}],"assets/img/quickavsketch01.png":[function(require,module,exports) {
+module.exports = "/quickavsketch01.7a8671cc.png";
 },{}],"assets/img/rainytypewriter.jpg":[function(require,module,exports) {
 module.exports = "/rainytypewriter.b3a01e1b.jpg";
-},{}],"assets/img/RG_main.png":[function(require,module,exports) {
-module.exports = "/RG_main.fe5b3a72.png";
-},{}],"assets/img/rg_thumbnail.jpg":[function(require,module,exports) {
-module.exports = "/rg_thumbnail.951e8542.jpg";
-},{}],"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":[function(require,module,exports) {
-module.exports = "/Screen-Shot-2012-07-04-at-5.37.24-PM.9a547d53.jpg";
 },{}],"assets/img/RG_rasterize.png":[function(require,module,exports) {
 module.exports = "/RG_rasterize.01c0923c.png";
+},{}],"assets/img/rg_thumbnail.jpg":[function(require,module,exports) {
+module.exports = "/rg_thumbnail.951e8542.jpg";
+},{}],"assets/img/RG_main.png":[function(require,module,exports) {
+module.exports = "/RG_main.fe5b3a72.png";
+},{}],"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":[function(require,module,exports) {
+module.exports = "/Screen-Shot-2012-07-04-at-5.37.24-PM.9a547d53.jpg";
+},{}],"assets/img/optpym3.jpg":[function(require,module,exports) {
+module.exports = "/optpym3.eda5a2c8.jpg";
 },{}],"assets/img/slitscan.jpg":[function(require,module,exports) {
 module.exports = "/slitscan.921cc49e.jpg";
-},{}],"assets/img/slitscan_01.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_01.b0023709.jpg";
 },{}],"assets/img/slitscan_02.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_02.06f991c9.jpg";
-},{}],"assets/img/slitscan_03.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_03.a57604f1.jpg";
-},{}],"assets/img/slitscan_04.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_04.091e1db7.jpg";
 },{}],"assets/img/slitscan_05.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_05.35caaec4.jpg";
+},{}],"assets/img/slitscan_04.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_04.091e1db7.jpg";
+},{}],"assets/img/slitscan_01.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_01.b0023709.jpg";
 },{}],"assets/img/slitscan_06.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_06.c1b52822.jpg";
 },{}],"assets/img/slitscan_07.png":[function(require,module,exports) {
@@ -1910,122 +1908,122 @@ module.exports = "/slitscan_07.70c753b9.png";
 module.exports = "/slitscan_08.ca4b3261.jpg";
 },{}],"assets/img/slitscan_09.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_09.2c2315b8.jpg";
-},{}],"assets/img/slitscan_10.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_10.150676a7.jpg";
-},{}],"assets/img/slitscan_11.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_11.c750a815.jpg";
+},{}],"assets/img/slitscan_03.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_03.a57604f1.jpg";
 },{}],"assets/img/slitscan_12.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_12.41992476.jpg";
-},{}],"assets/img/slitscan_13.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_13.630e4a80.jpg";
-},{}],"assets/img/slitscan_15.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_15.ba0daa47.jpg";
+},{}],"assets/img/slitscan_11.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_11.c750a815.jpg";
+},{}],"assets/img/slitscan_10.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_10.150676a7.jpg";
 },{}],"assets/img/slitscan_14.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_14.6b0fefa3.jpg";
-},{}],"assets/img/slitscan_16.jpg":[function(require,module,exports) {
-module.exports = "/slitscan_16.2f48330a.jpg";
+},{}],"assets/img/slitscan_15.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_15.ba0daa47.jpg";
+},{}],"assets/img/slitscan_13.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_13.630e4a80.jpg";
 },{}],"assets/img/slitscan_17.jpg":[function(require,module,exports) {
 module.exports = "/slitscan_17.81e3f3d4.jpg";
-},{}],"assets/img/Spatial-00.gif":[function(require,module,exports) {
-module.exports = "/Spatial-00.0d22bd08.gif";
-},{}],"assets/img/Spatial-01.gif":[function(require,module,exports) {
-module.exports = "/Spatial-01.5d563232.gif";
+},{}],"assets/img/slitscan_16.jpg":[function(require,module,exports) {
+module.exports = "/slitscan_16.2f48330a.jpg";
 },{}],"assets/img/Spatial-02.gif":[function(require,module,exports) {
 module.exports = "/Spatial-02.8711d6da.gif";
+},{}],"assets/img/Spatial-00.gif":[function(require,module,exports) {
+module.exports = "/Spatial-00.0d22bd08.gif";
+},{}],"assets/img/Spatial-04.gif":[function(require,module,exports) {
+module.exports = "/Spatial-04.4dfbdf77.gif";
 },{}],"assets/img/Spatial-03.gif":[function(require,module,exports) {
 module.exports = "/Spatial-03.f727ea54.gif";
 },{}],"assets/img/Spatial-05.gif":[function(require,module,exports) {
 module.exports = "/Spatial-05.b594974f.gif";
 },{}],"assets/img/Spatial-06.gif":[function(require,module,exports) {
 module.exports = "/Spatial-06.85d83e14.gif";
-},{}],"assets/img/Spatial-04.gif":[function(require,module,exports) {
-module.exports = "/Spatial-04.4dfbdf77.gif";
-},{}],"assets/img/Spatial-07.gif":[function(require,module,exports) {
-module.exports = "/Spatial-07.727c83a0.gif";
 },{}],"assets/img/Spatial-08.gif":[function(require,module,exports) {
 module.exports = "/Spatial-08.49000676.gif";
-},{}],"assets/img/Spatial-10.gif":[function(require,module,exports) {
-module.exports = "/Spatial-10.8090ab38.gif";
+},{}],"assets/img/Spatial-07.gif":[function(require,module,exports) {
+module.exports = "/Spatial-07.727c83a0.gif";
 },{}],"assets/img/Spatial-09.gif":[function(require,module,exports) {
 module.exports = "/Spatial-09.1550c29b.gif";
-},{}],"assets/img/Spatial-11.gif":[function(require,module,exports) {
-module.exports = "/Spatial-11.960754ab.gif";
+},{}],"assets/img/Spatial-01.gif":[function(require,module,exports) {
+module.exports = "/Spatial-01.5d563232.gif";
 },{}],"assets/img/Spatial-12.gif":[function(require,module,exports) {
 module.exports = "/Spatial-12.7ddccaa6.gif";
-},{}],"assets/img/Spatial-13.gif":[function(require,module,exports) {
-module.exports = "/Spatial-13.91e666a7.gif";
+},{}],"assets/img/Spatial-10.gif":[function(require,module,exports) {
+module.exports = "/Spatial-10.8090ab38.gif";
 },{}],"assets/img/Spatial-14.gif":[function(require,module,exports) {
 module.exports = "/Spatial-14.98efc422.gif";
+},{}],"assets/img/Spatial-11.gif":[function(require,module,exports) {
+module.exports = "/Spatial-11.960754ab.gif";
+},{}],"assets/img/Spatial-16.gif":[function(require,module,exports) {
+module.exports = "/Spatial-16.ea7826c4.gif";
 },{}],"assets/img/Spatial-15.gif":[function(require,module,exports) {
 module.exports = "/Spatial-15.552a1a74.gif";
 },{}],"assets/img/Spatial-17.gif":[function(require,module,exports) {
 module.exports = "/Spatial-17.3c04aeb8.gif";
-},{}],"assets/img/Spatial-16.gif":[function(require,module,exports) {
-module.exports = "/Spatial-16.ea7826c4.gif";
 },{}],"assets/img/Spatial-18.gif":[function(require,module,exports) {
 module.exports = "/Spatial-18.07da00c9.gif";
-},{}],"assets/img/Spatial-19.gif":[function(require,module,exports) {
-module.exports = "/Spatial-19.90df5b38.gif";
-},{}],"assets/img/Spatial-20.gif":[function(require,module,exports) {
-module.exports = "/Spatial-20.d587dbff.gif";
-},{}],"assets/img/Spatial-23.gif":[function(require,module,exports) {
-module.exports = "/Spatial-23.abfee8d5.gif";
-},{}],"assets/img/Spatial-22.gif":[function(require,module,exports) {
-module.exports = "/Spatial-22.d7af701d.gif";
 },{}],"assets/img/Spatial-21.gif":[function(require,module,exports) {
 module.exports = "/Spatial-21.d8e53428.gif";
-},{}],"assets/img/Spatial-24.gif":[function(require,module,exports) {
-module.exports = "/Spatial-24.fa1a9991.gif";
+},{}],"assets/img/Spatial-20.gif":[function(require,module,exports) {
+module.exports = "/Spatial-20.d587dbff.gif";
+},{}],"assets/img/Spatial-19.gif":[function(require,module,exports) {
+module.exports = "/Spatial-19.90df5b38.gif";
+},{}],"assets/img/Spatial-13.gif":[function(require,module,exports) {
+module.exports = "/Spatial-13.91e666a7.gif";
+},{}],"assets/img/Spatial-22.gif":[function(require,module,exports) {
+module.exports = "/Spatial-22.d7af701d.gif";
+},{}],"assets/img/Spatial-23.gif":[function(require,module,exports) {
+module.exports = "/Spatial-23.abfee8d5.gif";
 },{}],"assets/img/Spatial-26.gif":[function(require,module,exports) {
 module.exports = "/Spatial-26.9fac668e.gif";
-},{}],"assets/img/Spatial-25.gif":[function(require,module,exports) {
-module.exports = "/Spatial-25.dfa4df7a.gif";
-},{}],"assets/img/Spatial-27.gif":[function(require,module,exports) {
-module.exports = "/Spatial-27.bc447270.gif";
+},{}],"assets/img/Spatial-24.gif":[function(require,module,exports) {
+module.exports = "/Spatial-24.fa1a9991.gif";
 },{}],"assets/img/Spatial-28.gif":[function(require,module,exports) {
 module.exports = "/Spatial-28.cafdb11f.gif";
+},{}],"assets/img/Spatial-27.gif":[function(require,module,exports) {
+module.exports = "/Spatial-27.bc447270.gif";
 },{}],"assets/img/Spatial-30.gif":[function(require,module,exports) {
 module.exports = "/Spatial-30.0bcf806d.gif";
 },{}],"assets/img/Spatial-29.gif":[function(require,module,exports) {
 module.exports = "/Spatial-29.364d9490.gif";
-},{}],"assets/img/Spatial-31.gif":[function(require,module,exports) {
-module.exports = "/Spatial-31.9057b213.gif";
 },{}],"assets/img/Spatial-32.gif":[function(require,module,exports) {
 module.exports = "/Spatial-32.821e057c.gif";
+},{}],"assets/img/Spatial-31.gif":[function(require,module,exports) {
+module.exports = "/Spatial-31.9057b213.gif";
+},{}],"assets/img/Spatial-25.gif":[function(require,module,exports) {
+module.exports = "/Spatial-25.dfa4df7a.gif";
 },{}],"assets/img/Spatial-33.gif":[function(require,module,exports) {
 module.exports = "/Spatial-33.a6f97bef.gif";
 },{}],"assets/img/Spatial-34.gif":[function(require,module,exports) {
 module.exports = "/Spatial-34.3f908310.gif";
 },{}],"assets/img/Spatial-35.gif":[function(require,module,exports) {
 module.exports = "/Spatial-35.0d74aefb.gif";
-},{}],"assets/img/Spatial-36.gif":[function(require,module,exports) {
-module.exports = "/Spatial-36.3f28704e.gif";
-},{}],"assets/img/Spatial-37.gif":[function(require,module,exports) {
-module.exports = "/Spatial-37.55c5fb30.gif";
 },{}],"assets/img/thesis_thumb.jpg":[function(require,module,exports) {
 module.exports = "/thesis_thumb.129f4ca1.jpg";
-},{}],"assets/img/threejsstudy01.jpg":[function(require,module,exports) {
-module.exports = "/threejsstudy01.1727c358.jpg";
 },{}],"assets/img/thumb_36.jpg":[function(require,module,exports) {
 module.exports = "/thumb_36.a4ef69b4.jpg";
+},{}],"assets/img/Spatial-37.gif":[function(require,module,exports) {
+module.exports = "/Spatial-37.55c5fb30.gif";
 },{}],"assets/img/thumb_45.jpg":[function(require,module,exports) {
 module.exports = "/thumb_45.c9d189ad.jpg";
 },{}],"assets/img/thumb_48.jpg":[function(require,module,exports) {
 module.exports = "/thumb_48.1ea224b5.jpg";
 },{}],"assets/img/thumb_49.gif":[function(require,module,exports) {
 module.exports = "/thumb_49.2a9acc58.gif";
+},{}],"assets/img/threejsstudy01.jpg":[function(require,module,exports) {
+module.exports = "/threejsstudy01.1727c358.jpg";
 },{}],"assets/img/thumb_50.gif":[function(require,module,exports) {
 module.exports = "/thumb_50.a919a93d.gif";
-},{}],"assets/img/thumb_51.gif":[function(require,module,exports) {
-module.exports = "/thumb_51.e4112863.gif";
 },{}],"assets/img/thumb_52.gif":[function(require,module,exports) {
 module.exports = "/thumb_52.5e3f9ac7.gif";
+},{}],"assets/img/thumb_51.gif":[function(require,module,exports) {
+module.exports = "/thumb_51.e4112863.gif";
 },{}],"assets/img/thumb_53.gif":[function(require,module,exports) {
 module.exports = "/thumb_53.f91aa14d.gif";
-},{}],"assets/img/toneandthree.jpg":[function(require,module,exports) {
-module.exports = "/toneandthree.f94e1e28.jpg";
 },{}],"assets/img/ujnnova.jpg":[function(require,module,exports) {
 module.exports = "/ujnnova.ca74a571.jpg";
+},{}],"assets/img/toneandthree.jpg":[function(require,module,exports) {
+module.exports = "/toneandthree.f94e1e28.jpg";
 },{}],"assets/img/unpredictable.jpg":[function(require,module,exports) {
 module.exports = "/unpredictable.f1b25abf.jpg";
 },{}],"assets/img/upload1.jpg":[function(require,module,exports) {
@@ -2036,18 +2034,20 @@ module.exports = "/visexp.642e46b0.jpg";
 module.exports = "/webgl_bad.8a242a7d.gif";
 },{}],"assets/img/thumb_47.gif":[function(require,module,exports) {
 module.exports = "/thumb_47.36b6379a.gif";
-},{}],"assets/img/webgl_fuz.jpg":[function(require,module,exports) {
-module.exports = "/webgl_fuz.623b7fe9.jpg";
-},{}],"assets/img/webgl_peq.jpg":[function(require,module,exports) {
-module.exports = "/webgl_peq.5b7abcba.jpg";
+},{}],"assets/img/Spatial-36.gif":[function(require,module,exports) {
+module.exports = "/Spatial-36.3f28704e.gif";
 },{}],"assets/img/webgl_par.jpg":[function(require,module,exports) {
 module.exports = "/webgl_par.f199f185.jpg";
-},{}],"assets/img/webgl_sku.jpg":[function(require,module,exports) {
-module.exports = "/webgl_sku.bfd6464b.jpg";
+},{}],"assets/img/webgl_fuz.jpg":[function(require,module,exports) {
+module.exports = "/webgl_fuz.623b7fe9.jpg";
 },{}],"assets/img/web_thumbnail.jpg":[function(require,module,exports) {
 module.exports = "/web_thumbnail.41c80570.jpg";
 },{}],"assets/img/wooven.jpg":[function(require,module,exports) {
 module.exports = "/wooven.e235df90.jpg";
+},{}],"assets/img/webgl_peq.jpg":[function(require,module,exports) {
+module.exports = "/webgl_peq.5b7abcba.jpg";
+},{}],"assets/img/webgl_sku.jpg":[function(require,module,exports) {
+module.exports = "/webgl_sku.bfd6464b.jpg";
 },{}],"assets/img/[DTS]_W01_process.png":[function(require,module,exports) {
 module.exports = {};
 },{}],"assets/img/*.*":[function(require,module,exports) {
@@ -2085,11 +2085,11 @@ module.exports = {
   "bg_pattern_01": {
     "jpg": require("./bg_pattern_01.jpg")
   },
-  "bigscreen_thumb": {
-    "jpg": require("./bigscreen_thumb.jpg")
-  },
   "bg_pattern_02": {
     "png": require("./bg_pattern_02.png")
+  },
+  "bigscreen_thumb": {
+    "jpg": require("./bigscreen_thumb.jpg")
   },
   "buttonMirrorThumb": {
     "jpg": require("./buttonMirrorThumb.jpg")
@@ -2109,9 +2109,6 @@ module.exports = {
   "cityweatherThumb": {
     "jpg": require("./cityweatherThumb.jpg")
   },
-  "clip_content_01": {
-    "png": require("./clip_content_01.png")
-  },
   "clip_thumb": {
     "jpg": require("./clip_thumb.jpg")
   },
@@ -2124,14 +2121,8 @@ module.exports = {
   "crazyparticlesystem": {
     "jpg": require("./crazyparticlesystem.jpg")
   },
-  "diffuse": {
-    "jpg": require("./diffuse.jpg")
-  },
   "drpepper": {
     "jpg": require("./drpepper.jpg")
-  },
-  "expressivetypography": {
-    "jpg": require("./expressivetypography.jpg")
   },
   "DTS_W01": {
     "jpg": require("./DTS_W01.jpg")
@@ -2139,8 +2130,14 @@ module.exports = {
   "expressivetypography01": {
     "png": require("./expressivetypography01.png")
   },
-  "expressivetypography02": {
-    "png": require("./expressivetypography02.png")
+  "expressivetypography": {
+    "jpg": require("./expressivetypography.jpg")
+  },
+  "clip_content_01": {
+    "png": require("./clip_content_01.png")
+  },
+  "diffuse": {
+    "jpg": require("./diffuse.jpg")
   },
   "expressivetypography03": {
     "png": require("./expressivetypography03.png")
@@ -2151,35 +2148,38 @@ module.exports = {
   "fakelovernd02": {
     "jpg": require("./fakelovernd02.jpg")
   },
-  "fragthumbnail": {
-    "jpg": require("./fragthumbnail.jpg")
+  "expressivetypography02": {
+    "png": require("./expressivetypography02.png")
   },
   "fuckdetector": {
     "jpg": require("./fuckdetector.jpg")
   },
-  "g_cam_thumb": {
-    "jpg": require("./g_cam_thumb.jpg")
-  },
   "glitchnl": {
     "jpg": require("./glitchnl.jpg")
   },
-  "hoam": {
-    "jpg": require("./hoam.jpg")
+  "fragthumbnail": {
+    "jpg": require("./fragthumbnail.jpg")
   },
-  "ICM01": {
-    "jpg": require("./ICM01.jpg")
-  },
-  "itp-t-shirts-appl-2": {
-    "jpg": require("./itp-t-shirts-appl-2.jpg")
-  },
-  "itp-t-shirts-appl-3": {
-    "jpg": require("./itp-t-shirts-appl-3.jpg")
+  "g_cam_thumb": {
+    "jpg": require("./g_cam_thumb.jpg")
   },
   "hiddenfigures": {
     "jpg": require("./hiddenfigures.jpg")
   },
+  "itp-t-shirts-appl-3": {
+    "jpg": require("./itp-t-shirts-appl-3.jpg")
+  },
+  "itp-t-shirts-appl-2": {
+    "jpg": require("./itp-t-shirts-appl-2.jpg")
+  },
+  "ICM01": {
+    "jpg": require("./ICM01.jpg")
+  },
   "itp-t-shirts-appl-4": {
     "jpg": require("./itp-t-shirts-appl-4.jpg")
+  },
+  "hoam": {
+    "jpg": require("./hoam.jpg")
   },
   "itp-t-shirts-appl-5": {
     "jpg": require("./itp-t-shirts-appl-5.jpg")
@@ -2187,26 +2187,26 @@ module.exports = {
   "itp-t-shirts-appl-7": {
     "jpg": require("./itp-t-shirts-appl-7.jpg")
   },
-  "itp-t-shirts-appl": {
-    "png": require("./itp-t-shirts-appl.png")
-  },
-  "itp-t-shirts-appl-6": {
-    "jpg": require("./itp-t-shirts-appl-6.jpg")
-  },
   "itplogo": {
     "jpg": require("./itplogo.jpg")
   },
-  "kiacadenza": {
-    "jpg": require("./kiacadenza.jpg")
-  },
   "jthtime": {
     "jpg": require("./jthtime.jpg")
+  },
+  "itp-t-shirts-appl": {
+    "png": require("./itp-t-shirts-appl.png")
+  },
+  "kiacadenza": {
+    "jpg": require("./kiacadenza.jpg")
   },
   "logo": {
     "png": require("./logo.png")
   },
   "logo_dot_w": {
     "png": require("./logo_dot_w.png")
+  },
+  "itp-t-shirts-appl-6": {
+    "jpg": require("./itp-t-shirts-appl-6.jpg")
   },
   "MUFE_screen1": {
     "png": require("./MUFE_screen1.png")
@@ -2217,38 +2217,32 @@ module.exports = {
   "MUFE_screen2": {
     "png": require("./MUFE_screen2.png")
   },
-  "MUFE_screen3": {
-    "png": require("./MUFE_screen3.png")
-  },
   "MUFE_screen4": {
     "png": require("./MUFE_screen4.png")
-  },
-  "MUFE_screen5": {
-    "jpg": require("./MUFE_screen5.jpg")
-  },
-  "NM01": {
-    "jpg": require("./NM01.jpg")
   },
   "NM02": {
     "jpg": require("./NM02.jpg")
   },
+  "MUFE_screen5": {
+    "jpg": require("./MUFE_screen5.jpg")
+  },
   "noc_w04_thumb": {
     "jpg": require("./noc_w04_thumb.jpg")
+  },
+  "NM01": {
+    "jpg": require("./NM01.jpg")
   },
   "NOC_W05_01": {
     "jpg": require("./NOC_W05_01.jpg")
   },
-  "NOC_W05_03": {
-    "jpg": require("./NOC_W05_03.jpg")
-  },
   "NOC_W05_02": {
     "jpg": require("./NOC_W05_02.jpg")
   },
-  "NOC_W05_04": {
-    "jpg": require("./NOC_W05_04.jpg")
-  },
   "NOC_W05_05": {
     "jpg": require("./NOC_W05_05.jpg")
+  },
+  "NOC_W05_06": {
+    "jpg": require("./NOC_W05_06.jpg")
   },
   "NOC_W05_07": {
     "jpg": require("./NOC_W05_07.jpg")
@@ -2256,38 +2250,41 @@ module.exports = {
   "NOC_W05_08": {
     "jpg": require("./NOC_W05_08.jpg")
   },
-  "NOC_W05_10": {
-    "jpg": require("./NOC_W05_10.jpg")
+  "NOC_W05_04": {
+    "jpg": require("./NOC_W05_04.jpg")
   },
   "NOC_W05_09": {
     "jpg": require("./NOC_W05_09.jpg")
   },
-  "NOC_W05_06": {
-    "jpg": require("./NOC_W05_06.jpg")
+  "NOC_W05_03": {
+    "jpg": require("./NOC_W05_03.jpg")
   },
-  "NOC_W05_12": {
-    "jpg": require("./NOC_W05_12.jpg")
+  "MUFE_screen3": {
+    "png": require("./MUFE_screen3.png")
   },
   "NOC_W05_11": {
     "jpg": require("./NOC_W05_11.jpg")
   },
-  "NOC_W05_13": {
-    "jpg": require("./NOC_W05_13.jpg")
+  "NOC_W05_12": {
+    "jpg": require("./NOC_W05_12.jpg")
   },
   "NOC_W05_14": {
     "jpg": require("./NOC_W05_14.jpg")
   },
-  "NOC_W05_17": {
-    "jpg": require("./NOC_W05_17.jpg")
-  },
-  "NOC_W05_15": {
-    "jpg": require("./NOC_W05_15.jpg")
+  "NOC_W05_10": {
+    "jpg": require("./NOC_W05_10.jpg")
   },
   "NOC_W05_16": {
     "jpg": require("./NOC_W05_16.jpg")
   },
+  "NOC_W05_15": {
+    "jpg": require("./NOC_W05_15.jpg")
+  },
   "NOC_W05_thumb": {
     "jpg": require("./NOC_W05_thumb.jpg")
+  },
+  "NOC_W05_17": {
+    "jpg": require("./NOC_W05_17.jpg")
   },
   "noise": {
     "jpg": require("./noise.jpg")
@@ -2295,23 +2292,20 @@ module.exports = {
   "nonagon": {
     "jpg": require("./nonagon.jpg")
   },
-  "ofs_mv": {
-    "jpg": require("./ofs_mv.jpg")
+  "opticalpiramid": {
+    "jpg": require("./opticalpiramid.jpg")
+  },
+  "NOC_W05_13": {
+    "jpg": require("./NOC_W05_13.jpg")
   },
   "op3": {
     "jpg": require("./op3.jpg")
   },
-  "opticalpiramid": {
-    "jpg": require("./opticalpiramid.jpg")
-  },
-  "optpym3": {
-    "jpg": require("./optpym3.jpg")
+  "ofs_mv": {
+    "jpg": require("./ofs_mv.jpg")
   },
   "opticalpy2": {
     "jpg": require("./opticalpy2.jpg")
-  },
-  "quickavsketch01": {
-    "png": require("./quickavsketch01.png")
   },
   "particleEQ_thumb": {
     "jpg": require("./particleEQ_thumb.jpg")
@@ -2319,38 +2313,41 @@ module.exports = {
   "profile": {
     "jpg": require("./profile.jpg")
   },
+  "quickavsketch01": {
+    "png": require("./quickavsketch01.png")
+  },
   "rainytypewriter": {
     "jpg": require("./rainytypewriter.jpg")
-  },
-  "RG_main": {
-    "png": require("./RG_main.png")
-  },
-  "rg_thumbnail": {
-    "jpg": require("./rg_thumbnail.jpg")
-  },
-  "Screen-Shot-2012-07-04-at-5": {
-    "37.24-PM.jpg": require("./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg")
   },
   "RG_rasterize": {
     "png": require("./RG_rasterize.png")
   },
+  "rg_thumbnail": {
+    "jpg": require("./rg_thumbnail.jpg")
+  },
+  "RG_main": {
+    "png": require("./RG_main.png")
+  },
+  "Screen-Shot-2012-07-04-at-5": {
+    "37.24-PM.jpg": require("./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg")
+  },
+  "optpym3": {
+    "jpg": require("./optpym3.jpg")
+  },
   "slitscan": {
     "jpg": require("./slitscan.jpg")
-  },
-  "slitscan_01": {
-    "jpg": require("./slitscan_01.jpg")
   },
   "slitscan_02": {
     "jpg": require("./slitscan_02.jpg")
   },
-  "slitscan_03": {
-    "jpg": require("./slitscan_03.jpg")
+  "slitscan_05": {
+    "jpg": require("./slitscan_05.jpg")
   },
   "slitscan_04": {
     "jpg": require("./slitscan_04.jpg")
   },
-  "slitscan_05": {
-    "jpg": require("./slitscan_05.jpg")
+  "slitscan_01": {
+    "jpg": require("./slitscan_01.jpg")
   },
   "slitscan_06": {
     "jpg": require("./slitscan_06.jpg")
@@ -2364,38 +2361,41 @@ module.exports = {
   "slitscan_09": {
     "jpg": require("./slitscan_09.jpg")
   },
-  "slitscan_10": {
-    "jpg": require("./slitscan_10.jpg")
-  },
-  "slitscan_11": {
-    "jpg": require("./slitscan_11.jpg")
+  "slitscan_03": {
+    "jpg": require("./slitscan_03.jpg")
   },
   "slitscan_12": {
     "jpg": require("./slitscan_12.jpg")
   },
-  "slitscan_13": {
-    "jpg": require("./slitscan_13.jpg")
+  "slitscan_11": {
+    "jpg": require("./slitscan_11.jpg")
   },
-  "slitscan_15": {
-    "jpg": require("./slitscan_15.jpg")
+  "slitscan_10": {
+    "jpg": require("./slitscan_10.jpg")
   },
   "slitscan_14": {
     "jpg": require("./slitscan_14.jpg")
   },
-  "slitscan_16": {
-    "jpg": require("./slitscan_16.jpg")
+  "slitscan_15": {
+    "jpg": require("./slitscan_15.jpg")
+  },
+  "slitscan_13": {
+    "jpg": require("./slitscan_13.jpg")
   },
   "slitscan_17": {
     "jpg": require("./slitscan_17.jpg")
   },
-  "Spatial-00": {
-    "gif": require("./Spatial-00.gif")
-  },
-  "Spatial-01": {
-    "gif": require("./Spatial-01.gif")
+  "slitscan_16": {
+    "jpg": require("./slitscan_16.jpg")
   },
   "Spatial-02": {
     "gif": require("./Spatial-02.gif")
+  },
+  "Spatial-00": {
+    "gif": require("./Spatial-00.gif")
+  },
+  "Spatial-04": {
+    "gif": require("./Spatial-04.gif")
   },
   "Spatial-03": {
     "gif": require("./Spatial-03.gif")
@@ -2406,32 +2406,32 @@ module.exports = {
   "Spatial-06": {
     "gif": require("./Spatial-06.gif")
   },
-  "Spatial-04": {
-    "gif": require("./Spatial-04.gif")
+  "Spatial-08": {
+    "gif": require("./Spatial-08.gif")
   },
   "Spatial-07": {
     "gif": require("./Spatial-07.gif")
   },
-  "Spatial-08": {
-    "gif": require("./Spatial-08.gif")
-  },
-  "Spatial-10": {
-    "gif": require("./Spatial-10.gif")
-  },
   "Spatial-09": {
     "gif": require("./Spatial-09.gif")
   },
-  "Spatial-11": {
-    "gif": require("./Spatial-11.gif")
+  "Spatial-01": {
+    "gif": require("./Spatial-01.gif")
   },
   "Spatial-12": {
     "gif": require("./Spatial-12.gif")
   },
-  "Spatial-13": {
-    "gif": require("./Spatial-13.gif")
+  "Spatial-10": {
+    "gif": require("./Spatial-10.gif")
   },
   "Spatial-14": {
     "gif": require("./Spatial-14.gif")
+  },
+  "Spatial-11": {
+    "gif": require("./Spatial-11.gif")
+  },
+  "Spatial-16": {
+    "gif": require("./Spatial-16.gif")
   },
   "Spatial-15": {
     "gif": require("./Spatial-15.gif")
@@ -2439,41 +2439,38 @@ module.exports = {
   "Spatial-17": {
     "gif": require("./Spatial-17.gif")
   },
-  "Spatial-16": {
-    "gif": require("./Spatial-16.gif")
-  },
   "Spatial-18": {
     "gif": require("./Spatial-18.gif")
-  },
-  "Spatial-19": {
-    "gif": require("./Spatial-19.gif")
-  },
-  "Spatial-20": {
-    "gif": require("./Spatial-20.gif")
-  },
-  "Spatial-23": {
-    "gif": require("./Spatial-23.gif")
-  },
-  "Spatial-22": {
-    "gif": require("./Spatial-22.gif")
   },
   "Spatial-21": {
     "gif": require("./Spatial-21.gif")
   },
-  "Spatial-24": {
-    "gif": require("./Spatial-24.gif")
+  "Spatial-20": {
+    "gif": require("./Spatial-20.gif")
+  },
+  "Spatial-19": {
+    "gif": require("./Spatial-19.gif")
+  },
+  "Spatial-13": {
+    "gif": require("./Spatial-13.gif")
+  },
+  "Spatial-22": {
+    "gif": require("./Spatial-22.gif")
+  },
+  "Spatial-23": {
+    "gif": require("./Spatial-23.gif")
   },
   "Spatial-26": {
     "gif": require("./Spatial-26.gif")
   },
-  "Spatial-25": {
-    "gif": require("./Spatial-25.gif")
-  },
-  "Spatial-27": {
-    "gif": require("./Spatial-27.gif")
+  "Spatial-24": {
+    "gif": require("./Spatial-24.gif")
   },
   "Spatial-28": {
     "gif": require("./Spatial-28.gif")
+  },
+  "Spatial-27": {
+    "gif": require("./Spatial-27.gif")
   },
   "Spatial-30": {
     "gif": require("./Spatial-30.gif")
@@ -2481,11 +2478,14 @@ module.exports = {
   "Spatial-29": {
     "gif": require("./Spatial-29.gif")
   },
+  "Spatial-32": {
+    "gif": require("./Spatial-32.gif")
+  },
   "Spatial-31": {
     "gif": require("./Spatial-31.gif")
   },
-  "Spatial-32": {
-    "gif": require("./Spatial-32.gif")
+  "Spatial-25": {
+    "gif": require("./Spatial-25.gif")
   },
   "Spatial-33": {
     "gif": require("./Spatial-33.gif")
@@ -2496,20 +2496,14 @@ module.exports = {
   "Spatial-35": {
     "gif": require("./Spatial-35.gif")
   },
-  "Spatial-36": {
-    "gif": require("./Spatial-36.gif")
-  },
-  "Spatial-37": {
-    "gif": require("./Spatial-37.gif")
-  },
   "thesis_thumb": {
     "jpg": require("./thesis_thumb.jpg")
   },
-  "threejsstudy01": {
-    "jpg": require("./threejsstudy01.jpg")
-  },
   "thumb_36": {
     "jpg": require("./thumb_36.jpg")
+  },
+  "Spatial-37": {
+    "gif": require("./Spatial-37.gif")
   },
   "thumb_45": {
     "jpg": require("./thumb_45.jpg")
@@ -2520,23 +2514,26 @@ module.exports = {
   "thumb_49": {
     "gif": require("./thumb_49.gif")
   },
+  "threejsstudy01": {
+    "jpg": require("./threejsstudy01.jpg")
+  },
   "thumb_50": {
     "gif": require("./thumb_50.gif")
-  },
-  "thumb_51": {
-    "gif": require("./thumb_51.gif")
   },
   "thumb_52": {
     "gif": require("./thumb_52.gif")
   },
+  "thumb_51": {
+    "gif": require("./thumb_51.gif")
+  },
   "thumb_53": {
     "gif": require("./thumb_53.gif")
   },
-  "toneandthree": {
-    "jpg": require("./toneandthree.jpg")
-  },
   "ujnnova": {
     "jpg": require("./ujnnova.jpg")
+  },
+  "toneandthree": {
+    "jpg": require("./toneandthree.jpg")
   },
   "unpredictable": {
     "jpg": require("./unpredictable.jpg")
@@ -2553,17 +2550,14 @@ module.exports = {
   "thumb_47": {
     "gif": require("./thumb_47.gif")
   },
-  "webgl_fuz": {
-    "jpg": require("./webgl_fuz.jpg")
-  },
-  "webgl_peq": {
-    "jpg": require("./webgl_peq.jpg")
+  "Spatial-36": {
+    "gif": require("./Spatial-36.gif")
   },
   "webgl_par": {
     "jpg": require("./webgl_par.jpg")
   },
-  "webgl_sku": {
-    "jpg": require("./webgl_sku.jpg")
+  "webgl_fuz": {
+    "jpg": require("./webgl_fuz.jpg")
   },
   "web_thumbnail": {
     "jpg": require("./web_thumbnail.jpg")
@@ -2571,11 +2565,17 @@ module.exports = {
   "wooven": {
     "jpg": require("./wooven.jpg")
   },
+  "webgl_peq": {
+    "jpg": require("./webgl_peq.jpg")
+  },
+  "webgl_sku": {
+    "jpg": require("./webgl_sku.jpg")
+  },
   "[DTS]_W01_process": {
     "png": require("./[DTS]_W01_process.png")
   }
 };
-},{"./10years.jpg":"assets/img/10years.jpg","./2-agrippa.jpg":"assets/img/2-agrippa.jpg","./3-answer.jpg":"assets/img/3-answer.jpg","./360stadium.jpg":"assets/img/360stadium.jpg","./5-tea.jpg":"assets/img/5-tea.jpg","./8sec1.jpg":"assets/img/8sec1.jpg","./8sec2.jpg":"assets/img/8sec2.jpg","./artcol.jpg":"assets/img/artcol.jpg","./asdf.jpg":"assets/img/asdf.jpg","./bemyluv.jpg":"assets/img/bemyluv.jpg","./bg_pattern_01.jpg":"assets/img/bg_pattern_01.jpg","./bigscreen_thumb.jpg":"assets/img/bigscreen_thumb.jpg","./bg_pattern_02.png":"assets/img/bg_pattern_02.png","./buttonMirrorThumb.jpg":"assets/img/buttonMirrorThumb.jpg","./cityweather02.jpg":"assets/img/cityweather02.jpg","./cityweather01.jpg":"assets/img/cityweather01.jpg","./cityweather03.jpg":"assets/img/cityweather03.jpg","./cityweather04.jpg":"assets/img/cityweather04.jpg","./cityweatherThumb.jpg":"assets/img/cityweatherThumb.jpg","./clip_content_01.png":"assets/img/clip_content_01.png","./clip_thumb.jpg":"assets/img/clip_thumb.jpg","./contact.jpg":"assets/img/contact.jpg","./cosmosonic.jpg":"assets/img/cosmosonic.jpg","./crazyparticlesystem.jpg":"assets/img/crazyparticlesystem.jpg","./diffuse.jpg":"assets/img/diffuse.jpg","./drpepper.jpg":"assets/img/drpepper.jpg","./expressivetypography.jpg":"assets/img/expressivetypography.jpg","./DTS_W01.jpg":"assets/img/DTS_W01.jpg","./expressivetypography01.png":"assets/img/expressivetypography01.png","./expressivetypography02.png":"assets/img/expressivetypography02.png","./expressivetypography03.png":"assets/img/expressivetypography03.png","./fakelovernd01.png":"assets/img/fakelovernd01.png","./fakelovernd02.jpg":"assets/img/fakelovernd02.jpg","./fragthumbnail.jpg":"assets/img/fragthumbnail.jpg","./fuckdetector.jpg":"assets/img/fuckdetector.jpg","./g_cam_thumb.jpg":"assets/img/g_cam_thumb.jpg","./glitchnl.jpg":"assets/img/glitchnl.jpg","./hoam.jpg":"assets/img/hoam.jpg","./ICM01.jpg":"assets/img/ICM01.jpg","./itp-t-shirts-appl-2.jpg":"assets/img/itp-t-shirts-appl-2.jpg","./itp-t-shirts-appl-3.jpg":"assets/img/itp-t-shirts-appl-3.jpg","./hiddenfigures.jpg":"assets/img/hiddenfigures.jpg","./itp-t-shirts-appl-4.jpg":"assets/img/itp-t-shirts-appl-4.jpg","./itp-t-shirts-appl-5.jpg":"assets/img/itp-t-shirts-appl-5.jpg","./itp-t-shirts-appl-7.jpg":"assets/img/itp-t-shirts-appl-7.jpg","./itp-t-shirts-appl.png":"assets/img/itp-t-shirts-appl.png","./itp-t-shirts-appl-6.jpg":"assets/img/itp-t-shirts-appl-6.jpg","./itplogo.jpg":"assets/img/itplogo.jpg","./kiacadenza.jpg":"assets/img/kiacadenza.jpg","./jthtime.jpg":"assets/img/jthtime.jpg","./logo.png":"assets/img/logo.png","./logo_dot_w.png":"assets/img/logo_dot_w.png","./MUFE_screen1.png":"assets/img/MUFE_screen1.png","./moreraytracing.jpg":"assets/img/moreraytracing.jpg","./MUFE_screen2.png":"assets/img/MUFE_screen2.png","./MUFE_screen3.png":"assets/img/MUFE_screen3.png","./MUFE_screen4.png":"assets/img/MUFE_screen4.png","./MUFE_screen5.jpg":"assets/img/MUFE_screen5.jpg","./NM01.jpg":"assets/img/NM01.jpg","./NM02.jpg":"assets/img/NM02.jpg","./noc_w04_thumb.jpg":"assets/img/noc_w04_thumb.jpg","./NOC_W05_01.jpg":"assets/img/NOC_W05_01.jpg","./NOC_W05_03.jpg":"assets/img/NOC_W05_03.jpg","./NOC_W05_02.jpg":"assets/img/NOC_W05_02.jpg","./NOC_W05_04.jpg":"assets/img/NOC_W05_04.jpg","./NOC_W05_05.jpg":"assets/img/NOC_W05_05.jpg","./NOC_W05_07.jpg":"assets/img/NOC_W05_07.jpg","./NOC_W05_08.jpg":"assets/img/NOC_W05_08.jpg","./NOC_W05_10.jpg":"assets/img/NOC_W05_10.jpg","./NOC_W05_09.jpg":"assets/img/NOC_W05_09.jpg","./NOC_W05_06.jpg":"assets/img/NOC_W05_06.jpg","./NOC_W05_12.jpg":"assets/img/NOC_W05_12.jpg","./NOC_W05_11.jpg":"assets/img/NOC_W05_11.jpg","./NOC_W05_13.jpg":"assets/img/NOC_W05_13.jpg","./NOC_W05_14.jpg":"assets/img/NOC_W05_14.jpg","./NOC_W05_17.jpg":"assets/img/NOC_W05_17.jpg","./NOC_W05_15.jpg":"assets/img/NOC_W05_15.jpg","./NOC_W05_16.jpg":"assets/img/NOC_W05_16.jpg","./NOC_W05_thumb.jpg":"assets/img/NOC_W05_thumb.jpg","./noise.jpg":"assets/img/noise.jpg","./nonagon.jpg":"assets/img/nonagon.jpg","./ofs_mv.jpg":"assets/img/ofs_mv.jpg","./op3.jpg":"assets/img/op3.jpg","./opticalpiramid.jpg":"assets/img/opticalpiramid.jpg","./optpym3.jpg":"assets/img/optpym3.jpg","./opticalpy2.jpg":"assets/img/opticalpy2.jpg","./quickavsketch01.png":"assets/img/quickavsketch01.png","./particleEQ_thumb.jpg":"assets/img/particleEQ_thumb.jpg","./profile.jpg":"assets/img/profile.jpg","./rainytypewriter.jpg":"assets/img/rainytypewriter.jpg","./RG_main.png":"assets/img/RG_main.png","./rg_thumbnail.jpg":"assets/img/rg_thumbnail.jpg","./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg","./RG_rasterize.png":"assets/img/RG_rasterize.png","./slitscan.jpg":"assets/img/slitscan.jpg","./slitscan_01.jpg":"assets/img/slitscan_01.jpg","./slitscan_02.jpg":"assets/img/slitscan_02.jpg","./slitscan_03.jpg":"assets/img/slitscan_03.jpg","./slitscan_04.jpg":"assets/img/slitscan_04.jpg","./slitscan_05.jpg":"assets/img/slitscan_05.jpg","./slitscan_06.jpg":"assets/img/slitscan_06.jpg","./slitscan_07.png":"assets/img/slitscan_07.png","./slitscan_08.jpg":"assets/img/slitscan_08.jpg","./slitscan_09.jpg":"assets/img/slitscan_09.jpg","./slitscan_10.jpg":"assets/img/slitscan_10.jpg","./slitscan_11.jpg":"assets/img/slitscan_11.jpg","./slitscan_12.jpg":"assets/img/slitscan_12.jpg","./slitscan_13.jpg":"assets/img/slitscan_13.jpg","./slitscan_15.jpg":"assets/img/slitscan_15.jpg","./slitscan_14.jpg":"assets/img/slitscan_14.jpg","./slitscan_16.jpg":"assets/img/slitscan_16.jpg","./slitscan_17.jpg":"assets/img/slitscan_17.jpg","./Spatial-00.gif":"assets/img/Spatial-00.gif","./Spatial-01.gif":"assets/img/Spatial-01.gif","./Spatial-02.gif":"assets/img/Spatial-02.gif","./Spatial-03.gif":"assets/img/Spatial-03.gif","./Spatial-05.gif":"assets/img/Spatial-05.gif","./Spatial-06.gif":"assets/img/Spatial-06.gif","./Spatial-04.gif":"assets/img/Spatial-04.gif","./Spatial-07.gif":"assets/img/Spatial-07.gif","./Spatial-08.gif":"assets/img/Spatial-08.gif","./Spatial-10.gif":"assets/img/Spatial-10.gif","./Spatial-09.gif":"assets/img/Spatial-09.gif","./Spatial-11.gif":"assets/img/Spatial-11.gif","./Spatial-12.gif":"assets/img/Spatial-12.gif","./Spatial-13.gif":"assets/img/Spatial-13.gif","./Spatial-14.gif":"assets/img/Spatial-14.gif","./Spatial-15.gif":"assets/img/Spatial-15.gif","./Spatial-17.gif":"assets/img/Spatial-17.gif","./Spatial-16.gif":"assets/img/Spatial-16.gif","./Spatial-18.gif":"assets/img/Spatial-18.gif","./Spatial-19.gif":"assets/img/Spatial-19.gif","./Spatial-20.gif":"assets/img/Spatial-20.gif","./Spatial-23.gif":"assets/img/Spatial-23.gif","./Spatial-22.gif":"assets/img/Spatial-22.gif","./Spatial-21.gif":"assets/img/Spatial-21.gif","./Spatial-24.gif":"assets/img/Spatial-24.gif","./Spatial-26.gif":"assets/img/Spatial-26.gif","./Spatial-25.gif":"assets/img/Spatial-25.gif","./Spatial-27.gif":"assets/img/Spatial-27.gif","./Spatial-28.gif":"assets/img/Spatial-28.gif","./Spatial-30.gif":"assets/img/Spatial-30.gif","./Spatial-29.gif":"assets/img/Spatial-29.gif","./Spatial-31.gif":"assets/img/Spatial-31.gif","./Spatial-32.gif":"assets/img/Spatial-32.gif","./Spatial-33.gif":"assets/img/Spatial-33.gif","./Spatial-34.gif":"assets/img/Spatial-34.gif","./Spatial-35.gif":"assets/img/Spatial-35.gif","./Spatial-36.gif":"assets/img/Spatial-36.gif","./Spatial-37.gif":"assets/img/Spatial-37.gif","./thesis_thumb.jpg":"assets/img/thesis_thumb.jpg","./threejsstudy01.jpg":"assets/img/threejsstudy01.jpg","./thumb_36.jpg":"assets/img/thumb_36.jpg","./thumb_45.jpg":"assets/img/thumb_45.jpg","./thumb_48.jpg":"assets/img/thumb_48.jpg","./thumb_49.gif":"assets/img/thumb_49.gif","./thumb_50.gif":"assets/img/thumb_50.gif","./thumb_51.gif":"assets/img/thumb_51.gif","./thumb_52.gif":"assets/img/thumb_52.gif","./thumb_53.gif":"assets/img/thumb_53.gif","./toneandthree.jpg":"assets/img/toneandthree.jpg","./ujnnova.jpg":"assets/img/ujnnova.jpg","./unpredictable.jpg":"assets/img/unpredictable.jpg","./upload1.jpg":"assets/img/upload1.jpg","./visexp.jpg":"assets/img/visexp.jpg","./webgl_bad.gif":"assets/img/webgl_bad.gif","./thumb_47.gif":"assets/img/thumb_47.gif","./webgl_fuz.jpg":"assets/img/webgl_fuz.jpg","./webgl_peq.jpg":"assets/img/webgl_peq.jpg","./webgl_par.jpg":"assets/img/webgl_par.jpg","./webgl_sku.jpg":"assets/img/webgl_sku.jpg","./web_thumbnail.jpg":"assets/img/web_thumbnail.jpg","./wooven.jpg":"assets/img/wooven.jpg","./[DTS]_W01_process.png":"assets/img/[DTS]_W01_process.png"}],"../node_modules/process/browser.js":[function(require,module,exports) {
+},{"./10years.jpg":"assets/img/10years.jpg","./2-agrippa.jpg":"assets/img/2-agrippa.jpg","./3-answer.jpg":"assets/img/3-answer.jpg","./360stadium.jpg":"assets/img/360stadium.jpg","./5-tea.jpg":"assets/img/5-tea.jpg","./8sec1.jpg":"assets/img/8sec1.jpg","./8sec2.jpg":"assets/img/8sec2.jpg","./artcol.jpg":"assets/img/artcol.jpg","./asdf.jpg":"assets/img/asdf.jpg","./bemyluv.jpg":"assets/img/bemyluv.jpg","./bg_pattern_01.jpg":"assets/img/bg_pattern_01.jpg","./bg_pattern_02.png":"assets/img/bg_pattern_02.png","./bigscreen_thumb.jpg":"assets/img/bigscreen_thumb.jpg","./buttonMirrorThumb.jpg":"assets/img/buttonMirrorThumb.jpg","./cityweather02.jpg":"assets/img/cityweather02.jpg","./cityweather01.jpg":"assets/img/cityweather01.jpg","./cityweather03.jpg":"assets/img/cityweather03.jpg","./cityweather04.jpg":"assets/img/cityweather04.jpg","./cityweatherThumb.jpg":"assets/img/cityweatherThumb.jpg","./clip_thumb.jpg":"assets/img/clip_thumb.jpg","./contact.jpg":"assets/img/contact.jpg","./cosmosonic.jpg":"assets/img/cosmosonic.jpg","./crazyparticlesystem.jpg":"assets/img/crazyparticlesystem.jpg","./drpepper.jpg":"assets/img/drpepper.jpg","./DTS_W01.jpg":"assets/img/DTS_W01.jpg","./expressivetypography01.png":"assets/img/expressivetypography01.png","./expressivetypography.jpg":"assets/img/expressivetypography.jpg","./clip_content_01.png":"assets/img/clip_content_01.png","./diffuse.jpg":"assets/img/diffuse.jpg","./expressivetypography03.png":"assets/img/expressivetypography03.png","./fakelovernd01.png":"assets/img/fakelovernd01.png","./fakelovernd02.jpg":"assets/img/fakelovernd02.jpg","./expressivetypography02.png":"assets/img/expressivetypography02.png","./fuckdetector.jpg":"assets/img/fuckdetector.jpg","./glitchnl.jpg":"assets/img/glitchnl.jpg","./fragthumbnail.jpg":"assets/img/fragthumbnail.jpg","./g_cam_thumb.jpg":"assets/img/g_cam_thumb.jpg","./hiddenfigures.jpg":"assets/img/hiddenfigures.jpg","./itp-t-shirts-appl-3.jpg":"assets/img/itp-t-shirts-appl-3.jpg","./itp-t-shirts-appl-2.jpg":"assets/img/itp-t-shirts-appl-2.jpg","./ICM01.jpg":"assets/img/ICM01.jpg","./itp-t-shirts-appl-4.jpg":"assets/img/itp-t-shirts-appl-4.jpg","./hoam.jpg":"assets/img/hoam.jpg","./itp-t-shirts-appl-5.jpg":"assets/img/itp-t-shirts-appl-5.jpg","./itp-t-shirts-appl-7.jpg":"assets/img/itp-t-shirts-appl-7.jpg","./itplogo.jpg":"assets/img/itplogo.jpg","./jthtime.jpg":"assets/img/jthtime.jpg","./itp-t-shirts-appl.png":"assets/img/itp-t-shirts-appl.png","./kiacadenza.jpg":"assets/img/kiacadenza.jpg","./logo.png":"assets/img/logo.png","./logo_dot_w.png":"assets/img/logo_dot_w.png","./itp-t-shirts-appl-6.jpg":"assets/img/itp-t-shirts-appl-6.jpg","./MUFE_screen1.png":"assets/img/MUFE_screen1.png","./moreraytracing.jpg":"assets/img/moreraytracing.jpg","./MUFE_screen2.png":"assets/img/MUFE_screen2.png","./MUFE_screen4.png":"assets/img/MUFE_screen4.png","./NM02.jpg":"assets/img/NM02.jpg","./MUFE_screen5.jpg":"assets/img/MUFE_screen5.jpg","./noc_w04_thumb.jpg":"assets/img/noc_w04_thumb.jpg","./NM01.jpg":"assets/img/NM01.jpg","./NOC_W05_01.jpg":"assets/img/NOC_W05_01.jpg","./NOC_W05_02.jpg":"assets/img/NOC_W05_02.jpg","./NOC_W05_05.jpg":"assets/img/NOC_W05_05.jpg","./NOC_W05_06.jpg":"assets/img/NOC_W05_06.jpg","./NOC_W05_07.jpg":"assets/img/NOC_W05_07.jpg","./NOC_W05_08.jpg":"assets/img/NOC_W05_08.jpg","./NOC_W05_04.jpg":"assets/img/NOC_W05_04.jpg","./NOC_W05_09.jpg":"assets/img/NOC_W05_09.jpg","./NOC_W05_03.jpg":"assets/img/NOC_W05_03.jpg","./MUFE_screen3.png":"assets/img/MUFE_screen3.png","./NOC_W05_11.jpg":"assets/img/NOC_W05_11.jpg","./NOC_W05_12.jpg":"assets/img/NOC_W05_12.jpg","./NOC_W05_14.jpg":"assets/img/NOC_W05_14.jpg","./NOC_W05_10.jpg":"assets/img/NOC_W05_10.jpg","./NOC_W05_16.jpg":"assets/img/NOC_W05_16.jpg","./NOC_W05_15.jpg":"assets/img/NOC_W05_15.jpg","./NOC_W05_thumb.jpg":"assets/img/NOC_W05_thumb.jpg","./NOC_W05_17.jpg":"assets/img/NOC_W05_17.jpg","./noise.jpg":"assets/img/noise.jpg","./nonagon.jpg":"assets/img/nonagon.jpg","./opticalpiramid.jpg":"assets/img/opticalpiramid.jpg","./NOC_W05_13.jpg":"assets/img/NOC_W05_13.jpg","./op3.jpg":"assets/img/op3.jpg","./ofs_mv.jpg":"assets/img/ofs_mv.jpg","./opticalpy2.jpg":"assets/img/opticalpy2.jpg","./particleEQ_thumb.jpg":"assets/img/particleEQ_thumb.jpg","./profile.jpg":"assets/img/profile.jpg","./quickavsketch01.png":"assets/img/quickavsketch01.png","./rainytypewriter.jpg":"assets/img/rainytypewriter.jpg","./RG_rasterize.png":"assets/img/RG_rasterize.png","./rg_thumbnail.jpg":"assets/img/rg_thumbnail.jpg","./RG_main.png":"assets/img/RG_main.png","./Screen-Shot-2012-07-04-at-5.37.24-PM.jpg":"assets/img/Screen-Shot-2012-07-04-at-5.37.24-PM.jpg","./optpym3.jpg":"assets/img/optpym3.jpg","./slitscan.jpg":"assets/img/slitscan.jpg","./slitscan_02.jpg":"assets/img/slitscan_02.jpg","./slitscan_05.jpg":"assets/img/slitscan_05.jpg","./slitscan_04.jpg":"assets/img/slitscan_04.jpg","./slitscan_01.jpg":"assets/img/slitscan_01.jpg","./slitscan_06.jpg":"assets/img/slitscan_06.jpg","./slitscan_07.png":"assets/img/slitscan_07.png","./slitscan_08.jpg":"assets/img/slitscan_08.jpg","./slitscan_09.jpg":"assets/img/slitscan_09.jpg","./slitscan_03.jpg":"assets/img/slitscan_03.jpg","./slitscan_12.jpg":"assets/img/slitscan_12.jpg","./slitscan_11.jpg":"assets/img/slitscan_11.jpg","./slitscan_10.jpg":"assets/img/slitscan_10.jpg","./slitscan_14.jpg":"assets/img/slitscan_14.jpg","./slitscan_15.jpg":"assets/img/slitscan_15.jpg","./slitscan_13.jpg":"assets/img/slitscan_13.jpg","./slitscan_17.jpg":"assets/img/slitscan_17.jpg","./slitscan_16.jpg":"assets/img/slitscan_16.jpg","./Spatial-02.gif":"assets/img/Spatial-02.gif","./Spatial-00.gif":"assets/img/Spatial-00.gif","./Spatial-04.gif":"assets/img/Spatial-04.gif","./Spatial-03.gif":"assets/img/Spatial-03.gif","./Spatial-05.gif":"assets/img/Spatial-05.gif","./Spatial-06.gif":"assets/img/Spatial-06.gif","./Spatial-08.gif":"assets/img/Spatial-08.gif","./Spatial-07.gif":"assets/img/Spatial-07.gif","./Spatial-09.gif":"assets/img/Spatial-09.gif","./Spatial-01.gif":"assets/img/Spatial-01.gif","./Spatial-12.gif":"assets/img/Spatial-12.gif","./Spatial-10.gif":"assets/img/Spatial-10.gif","./Spatial-14.gif":"assets/img/Spatial-14.gif","./Spatial-11.gif":"assets/img/Spatial-11.gif","./Spatial-16.gif":"assets/img/Spatial-16.gif","./Spatial-15.gif":"assets/img/Spatial-15.gif","./Spatial-17.gif":"assets/img/Spatial-17.gif","./Spatial-18.gif":"assets/img/Spatial-18.gif","./Spatial-21.gif":"assets/img/Spatial-21.gif","./Spatial-20.gif":"assets/img/Spatial-20.gif","./Spatial-19.gif":"assets/img/Spatial-19.gif","./Spatial-13.gif":"assets/img/Spatial-13.gif","./Spatial-22.gif":"assets/img/Spatial-22.gif","./Spatial-23.gif":"assets/img/Spatial-23.gif","./Spatial-26.gif":"assets/img/Spatial-26.gif","./Spatial-24.gif":"assets/img/Spatial-24.gif","./Spatial-28.gif":"assets/img/Spatial-28.gif","./Spatial-27.gif":"assets/img/Spatial-27.gif","./Spatial-30.gif":"assets/img/Spatial-30.gif","./Spatial-29.gif":"assets/img/Spatial-29.gif","./Spatial-32.gif":"assets/img/Spatial-32.gif","./Spatial-31.gif":"assets/img/Spatial-31.gif","./Spatial-25.gif":"assets/img/Spatial-25.gif","./Spatial-33.gif":"assets/img/Spatial-33.gif","./Spatial-34.gif":"assets/img/Spatial-34.gif","./Spatial-35.gif":"assets/img/Spatial-35.gif","./thesis_thumb.jpg":"assets/img/thesis_thumb.jpg","./thumb_36.jpg":"assets/img/thumb_36.jpg","./Spatial-37.gif":"assets/img/Spatial-37.gif","./thumb_45.jpg":"assets/img/thumb_45.jpg","./thumb_48.jpg":"assets/img/thumb_48.jpg","./thumb_49.gif":"assets/img/thumb_49.gif","./threejsstudy01.jpg":"assets/img/threejsstudy01.jpg","./thumb_50.gif":"assets/img/thumb_50.gif","./thumb_52.gif":"assets/img/thumb_52.gif","./thumb_51.gif":"assets/img/thumb_51.gif","./thumb_53.gif":"assets/img/thumb_53.gif","./ujnnova.jpg":"assets/img/ujnnova.jpg","./toneandthree.jpg":"assets/img/toneandthree.jpg","./unpredictable.jpg":"assets/img/unpredictable.jpg","./upload1.jpg":"assets/img/upload1.jpg","./visexp.jpg":"assets/img/visexp.jpg","./webgl_bad.gif":"assets/img/webgl_bad.gif","./thumb_47.gif":"assets/img/thumb_47.gif","./Spatial-36.gif":"assets/img/Spatial-36.gif","./webgl_par.jpg":"assets/img/webgl_par.jpg","./webgl_fuz.jpg":"assets/img/webgl_fuz.jpg","./web_thumbnail.jpg":"assets/img/web_thumbnail.jpg","./wooven.jpg":"assets/img/wooven.jpg","./webgl_peq.jpg":"assets/img/webgl_peq.jpg","./webgl_sku.jpg":"assets/img/webgl_sku.jpg","./[DTS]_W01_process.png":"assets/img/[DTS]_W01_process.png"}],"../node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -2813,6 +2813,8 @@ var ___1 = __importDefault(require("./../assets/img/*.*"));
 var utils_2 = require("./utils");
 
 var expandContent = function expandContent(index, scrollToNode) {
+  var scrollTo = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
   var _a; // Reset the dom
 
 
@@ -2836,7 +2838,9 @@ var expandContent = function expandContent(index, scrollToNode) {
   var project = content_json_1.default.projects[index];
   var targetDom = document.getElementById(project.id);
   var contentContainer = document.createElement('div');
-  contentContainer.className = "content contentContainer"; // Append to target
+  contentContainer.className = "content contentContainer"; // Set hash location
+
+  window.location.hash = project.id; // Append to target
 
   utils_1.insertNext(contentContainer, targetDom); // Content info
 
@@ -2965,8 +2969,11 @@ var expandContent = function expandContent(index, scrollToNode) {
     }
 
     if (description !== null) contentContainer.appendChild(description);
-  } // scrollToNode.scrollIntoView({ behavior: 'smooth' });
+  }
 
+  if (scrollTo) scrollToNode.scrollIntoView({
+    behavior: 'smooth'
+  });
 };
 
 var buildCreditNode = function buildCreditNode(info) {
@@ -3044,7 +3051,7 @@ var buildContentContainerNode = function buildContentContainerNode(contentData, 
 
     case 'image':
       thumbnail = buildContentNode(contentData.content.url, utils_1.CONTENT_TYPE.IMAGE);
-      thumbnail.onclick = expandContent.bind(this, nodeIndex, thumbnailMask);
+      thumbnail.onclick = expandContent.bind(this, nodeIndex, thumbnailMask, false);
       break;
 
     case 'realtime':
@@ -3063,7 +3070,7 @@ var buildContentContainerNode = function buildContentContainerNode(contentData, 
   thumbnailMask.className = 'listThumbnailImageContainer';
   descriptionMask.className = 'listDescriptionContainer';
   subject.className = 'listSubject';
-  subject.onclick = expandContent.bind(this, nodeIndex, thumbnailMask);
+  subject.onclick = expandContent.bind(this, nodeIndex, thumbnailMask, false);
   subject.style.cursor = 'pointer';
   subject.innerHTML = '<div><h2>' + contentData.title + '</h2></div>';
   description.className = 'listDescription';
@@ -3071,7 +3078,7 @@ var buildContentContainerNode = function buildContentContainerNode(contentData, 
   date.className = 'listDate';
   date.innerHTML = '<p>' + contentData.date + '</p>';
   detail.className = 'listDetail';
-  detail.onclick = expandContent.bind(this, nodeIndex, thumbnailMask);
+  detail.onclick = expandContent.bind(this, nodeIndex, thumbnailMask, false);
   detail.innerHTML = '<a>Details</a>';
   return container;
 };
@@ -3107,6 +3114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.open("https://" + window.location.hostname + window.location.pathname, '_top');
   } else {
     init();
+    onHashChanged();
   }
 }, false);
 var raycastTargetNodes = [];
@@ -3211,6 +3219,17 @@ var onScroll = function onScroll() {
 };
 
 window.addEventListener('scroll', onScroll, false);
+
+var onHashChanged = function onHashChanged() {
+  var _a;
+
+  var hash = location.hash;
+  var id = hash.split('#')[1];
+  var nodeIndex = content_json_1.default.projects.findIndex(function (project, i) {
+    return project.id === id;
+  });
+  expandContent(nodeIndex, (_a = document.getElementById(id)) === null || _a === void 0 ? void 0 : _a.childNodes[1], true);
+};
 },{"/json/content.json":"json/content.json","/js/utils":"js/utils.ts","./../assets/img/*.*":"assets/img/*.*","./utils":"js/utils.ts","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3239,7 +3258,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58732" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62425" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
