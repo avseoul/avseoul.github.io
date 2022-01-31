@@ -1,0 +1,282 @@
+html{scroll-behavior:smooth}
+
+:root {
+    --width: 100%;
+    --globalMarginSize: 20px;
+    --titlePaddingSize: 150px;
+    --containerPaddingBottomSize: 100px;
+    --contentContainerWidth: 100%;
+    --contentContainerHeight: 70%;
+    --contentContainerVerticalPaddingSize: 50px;
+}
+
+body {
+    position: relative;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 20px;
+    padding: 
+        var(--globalMarginSize) 
+        calc(var(--globalMarginSize) + var(--titlePaddingSize))
+        var(--globalMarginSize)
+        calc(var(--globalMarginSize) + var(--titlePaddingSize));
+}
+
+h1 {
+    font-size: 84px;
+    letter-spacing: -2;
+    line-height: 1;
+    margin: 0 0 10px 0;
+}
+
+h2 {
+    font-size: 32px;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin: 0;
+}
+
+h3 {
+    font-size: 16px;
+    letter-spacing: -.1px;
+    line-height: 1;
+    margin: 25px 0 0 0;
+}
+
+span,
+p {
+    font-size: 13px;
+    color: #222;
+    margin: 0 2px 2px 2px;
+    line-height: 1.5;
+}
+
+a {
+    cursor: pointer;
+    color: -webkit-link;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: -webkit-link;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: black;
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+    margin-bottom: var(--containerPaddingBottomSize);
+}
+
+.contentContainer {
+    width: 80%;
+    min-height: 100vh;
+    margin:
+        calc(-1 * var(--contentContainerVerticalPaddingSize))
+        0
+        calc(2 * var(--contentContainerVerticalPaddingSize))
+        0;
+}
+
+.contentTitle h2 {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.contentDescription {
+    margin: 0px 0px 30px 0px;
+
+}
+
+.listContainer {
+    width: var(--contentContainerWidth);
+    margin-bottom: 70px;
+}
+
+.listDetail,
+.listSubject {
+    margin: 10px 0 5px 0;
+}
+
+.listThumbnailImageContainer {
+    width: var(--contentContainerWidth);
+    height: var(--contentContainerHeight);
+    cursor: pointer;
+}
+
+.listThumbnailImage {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow:hidden;
+}
+
+.listDescriptionContainer {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.listDate p {
+    color: #222;
+    font-weight: 100;
+    font-size: 11px;
+}
+
+#title {
+    transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    position: fixed;
+    right: 76px;
+    bottom: -23px;
+    font-size: 100px;
+    font-weight: 600;
+    letter-spacing: -3;
+    line-height: 1;
+    margin: 0;
+    width: 0px;
+    white-space: nowrap;
+    z-index: 999;
+}
+
+#logo {
+    position: fixed;
+    left: 34px;
+    top: 36px;
+    width: 100px;
+}
+
+#menu {
+    position: fixed;
+    left: 35px;
+    bottom: 28px;
+    width: 100px;
+    text-align: left;
+}
+
+#bio {
+    width: 80%;
+}
+
+#link {
+    text-align: right;
+}
+
+credit {
+    color: #999;
+    font-style: italic;
+    font-weight: 100;
+}
+
+@media only screen and (max-width: 960px) {
+    :root {
+        --width: 100%;
+        --globalMarginSize: 0px;
+        --titlePaddingSize: 0px;
+        --containerPaddingBottomSize: 100px;
+        --contentContainerWidth: 100%;
+        --contentContainerHeight: 70%;
+        --contentContainerVerticalPaddingSize: 50px;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    #logo {
+        position: relative;
+        width: 100px;
+        left: 0;
+        top: 0;
+    }
+    
+    #menu {
+        position: relative;
+        text-align: left;
+        margin-right: 0;
+        left: 0;
+        bottom: 0;
+    }
+
+    #title {
+        display: none;
+    }
+
+    #bio {
+        width: 100%;
+    }
+}
+
+.is_fucked {
+    -webkit-animation-name: example;
+    -webkit-animation-duration: 500ms;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: example;
+    -moz-animation-duration: 500ms;
+    -moz-animation-iteration-count: infinite;
+
+    -o-animation-name: example;
+    -o-animation-duration: 500ms;
+    -o-animation-iteration-count: infinite;
+
+    animation-name: example;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes example {
+    0% {
+        color: red;
+    }
+
+    25% {
+        color: yellow;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    75% {
+        color: green;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+@keyframes example {
+    0% {
+        color: red;
+    }
+
+    25% {
+        color: yellow;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    75% {
+        color: green;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+/*# sourceMappingURL=/style.78032849.css.map */
