@@ -17,6 +17,12 @@ export default class App {
     private _skybox;
     private _floor;
     private _screen;
+    private _fbo;
+    private _frameComposer;
+    private _time;
+    private _timeTweenMin;
+    private _timeTweenMax;
+    private _timeTween;
     private _camera;
     private _cameraControl;
     private _scene;
@@ -25,6 +31,7 @@ export default class App {
     private _stats;
     private _mouseX;
     private _mouseY;
+    private _isMouseDown;
     private _width;
     private _height;
     private _halfWidth;
@@ -32,15 +39,14 @@ export default class App {
     private _useLightings;
     private _debugTextures;
     private _cameraNeedsUpdate;
-    private _prevTime;
-    private _timeScale;
-    private _diceRespawnCounter;
     constructor();
     private update;
     private resetSkybox;
     private randomize;
-    private setTimeScale;
+    private handleTimeEvent;
     private setLightPosition;
+    onMouseDown(event: MouseEvent): void;
     onMouseMove(event: MouseEvent): void;
+    onMouseUp(event: MouseEvent): void;
     private setupGUI;
 }
