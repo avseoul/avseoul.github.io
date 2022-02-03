@@ -1,4 +1,4 @@
-import { Group, SkinnedMesh } from "three";
+import { Group, SkinnedMesh, Texture } from "three";
 export default class ParticleSystem extends Group {
     private _material;
     private _behaviorBufferHandler;
@@ -7,6 +7,8 @@ export default class ParticleSystem extends Group {
     private _isInit;
     private get _currentBehaviorBuffer();
     private get _previousBehaviorBuffer();
+    private _skinMap;
+    get skinMap(): Texture;
     constructor(reference: SkinnedMesh);
     update(animationFrame: number): void;
     private setupTextureFormat;

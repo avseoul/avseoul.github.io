@@ -27,3 +27,4 @@ export declare const TextureToInstanceFrag: string;
 export declare const PlannarReflectionVert: string;
 export declare const PlannarReflectionFrag: string;
 export declare const ParticleBehavior: string;
+export declare const ComposerFrag: string;

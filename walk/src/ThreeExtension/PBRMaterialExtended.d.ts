@@ -9,6 +9,7 @@ export default class PBRMaterialExtended extends MeshPhysicalMaterial {
     set animationFrame(value: number);
     set customMap0(value: Texture);
     set customMap1(value: Texture);
+    set customSlider0(value: number);
     set textureMatrix(value: Matrix4);
     private setValue;
 }

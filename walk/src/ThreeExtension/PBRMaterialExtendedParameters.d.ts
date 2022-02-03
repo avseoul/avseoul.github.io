@@ -4,7 +4,8 @@ export default interface PBRMaterialExtendedParameters extends MeshPhysicalMater
     fresnelPower?: number | undefined;
     totalElapsedTime?: number | undefined;
     animationFrame?: number | undefined;
-    customMap0?: Texture | undefined;
-    customMap1?: Texture | undefined;
+    customMap0?: Texture | null;
+    customMap1?: Texture | null;
+    customSlider0?: number | undefined;
     textureMatrix?: Matrix4 | undefined;
 }
