@@ -9,8 +9,6 @@ export default class App {
     static get screenOverlayCamera(): OrthographicCamera;
     private static _screenQuadGeometry;
     static get screenQuadGeometry(): PlaneGeometry;
-    private static _isMobile;
-    static get isMobile(): boolean;
     private _TWOPI;
     private _walker;
     private _particles;
@@ -32,6 +30,7 @@ export default class App {
     private _mouseX;
     private _mouseY;
     private _isMouseDown;
+    private _isPortrait;
     private _width;
     private _height;
     private _halfWidth;
@@ -41,6 +40,7 @@ export default class App {
     private _cameraNeedsUpdate;
     constructor();
     private update;
+    resetFrameBuffers(): void;
     private resetSkybox;
     private randomize;
     private handleTimeEvent;
@@ -48,5 +48,6 @@ export default class App {
     onMouseDown(event: MouseEvent): void;
     onMouseMove(event: MouseEvent): void;
     onMouseUp(event: MouseEvent): void;
+    onResize(): boolean;
     private setupGUI;
 }
