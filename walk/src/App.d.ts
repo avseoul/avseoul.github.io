@@ -36,6 +36,7 @@ export default class App {
     private _mouseY;
     private _isMouseDown;
     private _isPortrait;
+    private _canvasSize;
     private _width;
     private _height;
     private _halfWidth;
