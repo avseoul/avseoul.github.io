@@ -1,9 +1,14 @@
-import { ShaderMaterialParameters } from "three";
+import { RawShaderMaterial, Scene, ShaderMaterialParameters } from "three";
 export default class RenderToTextureHandler {
+    protected _material: RawShaderMaterial;
     private _scene;
-    private _material;
+    get scene(): Scene;
+    private _onBeforeRender;
+    get onBeforeRender(): any;
+    set onBeforeRender(ref: any);
     constructor(blitShader: string, options?: ShaderMaterialParameters);
-    setShaderParameter(param: string, value: any): void;
-    render(targetRenderTexture: any): void;
-    renderToScreen(): void;
+    setUniform(param: string, value: any): void;
+    setDefine(key: string, value?: any): void;
+    updateUniforms(): void;
+    render(renderTarget: any): void;
 }

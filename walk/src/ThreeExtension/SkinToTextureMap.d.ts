@@ -6,6 +6,8 @@ export default class SkinToTextureMap extends WebGLMultipleRenderTargets {
     get count(): number;
     get positionTexture(): Texture;
     get normalTexture(): Texture;
+    get tangentTexture(): Texture;
     constructor(source: SkinnedMesh);
+    updateUniforms(): void;
     update(): void;
 }
