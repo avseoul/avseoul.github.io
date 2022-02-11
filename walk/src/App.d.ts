@@ -13,6 +13,7 @@ export default class App {
     private _camera;
     get camera(): CameraExtended;
     private _walker;
+    private _skinToMaps;
     private _particles;
     private _skybox;
     private _floor;
