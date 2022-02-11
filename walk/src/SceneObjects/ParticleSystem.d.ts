@@ -1,3 +1,4 @@
+import SkinToTextureMap from "../ThreeExtension/SkinToTextureMap";
 import { Group, SkinnedMesh, Texture } from "three";
 export default class ParticleSystem extends Group {
     private _material;
@@ -10,7 +11,7 @@ export default class ParticleSystem extends Group {
     private _skinToMap;
     private _skinMap;
     get skinMap(): Texture;
-    constructor(reference: SkinnedMesh);
+    constructor(reference: SkinnedMesh, skinToTextureInitCallback: (ref: SkinToTextureMap) => any);
     update(animationFrame: number): void;
     private setupTextureFormat;
 }
