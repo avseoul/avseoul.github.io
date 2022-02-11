@@ -3,9 +3,6 @@ export default class RenderToTextureHandler {
     protected _material: RawShaderMaterial;
     private _scene;
     get scene(): Scene;
-    private _onBeforeRender;
-    get onBeforeRender(): any;
-    set onBeforeRender(ref: any);
     constructor(blitShader: string, options?: ShaderMaterialParameters);
     setUniform(param: string, value: any): void;
     setDefine(key: string, value?: any): void;

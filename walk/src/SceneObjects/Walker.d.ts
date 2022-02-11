@@ -10,6 +10,5 @@ export default class Walker {
     set tangentEnabled(value: boolean);
     constructor(radius?: number, resolution?: number);
     update(time: number, delta: number): void;
-    setTimeScale(value: number): void;
     private setTangentEnabled;
 }

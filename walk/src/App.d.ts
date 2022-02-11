@@ -12,7 +12,6 @@ export default class App {
     static get screenQuadGeometry(): PlaneGeometry;
     private _camera;
     get camera(): CameraExtended;
-    private _TWOPI;
     private _walker;
     private _particles;
     private _skybox;
@@ -43,11 +42,6 @@ export default class App {
     private _halfHeight;
     private _debugTextures;
     private _cameraNeedsUpdate;
-    private _ssrtMaxRayTraceDistance;
-    private _ssrtMaxSteps;
-    private _ssrtJitterFraction;
-    private _ssrtStride;
-    private _ssrtDepthThickness;
     constructor();
     private update;
     resetFrameBuffers(camera: PerspectiveCamera): void;
