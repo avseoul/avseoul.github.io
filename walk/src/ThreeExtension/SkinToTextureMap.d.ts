@@ -1,6 +1,6 @@
 import { SkinnedMesh, Texture, WebGLMultipleRenderTargets } from "three";
 export default class SkinToTextureMap extends WebGLMultipleRenderTargets {
-    private _source;
+    private _reference;
     private _rttHandler;
     private _isBoneTextureAvailable;
     private _usedSlotCount;
@@ -15,7 +15,7 @@ export default class SkinToTextureMap extends WebGLMultipleRenderTargets {
     get positionTexture(): Texture;
     get normalTexture(): Texture;
     get tangentTexture(): Texture;
-    constructor(source: SkinnedMesh);
+    constructor(reference: SkinnedMesh, skinToTextureInitCallback: (ref: SkinToTextureMap) => any);
     updateUniforms(): void;
     update(): void;
 }
