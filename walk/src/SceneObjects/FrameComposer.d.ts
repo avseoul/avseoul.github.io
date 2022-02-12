@@ -39,9 +39,6 @@ export declare class FrameComposer extends RenderToTextureHandler {
     private _ssrPixelStride;
     get ssrPixelStride(): number;
     set ssrPixelStride(value: number);
-    private _ssrPixelStrideZCuttoff;
-    get ssrPixelStrideZCuttoff(): number;
-    set ssrPixelStrideZCuttoff(value: number);
     private _debugPassDirection;
     get debugPassDirection(): DebugPassDirection;
     set debugPassDirection(value: DebugPassDirection);
