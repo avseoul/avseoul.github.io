@@ -14,10 +14,11 @@ export default class App {
     get camera(): CameraExtended;
     private _walker;
     private _skinToMaps;
-    private _particles;
     private _skybox;
     private _floor;
     private _screen;
+    private _particles;
+    private _particleAmount;
     private _frameComposer;
     private _fogDensityTarget;
     private readonly _fogDensityTargetMin;
