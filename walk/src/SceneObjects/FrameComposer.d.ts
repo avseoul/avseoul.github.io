@@ -45,8 +45,12 @@ export declare class FrameComposer extends RenderToTextureHandler {
     private _clearCoatEnabled;
     get clearCoatEnabled(): boolean;
     set clearCoatEnabled(value: boolean);
+    private _ssrEnabled;
+    get ssrEnabled(): boolean;
+    set ssrEnabled(value: boolean);
     constructor(w: number, h: number, cameraRef: PerspectiveCamera);
     private setClearCoatEnabled;
+    private setSSREnabled;
     setFogDensity(value: number): void;
     private resetDebugPassDirection;
     setDebugPassDirection(direction: DebugPassDirection): void;
