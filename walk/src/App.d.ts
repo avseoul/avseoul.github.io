@@ -44,6 +44,7 @@ export default class App {
     private _halfHeight;
     private _debugTextures;
     private _cameraNeedsUpdate;
+    private get _pixelRatio();
     constructor();
     private update;
     resetFrameBuffers(camera: PerspectiveCamera): void;
@@ -51,6 +52,7 @@ export default class App {
     private randomize;
     private handleTimeEvent;
     private setLightPosition;
+    private printRendererInfo;
     onMouseDown(event: MouseEvent): void;
     onMouseMove(event: MouseEvent): void;
     onMouseUp(event: MouseEvent): void;
