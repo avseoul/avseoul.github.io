@@ -3,7 +3,8 @@ export default class Walker {
     private _gltf;
     private _mixer;
     private _skinnedMeshes;
-    private _glitchMaxEnabled;
+    private _flickerEnabled;
+    get flickerEnabled(): boolean;
     get scene(): import("three").Group;
     get skinnedMeshes(): SkinnedMesh<import("three").BufferGeometry, import("three").Material | import("three").Material[]>[];
     private _normalMapEnabled;
