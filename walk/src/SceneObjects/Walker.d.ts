@@ -1,4 +1,4 @@
-import { SkinnedMesh } from "three";
+import { SkinnedMesh, Vector3 } from "three";
 export default class Walker {
     private _gltf;
     private _mixer;
@@ -13,5 +13,6 @@ export default class Walker {
     constructor(radius?: number, resolution?: number);
     update(time: number, delta: number): void;
     setGlitchEnabled(enabled: boolean): void;
+    setShuffledIndex(index: Vector3): void;
     private setNormalMapEnabled;
 }
