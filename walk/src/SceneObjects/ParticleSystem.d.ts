@@ -19,7 +19,9 @@ export default class ParticleSystem extends Group {
     set particleAmount(value: ParticleAmount);
     constructor(meshReference: SkinnedMesh, skinReference: SkinToTextureMap);
     update(animationFrame: number): void;
-    setFluorescentColor(enabled: boolean, shuffledIndex: Vector3): void;
+    setShuffledIndex(shuffledIndex: Vector3): void;
+    setFluorescentColor(enabled: boolean): void;
+    setVoxelRain(enabled: boolean): void;
     resetBuffers(): void;
     private getGeomSize;
     private setupTextureFormat;
