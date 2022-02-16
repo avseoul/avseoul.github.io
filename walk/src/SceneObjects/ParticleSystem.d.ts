@@ -1,5 +1,5 @@
 import SkinToTextureMap from "../ThreeExtension/SkinToTextureMap";
-import { Group, SkinnedMesh, Texture } from "three";
+import { Group, SkinnedMesh, Texture, Vector3 } from "three";
 import { ParticleAmount } from "../Enum";
 export default class ParticleSystem extends Group {
     private _material;
@@ -19,6 +19,7 @@ export default class ParticleSystem extends Group {
     set particleAmount(value: ParticleAmount);
     constructor(meshReference: SkinnedMesh, skinReference: SkinToTextureMap);
     update(animationFrame: number): void;
+    setFluorescentColor(enabled: boolean, shuffledIndex: Vector3): void;
     resetBuffers(): void;
     private getGeomSize;
     private setupTextureFormat;

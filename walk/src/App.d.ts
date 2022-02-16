@@ -19,6 +19,7 @@ export default class App {
     private _screen;
     private _particles;
     private _particleAmount;
+    private _indexShuffle;
     private _frameComposer;
     private _fogDensityTarget;
     private readonly _fogDensityTargetMin;
@@ -49,6 +50,7 @@ export default class App {
     private update;
     resetFrameBuffers(camera: PerspectiveCamera): void;
     private resetSkybox;
+    private shuffledIndex;
     private randomize;
     private handleTimeEvent;
     private setLightPosition;
