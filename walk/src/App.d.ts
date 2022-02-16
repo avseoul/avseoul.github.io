@@ -15,8 +15,8 @@ export default class App {
     private _walker;
     private _skinToMaps;
     private _skybox;
-    private _floor;
     private _screen;
+    private _floor;
     private _particles;
     private _particleAmount;
     private _indexShuffle;

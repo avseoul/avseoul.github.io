@@ -1,4 +1,4 @@
-import { Mesh } from "three";
+import { Color, Mesh } from "three";
 export default class Floor extends Mesh {
     private _plannarReflectionHandler;
     private _normalMapEnabled;
@@ -11,6 +11,7 @@ export default class Floor extends Mesh {
     update(animationFrame: number): void;
     setCustomSlider(value: number): void;
     setTimeScale(value: number): void;
+    setColor(value: Color): void;
     private setNormalMapEnabled;
     private setPlannarReflectionEnabled;
 }
