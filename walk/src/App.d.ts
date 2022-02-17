@@ -14,9 +14,11 @@ export default class App {
     get camera(): CameraExtended;
     private _walker;
     private _skinToMaps;
-    private _skybox;
     private _screen;
     private _floor;
+    private _skybox;
+    private _skyboxResetCounter;
+    private readonly _skyboxResetInterval;
     private _particles;
     private _particleAmount;
     private _indexShuffle;
