@@ -13,6 +13,9 @@ export default class Walker {
     constructor(radius?: number, resolution?: number);
     update(time: number, delta: number): void;
     setGlitchEnabled(enabled: boolean): void;
+    private setFlickerEnabled;
     setShuffledIndex(index: Vector3): void;
     private setNormalMapEnabled;
+    private getHash;
+    private getInfluence;
 }
