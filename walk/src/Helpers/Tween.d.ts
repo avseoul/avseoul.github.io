@@ -17,9 +17,11 @@ export default class Tween {
     private _onEnd;
     get onEnd(): EventTarget;
     constructor(from?: number, to?: number, speed?: number, epsilon?: number);
+    setSpeed(value: number): void;
     setFrom(value: number, needRestart?: boolean): void;
     setTo(value: number, needRestart?: boolean): void;
     setFromTo(from: number, to: number, needRestart?: boolean): void;
+    resetValue(value?: number): void;
     begin(): void;
     end(): void;
     update(): void;

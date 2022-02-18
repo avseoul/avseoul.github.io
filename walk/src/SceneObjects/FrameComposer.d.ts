@@ -14,7 +14,8 @@ export declare enum DebugPassDirection {
     DEPTH_PASS = "DEPTH_PASS",
     SSR_PASS = "SSR_PASS",
     LIGHTING_MASK_PASS = "LIGHTING_MASK_PASS",
-    FOG_MASK_PASS = "FOG_MASK_PASS"
+    FOG_MASK_PASS = "FOG_MASK_PASS",
+    BLOOM_PASS = "BLOOM_PASS"
 }
 export declare class FrameComposer extends RenderToTextureHandler {
     private _fbo;
@@ -27,6 +28,9 @@ export declare class FrameComposer extends RenderToTextureHandler {
     private _envMap;
     get envMap(): Texture;
     set envMap(value: Texture);
+    private _bloomMap;
+    get bloomMap(): Texture;
+    set bloomMap(value: Texture);
     private _ssrMaxDistance;
     get ssrMaxDistance(): number;
     set ssrMaxDistance(value: number);
@@ -52,6 +56,7 @@ export declare class FrameComposer extends RenderToTextureHandler {
     private setClearCoatEnabled;
     private setSSREnabled;
     setFogDensity(value: number): void;
+    setNormalColorEnabled(enabled: boolean): void;
     private resetDebugPassDirection;
     setDebugPassDirection(direction: DebugPassDirection): void;
     update(camera: Camera): void;
