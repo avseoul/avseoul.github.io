@@ -7,3 +7,5 @@ export declare const ComposerFrag: string;
 export declare const GBufferVert: string;
 export declare const GBufferFrag: string;
 export declare const BlurPassFrag: string;
+export declare const SkyboxVert: string;
+export declare const SkyboxFrag: string;
