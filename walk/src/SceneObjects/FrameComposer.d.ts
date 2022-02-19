@@ -56,7 +56,6 @@ export declare class FrameComposer extends RenderToTextureHandler {
     private setClearCoatEnabled;
     private setSSREnabled;
     setFogDensity(value: number): void;
-    setNormalColorEnabled(enabled: boolean): void;
     private resetDebugPassDirection;
     setDebugPassDirection(direction: DebugPassDirection): void;
     update(camera: Camera): void;

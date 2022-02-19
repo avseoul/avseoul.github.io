@@ -1,11 +1,9 @@
-import { OrthographicCamera, PerspectiveCamera, PlaneGeometry, PMREMGenerator, WebGLRenderer } from 'three';
+import { OrthographicCamera, PerspectiveCamera, PlaneGeometry, WebGLRenderer } from 'three';
 import CameraExtended from './ThreeExtension/CameraExtended';
 import "./style.css";
 export default class App {
     private static _renderer;
     static get renderer(): WebGLRenderer;
-    private static _pmremGenerator;
-    static get pmremGenerator(): PMREMGenerator;
     private static _screenOverlayCamera;
     static get screenOverlayCamera(): OrthographicCamera;
     private static _screenQuadGeometry;
@@ -22,6 +20,7 @@ export default class App {
     private static _halfHeight;
     static get halfHeight(): number;
     static set halfHeight(value: number);
+    static get pixelRatio(): number;
     private _camera;
     get camera(): CameraExtended;
     private _walker;
@@ -29,9 +28,8 @@ export default class App {
     private _screen;
     private _floor;
     private _verticalLaser;
-    private _skybox;
-    private _skyboxResetCounter;
-    private readonly _skyboxResetInterval;
+    private _skyboxOffScreenCanvasHandler;
+    private _skyboxTexture;
     private _particles;
     private _particleAmount;
     private _indexShuffle;
@@ -39,7 +37,6 @@ export default class App {
     private _fogDensityTarget;
     private readonly _fogDensityTargetMin;
     private readonly _fogDensityMin;
-    private _pmremBufferProxy;
     private _blurPass;
     private _time;
     private _timeTweenMin;
@@ -57,11 +54,9 @@ export default class App {
     private _canvasSize;
     private _debugTextures;
     private _cameraNeedsUpdate;
-    private get _pixelRatio();
     constructor();
     private update;
     resetFrameBuffers(camera: PerspectiveCamera): void;
-    private resetSkybox;
     private shuffledIndex;
     private randomize;
     private handleTimeEvent;
