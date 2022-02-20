@@ -1,5 +1,5 @@
 import RenderToTextureHandler from "../Helpers/RenderToTextureHandler";
-import { Camera, DepthTexture, PerspectiveCamera, Texture, WebGLMultipleRenderTargets } from "three";
+import { Camera, DepthTexture, PerspectiveCamera, Texture, WebGLMultipleRenderTargets, CubeTexture } from "three";
 export declare enum DebugPassDirection {
     COMPOSITION = "COMPOSITION",
     COLOR_PASS = "COLOR_PASS",
@@ -26,8 +26,8 @@ export declare class FrameComposer extends RenderToTextureHandler {
     get shaderParamMap(): Texture;
     get depthMap(): DepthTexture;
     private _envMap;
-    get envMap(): Texture;
-    set envMap(value: Texture);
+    get envMap(): CubeTexture;
+    set envMap(value: CubeTexture);
     private _bloomMap;
     get bloomMap(): Texture;
     set bloomMap(value: Texture);
