@@ -9,3 +9,4 @@ export declare const GBufferFrag: string;
 export declare const BlurPassFrag: string;
 export declare const SkyboxVert: string;
 export declare const SkyboxFrag: string;
+export declare const MasterFrag: string;
