@@ -29,15 +29,15 @@ export default class App {
     private _floor;
     private _verticalLaser;
     private _skyboxOffScreenCanvasHandler;
+    private _skyboxTexture;
     private _particles;
     private _particleAmount;
     private _indexShuffle;
     private _frameComposer;
-    private _masterBuffer;
-    private _blurPass;
     private _fogDensityTarget;
     private readonly _fogDensityTargetMin;
     private readonly _fogDensityMin;
+    private _blurPass;
     private _time;
     private _timeTweenMin;
     private _timeTweenMax;
