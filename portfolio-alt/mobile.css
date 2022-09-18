@@ -1,0 +1,76 @@
+@media screen and (max-width: 768px) {
+
+    .github-corner,
+    .sidebar-toggle,
+    .sidebar {
+        position: fixed;
+    }
+
+    .app-nav {
+        margin-top: 16px;
+    }
+
+    .app-nav li ul {
+        top: 30px;
+    }
+
+    main {
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .sidebar {
+        left: -300px;
+        transition: transform 250ms ease-out;
+    }
+
+    .content {
+        left: 0;
+        max-width: 100vw;
+        position: static;
+        padding-top: 20px;
+        transition: transform 250ms ease;
+    }
+
+    .app-nav,
+    .github-corner {
+        transition: transform 250ms ease-out;
+    }
+
+    .sidebar-toggle {
+        background-color: transparent;
+        width: auto;
+        padding: 30px 30px 10px 10px;
+    }
+
+    body.close .sidebar {
+        transform: translateX(300px);
+    }
+
+    body.close .sidebar-toggle {
+        background-color: rgba(255, 255, 255, 0.8);
+        transition: 1s background-color;
+        width: 284px;
+        padding: 10px;
+    }
+
+    body.close .content {
+        transform: translateX(300px);
+    }
+
+    body.close .app-nav,
+    body.close .github-corner {
+        display: none;
+    }
+
+    .github-corner:hover .octo-arm {
+        -webkit-animation: none;
+        animation: none;
+    }
+
+    .github-corner .octo-arm {
+        -webkit-animation: octocat-wave 560ms ease-in-out;
+        animation: octocat-wave 560ms ease-in-out;
+    }
+}
