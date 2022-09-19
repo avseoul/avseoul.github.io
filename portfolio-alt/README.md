@@ -12,7 +12,7 @@ Currently, I'm a technical artist at Marcom, Creative Tech at Apple.
 
 [Resume](https://docs.google.com/document/d/1U_0qwoadvwsV9x-FkS7Bj1ODvtJ5vnsinRwrHzDMlVI/edit?usp=sharing)
 [LinkedIn](https://www.linkedin.com/in/avseoul/)
-[realtime WebGL sketches](https://www.instagram.com/avseoul/)
+[Personal Works](https://www.instagram.com/avseoul/)
 
 ---
 
@@ -291,27 +291,39 @@ Implemented with Unity3D, runs on Quest 1, 2.
 ![](./assets/Screen-Recording-2022-07-13-at-11.57.gif)
 [WALK - working in progress (currently only available on Chrome)](https://avseoul.net/walk/)
 
+---
+
 ### GLITCH SKULL
 
 ![](./assets/GLITCH-SKULL---webgl-realtime-audio-reactive-sketch-2009.gif)
 [GLITCH SKULL](https://avseoul.net/GLITCH_SKULL/)
+
+---
 
 ### Particle Equalizer
 
 ![](./assets/webgl_-_particle_equalizer_revision_final-(1080p).gif)
 [Particle Equalizer - working in progress](https://avseoul.net/particleEqualizer/)
 
+---
+
 ### FUZZY BLOB
 
 ![](./assets/FUZZY-BLOB---webgl-realtime-audio-reactive-sketch-2004.gif)
 [FUZZY BLOB](https://avseoul.net/FUZZY_BLOB/)
+
+---
 
 ### BAD SIGNALS
 
 ![](./assets/BAD-SIGNALS---webgl-audio-reactive-glitch-2008.gif)
 [BAD SIGNALS](https://avseoul.net/BAD_SIGNALS/)
 
+---
+
 ### Untitled
 
 ![](./assets/1_mar_2019_-_untitled_-_wip-(720p).gif)
 Demo not available at the moment
+
+---
