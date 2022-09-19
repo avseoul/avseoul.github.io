@@ -56,6 +56,10 @@ main.hidden {
     display: none;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 .anchor {
     display: inline-block;
     text-decoration: none;

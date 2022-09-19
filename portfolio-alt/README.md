@@ -65,7 +65,7 @@ Implemented with Unity3D, runs on Quest 1, 2, iOS/Android devices.
 
 #### Design iteration
 
-![](./assets/Spatial-08.d1aab532-7360.gif ':size=500') ![](./assets/Spatial-09.74d1a3b1-7359.gif ':size=500') ![](./assets/Spatial-07.17f2d62b-7361.gif ':size=500') ![](./assets/Spatial-11.4f52bdda-7357.gif ':size=500')
+![](./assets/Spatial-08.d1aab532-7360.gif ':size=600') ![](./assets/Spatial-09.74d1a3b1-7359.gif ':size=600') ![](./assets/Spatial-07.17f2d62b-7361.gif ':size=600') ![](./assets/Spatial-11.4f52bdda-7357.gif ':size=600')
 
 ---
 
@@ -104,11 +104,11 @@ Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
 
 ### Selfie Stick
 
-![](./assets/Spatial-13.fffa6e84-7444.gif) ![](./assets/Spatial-14.97faf0b5-7443.gif)
+![](./assets/Spatial-13.fffa6e84-7444.gif ':size=600') ![](./assets/Spatial-14.97faf0b5-7443.gif ':size=600')
 
 #### What
 
-A screen capture module in a selfie stick form, providing a playful experience yet serving the purpose
+I prototyped this in a Spatial internal hackathon and it has been accepted as a main feature. It is a screen capture module in a selfie stick form, providing a playful experience yet serving the purpose.
 
 Implemented with Unity3D, runs on Quest 1, 2.
 
@@ -116,32 +116,40 @@ Implemented with Unity3D, runs on Quest 1, 2.
 
 ### Configurable Button & Tangible Touch Interaction
 
-![](./assets/Spatial-28.c310e5f7-7465.gif) ![](./assets/image3.gif)  
 ![](./assets/Spatial-27.ad53dc27-7464.gif)
 
-*What it is?*
+#### What
+
 A configurable button module with tangible interaction
 
-*Target Platforms*
+Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
 
-- Oculus Quest 1,2,  Hololens 1,2
+![](./assets/Spatial-28.c310e5f7-7465.gif ':size=600') ![](./assets/image3.gif ':size=600')  
 
-### Work Board
-
-![](./assets/workboard-gridtype-interaction-effect.gif) ![](./assets/workboard-gridtype-transition.gif)
-![](./assets/workboard-solidtype-backdrop-effect.gif) ![](./assets/workboard-solidtype-transition.gif)
+---
 
 ### Gaze Hint
 
+#### What
+
+Prototyping a gaze hint UI
+
 ![](./assets/gaze-hint-type-a.gif) ![](./assets/gaze-hint-type-b.gif)
+
+---
 
 ### Object Highlighter
 
-![](./assets/plane_highlighter.gif) ![](./assets/3d_object_contour_highlighter.gif)
+![](./assets/3d_object_contour_highlighter.gif)
+![](./assets/plane_highlighter.gif ':size=414')
+
+---
 
 ### 3D Elastic Tooltip
 
 ![](./assets/elastic-tooltip.gif)
+
+---
 
 ### Avatar Loading View
 
@@ -162,6 +170,27 @@ Implemented with Threejs, runs on desktop/mobile web browsers.
 
 ---
 
+### Work Board
+
+#### What
+
+Prototyping various designs for work boards where you pin items
+
+**Transitions**
+
+![](./assets/workboard-gridtype-transition.gif)
+![](./assets/workboard-solidtype-transition.gif ':size=450')
+
+**Back drop effects**
+
+![](./assets/workboard-solidtype-backdrop-effect.gif)  
+
+**Event feedback**
+
+![](./assets/workboard-gridtype-interaction-effect.gif)
+
+---
+
 ### Space Portal
 
 ![](./assets/ezgif.com-gif-maker-7.gif) ![](./assets/ezgif.com-gif-maker-5.gif)
@@ -171,93 +200,118 @@ Prototyping a space portal
 - Target space is capture as a cubemap and map to the portal sphere
 - The portal sphere is backface rendered to create 3D space portal illusion (3D parallax)
 
-*Target Platforms*
+Implemented with Unity3D, runs on Quest 1, 2.
 
-- Oculus Quest1, 2
+---
 
 ### Runtime Lightmap Transition
 
 ![](./assets/ezgif.com-gif-maker-6.gif)
 
-*What it is?*
+#### What
+
 Prototyping a simple lightmap transition system to express different time of a day in VR
 
-*Target Platforms*
+Implemented with Unity3D, runs on Quest 1, 2.
 
-- Oculus Quest1, 2
+---
 
 ## Technical Exploration
 
 ### Custom Spring Physics & Confetti Particle System
 
 ![](./assets/ezgif.com-gif-maker-10.gif) ![](./assets/ezgif.com-gif-maker-9.gif)
-*What it is?*
+
+#### What
 
 - A technical exploration in VR with spring physics for sling shot to trigger confetti like particles
 - Implemented with Unity3D/Oculus Rift
+
+---
 
 ### Fluid Simulation
 
 ![](./assets/thumb_47-1949.gif ':size=326') ![](./assets/cinder-fluid-sim-test--wip-1942.gif) ![](./assets/cinder-fluid-sim-test--wip(1)-1945.gif)  
 
-*What it is?*
+#### What
 
 - A technical exploration in particle system based on fluid simulation
 - Implemented with Cinder with Nvidia Flex library for fluid simulation
 
+---
+
 ### Ray Marching & Metaball
 
 ![](./assets/ezgif.com-gif-maker-16.gif)
-*What it is?*
+
+#### What
 
 - A technical exploration in ray marching and metaball
 - Implemented based on Inigo Quilez’s metaball (<https://www.shadertoy.com/view/ld2GRz>)
 - Extra small particles are actual geometries, they are composed in a composition shader pass with ray marched metaball pass with manual depth testing
 - Implemented with Unity3D
 
+---
+
 ### Sphere Collision Detection & Screen Space Reflection
 
-![](./assets/24-25-Feb-2018-Test---Compute-Shader-&-Instancing-&-SSR-in-Touch-Designer-5889.gif)  
 ![](./assets/23-Feb-2018-Test---Compute-Shader-&-Instancing-in-Touch-Designer-5891.gif)
+![](./assets/24-25-Feb-2018-Test---Compute-Shader-&-Instancing-&-SSR-in-Touch-Designer-5889.gif ':size=450')
 
-*What it is?*
+#### What
 
 - A technical exploration in sphere collision test and screen space reflection
 - GPU driven particle system, particle’s transform parameters are computed in compute shader and applied to batched spheres
 - Naive brute force collision test in compute shader
 - Implemented with Unity3D
 
-### Procedural PBR textures & Subsurface Scattering
+---
 
-![](./assets/258786282_903283267059254_4408524444550198624_n-10040.gif)
+### Procedural Normal and PBR textures & Subsurface Scattering
+
 ![](./assets/257837783_430141128671717_5514147033628404774_n-10039.gif)
+![](./assets/258786282_903283267059254_4408524444550198624_n-10040.gif ':size=480')
 
-*What it is?*
+#### What
 
 - A technical exploration in lookdev with procedurally generated textures for PBR lighting and subsurface scattering
 - Roughness map is generated from 2D noise pattern, the roughness map can be considered as an inverted height map by assuming the surface of the sphere is perfectly smooth, a tangent space normal map can be generated from the height map by comparing neighbor’s height
 - Implemented with Threejs
 
-## Personal Works
+![](./assets/28_mar_2018_test_-_audio_reactive_shader_in_unity3d-(360p).gif)
+
+---
+
+## Personal Works (WebGL Sketches)
+
+**Below demos are developed and tested with Chrome, trying it with Chrome is recommended*
+
+### WALK
+
+![](./assets/Screen-Recording-2022-07-13-at-11.57.gif)
+[WALK - working in progress (currently only available on Chrome)](https://avseoul.net/walk/)
+
+### GLITCH SKULL
+
+![](./assets/GLITCH-SKULL---webgl-realtime-audio-reactive-sketch-2009.gif)
+[GLITCH SKULL](https://avseoul.net/GLITCH_SKULL/)
+
+### Particle Equalizer
+
+![](./assets/webgl_-_particle_equalizer_revision_final-(1080p).gif)
+[Particle Equalizer - working in progress](https://avseoul.net/particleEqualizer/)
+
+### FUZZY BLOB
+
+![](./assets/FUZZY-BLOB---webgl-realtime-audio-reactive-sketch-2004.gif)
+[FUZZY BLOB](https://avseoul.net/FUZZY_BLOB/)
+
+### BAD SIGNALS
 
 ![](./assets/BAD-SIGNALS---webgl-audio-reactive-glitch-2008.gif)
-![](./assets/FUZZY-BLOB---webgl-realtime-audio-reactive-sketch-2004.gif)
-![](./assets/GLITCH-SKULL---webgl-realtime-audio-reactive-sketch-2009.gif)
-![](./assets/Screen-Recording-2022-07-13-at-11.57.gif)
+[BAD SIGNALS](https://avseoul.net/BAD_SIGNALS/)
 
-![](./assets/28_mar_2018_test_-_audio_reactive_shader_in_unity3d-(360p).gif)
+### Untitled
+
 ![](./assets/1_mar_2019_-_untitled_-_wip-(720p).gif)
-![](./assets/webgl_-_particle_equalizer_revision_final-(1080p).gif)
-
-### Walk
-
-*What it is?*
-
-- Demo available via avseoul.net/walk (<http://avseoul.net/walk>) (*Currently not working on Safari due to OffScreenCanvas (<https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas>) API that I use in this sketch, not supported in Safari. Tested with Chrome)
-- The rendering is based on Threejs PBR lighting but slightly modified since I do deferred shading due to no transparency in the scene and most of the additional rendering techniques that I applied are in screen space. I also do a custom skinned mesh animation that is modified from the Threejs.
-- Threejs skinning is done in vertex shader pass of when the skinned mesh is rendered, so the modified vertex position is not accessible from in other passes. So I had to get around by encoding the skinned mesh vertex attributes and skinning attributes to textures, computing the skinning in an extra shader pass, export the skinned position, normal, and tangent to textures.
-- So in the vertex shader pass of the skinned mesh only looks up those textures by vertex index, and applies the values to their vertex attributes. This enables me to glitch the model easily. What I did was, just give a little bit of random shuffle and offset to the texture coordinates for sampling skinning textures, so the skinning attributes are applied to the incorrect vertex.
-- Particle systems reference those skinned positions and normals as well for their emitting position and forces. (Particle systems are pre-batched cubes and quads driven by textures in shader passes in order to draw them in less draw calls. I use extra texture coordinate channels to store the index of those individual cube and quad in order to distinguish them in the same shader pass)
-- Implemented with Threejs
-
-Etc.
+Demo not available at the moment
