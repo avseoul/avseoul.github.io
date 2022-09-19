@@ -72,7 +72,7 @@ body.sticky .sidebar-toggle {
 }
 
 .sidebar ul li ul {
-    padding: 0;
+    padding: 0;    
 }
 
 .sidebar ul li.active>a {
