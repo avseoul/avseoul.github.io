@@ -116,25 +116,28 @@
 .markdown-section h1 {
     font-size: 3rem;
     letter-spacing: -0.1rem;
-    margin: 0 0 1rem;
+    margin: 0 0 2rem;
 }
 
 .markdown-section h2 {
     font-size: 2rem;
     letter-spacing: -0.05rem;
-    margin: 0 0 0 0;
+    margin: 0 0 2rem 0;
 }
 
 .markdown-section h3 {
-    font-size: 1rem;
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
 }
 
 .markdown-section h4 {
-    font-size: 0.5rem;
+    font-size: 1rem;
+    margin: 0 0 0 0;
 }
 
 .markdown-section h5 {
-    font-size: 0.25rem;
+    font-size: 1rem;
+    margin: 0 0 0 0;
 }
 
 .markdown-section h6 {
@@ -143,9 +146,7 @@
 }
 
 .markdown-section figure,
-.markdown-section p {
-    margin: 1.2em 0;
-}
+.markdown-section p {}
 
 .markdown-section p,
 .markdown-section ul,
