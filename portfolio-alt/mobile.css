@@ -20,6 +20,10 @@
         overflow-x: hidden;
     }
 
+    img {
+        width: 100%;
+    }
+
     .sidebar {
         left: -300px;
         transition: transform 250ms ease-out;
