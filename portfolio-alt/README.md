@@ -27,8 +27,6 @@ Currently, I'm a technical artist at Marcom, Creative Tech at Apple.
 
 - Responsible for WebGL and localization parts for Airpods Max retail store experience
 
-**Above links are only accessible from Apple's private network*
-
 ---
 
 ## Works at Spatial
@@ -37,9 +35,9 @@ Currently, I'm a technical artist at Marcom, Creative Tech at Apple.
 
 - Responsible for designing and implementing **realtime visual effects**, **animations**, and **interactions** for **AR/VR/MR/Web** experience on various platforms that range from **Microsoft Hololens**, **Oculus Quest**, **iOS**, **Android**, to **Web browsers** with **Unity**, **Threejs (WebGL)**.
 
-Spatial is a start up and it was even smaller when I was in. So the usual working process is starting with a simple need/idea/direction.
+Spatial is a start up and it was even smaller when I was in. So the usual working process involves from brainstorming to production stages.
 
-I start with it and come up with some variations of quick working prototype. Sometimes, I use sketches or pre-rendered animations, but most of time, the working prototype works the most efficiently with less chance of miscommunications, especially for immersive experience, which is hard to demonstrate the idea in 2D.
+It starts from a simple need/idea/direction. I start with it and come up with some variations of quick working prototype. Sometimes, I use sketches or pre-rendered animations, but most of time, the working prototype works the most efficiently with less chance of miscommunications, especially for immersive experience, which is hard to demonstrate the idea in 2D. From there, I work closely with designers to refine how it works and how it looks and with engineers to integrate prototypes into framework.
 
 Followings are some of features that I designed and developed:
 
@@ -51,8 +49,6 @@ Followings are some of features that I designed and developed:
 
 A transition effects for 3d objects res-in/out.
 
-![](./assets/Spatial-03.01cf68f2-7329.gif ':size=200')
-
 #### How it works
 
 1. Batched triangles(particles) are generated based on the given target meshes triangles
@@ -62,6 +58,8 @@ A transition effects for 3d objects res-in/out.
     1. Target meshes vertex attributes are encoded into ** this compute buffer as well and used for looking up target meshes rendering parameters to match up the initial look when the transition begins
 
 Implemented with Unity3D, runs on Quest 1, 2, iOS/Android devices.
+
+![](./assets/Spatial-03.01cf68f2-7329.gif ':size=200')
 
 #### Design iteration
 
@@ -120,7 +118,7 @@ Implemented with Unity3D, runs on Quest 1, 2.
 
 #### What
 
-A configurable button module with tangible interaction
+Prototyping configurable button module with tangible interactions.
 
 Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
 
@@ -129,10 +127,6 @@ Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
 ---
 
 ### Gaze Hint
-
-#### What
-
-Prototyping a gaze hint UI
 
 ![](./assets/gaze-hint-type-a.gif) ![](./assets/gaze-hint-type-b.gif)
 
@@ -174,7 +168,7 @@ Implemented with Threejs, runs on desktop/mobile web browsers.
 
 #### What
 
-Prototyping various designs for work boards where you pin items
+Prototyping various designs and behavious for work boards where you pin items
 
 **Transitions**
 
@@ -191,16 +185,13 @@ Prototyping various designs for work boards where you pin items
 
 ---
 
-### Space Portal
+### Space Portal Effects
 
 ![](./assets/ezgif.com-gif-maker-7.gif) ![](./assets/ezgif.com-gif-maker-5.gif)
-*What it is?*
-Prototyping a space portal
 
-- Target space is capture as a cubemap and map to the portal sphere
-- The portal sphere is backface rendered to create 3D space portal illusion (3D parallax)
+### What
 
-Implemented with Unity3D, runs on Quest 1, 2.
+Prototyping a space portal that shows another space that is captured as a cubemap and map to a backface rendered sphere to create 3D portal type of parallax.
 
 ---
 
@@ -210,9 +201,7 @@ Implemented with Unity3D, runs on Quest 1, 2.
 
 #### What
 
-Prototyping a simple lightmap transition system to express different time of a day in VR
-
-Implemented with Unity3D, runs on Quest 1, 2.
+Prototyping a simple lightmap transition system to render different time of a day in VR
 
 ---
 
@@ -224,8 +213,8 @@ Implemented with Unity3D, runs on Quest 1, 2.
 
 #### What
 
-- A technical exploration in VR with spring physics for sling shot to trigger confetti like particles
-- Implemented with Unity3D/Oculus Rift
+- Spring physics for sling shot to trigger confetti like particles
+- Implemented with Unity3D, runs on Oculus Rift
 
 ---
 
@@ -235,8 +224,7 @@ Implemented with Unity3D, runs on Quest 1, 2.
 
 #### What
 
-- A technical exploration in particle system based on fluid simulation
-- Implemented with Cinder with Nvidia Flex library for fluid simulation
+- Implemented with Cinder with Nvidia Flex for fluid simulation
 
 ---
 
@@ -246,7 +234,6 @@ Implemented with Unity3D, runs on Quest 1, 2.
 
 #### What
 
-- A technical exploration in ray marching and metaball
 - Implemented based on Inigo Quilez’s metaball (<https://www.shadertoy.com/view/ld2GRz>)
 - Extra small particles are actual geometries, they are composed in a composition shader pass with ray marched metaball pass with manual depth testing
 - Implemented with Unity3D
@@ -260,9 +247,7 @@ Implemented with Unity3D, runs on Quest 1, 2.
 
 #### What
 
-- A technical exploration in sphere collision test and screen space reflection
-- GPU driven particle system, particle’s transform parameters are computed in compute shader and applied to batched spheres
-- Naive brute force collision test in compute shader
+- A technical exploration in sphere collision test with compute shader and screen space reflection
 - Implemented with Unity3D
 
 ---
@@ -275,7 +260,6 @@ Implemented with Unity3D, runs on Quest 1, 2.
 #### What
 
 - A technical exploration in lookdev with procedurally generated textures for PBR lighting and subsurface scattering
-- Roughness map is generated from 2D noise pattern, the roughness map can be considered as an inverted height map by assuming the surface of the sphere is perfectly smooth, a tangent space normal map can be generated from the height map by comparing neighbor’s height
 - Implemented with Threejs
 
 ![](./assets/28_mar_2018_test_-_audio_reactive_shader_in_unity3d-(360p).gif)
