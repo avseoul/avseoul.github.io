@@ -1,5 +1,7 @@
 # Sehyun Av Kim
 
+## Technical Artist & Prototyper
+
 Hi, I'm Sehyun Kim (also known as ‘av’ or ‘avseoul’). I am a computer graphics artist from Seoul, Korea.
 
 I love things that are raw, bold, and rough but that are not indigested or distracted. I also love things that are sophisticated, elaborated, and refined but that are not boring or indistinctive.
@@ -49,13 +51,11 @@ Followings are some of features that I designed and developed:
 
 A transition effects for 3d objects res-in/out.
 
-#### How it works
-
-1. Batched triangles(particles) are generated based on the given target meshes triangles
-2. Transform of the triangles are computed in compute shader, encoded to a compute buffer
-3. Computed transform data is applied in vertex shader pass
-4. Lighting is applied in fragment shader pass:
-    1. Target meshes vertex attributes are encoded into ** this compute buffer as well and used for looking up target meshes rendering parameters to match up the initial look when the transition begins
+- Batched triangles(particles) are generated based on the given target object's triangles
+- Compute shader pass to compute transform for triangles
+- Vertex shader pass to apply the computed transform data per triangle
+- Fragment shader pass to apply lighting
+    - Vertex attributes (normal, uv) and material parameters of the original object are encoded into the triangle data, to be used to match the lighting between the triangulated particles and the original object
 
 Implemented with Unity3D, runs on Quest 1, 2, iOS/Android devices.
 
@@ -89,11 +89,6 @@ Implemented with Unity3D, runs on Hololens 2, Quest 1, 2, iOS/Android devices.
 
 A 3D scribbling in immersive environment.
 
-Dynamic mesh generation in runtime:
-
-- A flat strip mesh is used for a better performance for hololens
-- Surface direction is defined by direction delta between current and previous input in order to prevent scribble meshes being too flat on certain angle
-
 Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
 
 ![](./assets/Spatial-25.bdc31f62-7416.gif ':size=600')  
@@ -109,39 +104,6 @@ Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
 I prototyped this in a Spatial internal hackathon and it has been accepted as a main feature. It is a screen capture module in a selfie stick form, providing a playful experience yet serving the purpose.
 
 Implemented with Unity3D, runs on Quest 1, 2.
-
----
-
-### Configurable Button & Tangible Touch Interaction
-
-![](./assets/Spatial-27.ad53dc27-7464.gif)
-
-#### What
-
-Prototyping configurable button module with tangible interactions.
-
-Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
-
-![](./assets/Spatial-28.c310e5f7-7465.gif ':size=600') ![](./assets/image3.gif ':size=600')  
-
----
-
-### Gaze Hint
-
-![](./assets/gaze-hint-type-a.gif) ![](./assets/gaze-hint-type-b.gif)
-
----
-
-### Object Highlighter
-
-![](./assets/3d_object_contour_highlighter.gif)
-![](./assets/plane_highlighter.gif ':size=414')
-
----
-
-### 3D Elastic Tooltip
-
-![](./assets/elastic-tooltip.gif)
 
 ---
 
@@ -161,6 +123,51 @@ Implemented with Threejs, runs on desktop/mobile web browsers.
 
 *Design passes with prerendered animations)*  
 ![](./assets/06.05.2019-avatar_loading_type_comparision.gif) ![](./assets/06.05.2019-generic_loading_type_comparision.gif)
+
+---
+
+### Configurable Button & Tangible Touch Interaction
+
+![](./assets/Spatial-27.ad53dc27-7464.gif)
+
+#### What
+
+Prototyping configurable button module with tangible interactions.
+
+Implemented with Unity3D, runs on Hololens 1, 2, Quest 1, 2.
+
+![](./assets/Spatial-28.c310e5f7-7465.gif ':size=600') ![](./assets/image3.gif ':size=600')  
+
+---
+
+### Gaze Hint
+
+#### What
+
+Prototyping visual guidance to help you notice events that happen outside of your view in immersive space.
+
+![](./assets/gaze-hint-type-a.gif) ![](./assets/gaze-hint-type-b.gif)
+
+---
+
+### Object Highlighter
+
+#### What
+
+Prototyping visual guidance to help you understand what you are interacting with.
+
+![](./assets/3d_object_contour_highlighter.gif)
+![](./assets/plane_highlighter.gif ':size=414')
+
+---
+
+### 3D Elastic Tooltip
+
+#### What
+
+Prototyping tooltip in 3D space, with elastic behavior
+
+![](./assets/elastic-tooltip.gif)
 
 ---
 
