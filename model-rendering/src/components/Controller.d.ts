@@ -1,2 +1,2 @@
-import { AppProps } from "../Const";
-export declare const Controller: (props: AppProps) => JSX.Element;
+import { ControllerProps } from "../Const";
+export declare const Controller: (props: ControllerProps) => JSX.Element;
