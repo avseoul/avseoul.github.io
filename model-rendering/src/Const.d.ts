@@ -27,5 +27,11 @@ export declare enum Model {
     ClearCoatTest = "ClearCoatTest",
     MorphPrimitivesTest = "MorphPrimitivesTest",
     CesiumMan = "CesiumMan",
-    ToyDrummer = "ToyDrummer"
+    ToyDrummer = "ToyDrummer",
+    SheenChair = "SheenChair",
+    EmissiveStrengthTest = "EmissiveStrengthTest",
+    IridescentDishWithOlives = "IridescentDishWithOlives",
+    DragonAttenuation = "DragonAttenuation",
+    AttenuationTest = "AttenuationTest",
+    MaterialsVariantsShoe = "MaterialsVariantsShoe"
 }
